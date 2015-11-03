@@ -146,4 +146,11 @@ public class FoodItem {
 	public FoodGroup getFoodGroup() {
 		return foodGroup;
 	}
+	
+	public NutrientData getNutrientData(){
+		return nutrientData;
+	}
+	public void setNutrientData(NutrientData nd){
+		this.nutrientData = nd;
+	}
 }

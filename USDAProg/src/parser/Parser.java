@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 /**
  * PLEASE DONT CHANGE THIS SHIT YET IT IS STILL A WORK IN PROGRESS
+ * 
  * @author Netdex
  *
  */
@@ -25,27 +26,19 @@ public class Parser {
 	private File file_foodWeight;
 	private File file_nutrientData;
 
-	public Parser(File foodDesc, File foodGroup, File foodWeight,
-			File nutrientData) {
+	public Parser(File foodDesc, File foodGroup, File foodWeight, File nutrientData) {
 
 	}
 
 	private void parseFoodDescriptions() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file_foodDesc));
-		
+
 		String line;
 		while ((line = br.readLine()) != null) {
 			line = line.replaceAll("~", "");
 			StringTokenizer st = new StringTokenizer(line, "^");
-			FoodItem foodItem = new FoodItem(
-					Integer.parseInt(st.nextToken()),
-					Integer.parseInt(st.nextToken()),
-					st.nextToken(),
-					st.nextToken(),
-					st.nextToken(),
-					st.nextToken(),
-					st.nextToken(), 
-					null);
+			FoodItem foodItem = new FoodItem(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()),
+					st.nextToken(), st.nextToken(), st.nextToken(), st.nextToken(), st.nextToken(), null);
 			int id = foodItem.getNDB_No();
 			map_foodItem.put(id, foodItem);
 		}
@@ -54,18 +47,32 @@ public class Parser {
 
 	private void parseNutrientData() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file_nutrientData));
-		
+
 		String line;
-		while((line = br.readLine()) != null){
-			
+		while ((line = br.readLine()) != null) {
+			line = line.replaceAll("~", "");
+			StringTokenizer st = new StringTokenizer(line, "^");
+			Nutrient nutr = new Nutrient(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()),
+					Double.parseDouble(st.nextToken()), Integer.parseInt(st.nextToken()),
+					Double.parseDouble(st.nextToken()), st.nextToken(), st.nextToken(),
+					Integer.parseInt(st.nextToken()), st.nextToken(), Integer.parseInt(st.nextToken()),
+					Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()),
+					Double.parseDouble(st.nextToken()), Double.parseDouble(st.nextToken()),
+					Double.parseDouble(st.nextToken()), st.nextToken(), st.nextToken(), st.nextToken());
+			FoodItem selectedFoodItem = map_foodItem.get(nutr.getNdbNo());
+			if (selectedFoodItem.getNutrientData() == null) {
+				selectedFoodItem.setNutrientData(new NutrientData());
+			}
+			NutrientData nd = selectedFoodItem.getNutrientData();
+			nd.addNutrient(nutr);
 		}
 	}
-	
+
 	public static FoodItem[] parseFoodData(File file) {
 		ArrayList<FoodItem> items = new ArrayList<FoodItem>();
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
+
 		return null;
 
 	}
