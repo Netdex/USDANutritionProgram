@@ -1,0 +1,40 @@
+ACTUALLY USEFUL FILES:
+Food descriptions (FOOD_DES)
+Footnotes (FOOTNOTE)
+Nutrient Data (NUT_DATA)
+Gram Weight (WEIGHT)
+LanguaL matcher (LANGUAL)
+LanguaL Descriptors (LANGDESC)
+Food group (FD_GROUP)
+Nutrient definitions (NUTR_DEF)
+
+BUT NOT: Source code, data derivation, sources of data, sources of data link
+
+Search function
+    Matches by:
+    short description
+    also long description
+    also LanguaL identifiers
+    also search by NDB (Nutrition Data Bank) number
+    also by regional name
+    also by scientific name
+    Also by manufacturer's name
+    if a search matches more than one item, shows top 20 matched items
+    Misspelling suggestions? Just get some APIs from Google
+    
+Lists items by food group (25 total), then by name
+
+Nutrition facts
+    Percentage of Daily Value... PERSONALIZED FOR THEIR BODY WEIGHT, AGE, ETC.
+    Calculate specific amount of nutritions based on serving size (select units too)
+    Food group it's in
+    Optional: scientific name and data source (hide it away elsewhere)
+    Other names and footnotes for product (if applicable)
+    Manufacturer's name
+
+Similar foods, suggested "healthier" alternatives
+    Finds foods under similar key words (they're comma separated) and compares nutritional value
+    You gotta get those marks!
+"bookmark" food
+
+Apparently the USDA has an API that can return info about a product in HTML format: http://ndb.nal.usda.gov/ndb/doc/apilist/API-FOOD-REPORT.md
