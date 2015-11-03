@@ -2,7 +2,12 @@ package parser;
 
 import java.util.ArrayList;
 
-import java.util.ArrayList;
+
+/**
+ * This class contains a list of nutrients which this food item has
+ * @author Netdex
+ *
+ */
 
 public class NutrientData {
 	private ArrayList<Nutrient> nutrients = new ArrayList<Nutrient>();

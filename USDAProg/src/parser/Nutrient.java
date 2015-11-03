@@ -4,6 +4,8 @@ package parser;
  * 
  * PLEASE DONT CHANGE THIS SHIT YET IT IS STILL A WORK IN PROGRESS
  *
+ * Represents a nutrient, which is contained in a NutrientData. 
+ * Modify in future to use builder structure, this is temporary to allow my code to work.
  */
 public class Nutrient {
 	
