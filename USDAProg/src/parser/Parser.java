@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+/**
+ * PLEASE DONT CHANGE THIS SHIT YET IT IS STILL A WORK IN PROGRESS
+ * @author Netdex
+ *
+ */
 public class Parser {
 
 	private HashMap<Integer, NutrientData> map_nutrientData;
@@ -27,30 +32,40 @@ public class Parser {
 
 	private void parseFoodDescriptions() throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file_foodDesc));
-
+		
 		String line;
 		while ((line = br.readLine()) != null) {
+			line = line.replaceAll("~", "");
 			StringTokenizer st = new StringTokenizer(line, "^");
-			String[] arr = line.split("\\^");
 			FoodItem foodItem = new FoodItem(
 					Integer.parseInt(st.nextToken()),
 					Integer.parseInt(st.nextToken()),
-					st.nextToken(), // you're going to have to get rid of the tildes
 					st.nextToken(),
 					st.nextToken(),
 					st.nextToken(),
-					st.nextToken(), 0); // cross reference and get the food group and then add it here
+					st.nextToken(),
+					st.nextToken(), 
+					null);
 			int id = foodItem.getNDB_No();
 			map_foodItem.put(id, foodItem);
 		}
 		br.close();
 	}
 
+	private void parseNutrientData() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(file_nutrientData));
+		
+		String line;
+		while((line = br.readLine()) != null){
+			
+		}
+	}
+	
 	public static FoodItem[] parseFoodData(File file) {
 		ArrayList<FoodItem> items = new ArrayList<FoodItem>();
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+		
 		return null;
 
 	}

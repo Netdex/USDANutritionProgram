@@ -2,6 +2,9 @@ package parser;
 
 public class FoodGroup {
 	
+	/**
+	 * We shouldn't hard code the food group stuff, we must read it from the file
+	 */
 	private final static int DAIRY_EGG = 1;
 	private final static int SPICES_HERBS = 2;
 	private final static int BABY = 3;
