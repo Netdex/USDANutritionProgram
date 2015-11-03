@@ -39,7 +39,7 @@ public class Parser {
 					st.nextToken(),
 					st.nextToken(),
 					st.nextToken(),
-					st.nextToken()); // cross reference and get the food group and then add it here
+					st.nextToken(), 0); // cross reference and get the food group and then add it here
 			int id = foodItem.getNDB_No();
 			map_foodItem.put(id, foodItem);
 		}

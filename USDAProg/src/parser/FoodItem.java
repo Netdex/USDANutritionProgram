@@ -41,7 +41,7 @@ public class FoodItem {
 	/**
 	 * The food group of the item <br>
 	 */
-	private FoodGroup foodGroup;
+	private int foodGroup;
 
 	/**
 	 * Creates an instance of a food item.
@@ -78,7 +78,7 @@ public class FoodItem {
 	 */
 	public FoodItem(int nDB_No, int foodGroupID, String longDescription,
 			String shortDescription, String commonName, String manufacturerName,
-			String scientificName, FoodGroup foodGroup) {
+			String scientificName, int foodGroup) {
 		this.NDB_No = nDB_No;
 		this.foodGroupID = foodGroupID;
 		this.longDescription = longDescription;
@@ -141,7 +141,7 @@ public class FoodItem {
 	/**
 	 * @return the FoodGroup
 	 */
-	public FoodGroup getFoodGroup() {
+	public int getFoodGroup() {
 		return foodGroup;
 	}
 }
