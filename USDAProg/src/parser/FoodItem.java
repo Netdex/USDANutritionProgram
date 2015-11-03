@@ -3,7 +3,7 @@ package parser;
 public class FoodItem {
 
 	/**
-	 * Nutrient Databank number<br>
+	 * Nutrition Data Bank number<br>
 	 * (5 digits)
 	 */
 	private int NDB_No;
@@ -12,117 +12,59 @@ public class FoodItem {
 	 * Food Group ID<br>
 	 * (4 digits)
 	 */
-	private int FdGrp_Cd;
+	private int foodGroupID;
 
 	/** 200-character description of the item */
-	private String Long_Desc;
+	private String longDescription;
 
 	/** 60-character abbreviated description of the item */
-	private String Shrt_Desc;
+	private String shortDescription;
 
 	/**
 	 * Common name associated with the item<br>
 	 * Can be blank
 	 */
-	private String ComName;
+	private String commonName;
 
 	/**
 	 * Manufacturer company name<br>
 	 * Can be blank
 	 */
-	private String ManufacName;
-
-	/**
-	 * Indicates if the food item is used in a USDA survey database<br>
-	 * Y/N<br>
-	 * Can be blank
-	 */
-	private boolean Survey;
-
-	/**
-	 * Description of refuse (inedible parts) of the food<br>
-	 * Can be blank
-	 */
-	private String Ref_desc;
-
-	/**
-	 * Percentage of the food which is refuse<br>
-	 * Can be blank
-	 */
-	private double Refuse;
+	private String manufacturerName;
 
 	/**
 	 * Scientific name of the food item<br>
 	 * Can be blank
 	 */
-	private String SciName;
+	private String scientificName;
 
 	/**
-	 * Factor for converting nitrogen to protein<br>
-	 * Can be blank
+	 * The food group of the item <br>
 	 */
-	private double N_Factor;
-
-	/**
-	 * Factor for calculating calories from protein<br>
-	 * Can be blank
-	 */
-	private double Pro_Factor;
-
-	/**
-	 * Factor for calculating calories from fat<br>
-	 * Can be blank
-	 */
-	private double Fat_Factor;
-
-	/**
-	 * Factor for calculating calories from carbohydrate<br>
-	 * Can be blank
-	 */
-	private double CHO_Factor;
-
-	private FoodItem(int nDB_No, int fdGrp_Cd, String long_Desc, String shrt_Desc, String comName, String manufacName,
-			boolean survey, String ref_desc, double refuse, String sciName, double n_Factor, double pro_Factor,
-			double fat_Factor, double cHO_Factor) {
-		super();
-		NDB_No = nDB_No;
-		FdGrp_Cd = fdGrp_Cd;
-		Long_Desc = long_Desc;
-		Shrt_Desc = shrt_Desc;
-		ComName = comName;
-		ManufacName = manufacName;
-		Survey = survey;
-		Ref_desc = ref_desc;
-		Refuse = refuse;
-		SciName = sciName;
-		N_Factor = n_Factor;
-		Pro_Factor = pro_Factor;
-		Fat_Factor = fat_Factor;
-		CHO_Factor = cHO_Factor;
-	}
+	private FoodGroup foodGroup;
 
 	/**
 	 * Creates an instance of a food item.
 	 * 
 	 * @param nDB_No
 	 *            The unique identifier for this food item
-	 * @param fdGrp_Cd
+	 * @param foodGroupID
 	 *            The food group ID of this food item
-	 * @param long_Desc
+	 * @param longDescription
 	 *            A long description of this food
-	 * @param shrt_Desc
+	 * @param shortDescription
 	 *            A short description of this food
-	 * @param comName
+	 * @param commonName
 	 *            A common name for this food
-	 * @param manufacName
+	 * @param manufacturerName
 	 *            A manufacturer name for this food
 	 * @param survey
 	 *            Whether this food is used in a USDA survey
-	 * @param ref_desc
+	 * @param refuseDescription
 	 *            A description of the refuse in this food
 	 * @param refuse
 	 *            A percentage of refuse in this food
-	 * @param sciName
+	 * @param scientificName
 	 *            The scientific name for this food
 	 * @param n_Factor
 	 *            The factor for converting nitrogen to protein
@@ -134,11 +76,17 @@ public class FoodItem {
 	 *            The factor for calculating calories from carbohydrate
 	 * @return An instance of the food item with the specified parameters
 	 */
-	public static FoodItem getInstance(int nDB_No, int fdGrp_Cd, String long_Desc, String shrt_Desc, String comName,
-			String manufacName, boolean survey, String ref_desc, double refuse, String sciName, double n_Factor,
-			double pro_Factor, double fat_Factor, double cHO_Factor) {
-		return new FoodItem(nDB_No, fdGrp_Cd, long_Desc, shrt_Desc, comName, manufacName, survey, ref_desc, refuse,
-				sciName, n_Factor, pro_Factor, fat_Factor, cHO_Factor);
+	public FoodItem(int nDB_No, int foodGroupID, String longDescription,
+			String shortDescription, String commonName, String manufacturerName,
+			String scientificName, FoodGroup foodGroup) {
+		this.NDB_No = nDB_No;
+		this.foodGroupID = foodGroupID;
+		this.longDescription = longDescription;
+		this.shortDescription = shortDescription;
+		this.commonName = commonName;
+		this.manufacturerName = manufacturerName;
+		this.scientificName = scientificName;
+		this.foodGroup = foodGroup;
 	}
 
 	/**
@@ -149,206 +97,51 @@ public class FoodItem {
 	}
 
 	/**
-	 * @param nDB_No
-	 *            the nDB_No to set
-	 */
-	public void setNDB_No(int nDB_No) {
-		NDB_No = nDB_No;
-	}
-
-	/**
 	 * @return the fdGrp_Cd
 	 */
 	public int getFdGrp_Cd() {
-		return FdGrp_Cd;
-	}
-
-	/**
-	 * @param fdGrp_Cd
-	 *            the fdGrp_Cd to set
-	 */
-	public void setFdGrp_Cd(int fdGrp_Cd) {
-		FdGrp_Cd = fdGrp_Cd;
+		return foodGroupID;
 	}
 
 	/**
 	 * @return the long_Desc
 	 */
 	public String getLong_Desc() {
-		return Long_Desc;
-	}
-
-	/**
-	 * @param long_Desc
-	 *            the long_Desc to set
-	 */
-	public void setLong_Desc(String long_Desc) {
-		Long_Desc = long_Desc;
+		return longDescription;
 	}
 
 	/**
 	 * @return the shrt_Desc
 	 */
 	public String getShrt_Desc() {
-		return Shrt_Desc;
+		return shortDescription;
 	}
 
 	/**
-	 * @param shrt_Desc
-	 *            the shrt_Desc to set
+	 * @return the commonName
 	 */
-	public void setShrt_Desc(String shrt_Desc) {
-		Shrt_Desc = shrt_Desc;
-	}
-
-	/**
-	 * @return the comName
-	 */
-	public String getComName() {
-		return ComName;
-	}
-
-	/**
-	 * @param comName
-	 *            the comName to set
-	 */
-	public void setComName(String comName) {
-		ComName = comName;
+	public String getCommonName() {
+		return commonName;
 	}
 
 	/**
 	 * @return the manufacName
 	 */
 	public String getManufacName() {
-		return ManufacName;
-	}
-
-	/**
-	 * @param manufacName
-	 *            the manufacName to set
-	 */
-	public void setManufacName(String manufacName) {
-		ManufacName = manufacName;
-	}
-
-	/**
-	 * @return the survey
-	 */
-	public boolean isSurvey() {
-		return Survey;
-	}
-
-	/**
-	 * @param survey
-	 *            the survey to set
-	 */
-	public void setSurvey(boolean survey) {
-		Survey = survey;
-	}
-
-	/**
-	 * @return the ref_desc
-	 */
-	public String getRef_desc() {
-		return Ref_desc;
-	}
-
-	/**
-	 * @param ref_desc
-	 *            the ref_desc to set
-	 */
-	public void setRef_desc(String ref_desc) {
-		Ref_desc = ref_desc;
-	}
-
-	/**
-	 * @return the refuse
-	 */
-	public double getRefuse() {
-		return Refuse;
-	}
-
-	/**
-	 * @param refuse
-	 *            the refuse to set
-	 */
-	public void setRefuse(double refuse) {
-		Refuse = refuse;
+		return manufacturerName;
 	}
 
 	/**
 	 * @return the sciName
 	 */
 	public String getSciName() {
-		return SciName;
+		return scientificName;
 	}
 
 	/**
-	 * @param sciName
-	 *            the sciName to set
+	 * @return the FoodGroup
 	 */
-	public void setSciName(String sciName) {
-		SciName = sciName;
+	public FoodGroup getFoodGroup() {
+		return foodGroup;
 	}
-
-	/**
-	 * @return the n_Factor
-	 */
-	public double getN_Factor() {
-		return N_Factor;
-	}
-
-	/**
-	 * @param n_Factor
-	 *            the n_Factor to set
-	 */
-	public void setN_Factor(double n_Factor) {
-		N_Factor = n_Factor;
-	}
-
-	/**
-	 * @return the pro_Factor
-	 */
-	public double getPro_Factor() {
-		return Pro_Factor;
-	}
-
-	/**
-	 * @param pro_Factor
-	 *            the pro_Factor to set
-	 */
-	public void setPro_Factor(double pro_Factor) {
-		Pro_Factor = pro_Factor;
-	}
-
-	/**
-	 * @return the fat_Factor
-	 */
-	public double getFat_Factor() {
-		return Fat_Factor;
-	}
-
-	/**
-	 * @param fat_Factor
-	 *            the fat_Factor to set
-	 */
-	public void setFat_Factor(double fat_Factor) {
-		Fat_Factor = fat_Factor;
-	}
-
-	/**
-	 * @return the cHO_Factor
-	 */
-	public double getCHO_Factor() {
-		return CHO_Factor;
-	}
-
-	/**
-	 * @param cHO_Factor
-	 *            the cHO_Factor to set
-	 */
-	public void setCHO_Factor(double cHO_Factor) {
-		CHO_Factor = cHO_Factor;
-	}
-
 }
