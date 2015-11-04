@@ -93,4 +93,8 @@ public class NutrientDescription implements Parsable<NutrientDescription> {
 	public int getSrOrder() {
 		return srOrder;
 	}
+	
+	public String toString(){
+		return this.getNutrientDescription();
+	}
 }

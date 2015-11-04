@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -47,8 +48,9 @@ import java.util.HashMap;
 public class Parser {
 	
 	// Various maps for storing indexes to temporary data
-	private HashMap<Integer, FoodItem> map_foodItem = new HashMap<>();
+	private ArrayList<FoodItem> foodItems = new ArrayList<>();
 	
+	private HashMap<Integer, NutrientData> map_nutrData = new HashMap<>();
 	private HashMap<Integer, NutrientDescription> map_nutrDesc = new HashMap<>();
 	private HashMap<Integer, FoodGroup> map_foodGroup = new HashMap<>();
 	private HashMap<Integer, FoodWeight> map_foodWeight = new HashMap<>();
@@ -74,12 +76,12 @@ public class Parser {
 			this.parseFoodGroups();
 			System.out.println("PARSING FOOD WEIGHTS");
 			this.parseFoodWeights();
-			System.out.println("PARSING FOOD DESCRIPTIONS");
-			this.parseFoodDescriptions();
 			System.out.println("PARSING NUTRIENT DEFINITIONS");
 			this.parseNutrientDefinitions();
 			System.out.println("PARSING NUTRIENT DATA");
 			this.parseNutrientData();
+			System.out.println("PARSING FOOD DESCRIPTIONS");
+			this.parseFoodDescriptions();
 			System.out.println("DONE");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,6 +131,7 @@ public class Parser {
 	/**
 	 * Reads all the food descriptions and places it into a lookup table
 	 * Sets the proper food group of the item
+	 * Sets the proper nutrients of the item
 	 * @throws IOException
 	 * @throws InvalidParseDataException
 	 */
@@ -144,8 +147,8 @@ public class Parser {
 			foodItem.parse(items);
 			foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
 			foodItem.setWeightInfo(map_foodWeight.get(foodItem.getNutrientDatabankNumber()));
-			int id = foodItem.getNutrientDatabankNumber();
-			map_foodItem.put(id, foodItem);
+			foodItem.setNutrientData(map_nutrData.get(foodItem.getNutrientDatabankNumber()));
+			foodItems.add(foodItem);
 		}
 		br.close();
 	}
@@ -184,9 +187,9 @@ public class Parser {
 			Nutrient nutr = new Nutrient();
 			nutr.parse(items);
 			nutr.setNutrientDescription(map_nutrDesc.get(nutr.getNutrNo()));
-			FoodItem selectedFoodItem = map_foodItem.get(nutr.getNdbNo());
-			NutrientData nd = selectedFoodItem.getNutrientData();
-			nd.addNutrient(nutr);
+			if(map_nutrData.get(nutr.getNdbNo()) == null)
+				map_nutrData.put(nutr.getNdbNo(), new NutrientData());
+			map_nutrData.get(nutr.getNdbNo()).addNutrient(nutr);
 		}
 		br.close();
 	}

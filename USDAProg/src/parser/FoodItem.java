@@ -254,5 +254,9 @@ public class FoodItem implements Parsable<FoodItem> {
 	public double getCholestrolFactor() {
 		return cholestrolFactor;
 	}
+	
+	public String toString(){
+		return this.getLongDescription();
+	}
 
 }
