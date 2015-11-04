@@ -1,4 +1,6 @@
-package parser;
+package parser.parsables;
+
+import parser.InvalidParseDataException;
 
 /**
  * 

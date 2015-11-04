@@ -7,6 +7,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import parser.parsables.FoodGroup;
+import parser.parsables.FoodItem;
+import parser.parsables.FoodWeight;
+import parser.parsables.Nutrient;
+import parser.parsables.NutrientData;
+import parser.parsables.NutrientDescription;
+
 /**
  * =================================================================================================
  * || PLEASE DO NOT MODIFY THE PARSER OR ANY OF ITS SUBCLASSES UNTIL I GET THE CODE WORKING FULLY ||
@@ -72,6 +79,7 @@ public class Parser {
 
 	public void parseData() {
 		try {
+			long start = System.currentTimeMillis();
 			System.out.println("PARSING FOOD GROUPS");
 			this.parseFoodGroups();
 			System.out.println("PARSING FOOD WEIGHTS");
@@ -83,6 +91,8 @@ public class Parser {
 			System.out.println("PARSING FOOD DESCRIPTIONS");
 			this.parseFoodDescriptions();
 			System.out.println("DONE");
+			long end = System.currentTimeMillis() - start;
+			System.out.println("Took " + end + "ms");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -145,6 +155,8 @@ public class Parser {
 			String[] items = line.split("\\^", -1);
 			FoodItem foodItem = new FoodItem();
 			foodItem.parse(items);
+			
+			// Set the appropriate items in the food item
 			foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
 			foodItem.setWeightInfo(map_foodWeight.get(foodItem.getNutrientDatabankNumber()));
 			foodItem.setNutrientData(map_nutrData.get(foodItem.getNutrientDatabankNumber()));

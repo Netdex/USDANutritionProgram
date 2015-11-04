@@ -1,4 +1,6 @@
-package parser;
+package parser.parsables;
+
+import parser.InvalidParseDataException;
 
 /**
  * I have reverted the structure temporarily since this structure is actually
@@ -47,7 +49,7 @@ public class FoodItem implements Parsable<FoodItem> {
 	 * @param nutrientData
 	 *            the nutrientData to set
 	 */
-	protected void setNutrientData(NutrientData nutrientData) {
+	public void setNutrientData(NutrientData nutrientData) {
 		this.nutrientData = nutrientData;
 	}
 
@@ -62,7 +64,7 @@ public class FoodItem implements Parsable<FoodItem> {
 	 * @param foodGroup
 	 *            the foodGroup to set
 	 */
-	protected void setFoodGroup(FoodGroup foodGroup) {
+	public void setFoodGroup(FoodGroup foodGroup) {
 		this.foodGroup = foodGroup;
 	}
 
@@ -70,7 +72,7 @@ public class FoodItem implements Parsable<FoodItem> {
 		return foodWeight;
 	}
 
-	protected void setWeightInfo(FoodWeight fw) {
+	public void setWeightInfo(FoodWeight fw) {
 		this.foodWeight = fw;
 	}
 
@@ -167,7 +169,7 @@ public class FoodItem implements Parsable<FoodItem> {
 	/**
 	 * @return the fdGrp_Cd
 	 */
-	protected int getFoodGroupID() {
+	public int getFoodGroupID() {
 		return foodGroupID;
 	}
 
