@@ -97,9 +97,6 @@ public class Parser {
 			Nutrient nutr = new Nutrient();
 			nutr.parse(items);
 			FoodItem selectedFoodItem = map_foodItem.get(nutr.getNdbNo());
-			if (selectedFoodItem.getNutrientData() == null) {
-				selectedFoodItem.setNutrientData(new NutrientData());
-			}
 			NutrientData nd = selectedFoodItem.getNutrientData();
 			nd.addNutrient(nutr);
 		}

@@ -10,6 +10,7 @@ package parser;
 public class Nutrient implements Parsable<Nutrient> {
 	
 	private static final int PARSE_DATA_LENGTH = 18;
+	
 	@Override
 	public void parse(String[] data) throws InvalidParseDataException {
 		if(data.length != PARSE_DATA_LENGTH)
@@ -86,29 +87,6 @@ public class Nutrient implements Parsable<Nutrient> {
 		
 	}
 	
-	private Nutrient(int ndbNo, int nutrNo, double nutrVal, int numDataPts, double stdError, String srcCd,
-			String derivCd, int refNDBNo, String addNutrMark, int numStudies, double min, double max, double df, double lowEB,
-			double upEB, String statCmt, String addModDate, String confidenceCode) {
-		super();
-		this.ndbNo = ndbNo;
-		this.nutrNo = nutrNo;
-		this.nutrVal = nutrVal;
-		this.numDataPts = numDataPts;
-		this.stdError = stdError;
-		this.srcCd = srcCd;
-		this.derivCd = derivCd;
-		this.refNDBNo = refNDBNo;
-		this.addNutrMark = addNutrMark;
-		this.numStudies = numStudies;
-		this.min = min;
-		this.max = max;
-		this.df = df;
-		this.lowEB = lowEB;
-		this.upEB = upEB;
-		this.statCmt = statCmt;
-		this.addModDate = addModDate;
-		this.confidenceCode = confidenceCode;
-	}
 	/**
 	 * @return the ndbNo
 	 */

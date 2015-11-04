@@ -117,66 +117,6 @@ public class FoodItem implements Parsable<FoodItem> {
 
 	}
 
-	private FoodItem(int nDB_No, int fdGrp_Cd, String long_Desc, String shrt_Desc, String comName, String manufacName,
-			boolean survey, String ref_desc, double refuse, String sciName, double n_Factor, double pro_Factor,
-			double fat_Factor, double cHO_Factor) {
-		super();
-		nutrientDatabankNumber = nDB_No;
-		foodGroupID = fdGrp_Cd;
-		longDescription = long_Desc;
-		shortDescription = shrt_Desc;
-		commonName = comName;
-		manufacturerName = manufacName;
-		isSurvey = survey;
-		refuseDescription = ref_desc;
-		percentRefuse = refuse;
-		scientificName = sciName;
-		nitrogenFactor = n_Factor;
-		proteinFactor = pro_Factor;
-		fatFactor = fat_Factor;
-		cholestrolFactor = cHO_Factor;
-	}
-
-	/**
-	 * Creates an instance of a food item.
-	 * 
-	 * @param nDB_No
-	 *            The unique identifier for this food item
-	 * @param fdGrp_Cd
-	 *            The food group ID of this food item
-	 * @param long_Desc
-	 *            A long description of this food
-	 * @param shrt_Desc
-	 *            A short description of this food
-	 * @param comName
-	 *            A common name for this food
-	 * @param manufacName
-	 *            A manufacturer name for this food
-	 * @param survey
-	 *            Whether this food is used in a USDA survey
-	 * @param ref_desc
-	 *            A description of the refuse in this food
-	 * @param refuse
-	 *            A percentage of refuse in this food
-	 * @param sciName
-	 *            The scientific name for this food
-	 * @param n_Factor
-	 *            The factor for converting nitrogen to protein
-	 * @param pro_Factor
-	 *            The factor for calculating calories from protein
-	 * @param fat_Factor
-	 *            The factor for calculating calories from fat
-	 * @param cHO_Factor
-	 *            The factor for calculating calories from carbohydrate
-	 * @return An instance of the food item with the specified parameters
-	 */
-	public static FoodItem getInstance(int nDB_No, int fdGrp_Cd, String long_Desc, String shrt_Desc, String comName,
-			String manufacName, boolean survey, String ref_desc, double refuse, String sciName, double n_Factor,
-			double pro_Factor, double fat_Factor, double cHO_Factor) {
-		return new FoodItem(nDB_No, fdGrp_Cd, long_Desc, shrt_Desc, comName, manufacName, survey, ref_desc, refuse,
-				sciName, n_Factor, pro_Factor, fat_Factor, cHO_Factor);
-	}
-
 	/**
 	 * @return the nDB_No
 	 */
