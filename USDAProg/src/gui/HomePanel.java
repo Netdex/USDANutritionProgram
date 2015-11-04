@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,10 +17,12 @@ import javax.swing.JPanel;
 
 public class HomePanel extends JPanel {
 
-	GUIFrame frame;
+	JFrame frame;
+	GUI gui;
 
-	public HomePanel(GUIFrame frame) {
+	public HomePanel(JFrame frame, GUI gui) {
 		this.frame = frame;
+		this.gui = gui;
 		run();
 	}
 
@@ -28,30 +31,32 @@ public class HomePanel extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		// create banner header and buttons on layout
-		JLabel bannerLabel;
-		try {
-			bannerLabel = new JLabel(new ImageIcon(ImageIO.read(new File(
-					"homebanner.jpg"))));
-		} catch (IOException e) {
-			bannerLabel = null;
-		}
-		JPanel buttons = new JPanel(new GridLayout(2, 2, 16, 16));
+		JLabel bannerLabel = new JLabel("BANNER HERE");
+		JPanel buttonQuad = new JPanel(new GridLayout(2, 2, 8, 8));
 
 		// create five buttons
-		// TODO Images need to be created
-		JButton searchButton = new JButton(new ImageIcon("searchButton.png"));
-		JButton groupButton = new JButton(new ImageIcon("groupButton.png"));
-		JButton bookmarksButton = new JButton(new ImageIcon(
-				"bookmarksButton.png"));
-		JButton settingsButton = new JButton(
-				new ImageIcon("settingsButton.png"));
+		// TODO Proper images need to be created
 
-		buttons.add(searchButton);
-		buttons.add(groupButton);
-		buttons.add(bookmarksButton);
-		buttons.add(settingsButton);
+		// Why can't I display an icon in a button?
+		ImageIcon searchButtonImage = null;
+		try {
+			searchButtonImage = new ImageIcon(ImageIO.read(new File(
+					"images/searchButton.png")));
+		} catch (IOException e) {
+		}
+		JButton searchButton = new JButton(searchButtonImage);
 
-		JButton aboutButton = new JButton(new ImageIcon("aboutButton.png"));
+		// JButton searchButton = new JButton("Search");
+		JButton groupButton = new JButton("Group");
+		JButton bookmarksButton = new JButton("Bookmarks");
+		JButton settingsButton = new JButton("Settings");
+
+		JButton aboutButton = new JButton("About");
+
+		buttonQuad.add(searchButton);
+		buttonQuad.add(groupButton);
+		buttonQuad.add(bookmarksButton);
+		buttonQuad.add(settingsButton);
 
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
@@ -60,15 +65,16 @@ public class HomePanel extends JPanel {
 		aboutButton.addActionListener(new AboutButtonListener());
 
 		this.add(bannerLabel);
-		this.add(buttons);
+		bannerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.add(buttonQuad);
 		this.add(aboutButton);
+		aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 
 	class SearchButtonListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			frame.switchToSearch();
+			gui.switchToSearch();
 		}
 	}
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class GUIFrame {
+public class GUI {
 
 	JFrame frame;
 	HomePanel homePanel;
@@ -17,16 +17,17 @@ public class GUIFrame {
 	ExtraInfoPanel extraInfoPanel;
 	SettingsPanel settingsPanel;
 
-	public GUIFrame() {
+	public GUI() {
 		frame = new JFrame("USDA FOOD ORGANIZER");
+		frame.setSize(480, 640);
 		try {
-			frame.setIconImage(ImageIO.read(new File("frameIcon.png")));
+			frame.setIconImage(ImageIO.read(new File("images/frameIcon.png"))); //TODO make image for this
 		} catch (IOException e) {
 		}
-		frame.setResizable(true);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		homePanel = new HomePanel(this);
+		homePanel = new HomePanel(frame, this);
 		frame.add(homePanel);
 	}
 

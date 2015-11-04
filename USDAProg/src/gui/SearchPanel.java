@@ -7,22 +7,25 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class SearchPanel {
+public class SearchPanel extends JPanel{
 
-	GUIFrame frame;
+	GUI frame;
 
-	public SearchPanel(GUIFrame frame) {
+	public SearchPanel(GUI frame) {
 		this.frame = frame;
 		go();
 	}
 
 	private void go() {
-		JPanel title = new JPanel();
-		title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JPanel titlePanel = new JPanel();
+		titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JButton homeButton = new JButton(new ImageIcon("homeButton.png"));
-		JTextField searchBox = new JTextField("Search...");
-		title.add(homeButton);
-		title.add(searchBox);
+		JTextField searchBox = new JTextField("Search...", 20);
+		titlePanel.add(homeButton);
+		titlePanel.add(searchBox);
+		this.add(titlePanel);
+		
+		
 	}
 
 }
