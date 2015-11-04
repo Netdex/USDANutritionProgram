@@ -37,7 +37,7 @@ public class HomePanel extends JPanel {
 		// create five buttons
 		// TODO Proper images need to be created
 
-		// Why can't I display an icon in a button?
+		// Why can't I display an icon in a button? Can you check this out?
 		ImageIcon searchButtonImage = null;
 		try {
 			searchButtonImage = new ImageIcon(ImageIO.read(new File(
