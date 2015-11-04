@@ -2,7 +2,7 @@ package util;
 
 public class HashTable<K extends Comparable<K>, V> {
 	
-	public BalancedBinaryTree<HashTableNode<K, V>> tree = new BalancedBinaryTree<HashTableNode<K, V>>();
+	public BinaryTree<HashTableNode<K, V>> tree = new BinaryTree<HashTableNode<K, V>>();
 	
 	public HashTable(){
 		
@@ -28,6 +28,10 @@ public class HashTable<K extends Comparable<K>, V> {
 		else{
 			return get(key, node.getRight());
 		}
+	}
+	
+	public String toString(){
+		return tree.toString();
 	}
 	
 	public static class HashTableNode<K extends Comparable<K>, V> implements Comparable<HashTableNode<K, V>> {

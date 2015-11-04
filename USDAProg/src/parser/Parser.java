@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
@@ -11,7 +12,6 @@ import parser.parsables.FoodWeight;
 import parser.parsables.Nutrient;
 import parser.parsables.NutrientData;
 import parser.parsables.NutrientDescription;
-import util.BalancedBinaryTree;
 import util.HashTable;
 
 /**
@@ -55,12 +55,12 @@ import util.HashTable;
 public class Parser {
 	
 	// Various maps for storing indexes to temporary data
-	private BalancedBinaryTree<FoodItem> foodItems = new BalancedBinaryTree<>();
+	private HashMap<Integer, FoodItem> foodItems = new HashMap<>();
 	
-	private HashTable<Integer, NutrientData> map_nutrData = new HashTable<>();
-	private HashTable<Integer, NutrientDescription> map_nutrDesc = new HashTable<>();
-	private HashTable<Integer, FoodGroup> map_foodGroup = new HashTable<>();
-	private HashTable<Integer, FoodWeight> map_foodWeight = new HashTable<>();
+	private HashMap<Integer, NutrientData> map_nutrData = new HashMap<>();
+	private HashMap<Integer, NutrientDescription> map_nutrDesc = new HashMap<>();
+	private HashMap<Integer, FoodGroup> map_foodGroup = new HashMap<>();
+	private HashMap<Integer, FoodWeight> map_foodWeight = new HashMap<>();
 	
 	// Various file handles
 	private File file_foodDesc;
@@ -77,6 +77,10 @@ public class Parser {
 		this.file_foodWeight = foodWeight;
 	}
 
+	public HashMap<Integer, FoodItem> getParsedData(){
+		return foodItems;
+	}
+	
 	public void parseData() {
 		try {
 			long start = System.currentTimeMillis();
@@ -95,15 +99,15 @@ public class Parser {
 			
 			long end = System.currentTimeMillis() - start;
 			System.out.println("Took " + end + "ms");
+			
+			// System.out.println(foodItems);
+			System.out.println(foodItems.get(01026).getNutrientData());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println();
 	}
-
-	public BalancedBinaryTree<FoodItem> getInternalTree(){
-		return this.foodItems;
-	}
+	
 	/**
 	 * Parses all the food weights
 	 * @throws IOException
@@ -165,7 +169,7 @@ public class Parser {
 			foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
 			foodItem.setWeightInfo(map_foodWeight.get(foodItem.getNDBNo()));
 			foodItem.setNutrientData(map_nutrData.get(foodItem.getNDBNo()));
-			foodItems.add(foodItem);
+			foodItems.put(foodItem.getNDBNo(), foodItem);
 		}
 		br.close();
 	}
