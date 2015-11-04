@@ -4,10 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
 /**
  * =================================================================================================
@@ -48,67 +45,149 @@ import java.util.StringTokenizer;
  *
  */
 public class Parser {
-
+	
+	// Various maps for storing indexes to temporary data
 	private HashMap<Integer, FoodItem> map_foodItem = new HashMap<>();
-
+	
+	private HashMap<Integer, NutrientDescription> map_nutrDesc = new HashMap<>();
+	private HashMap<Integer, FoodGroup> map_foodGroup = new HashMap<>();
+	private HashMap<Integer, FoodWeight> map_foodWeight = new HashMap<>();
+	
+	// Various file handles
 	private File file_foodDesc;
 	private File file_foodGroup;
 	private File file_foodWeight;
 	private File file_nutrientData;
+	private File file_nutrientDescription;
 
-	public Parser(File foodDesc, File nutrientData) {
+	public Parser(File foodDesc, File nutrientData, File nutrientDescription, File foodGroup, File foodWeight) {
 		this.file_foodDesc = foodDesc;
 		this.file_nutrientData = nutrientData;
+		this.file_nutrientDescription = nutrientDescription;
+		this.file_foodGroup = foodGroup;
+		this.file_foodWeight = foodWeight;
 	}
 
 	public void parseData() {
 		try {
+			System.out.println("PARSING FOOD GROUPS");
+			this.parseFoodGroups();
+			System.out.println("PARSING FOOD WEIGHTS");
+			this.parseFoodWeights();
+			System.out.println("PARSING FOOD DESCRIPTIONS");
 			this.parseFoodDescriptions();
+			System.out.println("PARSING NUTRIENT DEFINITIONS");
+			this.parseNutrientDefinitions();
+			System.out.println("PARSING NUTRIENT DATA");
 			this.parseNutrientData();
+			System.out.println("DONE");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println();
 	}
 
+	/**
+	 * Parses all the food weights
+	 * @throws IOException
+	 * @throws InvalidParseDataException
+	 */
+	private void parseFoodWeights() throws IOException, InvalidParseDataException {
+		BufferedReader br = new BufferedReader(new FileReader(file_foodWeight));
+
+		String line;
+		while ((line = br.readLine()) != null) {
+			line = line.replace("~", "");
+			// using .split now since stringtokenizer ignores empty values
+			String[] items = line.split("\\^", -1);
+			FoodWeight foodWeight = new FoodWeight();
+			foodWeight.parse(items);
+			map_foodWeight.put(foodWeight.getNutrientDatabankNumber(), foodWeight);
+		}
+		br.close();
+	}
+	
+	/**
+	 * Parses all the food groups
+	 * @throws IOException
+	 * @throws InvalidParseDataException
+	 */
+	private void parseFoodGroups() throws IOException, InvalidParseDataException {
+		BufferedReader br = new BufferedReader(new FileReader(file_foodGroup));
+
+		String line;
+		while ((line = br.readLine()) != null) {
+			line = line.replace("~", "");
+			// using .split now since stringtokenizer ignores empty values
+			String[] items = line.split("\\^", -1);
+			FoodGroup foodGroup = new FoodGroup();
+			foodGroup.parse(items);
+			map_foodGroup.put(foodGroup.getFoodGroupID(), foodGroup);
+		}
+		br.close();
+	}
+	/**
+	 * Reads all the food descriptions and places it into a lookup table
+	 * Sets the proper food group of the item
+	 * @throws IOException
+	 * @throws InvalidParseDataException
+	 */
 	private void parseFoodDescriptions() throws IOException, InvalidParseDataException {
 		BufferedReader br = new BufferedReader(new FileReader(file_foodDesc));
 
 		String line;
 		while ((line = br.readLine()) != null) {
-			line = line.replaceAll("~", "");
+			line = line.replace("~", "");
 			// using .split now since stringtokenizer ignores empty values
 			String[] items = line.split("\\^", -1);
 			FoodItem foodItem = new FoodItem();
 			foodItem.parse(items);
+			foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
+			foodItem.setWeightInfo(map_foodWeight.get(foodItem.getNutrientDatabankNumber()));
 			int id = foodItem.getNutrientDatabankNumber();
 			map_foodItem.put(id, foodItem);
 		}
 		br.close();
 	}
 
+	/**
+	 * Parses all the nutrient definitions
+	 * @throws IOException
+	 * @throws InvalidParseDataException
+	 */
+	private void parseNutrientDefinitions() throws IOException, InvalidParseDataException {
+		BufferedReader br = new BufferedReader(new FileReader(file_nutrientDescription));
+		
+		String line;
+		while((line = br.readLine()) != null){
+			line = line.replace("~", "");
+			String[] items = line.split("\\^", -1);
+			NutrientDescription nd = new NutrientDescription();
+			nd.parse(items);
+			map_nutrDesc.put(nd.getNutrientNumber(), nd);
+		}
+		br.close();
+	}
+	/**
+	 * Reads the nutrient data, and adds it to the appropriate food item
+	 * Sets the nutrient definition of the nutrient according to the table
+	 * @throws IOException
+	 * @throws InvalidParseDataException
+	 */
 	private void parseNutrientData() throws IOException, InvalidParseDataException {
 		BufferedReader br = new BufferedReader(new FileReader(file_nutrientData));
 
 		String line;
 		while ((line = br.readLine()) != null) {
-			line = line.replaceAll("~", "");
+			line = line.replace("~", "");
 			String[] items = line.split("\\^", -1);
 			Nutrient nutr = new Nutrient();
 			nutr.parse(items);
+			nutr.setNutrientDescription(map_nutrDesc.get(nutr.getNutrNo()));
 			FoodItem selectedFoodItem = map_foodItem.get(nutr.getNdbNo());
 			NutrientData nd = selectedFoodItem.getNutrientData();
 			nd.addNutrient(nutr);
 		}
 		br.close();
-	}
-
-	public static FoodItem[] parseFoodData(File file) {
-		ArrayList<FoodItem> items = new ArrayList<FoodItem>();
-
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-		return null;
-
 	}
 }

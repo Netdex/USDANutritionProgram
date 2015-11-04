@@ -82,6 +82,7 @@ public class Nutrient implements Parsable<Nutrient> {
 	private String statCmt;
 	private String addModDate;
 	private String confidenceCode;
+	private NutrientDescription desc;
 	
 	public Nutrient(){
 		
@@ -94,22 +95,10 @@ public class Nutrient implements Parsable<Nutrient> {
 		return ndbNo;
 	}
 	/**
-	 * @param ndbNo the ndbNo to set
-	 */
-	public void setNdbNo(int ndbNo) {
-		this.ndbNo = ndbNo;
-	}
-	/**
 	 * @return the nutrNo
 	 */
 	public int getNutrNo() {
 		return nutrNo;
-	}
-	/**
-	 * @param nutrNo the nutrNo to set
-	 */
-	public void setNutrNo(int nutrNo) {
-		this.nutrNo = nutrNo;
 	}
 	/**
 	 * @return the nutrVal
@@ -118,22 +107,10 @@ public class Nutrient implements Parsable<Nutrient> {
 		return nutrVal;
 	}
 	/**
-	 * @param nutrVal the nutrVal to set
-	 */
-	public void setNutrVal(double nutrVal) {
-		this.nutrVal = nutrVal;
-	}
-	/**
 	 * @return the numDataPts
 	 */
 	public int getNumDataPts() {
 		return numDataPts;
-	}
-	/**
-	 * @param numDataPts the numDataPts to set
-	 */
-	public void setNumDataPts(int numDataPts) {
-		this.numDataPts = numDataPts;
 	}
 	/**
 	 * @return the stdError
@@ -142,22 +119,10 @@ public class Nutrient implements Parsable<Nutrient> {
 		return stdError;
 	}
 	/**
-	 * @param stdError the stdError to set
-	 */
-	public void setStdError(double stdError) {
-		this.stdError = stdError;
-	}
-	/**
 	 * @return the srcCd
 	 */
 	public String getSrcCd() {
 		return srcCd;
-	}
-	/**
-	 * @param srcCd the srcCd to set
-	 */
-	public void setSrcCd(String srcCd) {
-		this.srcCd = srcCd;
 	}
 	/**
 	 * @return the derivCd
@@ -166,22 +131,10 @@ public class Nutrient implements Parsable<Nutrient> {
 		return derivCd;
 	}
 	/**
-	 * @param derivCd the derivCd to set
-	 */
-	public void setDerivCd(String derivCd) {
-		this.derivCd = derivCd;
-	}
-	/**
 	 * @return the refNDBNo
 	 */
 	public int getRefNDBNo() {
 		return refNDBNo;
-	}
-	/**
-	 * @param refNDBNo the refNDBNo to set
-	 */
-	public void setRefNDBNo(int refNDBNo) {
-		this.refNDBNo = refNDBNo;
 	}
 	/**
 	 * @return the addNutrMark
@@ -190,22 +143,10 @@ public class Nutrient implements Parsable<Nutrient> {
 		return addNutrMark;
 	}
 	/**
-	 * @param addNutrMark the addNutrMark to set
-	 */
-	public void setAddNutrMark(String addNutrMark) {
-		this.addNutrMark = addNutrMark;
-	}
-	/**
 	 * @return the numStudies
 	 */
 	public int getNumStudies() {
 		return numStudies;
-	}
-	/**
-	 * @param numStudies the numStudies to set
-	 */
-	public void setNumStudies(int numStudies) {
-		this.numStudies = numStudies;
 	}
 	/**
 	 * @return the min
@@ -214,22 +155,10 @@ public class Nutrient implements Parsable<Nutrient> {
 		return min;
 	}
 	/**
-	 * @param min the min to set
-	 */
-	public void setMin(int min) {
-		this.min = min;
-	}
-	/**
 	 * @return the max
 	 */
 	public double getMax() {
 		return max;
-	}
-	/**
-	 * @param max the max to set
-	 */
-	public void setMax(int max) {
-		this.max = max;
 	}
 	/**
 	 * @return the df
@@ -238,22 +167,10 @@ public class Nutrient implements Parsable<Nutrient> {
 		return df;
 	}
 	/**
-	 * @param df the df to set
-	 */
-	public void setDf(double df) {
-		this.df = df;
-	}
-	/**
 	 * @return the lowEB
 	 */
 	public double getLowEB() {
 		return lowEB;
-	}
-	/**
-	 * @param lowEB the lowEB to set
-	 */
-	public void setLowEB(double lowEB) {
-		this.lowEB = lowEB;
 	}
 	/**
 	 * @return the upEB
@@ -262,22 +179,10 @@ public class Nutrient implements Parsable<Nutrient> {
 		return upEB;
 	}
 	/**
-	 * @param upEB the upEB to set
-	 */
-	public void setUpEB(double upEB) {
-		this.upEB = upEB;
-	}
-	/**
 	 * @return the statCmt
 	 */
 	public String getStatCmt() {
 		return statCmt;
-	}
-	/**
-	 * @param statCmt the statCmt to set
-	 */
-	public void setStatCmt(String statCmt) {
-		this.statCmt = statCmt;
 	}
 	/**
 	 * @return the addModDate
@@ -286,23 +191,17 @@ public class Nutrient implements Parsable<Nutrient> {
 		return addModDate;
 	}
 	/**
-	 * @param addModDate the addModDate to set
-	 */
-	public void setAddModDate(String addModDate) {
-		this.addModDate = addModDate;
-	}
-	/**
 	 * @return the confidenceCode
 	 */
 	public String getConfidenceCode() {
 		return confidenceCode;
 	}
-	/**
-	 * @param confidenceCode the confidenceCode to set
-	 */
-	public void setConfidenceCode(String confidenceCode) {
-		this.confidenceCode = confidenceCode;
-	}
 	
+	public void setNutrientDescription(NutrientDescription nd){
+		this.desc = nd;
+	}
+	public NutrientDescription getNutrientDescription(){
+		return this.desc;
+	}
 	
 }
