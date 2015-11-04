@@ -1,10 +1,10 @@
 package util;
 
-public class HashTable<K extends Comparable<K>, V> {
+public class BinaryTreeMap<K extends Comparable<K>, V> {
 	
-	public BinaryTree<HashTableNode<K, V>> tree = new BinaryTree<HashTableNode<K, V>>();
+	public BalancedBinaryTree<HashTableNode<K, V>> tree = new BalancedBinaryTree<HashTableNode<K, V>>();
 	
-	public HashTable(){
+	public BinaryTreeMap(){
 		
 	}
 	

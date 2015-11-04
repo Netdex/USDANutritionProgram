@@ -12,7 +12,7 @@ import parser.parsables.FoodWeight;
 import parser.parsables.Nutrient;
 import parser.parsables.NutrientData;
 import parser.parsables.NutrientDescription;
-import util.HashTable;
+import util.BinaryTreeMap;
 
 /**
  * =================================================================================================
@@ -55,12 +55,12 @@ import util.HashTable;
 public class Parser {
 	
 	// Various maps for storing indexes to temporary data
-	private HashMap<Integer, FoodItem> foodItems = new HashMap<>();
+	private BinaryTreeMap<Integer, FoodItem> foodItems = new BinaryTreeMap<>();
 	
-	private HashMap<Integer, NutrientData> map_nutrData = new HashMap<>();
-	private HashMap<Integer, NutrientDescription> map_nutrDesc = new HashMap<>();
-	private HashMap<Integer, FoodGroup> map_foodGroup = new HashMap<>();
-	private HashMap<Integer, FoodWeight> map_foodWeight = new HashMap<>();
+	private BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
+	private BinaryTreeMap<Integer, NutrientDescription> map_nutrDesc = new BinaryTreeMap<>();
+	private BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
+	private BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
 	
 	// Various file handles
 	private File file_foodDesc;
@@ -77,7 +77,7 @@ public class Parser {
 		this.file_foodWeight = foodWeight;
 	}
 
-	public HashMap<Integer, FoodItem> getParsedData(){
+	public BinaryTreeMap<Integer, FoodItem> getParsedData(){
 		return foodItems;
 	}
 	
@@ -100,8 +100,7 @@ public class Parser {
 			long end = System.currentTimeMillis() - start;
 			System.out.println("Took " + end + "ms");
 			
-			// System.out.println(foodItems);
-			System.out.println(foodItems.get(01026).getNutrientData());
+			System.out.println(foodItems);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -208,7 +207,11 @@ public class Parser {
 			Nutrient nutr = new Nutrient();
 			nutr.parse(items);
 			nutr.setNutrientDescription(map_nutrDesc.get(nutr.getNutrNo()));
-			if(map_nutrData.get(nutr.getNDBNo()) == null)
+			if(nutr.getNDBNo() == 01026){
+				System.out.println("TEST");
+			}
+			NutrientData nd = map_nutrData.get(nutr.getNDBNo());
+			if(nd == null)
 				map_nutrData.put(nutr.getNDBNo(), new NutrientData());
 			map_nutrData.get(nutr.getNDBNo()).addNutrient(nutr);
 		}

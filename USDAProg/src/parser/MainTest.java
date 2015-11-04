@@ -3,7 +3,7 @@ package parser;
 import java.io.File;
 
 import util.BTreeVisualizer;
-import util.HashTable;
+import util.BinaryTreeMap;
 
 public class MainTest {
 
@@ -17,9 +17,9 @@ public class MainTest {
 	}
 
 	public static void hashTest() {
-		HashTable<Integer, String> ht = new HashTable<>();
+		BinaryTreeMap<Integer, String> ht = new BinaryTreeMap<>();
 
-		BTreeVisualizer<HashTable.HashTableNode<Integer, String>> btv = new BTreeVisualizer<HashTable.HashTableNode<Integer, String>>(
+		BTreeVisualizer<BinaryTreeMap.HashTableNode<Integer, String>> btv = new BTreeVisualizer<BinaryTreeMap.HashTableNode<Integer, String>>(
 				ht.tree);
 		btv.pack();
 		btv.setVisible(true);
