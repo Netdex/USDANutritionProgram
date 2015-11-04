@@ -10,7 +10,7 @@ import parser.InvalidParseDataException;
  * @author Netdex
  *
  */
-public class FoodItem implements Parsable<FoodItem> {
+public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 
 	private static final int PARSE_DATA_LENGTH = 14;
 
@@ -38,6 +38,11 @@ public class FoodItem implements Parsable<FoodItem> {
 		cholestrolFactor = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
 	}
 
+	@Override
+	public int compareTo(FoodItem o) {
+		return this.getNDBNo() - o.getNDBNo();
+	}
+	
 	/**
 	 * @return the nutrientData
 	 */
@@ -76,6 +81,8 @@ public class FoodItem implements Parsable<FoodItem> {
 		this.foodWeight = fw;
 	}
 
+	// All the fields start here
+	
 	/**
 	 * Nutrient Databank number<br>
 	 * (5 digits)
@@ -160,105 +167,110 @@ public class FoodItem implements Parsable<FoodItem> {
 	}
 
 	/**
-	 * @return the nDB_No
+	 * @return The Nutrient DataBank number of this food item
 	 */
-	public int getNutrientDatabankNumber() {
+	public int getNDBNo() {
 		return nutrientDatabankNumber;
 	}
 
 	/**
-	 * @return the fdGrp_Cd
+	 * @return The food group ID of the food item
 	 */
 	public int getFoodGroupID() {
 		return foodGroupID;
 	}
 
 	/**
-	 * @return the long_Desc
+	 * @return The long description of this food item
 	 */
 	public String getLongDescription() {
 		return longDescription;
 	}
 
 	/**
-	 * @return the shrt_Desc
+	 * @return The short description of this food item
 	 */
 	public String getShortDescription() {
 		return shortDescription;
 	}
 
 	/**
-	 * @return the comName
+	 * @return A common name for this item
 	 */
 	public String getCommmonName() {
 		return commonName;
 	}
 
 	/**
-	 * @return the manufacName
+	 * @return The manufacturer's name of the item
 	 */
 	public String getManufacturerName() {
 		return manufacturerName;
 	}
 
 	/**
-	 * @return the survey
+	 * @return Whether this document is in a USDA survey
 	 */
 	public boolean isSurvey() {
 		return isSurvey;
 	}
 
 	/**
-	 * @return the ref_desc
+	 * @return A description of the refuse in this food item
 	 */
 	public String getRefuseDescription() {
 		return refuseDescription;
 	}
 
 	/**
-	 * @return the refuse
+	 * @return The percentage of the food item which is refuse
 	 */
 	public double getRefusePercentage() {
 		return percentRefuse;
 	}
 
 	/**
-	 * @return the sciName
+	 * @return The scientific name for this item
 	 */
 	public String getScientificName() {
 		return scientificName;
 	}
 
 	/**
-	 * @return the n_Factor
+	 * @return The factor required for converting nitrogen in this food item
 	 */
 	public double getNitrogenFactor() {
 		return nitrogenFactor;
 	}
 
 	/**
-	 * @return the pro_Factor
+	 * @return The factor required for calculating protein in this food item
 	 */
 	public double getProteinFactor() {
 		return proteinFactor;
 	}
 
 	/**
-	 * @return the fat_Factor
+	 * @return The factor required for calculating fat in this food item
 	 */
 	public double getFatFactor() {
 		return fatFactor;
 	}
 
 	/**
-	 * @return the cHO_Factor
+	 * @return The factor required for calculating cholestrol in this food item
 	 */
 	public double getCholestrolFactor() {
 		return cholestrolFactor;
 	}
 	
+	/**
+	 * @return The factor
+	 */
 	public String toString(){
 		return this.getLongDescription();
 	}
+
+	
 
 }

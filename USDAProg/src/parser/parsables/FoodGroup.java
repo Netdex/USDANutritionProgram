@@ -44,5 +44,9 @@ public class FoodGroup implements Parsable<FoodGroup> {
 	public String getDescription() {
 		return desc;
 	}
+	
+	public String toString(){
+		return this.getDescription();
+	}
 
 }

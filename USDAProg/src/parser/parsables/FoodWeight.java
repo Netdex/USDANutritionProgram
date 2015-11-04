@@ -32,7 +32,7 @@ public class FoodWeight implements Parsable<FoodWeight> {
 
 	}
 
-	public int getNutrientDatabankNumber() {
+	public int getNDBNo() {
 		return ndbNo;
 	}
 
@@ -83,5 +83,9 @@ public class FoodWeight implements Parsable<FoodWeight> {
 	 */
 	public double getStdDev() {
 		return stdDev;
+	}
+	
+	public String toString(){
+		return this.getAmount() + " " + this.getDesc();
 	}
 }

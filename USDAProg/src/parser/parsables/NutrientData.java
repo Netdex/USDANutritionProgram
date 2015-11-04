@@ -1,6 +1,6 @@
 package parser.parsables;
 
-import java.util.ArrayList;
+import util.DoublyLinkedList;
 
 /**
  * This class contains a list of nutrients which this food item has
@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 
 public class NutrientData {
-	private ArrayList<Nutrient> nutrients = new ArrayList<Nutrient>();
+	private DoublyLinkedList<Nutrient> nutrients = new DoublyLinkedList<Nutrient>();
 
 	public NutrientData() {
 
@@ -20,7 +20,11 @@ public class NutrientData {
 		nutrients.add(nutr);
 	}
 
-	public Nutrient[] getNutrients() {
-		return nutrients.toArray(new Nutrient[1]);
+	public DoublyLinkedList<Nutrient> getNutrients() {
+		return nutrients;
+	}
+	
+	public String toString(){
+		return nutrients.toString();
 	}
 }

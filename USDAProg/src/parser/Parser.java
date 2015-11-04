@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
@@ -13,6 +11,8 @@ import parser.parsables.FoodWeight;
 import parser.parsables.Nutrient;
 import parser.parsables.NutrientData;
 import parser.parsables.NutrientDescription;
+import util.BalancedBinaryTree;
+import util.HashTable;
 
 /**
  * =================================================================================================
@@ -55,12 +55,12 @@ import parser.parsables.NutrientDescription;
 public class Parser {
 	
 	// Various maps for storing indexes to temporary data
-	private ArrayList<FoodItem> foodItems = new ArrayList<>();
+	private BalancedBinaryTree<FoodItem> foodItems = new BalancedBinaryTree<>();
 	
-	private HashMap<Integer, NutrientData> map_nutrData = new HashMap<>();
-	private HashMap<Integer, NutrientDescription> map_nutrDesc = new HashMap<>();
-	private HashMap<Integer, FoodGroup> map_foodGroup = new HashMap<>();
-	private HashMap<Integer, FoodWeight> map_foodWeight = new HashMap<>();
+	private HashTable<Integer, NutrientData> map_nutrData = new HashTable<>();
+	private HashTable<Integer, NutrientDescription> map_nutrDesc = new HashTable<>();
+	private HashTable<Integer, FoodGroup> map_foodGroup = new HashTable<>();
+	private HashTable<Integer, FoodWeight> map_foodWeight = new HashTable<>();
 	
 	// Various file handles
 	private File file_foodDesc;
@@ -80,6 +80,7 @@ public class Parser {
 	public void parseData() {
 		try {
 			long start = System.currentTimeMillis();
+			
 			System.out.println("PARSING FOOD GROUPS");
 			this.parseFoodGroups();
 			System.out.println("PARSING FOOD WEIGHTS");
@@ -91,6 +92,7 @@ public class Parser {
 			System.out.println("PARSING FOOD DESCRIPTIONS");
 			this.parseFoodDescriptions();
 			System.out.println("DONE");
+			
 			long end = System.currentTimeMillis() - start;
 			System.out.println("Took " + end + "ms");
 		} catch (Exception e) {
@@ -99,6 +101,9 @@ public class Parser {
 		System.out.println();
 	}
 
+	public BalancedBinaryTree<FoodItem> getInternalTree(){
+		return this.foodItems;
+	}
 	/**
 	 * Parses all the food weights
 	 * @throws IOException
@@ -114,7 +119,7 @@ public class Parser {
 			String[] items = line.split("\\^", -1);
 			FoodWeight foodWeight = new FoodWeight();
 			foodWeight.parse(items);
-			map_foodWeight.put(foodWeight.getNutrientDatabankNumber(), foodWeight);
+			map_foodWeight.put(foodWeight.getNDBNo(), foodWeight);
 		}
 		br.close();
 	}
@@ -158,8 +163,8 @@ public class Parser {
 			
 			// Set the appropriate items in the food item
 			foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
-			foodItem.setWeightInfo(map_foodWeight.get(foodItem.getNutrientDatabankNumber()));
-			foodItem.setNutrientData(map_nutrData.get(foodItem.getNutrientDatabankNumber()));
+			foodItem.setWeightInfo(map_foodWeight.get(foodItem.getNDBNo()));
+			foodItem.setNutrientData(map_nutrData.get(foodItem.getNDBNo()));
 			foodItems.add(foodItem);
 		}
 		br.close();
@@ -199,9 +204,9 @@ public class Parser {
 			Nutrient nutr = new Nutrient();
 			nutr.parse(items);
 			nutr.setNutrientDescription(map_nutrDesc.get(nutr.getNutrNo()));
-			if(map_nutrData.get(nutr.getNdbNo()) == null)
-				map_nutrData.put(nutr.getNdbNo(), new NutrientData());
-			map_nutrData.get(nutr.getNdbNo()).addNutrient(nutr);
+			if(map_nutrData.get(nutr.getNDBNo()) == null)
+				map_nutrData.put(nutr.getNDBNo(), new NutrientData());
+			map_nutrData.get(nutr.getNDBNo()).addNutrient(nutr);
 		}
 		br.close();
 	}

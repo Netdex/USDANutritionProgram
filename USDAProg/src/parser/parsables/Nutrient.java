@@ -92,7 +92,7 @@ public class Nutrient implements Parsable<Nutrient> {
 	/**
 	 * @return the ndbNo
 	 */
-	public int getNdbNo() {
+	public int getNDBNo() {
 		return ndbNo;
 	}
 
