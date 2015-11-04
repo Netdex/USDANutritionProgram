@@ -17,7 +17,8 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	private NutrientData nutrientData = new NutrientData();
 	private FoodGroup foodGroup;
 	private FoodWeight foodWeight;
-
+	private LanguaLGroup langualGroup;
+	
 	@Override
 	public void parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)
@@ -83,6 +84,14 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 
 	// All the fields start here
 	
+	public LanguaLGroup getLangualGroup() {
+		return langualGroup;
+	}
+
+	public void setLangualGroup(LanguaLGroup langualGroup) {
+		this.langualGroup = langualGroup;
+	}
+
 	/**
 	 * Nutrient Databank number<br>
 	 * (5 digits)

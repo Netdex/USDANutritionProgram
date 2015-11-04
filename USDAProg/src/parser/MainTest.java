@@ -34,7 +34,9 @@ public class MainTest {
 		Parser p = new Parser(new File("USDAFiles/FOOD_DES.TXT"), new File(
 				"USDAFiles/NUT_DATA.TXT"), new File("USDAFiles/NUTR_DEF.TXT"),
 				new File("USDAFiles/FD_GROUP.TXT"), new File(
-						"USDAFiles/WEIGHT.TXT"));
+						"USDAFiles/WEIGHT.TXT"), new File(
+						"USDAFiles/LANGUAL.txt"), new File(
+						"USDAFiles/LANGDESC.TXT"));
 
 		p.parseData();
 		System.out.println();

@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
 import parser.parsables.FoodWeight;
+import parser.parsables.LanguaL;
+import parser.parsables.LanguaLDescription;
+import parser.parsables.LanguaLGroup;
 import parser.parsables.Nutrient;
 import parser.parsables.NutrientData;
 import parser.parsables.NutrientDescription;
@@ -61,6 +63,8 @@ public class Parser {
 	private BinaryTreeMap<Integer, NutrientDescription> map_nutrDesc = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
+	private BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
+	private BinaryTreeMap<String, LanguaLDescription> map_langualDesc = new BinaryTreeMap<>();
 	
 	// Various file handles
 	private File file_foodDesc;
@@ -68,13 +72,17 @@ public class Parser {
 	private File file_foodWeight;
 	private File file_nutrientData;
 	private File file_nutrientDescription;
-
-	public Parser(File foodDesc, File nutrientData, File nutrientDescription, File foodGroup, File foodWeight) {
+	private File file_langual;
+	private File file_langualDesc;
+	
+	public Parser(File foodDesc, File nutrientData, File nutrientDescription, File foodGroup, File foodWeight, File langual, File langualDesc) {
 		this.file_foodDesc = foodDesc;
 		this.file_nutrientData = nutrientData;
 		this.file_nutrientDescription = nutrientDescription;
 		this.file_foodGroup = foodGroup;
 		this.file_foodWeight = foodWeight;
+		this.file_langual = langual;
+		this.file_langualDesc = langualDesc;
 	}
 
 	public BinaryTreeMap<Integer, FoodItem> getParsedData(){
@@ -93,12 +101,18 @@ public class Parser {
 			this.parseNutrientDefinitions();
 			System.out.println("PARSING NUTRIENT DATA");
 			this.parseNutrientData();
+			System.out.println("PARSING LANGUAL DESCRIPTIONS");
+			this.parseLanguaLDescriptions();
+			System.out.println("PARSING LANGUAL DATA");
+			this.parseLanguaL();
 			System.out.println("PARSING FOOD DESCRIPTIONS");
 			this.parseFoodDescriptions();
 			System.out.println("DONE");
 			
 			long end = System.currentTimeMillis() - start;
 			System.out.println("Took " + end + "ms");
+			FoodItem fi = new FoodItem();
+			fi.getLangualGroup().getLanguaLs().get(0).getLangualDescription().getDesc()
 			
 			System.out.println(foodItems);
 		} catch (Exception e) {
@@ -107,6 +121,38 @@ public class Parser {
 		System.out.println();
 	}
 	
+	private void parseLanguaLDescriptions() throws IOException, InvalidParseDataException {
+		BufferedReader br = new BufferedReader(new FileReader(file_langualDesc));
+
+		String line;
+		while ((line = br.readLine()) != null) {
+			line = line.replace("~", "");
+			// using .split now since stringtokenizer ignores empty values
+			String[] items = line.split("\\^", -1);
+			LanguaLDescription lld = new LanguaLDescription();
+			lld.parse(items);
+			map_langualDesc.put(lld.getFactorCode(), lld);
+		}
+		br.close();
+	}
+	
+	private void parseLanguaL() throws IOException, InvalidParseDataException {
+		BufferedReader br = new BufferedReader(new FileReader(file_langual));
+
+		String line;
+		while ((line = br.readLine()) != null) {
+			line = line.replace("~", "");
+			// using .split now since stringtokenizer ignores empty values
+			String[] items = line.split("\\^", -1);
+			LanguaL ll = new LanguaL();
+			ll.parse(items);
+			ll.setLangualDescription(map_langualDesc.get(ll.getFactorCode()));
+			if(map_langualGroup.get(ll.getNDBNo()) == null)
+				map_langualGroup.put(ll.getNDBNo(), new LanguaLGroup());
+			map_langualGroup.get(ll.getNDBNo()).addLanguaL(ll);
+		}
+		br.close();
+	}
 	/**
 	 * Parses all the food weights
 	 * @throws IOException
@@ -168,6 +214,7 @@ public class Parser {
 			foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
 			foodItem.setWeightInfo(map_foodWeight.get(foodItem.getNDBNo()));
 			foodItem.setNutrientData(map_nutrData.get(foodItem.getNDBNo()));
+			foodItem.setLangualGroup(map_langualGroup.get(foodItem.getNDBNo()));
 			foodItems.put(foodItem.getNDBNo(), foodItem);
 		}
 		br.close();
