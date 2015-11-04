@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,7 +23,7 @@ public class HomePanel extends JPanel {
 		run();
 	}
 
-	public void run() {
+	private void run() {
 		// Sets it up to boxLayout vertical
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -67,7 +68,7 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// switch to search panel
+			frame.switchToSearch();
 		}
 	}
 
