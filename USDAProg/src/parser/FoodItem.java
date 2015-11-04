@@ -1,115 +1,140 @@
 package parser;
 
 /**
- * I have reverted the structure temporarily since this structure is actually required for the parser to work
- * This class will be revised in the future to use a "builder" structure instead of this giant ass constructor
+ * I have reverted the structure temporarily since this structure is actually
+ * required for the parser to work This class will be revised in the future to
+ * use a "builder" structure instead of this giant ass constructor
  * 
  * @author Netdex
  *
  */
-public class FoodItem {
+public class FoodItem implements Parsable<FoodItem> {
+
+	private static final int PARSE_DATA_LENGTH = 14;
+	
+	@Override
+	public void parse(String[] data) throws InvalidParseDataException {
+		if(data.length != PARSE_DATA_LENGTH)
+			throw new InvalidParseDataException();
+		nutrientDatabankNumber = Integer.parseInt(data[0]);
+		foodGroupID = Integer.parseInt(data[1]);
+		longDescription = data[2];
+		shortDescription = data[3];
+		commonName = data[4];
+		manufacturerName = data[5];
+		isSurvey = data[6].equals("Y");
+		refuseDescription = data[7];
+		percentRefuse = data[8].equals("") ? 0 : Double.parseDouble(data[8]);
+		scientificName = data[9];
+		nitrogenFactor = data[10].equals("") ? 0 : Double.parseDouble(data[10]);
+		proteinFactor = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
+		fatFactor = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
+		cholestrolFactor = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
+	}
 
 	/**
 	 * Nutrient Databank number<br>
 	 * (5 digits)
 	 */
-	private int NDB_No;
+	private int nutrientDatabankNumber;
 
 	/**
 	 * Food Group ID<br>
 	 * (4 digits)
 	 */
-	private int FdGrp_Cd;
+	private int foodGroupID;
 
 	/** 200-character description of the item */
-	private String Long_Desc;
+	private String longDescription;
 
 	/** 60-character abbreviated description of the item */
-	private String Shrt_Desc;
+	private String shortDescription;
 
 	/**
 	 * Common name associated with the item<br>
 	 * Can be blank
 	 */
-	private String ComName;
+	private String commonName;
 
 	/**
 	 * Manufacturer company name<br>
 	 * Can be blank
 	 */
-	private String ManufacName;
+	private String manufacturerName;
 
 	/**
 	 * Indicates if the food item is used in a USDA survey database<br>
 	 * Y/N<br>
 	 * Can be blank
 	 */
-	private boolean Survey;
+	private boolean isSurvey;
 
 	/**
 	 * Description of refuse (inedible parts) of the food<br>
 	 * Can be blank
 	 */
-	private String Ref_desc;
+	private String refuseDescription;
 
 	/**
 	 * Percentage of the food which is refuse<br>
 	 * Can be blank
 	 */
-	private double Refuse;
+	private double percentRefuse;
 
 	/**
 	 * Scientific name of the food item<br>
 	 * Can be blank
 	 */
-	private String SciName;
+	private String scientificName;
 
 	/**
 	 * Factor for converting nitrogen to protein<br>
 	 * Can be blank
 	 */
-	private double N_Factor;
+	private double nitrogenFactor;
 
 	/**
 	 * Factor for calculating calories from protein<br>
 	 * Can be blank
 	 */
-	private double Pro_Factor;
+	private double proteinFactor;
 
 	/**
 	 * Factor for calculating calories from fat<br>
 	 * Can be blank
 	 */
-	private double Fat_Factor;
+	private double fatFactor;
 
 	/**
 	 * Factor for calculating calories from carbohydrate<br>
 	 * Can be blank
 	 */
-	private double CHO_Factor;
+	private double cholestrolFactor;
 
 	private NutrientData nutrientData = new NutrientData();
-	
-	
+
+	public FoodItem() {
+
+	}
 
 	private FoodItem(int nDB_No, int fdGrp_Cd, String long_Desc, String shrt_Desc, String comName, String manufacName,
 			boolean survey, String ref_desc, double refuse, String sciName, double n_Factor, double pro_Factor,
 			double fat_Factor, double cHO_Factor) {
 		super();
-		NDB_No = nDB_No;
-		FdGrp_Cd = fdGrp_Cd;
-		Long_Desc = long_Desc;
-		Shrt_Desc = shrt_Desc;
-		ComName = comName;
-		ManufacName = manufacName;
-		Survey = survey;
-		Ref_desc = ref_desc;
-		Refuse = refuse;
-		SciName = sciName;
-		N_Factor = n_Factor;
-		Pro_Factor = pro_Factor;
-		Fat_Factor = fat_Factor;
-		CHO_Factor = cHO_Factor;
+		nutrientDatabankNumber = nDB_No;
+		foodGroupID = fdGrp_Cd;
+		longDescription = long_Desc;
+		shortDescription = shrt_Desc;
+		commonName = comName;
+		manufacturerName = manufacName;
+		isSurvey = survey;
+		refuseDescription = ref_desc;
+		percentRefuse = refuse;
+		scientificName = sciName;
+		nitrogenFactor = n_Factor;
+		proteinFactor = pro_Factor;
+		fatFactor = fat_Factor;
+		cholestrolFactor = cHO_Factor;
 	}
 
 	/**
@@ -155,98 +180,98 @@ public class FoodItem {
 	/**
 	 * @return the nDB_No
 	 */
-	public int getNDB_No() {
-		return NDB_No;
+	public int getNutrientDatabankNumber() {
+		return nutrientDatabankNumber;
 	}
 
 	/**
 	 * @param nDB_No
 	 *            the nDB_No to set
 	 */
-	public void setNDB_No(int nDB_No) {
-		NDB_No = nDB_No;
+	public void setNutrientDatabankNumber(int nDB_No) {
+		nutrientDatabankNumber = nDB_No;
 	}
 
 	/**
 	 * @return the fdGrp_Cd
 	 */
-	public int getFdGrp_Cd() {
-		return FdGrp_Cd;
+	public int getFoodGroupID() {
+		return foodGroupID;
 	}
 
 	/**
 	 * @param fdGrp_Cd
 	 *            the fdGrp_Cd to set
 	 */
-	public void setFdGrp_Cd(int fdGrp_Cd) {
-		FdGrp_Cd = fdGrp_Cd;
+	public void setFoodGroupID(int fdGrp_Cd) {
+		foodGroupID = fdGrp_Cd;
 	}
 
 	/**
 	 * @return the long_Desc
 	 */
-	public String getLong_Desc() {
-		return Long_Desc;
+	public String getLongDescription() {
+		return longDescription;
 	}
 
 	/**
 	 * @param long_Desc
 	 *            the long_Desc to set
 	 */
-	public void setLong_Desc(String long_Desc) {
-		Long_Desc = long_Desc;
+	public void setLongDescription(String long_Desc) {
+		longDescription = long_Desc;
 	}
 
 	/**
 	 * @return the shrt_Desc
 	 */
-	public String getShrt_Desc() {
-		return Shrt_Desc;
+	public String getShortDescription() {
+		return shortDescription;
 	}
 
 	/**
 	 * @param shrt_Desc
 	 *            the shrt_Desc to set
 	 */
-	public void setShrt_Desc(String shrt_Desc) {
-		Shrt_Desc = shrt_Desc;
+	public void setShortDescription(String shrt_Desc) {
+		shortDescription = shrt_Desc;
 	}
 
 	/**
 	 * @return the comName
 	 */
-	public String getComName() {
-		return ComName;
+	public String getCommmonName() {
+		return commonName;
 	}
 
 	/**
 	 * @param comName
 	 *            the comName to set
 	 */
-	public void setComName(String comName) {
-		ComName = comName;
+	public void setCommmonName(String comName) {
+		commonName = comName;
 	}
 
 	/**
 	 * @return the manufacName
 	 */
-	public String getManufacName() {
-		return ManufacName;
+	public String getManufacturerName() {
+		return manufacturerName;
 	}
 
 	/**
 	 * @param manufacName
 	 *            the manufacName to set
 	 */
-	public void setManufacName(String manufacName) {
-		ManufacName = manufacName;
+	public void setManufacturerName(String manufacName) {
+		manufacturerName = manufacName;
 	}
 
 	/**
 	 * @return the survey
 	 */
 	public boolean isSurvey() {
-		return Survey;
+		return isSurvey;
 	}
 
 	/**
@@ -254,114 +279,114 @@ public class FoodItem {
 	 *            the survey to set
 	 */
 	public void setSurvey(boolean survey) {
-		Survey = survey;
+		isSurvey = survey;
 	}
 
 	/**
 	 * @return the ref_desc
 	 */
-	public String getRef_desc() {
-		return Ref_desc;
+	public String getRefuseDescription() {
+		return refuseDescription;
 	}
 
 	/**
 	 * @param ref_desc
 	 *            the ref_desc to set
 	 */
-	public void setRef_desc(String ref_desc) {
-		Ref_desc = ref_desc;
+	public void setRefuseDescription(String ref_desc) {
+		refuseDescription = ref_desc;
 	}
 
 	/**
 	 * @return the refuse
 	 */
-	public double getRefuse() {
-		return Refuse;
+	public double getRefusePercentage() {
+		return percentRefuse;
 	}
 
 	/**
 	 * @param refuse
 	 *            the refuse to set
 	 */
-	public void setRefuse(double refuse) {
-		Refuse = refuse;
+	public void setRefusePercentage(double refuse) {
+		percentRefuse = refuse;
 	}
 
 	/**
 	 * @return the sciName
 	 */
-	public String getSciName() {
-		return SciName;
+	public String getScientificName() {
+		return scientificName;
 	}
 
 	/**
 	 * @param sciName
 	 *            the sciName to set
 	 */
-	public void setSciName(String sciName) {
-		SciName = sciName;
+	public void setScientificName(String sciName) {
+		scientificName = sciName;
 	}
 
 	/**
 	 * @return the n_Factor
 	 */
-	public double getN_Factor() {
-		return N_Factor;
+	public double getNitrogenFactor() {
+		return nitrogenFactor;
 	}
 
 	/**
 	 * @param n_Factor
 	 *            the n_Factor to set
 	 */
-	public void setN_Factor(double n_Factor) {
-		N_Factor = n_Factor;
+	public void setNitrogenFactor(double n_Factor) {
+		nitrogenFactor = n_Factor;
 	}
 
 	/**
 	 * @return the pro_Factor
 	 */
-	public double getPro_Factor() {
-		return Pro_Factor;
+	public double getProteinFactor() {
+		return proteinFactor;
 	}
 
 	/**
 	 * @param pro_Factor
 	 *            the pro_Factor to set
 	 */
-	public void setPro_Factor(double pro_Factor) {
-		Pro_Factor = pro_Factor;
+	public void setProteinFactor(double pro_Factor) {
+		proteinFactor = pro_Factor;
 	}
 
 	/**
 	 * @return the fat_Factor
 	 */
-	public double getFat_Factor() {
-		return Fat_Factor;
+	public double getFatFactor() {
+		return fatFactor;
 	}
 
 	/**
 	 * @param fat_Factor
 	 *            the fat_Factor to set
 	 */
-	public void setFat_Factor(double fat_Factor) {
-		Fat_Factor = fat_Factor;
+	public void setFatFactor(double fat_Factor) {
+		fatFactor = fat_Factor;
 	}
 
 	/**
 	 * @return the cHO_Factor
 	 */
-	public double getCHO_Factor() {
-		return CHO_Factor;
+	public double getCholestrolFactor() {
+		return cholestrolFactor;
 	}
 
 	/**
 	 * @param cHO_Factor
 	 *            the cHO_Factor to set
 	 */
-	public void setCHO_Factor(double cHO_Factor) {
-		CHO_Factor = cHO_Factor;
+	public void setCholestrolFactor(double cHO_Factor) {
+		cholestrolFactor = cHO_Factor;
 	}
-	
+
 	/**
 	 * @return the nutrientData
 	 */
@@ -370,7 +395,8 @@ public class FoodItem {
 	}
 
 	/**
-	 * @param nutrientData the nutrientData to set
+	 * @param nutrientData
+	 *            the nutrientData to set
 	 */
 	public void setNutrientData(NutrientData nutrientData) {
 		this.nutrientData = nutrientData;

@@ -49,9 +49,7 @@ import java.util.StringTokenizer;
  */
 public class Parser {
 
-	private HashMap<Integer, NutrientData> map_nutrientData = new HashMap<>();
 	private HashMap<Integer, FoodItem> map_foodItem = new HashMap<>();
-	private HashMap<Integer, FoodGroup> map_foodGroup = new HashMap<>();
 
 	private File file_foodDesc;
 	private File file_foodGroup;
@@ -70,66 +68,34 @@ public class Parser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println();
 	}
 
-	private void parseFoodDescriptions() throws IOException {
+	private void parseFoodDescriptions() throws IOException, InvalidParseDataException {
 		BufferedReader br = new BufferedReader(new FileReader(file_foodDesc));
 
 		String line;
 		while ((line = br.readLine()) != null) {
 			line = line.replaceAll("~", "");
 			// using .split now since stringtokenizer ignores empty values
-			System.out.println(line);
 			String[] items = line.split("\\^", -1);
-			if(items.length < 13){
-				System.out.println();
-			}
-			FoodItem fi = FoodItem.getInstance(Integer.parseInt(items[0]), 
-					Integer.parseInt(items[1]), 
-					items[2],
-					items[3], 
-					items[4], 
-					items[5], 
-					items[6].equals("Y"), 
-					items[7], 
-					Double.parseDouble(items[8]),
-					items[9], 
-					Double.parseDouble(items[10]), 
-					Double.parseDouble(items[11]),
-					Double.parseDouble(items[12]), 
-					Double.parseDouble(items[13]));
-			int id = fi.getNDB_No();
-			map_foodItem.put(id, fi);
+			FoodItem foodItem = new FoodItem();
+			foodItem.parse(items);
+			int id = foodItem.getNutrientDatabankNumber();
+			map_foodItem.put(id, foodItem);
 		}
 		br.close();
 	}
 
-	private void parseNutrientData() throws IOException {
+	private void parseNutrientData() throws IOException, InvalidParseDataException {
 		BufferedReader br = new BufferedReader(new FileReader(file_nutrientData));
 
 		String line;
 		while ((line = br.readLine()) != null) {
 			line = line.replaceAll("~", "");
 			String[] items = line.split("\\^", -1);
-			Nutrient nutr = new Nutrient(
-					Integer.parseInt(items[0]), 
-					Integer.parseInt(items[1]),
-					Double.parseDouble(items[2]), 
-					Integer.parseInt(items[3]),
-					Double.parseDouble(items[4]), 
-					items[5], 
-					items[6],
-					Integer.parseInt(items[7]), 
-					items[8], 
-					Integer.parseInt(items[9]),
-					Integer.parseInt(items[10]), 
-					Integer.parseInt(items[11]),
-					Double.parseDouble(items[12]), 
-					Double.parseDouble(items[13]),
-					Double.parseDouble(items[14]), 
-					items[15], 
-					items[16], 
-					items[17]);
+			Nutrient nutr = new Nutrient();
+			nutr.parse(items);
 			FoodItem selectedFoodItem = map_foodItem.get(nutr.getNdbNo());
 			if (selectedFoodItem.getNutrientData() == null) {
 				selectedFoodItem.setNutrientData(new NutrientData());
@@ -137,6 +103,7 @@ public class Parser {
 			NutrientData nd = selectedFoodItem.getNutrientData();
 			nd.addNutrient(nutr);
 		}
+		br.close();
 	}
 
 	public static FoodItem[] parseFoodData(File file) {

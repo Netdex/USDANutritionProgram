@@ -7,7 +7,33 @@ package parser;
  * Represents a nutrient, which is contained in a NutrientData. 
  * Modify in future to use builder structure, this is temporary to allow my code to work.
  */
-public class Nutrient {
+public class Nutrient implements Parsable<Nutrient> {
+	
+	private static final int PARSE_DATA_LENGTH = 18;
+	@Override
+	public void parse(String[] data) throws InvalidParseDataException {
+		if(data.length != PARSE_DATA_LENGTH)
+			throw new InvalidParseDataException();
+		ndbNo = Integer.parseInt(data[0]); 
+		nutrNo = Integer.parseInt(data[1]);
+		nutrVal = Double.parseDouble(data[2]); 
+		numDataPts = Integer.parseInt(data[3]);
+		stdError = data[4].equals("") ? 0 : Double.parseDouble(data[4]); 
+		srcCd = data[5]; 
+		derivCd = data[6];
+		refNDBNo = data[7].equals("") ? 0 : Integer.parseInt(data[7]); 
+		addNutrMark = data[8]; 
+		numStudies = data[9].equals("") ? 0 : Integer.parseInt(data[9]);
+		min = data[10].equals("") ? 0 : Double.parseDouble(data[10]); 
+		max = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
+		df = data[12].equals("") ? 0 : Double.parseDouble(data[12]); 
+		lowEB = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
+		upEB = data[14].equals("") ? 0 : Double.parseDouble(data[14]); 
+		statCmt = data[15]; 
+		addModDate = data[16]; 
+		confidenceCode = data[17];
+		
+	}
 	
 	private int ndbNo;
 	/**
@@ -47,16 +73,21 @@ public class Nutrient {
 	
 	private int numStudies;
 	
-	private int min;
-	private int max;
+	private double min;
+	private double max;
 	private double df;
 	private double lowEB;
 	private double upEB;
 	private String statCmt;
 	private String addModDate;
 	private String confidenceCode;
-	public Nutrient(int ndbNo, int nutrNo, double nutrVal, int numDataPts, double stdError, String srcCd,
-			String derivCd, int refNDBNo, String addNutrMark, int numStudies, int min, int max, double df, double lowEB,
+	
+	public Nutrient(){
+		
+	}
+	
+	private Nutrient(int ndbNo, int nutrNo, double nutrVal, int numDataPts, double stdError, String srcCd,
+			String derivCd, int refNDBNo, String addNutrMark, int numStudies, double min, double max, double df, double lowEB,
 			double upEB, String statCmt, String addModDate, String confidenceCode) {
 		super();
 		this.ndbNo = ndbNo;
@@ -201,7 +232,7 @@ public class Nutrient {
 	/**
 	 * @return the min
 	 */
-	public int getMin() {
+	public double getMin() {
 		return min;
 	}
 	/**
@@ -213,7 +244,7 @@ public class Nutrient {
 	/**
 	 * @return the max
 	 */
-	public int getMax() {
+	public double getMax() {
 		return max;
 	}
 	/**
@@ -294,5 +325,6 @@ public class Nutrient {
 	public void setConfidenceCode(String confidenceCode) {
 		this.confidenceCode = confidenceCode;
 	}
+	
 	
 }
