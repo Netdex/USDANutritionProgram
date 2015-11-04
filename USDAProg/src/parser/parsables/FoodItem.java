@@ -3,9 +3,7 @@ package parser.parsables;
 import parser.InvalidParseDataException;
 
 /**
- * I have reverted the structure temporarily since this structure is actually
- * required for the parser to work This class will be revised in the future to
- * use a "builder" structure instead of this giant ass constructor
+ * Represents a single food item
  * 
  * @author Netdex
  *
@@ -45,7 +43,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	}
 	
 	/**
-	 * @return the nutrientData
+	 * @return Gets the nutritional data of this FoodItem
 	 */
 	public NutrientData getNutrientData() {
 		return nutrientData;
@@ -60,7 +58,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	}
 
 	/**
-	 * @return the foodGroup
+	 * @return Gets the FoodGroup of this FoodItem
 	 */
 	public FoodGroup getFoodGroup() {
 		return foodGroup;
@@ -74,6 +72,9 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 		this.foodGroup = foodGroup;
 	}
 
+	/**
+	 * @return The information about weights of this FoodItem
+	 */
 	public FoodWeight getWeightInfo() {
 		return foodWeight;
 	}
@@ -84,10 +85,13 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 
 	// All the fields start here
 	
+	/**
+	 * @return The LanguaLGroup of this FoodItem, containing all LanguaL descriptions
+	 */
 	public LanguaLGroup getLangualGroup() {
 		return langualGroup;
 	}
-
+	
 	public void setLangualGroup(LanguaLGroup langualGroup) {
 		this.langualGroup = langualGroup;
 	}

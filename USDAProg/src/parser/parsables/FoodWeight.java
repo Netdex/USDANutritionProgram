@@ -2,6 +2,11 @@ package parser.parsables;
 
 import parser.InvalidParseDataException;
 
+/**
+ * A structure storing weight information of this FoodItem
+ * @author Netdex
+ *
+ */
 public class FoodWeight implements Parsable<FoodWeight> {
 
 	private static final int PARSE_DATA_LENGTH = 7;

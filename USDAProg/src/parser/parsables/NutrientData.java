@@ -1,6 +1,6 @@
 package parser.parsables;
 
-import util.DoublyLinkedList;
+import parser.util.DoublyLinkedList;
 
 /**
  * This class contains a list of nutrients which this food item has

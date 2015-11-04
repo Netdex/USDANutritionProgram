@@ -14,7 +14,7 @@ import parser.parsables.LanguaLGroup;
 import parser.parsables.Nutrient;
 import parser.parsables.NutrientData;
 import parser.parsables.NutrientDescription;
-import util.BinaryTreeMap;
+import parser.util.BinaryTreeMap;
 
 /**
  * =================================================================================================

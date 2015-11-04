@@ -2,17 +2,13 @@ package parser.parsables;
 
 import parser.InvalidParseDataException;
 
+/**
+ * Represents a food group
+ * @author Netdex
+ *
+ */
 public class FoodGroup implements Parsable<FoodGroup> {
-
-	/**
-	 * We shouldn't hard code the food group stuff, we must read it from the
-	 * file
-	 */
-	/**
-	 * This class will represent a food group as read in from the file. Each
-	 * FoodItem will own a FoodGroup.
-	 */
-
+	
 	private static final int PARSE_DATA_LENGTH = 2;
 	
 	@Override
@@ -32,14 +28,14 @@ public class FoodGroup implements Parsable<FoodGroup> {
 	}
 
 	/**
-	 * @return the foodGroupID
+	 * @return The ID of this food group
 	 */
 	public int getFoodGroupID() {
 		return foodGroupID;
 	}
 
 	/**
-	 * @return the desc
+	 * @return The description of this food group
 	 */
 	public String getDescription() {
 		return desc;
