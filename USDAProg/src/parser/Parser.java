@@ -111,8 +111,6 @@ public class Parser {
 			
 			long end = System.currentTimeMillis() - start;
 			System.out.println("Took " + end + "ms");
-			FoodItem fi = new FoodItem();
-			fi.getLangualGroup().getLanguaLs().get(0).getLangualDescription().getDesc()
 			
 			System.out.println(foodItems);
 		} catch (Exception e) {
