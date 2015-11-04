@@ -2,8 +2,8 @@ package parser;
 
 import java.io.File;
 
-import util.BTreeVisualizer;
-import util.BinaryTreeMap;
+import parser.util.BTreeVisualizer;
+import parser.util.BinaryTreeMap;
 
 public class MainTest {
 

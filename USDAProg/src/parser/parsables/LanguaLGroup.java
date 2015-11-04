@@ -1,6 +1,6 @@
 package parser.parsables;
 
-import util.DoublyLinkedList;
+import parser.util.DoublyLinkedList;
 
 public class LanguaLGroup {
 
