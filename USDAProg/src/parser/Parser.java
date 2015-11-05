@@ -62,6 +62,23 @@ public class Parser {
 		return foodItems;
 	}
 
+	public BinaryTreeMap<Integer, FoodItem> getFoodItems(){
+		return foodItems;
+	}
+	/**
+	 * Parses all the data in the given files, but asynchronously
+	 */
+	public void parseDataAsync() {
+		new Thread() {
+			public void run() {
+				parseData();
+			}
+		}.start();
+	}
+
+	/**
+	 * Parses all the data in the given files
+	 */
 	public void parseData() {
 		try {
 			long start = System.currentTimeMillis();
@@ -87,7 +104,6 @@ public class Parser {
 			long end = System.currentTimeMillis() - start;
 			System.err.println("Took " + end + "ms");
 
-			System.err.println(foodItems);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
