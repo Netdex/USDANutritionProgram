@@ -31,6 +31,7 @@ public class GUI {
 		frame.setVisible(true);
 	}
 
+	// TODO find a way to switch panels
 	protected void switchToSearch() {
 		frame.remove(homePanel);
 		searchPanel = new SearchPanel(this);
