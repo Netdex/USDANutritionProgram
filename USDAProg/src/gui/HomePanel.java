@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -39,7 +40,7 @@ public class HomePanel extends JPanel {
 		JButton searchButton;
 		try {
 			searchButton = new JButton(new ImageIcon(ImageIO.read(new File(
-					"images/searchButton.png"))));
+					"images/searchButton.png")).getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
 		} catch (IOException e) {
 			searchButton = null;
 		}
@@ -47,7 +48,7 @@ public class HomePanel extends JPanel {
 		JButton groupButton;
 		try {
 			groupButton = new JButton(new ImageIcon(ImageIO.read(new File(
-					"images/groupButton.png"))));
+					"images/groupButton.png")).getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
 		} catch (IOException e) {
 			groupButton = null;
 		}
@@ -55,7 +56,7 @@ public class HomePanel extends JPanel {
 		JButton bookmarksButton;
 		try {
 			bookmarksButton = new JButton(new ImageIcon(ImageIO.read(new File(
-					"images/bookmarksButton.png"))));
+					"images/bookmarksButton.png")).getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
 		} catch (IOException e) {
 			bookmarksButton = null;
 		}
@@ -63,7 +64,7 @@ public class HomePanel extends JPanel {
 		JButton settingsButton;
 		try {
 			settingsButton = new JButton(new ImageIcon(ImageIO.read(new File(
-					"images/settingsButton.png"))));
+					"images/settingsButton.png")).getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
 		} catch (IOException e) {
 			settingsButton = null;
 		}
