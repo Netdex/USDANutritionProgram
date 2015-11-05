@@ -11,14 +11,17 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class HomePanel extends JPanel {
 
+	JFrame frame;
 	GUI gui;
 
-	public HomePanel(GUI gui) {
+	public HomePanel(JFrame frame, GUI gui) {
+		this.frame = frame;
 		this.gui = gui;
 		// Sets it up to boxLayout vertical
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

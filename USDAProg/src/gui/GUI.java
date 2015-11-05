@@ -6,8 +6,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class GUI extends JFrame {
+public class GUI {
 
+	JFrame frame;
 	HomePanel homePanel;
 	GroupPanel groupPanel;
 	FoodListPanel foodListPanel;
@@ -17,24 +18,22 @@ public class GUI extends JFrame {
 	SettingsPanel settingsPanel;
 
 	public GUI() {
-		super("USDA FOOD ORGANIZER");
-		this.setSize(480, 640);
+		frame = new JFrame("USDA FOOD ORGANIZER");
+		frame.setSize(480, 640);
 		try {
-			// TODO make icon image
-			this.setIconImage(ImageIO.read(new File("images/thisIcon.png"))); 
+			frame.setIconImage(ImageIO.read(new File("images/frameIcon.png"))); //TODO make image for this
 		} catch (IOException e) {
 		}
-		homePanel = new HomePanel(this);
-		this.add(homePanel);
-		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.pack();
-		this.setVisible(true);
+		homePanel = new HomePanel(frame, this);
+		frame.add(homePanel);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
 	protected void switchToSearch() {
-		this.remove(this.getContentPane());
+		frame.remove(homePanel);
 		searchPanel = new SearchPanel(this);
-		this.add(searchPanel);
+		frame.add(searchPanel);
 	}
 }
