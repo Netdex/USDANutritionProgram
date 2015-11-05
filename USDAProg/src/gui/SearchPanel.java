@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -18,19 +19,23 @@ import parser.parsables.FoodItem;
 
 public class SearchPanel extends JPanel {
 
-	GUI gui;
+	PanelManager manager;
 	JTextField searchBox;
 
-	public SearchPanel(GUI gui) {
-		this.gui = gui;
+	public SearchPanel(PanelManager manager) {
+		super();
+		this.manager = manager;
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-		JPanel titlePanel = new JPanel();
-		titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JPanel bannerTitlePanel = new JPanel();
+		bannerTitlePanel.setLayout(new FlowLayout());
 		JButton homeButton = new JButton(new ImageIcon("images/homeButton.png"));
+		homeButton.addActionListener(new HomeButtonListener());
+
 		searchBox = new JTextField("Search...", 20);
-		titlePanel.add(homeButton);
-		titlePanel.add(searchBox);
-		this.add(titlePanel);
+		bannerTitlePanel.add(homeButton);
+		bannerTitlePanel.add(searchBox);
+		this.add(bannerTitlePanel);
 		searchBox.addKeyListener(new SearchBoxActionListener());
 	}
 
@@ -39,14 +44,17 @@ public class SearchPanel extends JPanel {
 		// go find top 25, then displayResults them
 		displayResults(null);
 	}
-	
+
 	// TODO unbreak this
 	private void displayResults(FoodItem[] results) {
-		// create a scrollable JList of JButtons that redirect to their respective info pages
+		// create a scrollable JList of JButtons that redirect to their
+		// respective info pages
 		JList<FoodItem> resultsList = new JList<FoodItem>();
 		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		resultsList.setLayoutOrientation(JList.VERTICAL);
-		
+
+		this.add(resultsList);
+
 		// end up getting the FoodItem that is required, and show its info page
 		// DO NOT delete this panel in case they want to go back
 	}
@@ -54,8 +62,8 @@ public class SearchPanel extends JPanel {
 	class SearchBoxActionListener implements KeyListener {
 
 		@Override
-		public void keyPressed(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+		public void keyPressed(KeyEvent event) {
+			if (event.getKeyCode() == KeyEvent.VK_ENTER) {
 				findResults(searchBox.getText());
 			}
 		}
@@ -70,5 +78,12 @@ public class SearchPanel extends JPanel {
 			// nothing
 		}
 
+	}
+
+	class HomeButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			manager.switchToHome();
+		}
 	}
 }

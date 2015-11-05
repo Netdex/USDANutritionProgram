@@ -19,7 +19,7 @@ import javax.swing.SwingConstants;
 
 public class SettingsPanel extends JPanel {
 
-	GUI gui;
+	PanelManager manager;
 
 	boolean kilograms;
 	boolean centimeters;
@@ -30,9 +30,9 @@ public class SettingsPanel extends JPanel {
 	JTextField ageEntry;
 	JComboBox<Integer> exerciseSelector;
 
-	public SettingsPanel(GUI gui) {
+	public SettingsPanel(PanelManager pManager) {
 		super();
-		this.gui = gui;
+		this.manager = pManager;
 
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -189,16 +189,16 @@ public class SettingsPanel extends JPanel {
 						- (4.330 * age);
 
 			int exerciseAmount = exerciseSelector.getSelectedIndex();
-			if (exerciseAmount == 0) {
-				gui.setDailyCal(bmr * 1.2);
-			} else if (exerciseAmount <= 1 && exerciseAmount >= 3) {
-				gui.setDailyCal(bmr * 1.375);
-			} else if (exerciseAmount <= 3 && exerciseAmount >= 5) {
-				gui.setDailyCal(bmr * 1.55);
-			} else if (exerciseAmount == 6) {
-				gui.setDailyCal(bmr * 1.725);
-			} else
-				gui.setDailyCal(bmr * 1.9);
+//			if (exerciseAmount == 0) {
+//				manager.setDailyCal(bmr * 1.2);
+//			} else if (exerciseAmount <= 1 && exerciseAmount >= 3) {
+//				manager.setDailyCal(bmr * 1.375);
+//			} else if (exerciseAmount <= 3 && exerciseAmount >= 5) {
+//				manager.setDailyCal(bmr * 1.55);
+//			} else if (exerciseAmount == 6) {
+//				manager.setDailyCal(bmr * 1.725);
+//			} else
+//				manager.setDailyCal(bmr * 1.9);
 		}
 	}
 }
