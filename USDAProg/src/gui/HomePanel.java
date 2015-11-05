@@ -17,11 +17,9 @@ import javax.swing.JPanel;
 
 public class HomePanel extends JPanel {
 
-	JFrame frame;
 	GUI gui;
 
-	public HomePanel(JFrame frame, GUI gui) {
-		this.frame = frame;
+	public HomePanel(GUI gui) {
 		this.gui = gui;
 		// Sets it up to boxLayout vertical
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -93,7 +91,7 @@ public class HomePanel extends JPanel {
 	class SearchButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			gui.switchToSearch();
+			gui.showSearch();
 		}
 	}
 
@@ -117,7 +115,7 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// switch to settings panel
+			gui.showSettings();
 		}
 	}
 
