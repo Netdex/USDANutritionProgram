@@ -1,15 +1,15 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -25,13 +25,22 @@ public class SearchPanel extends JPanel {
 	public SearchPanel(PanelManager manager) {
 		super();
 		this.manager = manager;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new BorderLayout());
 
 		JPanel bannerTitlePanel = new JPanel();
 		bannerTitlePanel.setLayout(new FlowLayout());
-		bannerTitlePanel.add(new HomeButton(manager));
+		try {
+			bannerTitlePanel.add(new HomeButton(manager));
+		} catch (IOException e) {
+		}
 
-		searchBox = new JTextField("Search...", 20);
+		searchBox = new JTextField("Search...", 16);
+		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+		searchBox.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				searchBox.setText("");
+			}
+		});
 		bannerTitlePanel.add(searchBox);
 		this.add(bannerTitlePanel);
 		searchBox.addKeyListener(new SearchBoxActionListener());
@@ -57,6 +66,11 @@ public class SearchPanel extends JPanel {
 		// DO NOT delete this panel in case they want to go back
 	}
 
+	protected void reset() {
+		searchBox.setText("Search...");
+		// clear all previous search results
+	}
+
 	class SearchBoxActionListener implements KeyListener {
 
 		@Override
@@ -75,6 +89,5 @@ public class SearchPanel extends JPanel {
 		public void keyTyped(KeyEvent e) {
 			// nothing
 		}
-
 	}
 }

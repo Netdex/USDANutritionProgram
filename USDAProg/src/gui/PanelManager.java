@@ -39,6 +39,7 @@ public class PanelManager extends JPanel {
 	}
 
 	protected void switchToSearch() {
+		searchPanel.reset();
 		cardLayoutManager.show(this, "search");
 	}
 
@@ -51,4 +52,7 @@ public class PanelManager extends JPanel {
 		cardLayoutManager.show(this, "group");
 	}
 
+	protected void switchToSettings() {
+		cardLayoutManager.show(this, "settings");
+	}
 }
