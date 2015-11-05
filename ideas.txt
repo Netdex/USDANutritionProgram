@@ -36,5 +36,6 @@ Similar foods, suggested "healthier" alternatives
     Finds foods under similar key words (they're comma separated) and compares nutritional value
     You gotta get those marks!
 "bookmark" food
+YOU COULD COMPARE FOODS
 
 Apparently the USDA has an API that can return info about a product in HTML format: http://ndb.nal.usda.gov/ndb/doc/apilist/API-FOOD-REPORT.md
