@@ -8,15 +8,8 @@ import javax.swing.JFrame;
 
 public class GUI extends JFrame {
 
-	private HomePanel homePanel;
-	private GroupPanel groupPanel;
-	private FoodListPanel foodListPanel;
-	private SearchPanel searchPanel;
-	private InfoPanel infoPanel;
-	private ExtraInfoPanel extraInfoPanel;
-	private SettingsPanel settingsPanel;
-
-	private double dailyCal;
+	private double userNutritionMultiplier; 
+	// TODO move this somewhere more appropriate. Also should be saved on the HDD
 
 	public GUI() {
 		super("USDA FOOD ORGANIZER");
@@ -26,29 +19,15 @@ public class GUI extends JFrame {
 			this.setIconImage(ImageIO.read(new File("images/thisIcon.png")));
 		} catch (IOException e) {
 		}
-		homePanel = new HomePanel(this);
-		this.add(homePanel);
+		PanelManager manager = new PanelManager();
+		this.add(manager);
+		manager.switchToHome();
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
 
-	protected void showSearch() {
-		// TODO find a way to switch panels
-		searchPanel = new SearchPanel(this);
-		this.add(searchPanel);
-	}
-
-	protected void showSettings() {
-		settingsPanel = new SettingsPanel(this);
-		this.add(settingsPanel);
-	}
-
-	public double getDailyCal() {
-		return dailyCal;
-	}
-
 	protected void setDailyCal(double dailyCal) {
-		this.dailyCal = dailyCal;
+		this.userNutritionMultiplier = dailyCal / 2000;
 	}
 }
