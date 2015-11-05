@@ -24,11 +24,12 @@ public class GUI {
 			frame.setIconImage(ImageIO.read(new File("images/frameIcon.png"))); //TODO make image for this
 		} catch (IOException e) {
 		}
+		homePanel = new HomePanel(frame, this);
+		frame.add(homePanel);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		homePanel = new HomePanel(frame, this);
-		frame.add(homePanel);
+		
 	}
 
 	protected void switchToSearch() {
