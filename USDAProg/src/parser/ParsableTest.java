@@ -2,8 +2,11 @@ package parser;
 
 import java.io.File;
 
+import parser.parsables.FoodItem;
 import parser.util.BTreeVisualizer;
 import parser.util.BinaryTreeMap;
+import parser.util.DoublyLinkedList;
+import parser.util.Selector;
 
 public class ParsableTest {
 
@@ -37,6 +40,18 @@ public class ParsableTest {
 				new File("USDAFiles/FOOTNOTE.TXT"));
 
 		p.parseData();
+		BinaryTreeMap<Integer, FoodItem> foodItems = p.getFoodItems();
+		DoublyLinkedList<FoodItem> selected = foodItems.selectAllItems(new Selector<FoodItem>() {
+			@Override
+			public boolean select(FoodItem foodItem){
+				if(foodItem.getLongDescription().contains("Yogurt"))
+					return true;
+				return false;
+			}
+		});
+		for(int i = 0; i < selected.size(); i++){
+			System.out.println(selected.get(i));
+		}
 		System.out.println();
 	}
 }
