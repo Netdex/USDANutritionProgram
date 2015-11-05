@@ -1,9 +1,12 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,9 +16,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import com.sun.xml.internal.ws.api.Component;
 
 public class SettingsPanel extends JPanel {
 
@@ -34,40 +40,37 @@ public class SettingsPanel extends JPanel {
 		super();
 		this.manager = pManager;
 
+		// this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		// header
 		JPanel header = new JPanel();
-		header.setLayout(new FlowLayout());
+		header.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		JButton homeButton;
 		try {
-			// TODO make graphic
-			homeButton = new JButton(new ImageIcon(ImageIO.read(new File(
-					"images/homeButton.png"))));
+			header.add(new HomeButton(manager));
 		} catch (IOException e) {
-			homeButton = null;
 		}
-		header.add(homeButton);
 
 		JLabel title = new JLabel("SETTINGS");
-		title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 32));
 		header.add(title);
 
 		this.add(header);
 
 		// gender selection
 		JPanel genderLine = new JPanel();
-		genderLine.setLayout(new FlowLayout());
+		genderLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		genderLine.add(new JLabel("What is your biological gender?"));
 
 		String[] genderAmounts = { "Male", "Female" };
 		genderSelector = new JComboBox<String>(genderAmounts);
 		genderLine.add(genderSelector);
+		this.add(genderLine);
 
 		// weight
 		JPanel weightLine = new JPanel();
-		weightLine.setLayout(new FlowLayout());
+		weightLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		weightLine.add(new JLabel("Weight in: "));
 
 		JComboBox<String> weightUnitSelector = new JComboBox<String>(
@@ -81,13 +84,18 @@ public class SettingsPanel extends JPanel {
 			weightEntry.setText("Weight in kg");
 		else
 			weightEntry.setText("Weight in lbs");
+		weightEntry.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				weightEntry.setText("");
+			}
+		});
 		weightLine.add(weightEntry);
 
 		this.add(weightLine);
 
 		// height
 		JPanel heightLine = new JPanel();
-		heightLine.setLayout(new FlowLayout());
+		heightLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		heightLine.add(new JLabel("Height in: "));
 
 		JComboBox<String> heightUnitSelector = new JComboBox<String>(
@@ -101,25 +109,34 @@ public class SettingsPanel extends JPanel {
 			heightEntry.setText("Height in cm");
 		else
 			heightEntry.setText("Height in inches");
+		heightEntry.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				heightEntry.setText("");
+			}
+		});
 		heightLine.add(heightEntry);
 
 		this.add(heightLine);
 
 		// age
 		JPanel ageLine = new JPanel();
-		ageLine.setLayout(new FlowLayout());
+		ageLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		ageLine.add(new JLabel("How old are you, in years?"));
 
 		ageEntry = new JTextField("Age");
+		ageEntry.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				ageEntry.setText("");
+			}
+		});
 		ageLine.add(ageEntry);
 
 		this.add(ageLine);
 
 		// exercise amount
 		JPanel exerciseLine = new JPanel();
-		exerciseLine.setLayout(new FlowLayout());
-		exerciseLine
-				.add(new JLabel("How many days do\nyou exercise per week?"));
+		exerciseLine.setLayout(new FlowLayout(FlowLayout.LEFT));
+		exerciseLine.add(new JLabel("How many days do you exercise per week?"));
 
 		Integer[] exerciseAmounts = { 0, 1, 2, 3, 4, 5, 6, 7 };
 		exerciseSelector = new JComboBox<Integer>(exerciseAmounts);
@@ -130,7 +147,7 @@ public class SettingsPanel extends JPanel {
 		// Save button at the bottom
 		JButton saveButton = new JButton("Save Changes");
 		saveButton.addActionListener(new SaveButtonListener());
-		saveButton.setHorizontalAlignment(SwingConstants.RIGHT);
+		saveButton.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(saveButton);
 	}
 
@@ -166,19 +183,38 @@ public class SettingsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			double weight;
-			if (kilograms)
-				weight = Double.parseDouble(weightEntry.getText());
-			else
-				weight = Double.parseDouble(weightEntry.getText()) / 2.20462;
+			double weight = 0;
+			try {
+				if (kilograms)
+					weight = Double.parseDouble(weightEntry.getText());
+				else
+					weight = Double.parseDouble(weightEntry.getText()) / 2.20462;
+			} catch (NumberFormatException nfe) {
+				JOptionPane.showMessageDialog(SettingsPanel.this,
+						"Please enter a weight", "Invalid weight",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
-			double height;
-			if (centimeters)
-				height = Double.parseDouble(heightEntry.getText());
-			else
-				height = Double.parseDouble(heightEntry.getText()) / 0.393701;
+			double height = 0;
+			try {
+				if (centimeters)
+					height = Double.parseDouble(heightEntry.getText());
+				else
+					height = Double.parseDouble(heightEntry.getText()) / 0.393701;
+			} catch (NumberFormatException exc) {
+				JOptionPane.showMessageDialog(SettingsPanel.this,
+						"Please enter a height", "Invalid height",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
-			int age = Integer.parseInt(ageEntry.getText());
+			int age = 0;
+			try {
+				age = Integer.parseInt(ageEntry.getText());
+			} catch (NumberFormatException whee) {
+				JOptionPane.showMessageDialog(SettingsPanel.this,
+						"Please enter an age", "Invalid age",
+						JOptionPane.ERROR_MESSAGE);
+			}
 
 			double bmr;
 			if (genderSelector.getSelectedItem().equals("Male"))
@@ -189,16 +225,16 @@ public class SettingsPanel extends JPanel {
 						- (4.330 * age);
 
 			int exerciseAmount = exerciseSelector.getSelectedIndex();
-//			if (exerciseAmount == 0) {
-//				manager.setDailyCal(bmr * 1.2);
-//			} else if (exerciseAmount <= 1 && exerciseAmount >= 3) {
-//				manager.setDailyCal(bmr * 1.375);
-//			} else if (exerciseAmount <= 3 && exerciseAmount >= 5) {
-//				manager.setDailyCal(bmr * 1.55);
-//			} else if (exerciseAmount == 6) {
-//				manager.setDailyCal(bmr * 1.725);
-//			} else
-//				manager.setDailyCal(bmr * 1.9);
+			// if (exerciseAmount == 0) {
+			// manager.setDailyCal(bmr * 1.2);
+			// } else if (exerciseAmount <= 1 && exerciseAmount >= 3) {
+			// manager.setDailyCal(bmr * 1.375);
+			// } else if (exerciseAmount <= 3 && exerciseAmount >= 5) {
+			// manager.setDailyCal(bmr * 1.55);
+			// } else if (exerciseAmount == 6) {
+			// manager.setDailyCal(bmr * 1.725);
+			// } else
+			// manager.setDailyCal(bmr * 1.9);
 		}
 	}
 }

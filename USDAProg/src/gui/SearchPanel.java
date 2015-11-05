@@ -37,7 +37,7 @@ public class SearchPanel extends JPanel {
 		searchBox = new JTextField("Search...", 16);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
 		searchBox.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				searchBox.setText("");
 			}
 		});

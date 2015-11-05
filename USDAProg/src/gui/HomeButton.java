@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javafx.scene.paint.Color;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +21,7 @@ public class HomeButton extends JButton {
 		super(new ImageIcon(ImageIO.read(new File("images/homeButton.png"))
 				.getScaledInstance(48, 48, Image.SCALE_DEFAULT)));
 		this.manager = manager;
+		this.setBackground(java.awt.Color.WHITE);
 		addActionListener(new HomeButtonActionListener());
 	}
 

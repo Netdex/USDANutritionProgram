@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -11,13 +10,12 @@ import java.io.File;
 import java.io.IOException;
 
 import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -45,7 +43,8 @@ public class HomePanel extends JPanel {
 
 		// create five buttons
 		// TODO Proper images need to be created
-
+		javax.swing.border.Border emptyBorder = BorderFactory
+				.createEmptyBorder();
 		JButton searchButton;
 		try {
 			searchButton = new JButton(new ImageIcon(ImageIO.read(
@@ -55,7 +54,7 @@ public class HomePanel extends JPanel {
 			searchButton = null;
 		}
 		searchButton.setBackground(Color.GREEN);
-		// set button borders to nothing
+		searchButton.setBorder(emptyBorder);
 
 		JButton groupButton;
 		try {
@@ -66,6 +65,7 @@ public class HomePanel extends JPanel {
 			groupButton = null;
 		}
 		groupButton.setBackground(Color.BLUE);
+		groupButton.setBorder(emptyBorder);
 
 		JButton bookmarksButton;
 		try {
@@ -76,6 +76,7 @@ public class HomePanel extends JPanel {
 			bookmarksButton = null;
 		}
 		bookmarksButton.setBackground(Color.YELLOW);
+		bookmarksButton.setBorder(emptyBorder);
 
 		JButton settingsButton;
 		try {
@@ -86,10 +87,12 @@ public class HomePanel extends JPanel {
 			settingsButton = null;
 		}
 		settingsButton.setBackground(Color.DARK_GRAY);
+		settingsButton.setBorder(emptyBorder);
 
 		JButton aboutButton = new JButton("About");
 		aboutButton.setBackground(Color.BLACK);
 		aboutButton.setForeground(Color.WHITE);
+		aboutButton.setBorder(emptyBorder);
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
@@ -107,22 +110,6 @@ public class HomePanel extends JPanel {
 		this.add(buttonQuad);
 		this.add(aboutButton);
 		aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-	}
-
-	private void showAboutDialog() {
-		ImageIcon aboutIcon;
-		try {
-			aboutIcon = new ImageIcon(ImageIO.read(
-					new File("images/aboutIcon.png")).getScaledInstance(128,
-					64, Image.SCALE_SMOOTH));
-		} catch (IOException e) {
-			aboutIcon = null;
-		}
-		JOptionPane
-				.showMessageDialog(
-						this,
-						"(C) 2015 Gordon Guan and Vince Ou.\nCreated for ICS4UE Unit 3 Final Project.",
-						"About", JOptionPane.PLAIN_MESSAGE, aboutIcon);
 	}
 
 	class SearchButtonListener implements ActionListener {
@@ -152,7 +139,7 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			 manager.switchToSettings();
+			manager.switchToSettings();
 		}
 	}
 
@@ -160,7 +147,19 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			showAboutDialog();
+			ImageIcon aboutIcon;
+			try {
+				aboutIcon = new ImageIcon(ImageIO.read(
+						new File("images/aboutIcon.png")).getScaledInstance(
+						128, 64, Image.SCALE_SMOOTH));
+			} catch (IOException blargh) {
+				aboutIcon = null;
+			}
+			JOptionPane
+					.showMessageDialog(
+							HomePanel.this,
+							"(C) 2015 Gordon Guan and Vince Ou.\nCreated for ICS4UE Unit 3 Final Project.",
+							"About", JOptionPane.PLAIN_MESSAGE, aboutIcon);
 		}
 	}
 }
