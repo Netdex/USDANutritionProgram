@@ -16,9 +16,10 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	private FoodGroup foodGroup;
 	private FoodWeight foodWeight;
 	private LanguaLGroup langualGroup;
+	private Footnote footnotes;
 	
 	@Override
-	public void parse(String[] data) throws InvalidParseDataException {
+	public FoodItem parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		nutrientDatabankNumber = Integer.parseInt(data[0]);
@@ -35,6 +36,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 		proteinFactor = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
 		fatFactor = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
 		cholestrolFactor = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
+		return this;
 	}
 
 	@Override
@@ -94,6 +96,20 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	
 	public void setLangualGroup(LanguaLGroup langualGroup) {
 		this.langualGroup = langualGroup;
+	}
+
+	/**
+	 * @return the footnotes
+	 */
+	public Footnote getFootnotes() {
+		return footnotes;
+	}
+
+	/**
+	 * @param footnotes the footnotes to set
+	 */
+	public void setFootnotes(Footnote footnotes) {
+		this.footnotes = footnotes;
 	}
 
 	/**

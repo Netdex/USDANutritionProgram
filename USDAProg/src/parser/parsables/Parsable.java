@@ -9,5 +9,5 @@ public interface Parsable<E> {
 	 * @param data The data to be parsed
 	 * @throws InvalidParseDataException When parse data does not meet specifications required
 	 */
-	public void parse(String[] data) throws InvalidParseDataException;
+	public E parse(String[] data) throws InvalidParseDataException;
 }
