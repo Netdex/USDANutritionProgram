@@ -99,7 +99,7 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			manager.switchToGroups();
+			manager.switchToGroup();
 		}
 	}
 
@@ -107,7 +107,7 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			manager.switchToBookmarks();
+			// manager.switchToBookmarks();
 		}
 	}
 
@@ -115,7 +115,7 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			manager.switchToSettings();
+			// manager.switchToSettings();
 		}
 	}
 

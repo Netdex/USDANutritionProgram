@@ -20,7 +20,7 @@ public class PanelManager extends JPanel {
 		cardLayoutManager = new CardLayout();
 		this.setLayout(cardLayoutManager);
 		homePanel = new HomePanel(this);
-		groupPanel = new GroupPanel();
+		groupPanel = new GroupPanel(this);
 		foodListPanel = new FoodListPanel();
 		searchPanel = new SearchPanel(this);
 		settingsPanel = new SettingsPanel(this);
@@ -29,8 +29,8 @@ public class PanelManager extends JPanel {
 		this.add(groupPanel, "group");
 		this.add(foodListPanel, "foodList");
 		this.add(searchPanel, "search");
-//		layoutManager.addLayoutComponent(infoPanel, "info");
-//		layoutManager.addLayoutComponent(extraInfoPanel, "extraInfo");
+		// layoutManager.addLayoutComponent(infoPanel, "info");
+		// layoutManager.addLayoutComponent(extraInfoPanel, "extraInfo");
 		this.add(settingsPanel, "settings");
 	}
 
@@ -40,6 +40,15 @@ public class PanelManager extends JPanel {
 
 	protected void switchToSearch() {
 		cardLayoutManager.show(this, "search");
+	}
+
+	protected void switchToInfoPage(InfoPanel infoPanel) {
+		this.add(infoPanel, "foodInfo");
+		cardLayoutManager.show(this, "foodInfo");
+	}
+
+	protected void switchToGroup() {
+		cardLayoutManager.show(this, "group");
 	}
 
 }

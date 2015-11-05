@@ -29,11 +29,9 @@ public class SearchPanel extends JPanel {
 
 		JPanel bannerTitlePanel = new JPanel();
 		bannerTitlePanel.setLayout(new FlowLayout());
-		JButton homeButton = new JButton(new ImageIcon("images/homeButton.png"));
-		homeButton.addActionListener(new HomeButtonListener());
+		bannerTitlePanel.add(new HomeButton(manager));
 
 		searchBox = new JTextField("Search...", 20);
-		bannerTitlePanel.add(homeButton);
 		bannerTitlePanel.add(searchBox);
 		this.add(bannerTitlePanel);
 		searchBox.addKeyListener(new SearchBoxActionListener());
@@ -78,12 +76,5 @@ public class SearchPanel extends JPanel {
 			// nothing
 		}
 
-	}
-
-	class HomeButtonListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent event) {
-			manager.switchToHome();
-		}
 	}
 }

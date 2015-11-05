@@ -8,8 +8,10 @@ import javax.swing.JFrame;
 
 public class GUI extends JFrame {
 
-	private double userNutritionMultiplier; 
-	// TODO move this somewhere more appropriate. Also should be saved on the HDD
+	private double userNutritionMultiplier;
+
+	// TODO move this somewhere more appropriate. Also should be saved on the
+	// HDD
 
 	public GUI() {
 		super("USDA FOOD ORGANIZER");
@@ -24,6 +26,7 @@ public class GUI extends JFrame {
 		manager.switchToHome();
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.pack();
 		this.setVisible(true);
 	}
 
