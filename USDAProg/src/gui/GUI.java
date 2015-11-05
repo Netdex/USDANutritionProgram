@@ -33,13 +33,8 @@ public class GUI extends JFrame {
 		this.setVisible(true);
 	}
 
-<<<<<<< HEAD
 	protected void showSearch() {
-=======
-	// TODO find a way to switch panels
-	protected void switchToSearch() {
-		frame.remove(homePanel);
->>>>>>> refs/remotes/origin/gui
+		// TODO find a way to switch panels
 		searchPanel = new SearchPanel(this);
 		this.add(searchPanel);
 	}
