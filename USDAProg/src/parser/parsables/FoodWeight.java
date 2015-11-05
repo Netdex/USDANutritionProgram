@@ -12,7 +12,7 @@ public class FoodWeight implements Parsable<FoodWeight> {
 	private static final int PARSE_DATA_LENGTH = 7;
 
 	@Override
-	public void parse(String[] data) throws InvalidParseDataException {
+	public FoodWeight parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		ndbNo = Integer.parseInt(data[0]);
@@ -22,7 +22,7 @@ public class FoodWeight implements Parsable<FoodWeight> {
 		gramWeight = Double.parseDouble(data[4]);
 		numDataPts = data[5].equals("") ? 0 : Integer.parseInt(data[5]);
 		stdDev = data[6].equals("") ? 0 : Double.parseDouble(data[6]);
-
+		return this;
 	}
 
 	private int ndbNo;

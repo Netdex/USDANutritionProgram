@@ -5,7 +5,7 @@ import java.io.File;
 import parser.util.BTreeVisualizer;
 import parser.util.BinaryTreeMap;
 
-public class MainTest {
+public class ParsableTest {
 
 	/**
 	 * THIS CLASS DOES NOTHING BUT TEST MY CODE KTHXBYE
@@ -31,12 +31,10 @@ public class MainTest {
 	}
 
 	public static void parserTest() {
-		Parser p = new Parser(new File("USDAFiles/FOOD_DES.TXT"), new File(
-				"USDAFiles/NUT_DATA.TXT"), new File("USDAFiles/NUTR_DEF.TXT"),
-				new File("USDAFiles/FD_GROUP.TXT"), new File(
-						"USDAFiles/WEIGHT.TXT"), new File(
-						"USDAFiles/LANGUAL.txt"), new File(
-						"USDAFiles/LANGDESC.TXT"));
+		Parser p = new Parser(new File("USDAFiles/FOOD_DES.TXT"), new File("USDAFiles/NUT_DATA.TXT"),
+				new File("USDAFiles/NUTR_DEF.TXT"), new File("USDAFiles/FD_GROUP.TXT"),
+				new File("USDAFiles/WEIGHT.TXT"), new File("USDAFiles/LANGUAL.txt"), new File("USDAFiles/LANGDESC.TXT"),
+				new File("USDAFiles/FOOTNOTE.TXT"));
 
 		p.parseData();
 		System.out.println();

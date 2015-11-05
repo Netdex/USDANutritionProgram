@@ -32,7 +32,7 @@ public class NutrientDescription implements Parsable<NutrientDescription> {
 	private int srOrder;
 	
 	@Override
-	public void parse(String[] data) throws InvalidParseDataException {
+	public NutrientDescription parse(String[] data) throws InvalidParseDataException {
 		if(data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		nutrNo = Integer.parseInt(data[0]);
@@ -41,6 +41,7 @@ public class NutrientDescription implements Parsable<NutrientDescription> {
 		nutrDesc = data[3];
 		numDec = Integer.parseInt(data[4]);
 		srOrder = Integer.parseInt(data[5]);
+		return this;
 	}
 
 	public NutrientDescription(){

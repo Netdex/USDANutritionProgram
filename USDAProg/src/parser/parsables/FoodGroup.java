@@ -12,11 +12,13 @@ public class FoodGroup implements Parsable<FoodGroup> {
 	private static final int PARSE_DATA_LENGTH = 2;
 	
 	@Override
-	public void parse(String[] data) throws InvalidParseDataException {
+	public FoodGroup parse(String[] data) throws InvalidParseDataException {
 		if(data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		foodGroupID = Integer.parseInt(data[0]);
 		desc = data[1];
+		
+		return this;
 	}
 
 	private int foodGroupID;

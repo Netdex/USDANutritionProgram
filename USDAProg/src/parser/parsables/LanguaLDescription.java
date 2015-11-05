@@ -6,11 +6,12 @@ public class LanguaLDescription implements Parsable<LanguaLDescription> {
 
 	private static final int PARSE_DATA_LENGTH = 2;
 	@Override
-	public void parse(String[] data) throws InvalidParseDataException {
+	public LanguaLDescription parse(String[] data) throws InvalidParseDataException {
 		if(data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		factorCode = data[0];
 		desc = data[1];
+		return this;
 		
 	}
 	

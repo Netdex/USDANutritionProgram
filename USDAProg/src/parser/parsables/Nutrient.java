@@ -14,7 +14,7 @@ public class Nutrient implements Parsable<Nutrient> {
 	private static final int PARSE_DATA_LENGTH = 18;
 
 	@Override
-	public void parse(String[] data) throws InvalidParseDataException {
+	public Nutrient parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		ndbNo = Integer.parseInt(data[0]);
@@ -35,7 +35,7 @@ public class Nutrient implements Parsable<Nutrient> {
 		statCmt = data[15];
 		addModDate = data[16];
 		confidenceCode = data[17];
-
+		return this;
 	}
 
 	private int ndbNo;
