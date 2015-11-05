@@ -6,35 +6,48 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-public class GUI {
+public class GUI extends JFrame {
 
-	JFrame frame;
-	HomePanel homePanel;
-	GroupPanel groupPanel;
-	FoodListPanel foodListPanel;
-	SearchPanel searchPanel;
-	InfoPanel infoPanel;
-	ExtraInfoPanel extraInfoPanel;
-	SettingsPanel settingsPanel;
+	private HomePanel homePanel;
+	private GroupPanel groupPanel;
+	private FoodListPanel foodListPanel;
+	private SearchPanel searchPanel;
+	private InfoPanel infoPanel;
+	private ExtraInfoPanel extraInfoPanel;
+	private SettingsPanel settingsPanel;
+
+	private double dailyCal;
 
 	public GUI() {
-		frame = new JFrame("USDA FOOD ORGANIZER");
-		frame.setSize(480, 640);
+		super("USDA FOOD ORGANIZER");
+		this.setSize(480, 640);
 		try {
-			frame.setIconImage(ImageIO.read(new File("images/frameIcon.png"))); //TODO make image for this
+			// TODO make proper image
+			this.setIconImage(ImageIO.read(new File("images/thisIcon.png")));
 		} catch (IOException e) {
 		}
-		homePanel = new HomePanel(frame, this);
-		frame.add(homePanel);
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		homePanel = new HomePanel(this);
+		this.add(homePanel);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
 	}
 
-	// TODO find a way to switch panels
-	protected void switchToSearch() {
-		frame.remove(homePanel);
+	protected void showSearch() {
 		searchPanel = new SearchPanel(this);
-		frame.add(searchPanel);
+		this.add(searchPanel);
+	}
+
+	protected void showSettings() {
+		settingsPanel = new SettingsPanel(this);
+		this.add(settingsPanel);
+	}
+
+	public double getDailyCal() {
+		return dailyCal;
+	}
+
+	protected void setDailyCal(double dailyCal) {
+		this.dailyCal = dailyCal;
 	}
 }
