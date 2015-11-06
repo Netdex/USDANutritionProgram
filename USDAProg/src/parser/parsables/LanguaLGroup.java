@@ -17,4 +17,13 @@ public class LanguaLGroup {
 	public DoublyLinkedList<LanguaL> getLanguaLs(){
 		return languals;
 	}
+	
+	public String toString(){
+		String ret = "";
+		for(int i = 0; i < languals.size() - 1; i++){
+			ret += languals.get(i) + ";";
+		}
+		ret += languals.get(languals.size() - 1);
+		return ret;
+	}
 }
