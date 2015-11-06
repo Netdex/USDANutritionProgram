@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -13,13 +14,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 import config.ConfigurationManager;
 
 public class GUI extends JFrame {
-
-	protected static Color BACKGROUND_COLOR = new Color(16448250);
-	protected static Color HEADER_COLOR = new Color(16448250);
-	protected static Font CONTENT_FONT = new Font("Calibri", Font.PLAIN, 14);
-	protected static Font TITLE_FONT = new Font("Futura", Font.PLAIN, 32);
+	
 	public static ConfigurationManager CONFIG = new ConfigurationManager(
 			new File("config.prop"));
+
+	protected final static Color BACKGROUND_COLOR = new Color(16448250);
+	protected final static Color HEADER_COLOR = new Color(16448250);
+
+	protected static final Font TITLE_FONT = new Font("Futura", Font.PLAIN, 32);
+	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.PLAIN, 18);
+	protected static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN, 14);
+	
+	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
+			.createEmptyBorder();
 
 	public GUI() {
 		super("USDA Food Database");

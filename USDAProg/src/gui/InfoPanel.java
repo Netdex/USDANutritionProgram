@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import parser.parsables.FoodItem;
 
@@ -22,6 +20,12 @@ public class InfoPanel extends JPanel {
 	SearchPanel searchPanel;
 	FoodItem food;
 	double amountOfFood;
+
+	JList<String> nutritionDataList;
+
+	JLabel commonDescLabel = null;
+	JLabel foodGroupLabel = null;
+	JLabel commonNameLabel = null;
 
 	public InfoPanel(SearchPanel searchPanel) {
 		super();
@@ -51,30 +55,33 @@ public class InfoPanel extends JPanel {
 		header.add(moreInfo);
 
 		this.add(header);
+	}
 
-		JList<String> nutritionDataList = new JList<String>();
-		Font standardText = new Font(Font.SANS_SERIF, Font.BOLD, 14);
+	protected void setFoodItem(FoodItem food) {
+		this.food = food;
 
-		// TODO move this elsewhere so that it only starts rendering when given an actual FoodItem
-		JLabel commonDescLabel = new JLabel(food.getLongDescription());
-		commonDescLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
+		nutritionDataList = new JList<String>();
+
+		commonDescLabel = new JLabel(food.getLongDescription());
+		commonDescLabel.setFont(GUI.TITLE_FONT);
 		nutritionDataList.add(commonDescLabel);
 
-		JLabel foodGroupLabel = new JLabel(food.getFoodGroup().toString());
-		foodGroupLabel.setFont(standardText);
+		foodGroupLabel = new JLabel(food.getFoodGroup().toString());
+		foodGroupLabel.setFont(GUI.CONTENT_FONT);
 		nutritionDataList.add(foodGroupLabel);
 
-		JLabel commonNameLabel = new JLabel(food.getCommmonName());
-		commonNameLabel.setFont(standardText);
+		commonNameLabel = new JLabel(food.getCommmonName());
+		commonNameLabel.setFont(GUI.CONTENT_FONT);
 		nutritionDataList.add(commonNameLabel);
 
-		JLabel unitsTitle = new JLabel(
+		JLabel unitsEntryPrompt = new JLabel(
 				"Units: enter how much of the food product you are intending to consume.");
-		unitsTitle.setFont(standardText);
-		nutritionDataList.add(unitsTitle);
+		unitsEntryPrompt.setFont(GUI.CONTENT_FONT);
+		nutritionDataList.add(unitsEntryPrompt);
 
 		/*
-		 * Get the number of weight measurement units for each food.
+		 * TODO unbreak this Get the number of weight measurement units for each
+		 * food.
 		 * 
 		 * Use a for loop and generate that many text entry boxes, one for each
 		 * unit of measure
@@ -86,10 +93,6 @@ public class InfoPanel extends JPanel {
 		 */
 
 		this.add(nutritionDataList);
-	}
-
-	protected void setFoodItem(FoodItem food) {
-		this.food = food;
 	}
 
 	class BackButtonListener implements ActionListener {

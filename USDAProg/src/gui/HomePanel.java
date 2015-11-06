@@ -43,65 +43,63 @@ public class HomePanel extends JPanel {
 
 		// create five buttons
 		// TODO Proper images need to be created
-		javax.swing.border.Border emptyBorder = BorderFactory
-				.createEmptyBorder();
-		JButton searchButton;
+		JButton searchButton = new JButton();
 		try {
-			searchButton = new JButton(new ImageIcon(ImageIO.read(
+			searchButton.setIcon(new ImageIcon(ImageIO.read(
 					new File("images/searchButton.png")).getScaledInstance(200,
 					200, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			searchButton = null;
+			e.printStackTrace();
 		}
 		searchButton.setBackground(Color.GREEN);
-		searchButton.setBorder(emptyBorder);
+		searchButton.setBorder(GUI.EMPTY_BORDER);
 
-		JButton groupButton;
+		JButton groupButton = new JButton();
 		try {
-			groupButton = new JButton(new ImageIcon(ImageIO.read(
+			groupButton.setIcon(new ImageIcon(ImageIO.read(
 					new File("images/groupButton.png")).getScaledInstance(200,
 					200, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			groupButton = null;
+			e.printStackTrace();
 		}
-		groupButton.setBackground(Color.BLUE);
-		groupButton.setBorder(emptyBorder);
+		groupButton.setBackground(Color.ORANGE);
+		groupButton.setBorder(GUI.EMPTY_BORDER);
 
-		JButton bookmarksButton;
+		JButton helpButton = new JButton();
 		try {
-			bookmarksButton = new JButton(new ImageIcon(ImageIO.read(
-					new File("images/bookmarksButton.png")).getScaledInstance(
-					200, 200, Image.SCALE_SMOOTH)));
+			helpButton = new JButton(new ImageIcon(ImageIO.read(
+					new File("images/helpButton.png")).getScaledInstance(200,
+					200, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			bookmarksButton = null;
+			e.printStackTrace();
 		}
-		bookmarksButton.setBackground(Color.YELLOW);
-		bookmarksButton.setBorder(emptyBorder);
+		helpButton.setBackground(new Color(8174056));
+		helpButton.setBorder(GUI.EMPTY_BORDER);
 
-		JButton settingsButton;
+		JButton settingsButton = new JButton();
 		try {
-			settingsButton = new JButton(new ImageIcon(ImageIO.read(
+			settingsButton.setIcon(new ImageIcon(ImageIO.read(
 					new File("images/settingsButton.png")).getScaledInstance(
 					200, 200, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			settingsButton = null;
+			e.printStackTrace();
 		}
 		settingsButton.setBackground(Color.DARK_GRAY);
-		settingsButton.setBorder(emptyBorder);
+		settingsButton.setBorder(GUI.EMPTY_BORDER);
 
 		JButton aboutButton = new JButton("About");
 		aboutButton.setBackground(Color.BLACK);
 		aboutButton.setForeground(Color.WHITE);
-		aboutButton.setBorder(emptyBorder);
+		aboutButton.setBorder(GUI.EMPTY_BORDER);
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
-		buttonQuad.add(bookmarksButton);
+		buttonQuad.add(helpButton);
 		buttonQuad.add(settingsButton);
 
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
-		bookmarksButton.addActionListener(new BookmarksButtonListener());
+		helpButton.addActionListener(new HelpButtonListener());
 		settingsButton.addActionListener(new SettingsButtonListener());
 		aboutButton.addActionListener(new AboutButtonListener());
 
@@ -127,11 +125,11 @@ public class HomePanel extends JPanel {
 		}
 	}
 
-	class BookmarksButtonListener implements ActionListener {
+	class HelpButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			 manager.switchToBookmarks();
+			manager.switchToHelp();
 		}
 	}
 
@@ -148,20 +146,6 @@ public class HomePanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			manager.switchToAbout();
-			
-//			ImageIcon aboutIcon;
-//			try {
-//				aboutIcon = new ImageIcon(ImageIO.read(
-//						new File("images/aboutIcon.png")).getScaledInstance(
-//						128, 64, Image.SCALE_SMOOTH));
-//			} catch (IOException blargh) {
-//				aboutIcon = null;
-//			}
-//			JOptionPane
-//					.showMessageDialog(
-//							HomePanel.this,
-//							"(C) 2015 Gordon Guan and Vince Ou.\nCreated for ICS4UE Unit 3 Final Project.",
-//							"About", JOptionPane.PLAIN_MESSAGE, aboutIcon);
 		}
 	}
 }

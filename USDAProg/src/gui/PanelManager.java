@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 
 import javax.swing.JPanel;
 
@@ -16,6 +17,7 @@ public class PanelManager extends JPanel {
 	private ExtraInfoPanel extraInfoPanel;
 	private SettingsPanel settingsPanel;
 	private AboutPanel aboutPanel;
+	private HelpPanel helpPanel;
 
 	CardLayout cardLayoutManager;
 
@@ -29,6 +31,7 @@ public class PanelManager extends JPanel {
 		settingsPanel = new SettingsPanel(this);
 		aboutPanel = new AboutPanel(this);
 		infoPanel = new InfoPanel(searchPanel);
+		helpPanel = new HelpPanel();
 
 		this.add(homePanel, "home");
 		this.add(groupPanel, "group");
@@ -38,6 +41,7 @@ public class PanelManager extends JPanel {
 		// layoutManager.addLayoutComponent(extraInfoPanel, "extraInfo");
 		this.add(settingsPanel, "settings");
 		this.add(aboutPanel, "about");
+		this.add(helpPanel, "help");
 	}
 
 	protected void switchToHome() {
@@ -60,8 +64,8 @@ public class PanelManager extends JPanel {
 		cardLayoutManager.show(this, "settings");
 	}
 
-	protected void switchToBookmarks() {
-		cardLayoutManager.show(this, "bookmarks");
+	protected void switchToHelp() {
+		cardLayoutManager.show(this, "help");
 	}
 
 	protected void switchToAbout() {

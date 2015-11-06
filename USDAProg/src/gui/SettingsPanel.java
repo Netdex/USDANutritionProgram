@@ -1,14 +1,10 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,23 +14,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-
-import config.ConfigurationManager;
 
 public class SettingsPanel extends JPanel {
 
 	PanelManager manager;
 
-	private boolean kilograms;
-	private boolean centimeters;
 	private double dailyCal;
 
+	JComboBox<String> weightUnitSelector;
+	JComboBox<String> heightUnitSelector;
+
 	private JComboBox<String> genderSelector;
-	private JTextField weightEntry;
-	private JTextField heightEntry;
+	private JSpinner weightEntry;
+	private JSpinner heightEntry;
 	private JSpinner ageEntry;
 	private JComboBox<Integer> exerciseSelector;
 
@@ -59,11 +53,12 @@ public class SettingsPanel extends JPanel {
 		// gender selection
 		JPanel genderLine = new JPanel();
 		genderLine.setLayout(new FlowLayout(FlowLayout.LEFT));
-		genderLine.setBackground(GUI.BACKGROUND_COLOR);
 		genderLine.add(new JLabel("What is your biological gender?"));
 
 		String[] genderAmounts = { "Male", "Female" };
 		genderSelector = new JComboBox<String>(genderAmounts);
+		genderSelector.setBackground(GUI.BACKGROUND_COLOR);
+		genderSelector.setBorder(GUI.EMPTY_BORDER);
 		genderLine.add(genderSelector);
 		this.add(genderLine);
 
@@ -73,22 +68,17 @@ public class SettingsPanel extends JPanel {
 		weightLine.setBackground(GUI.BACKGROUND_COLOR);
 		weightLine.add(new JLabel("Weight in: "));
 
-		JComboBox<String> weightUnitSelector = new JComboBox<String>(
-				new String[] { "kg", "lbs" });
+		weightUnitSelector = new JComboBox<String>(new String[] { "kg", "lbs" });
 		weightUnitSelector.setEditable(false);
-		weightUnitSelector.addActionListener(new WeightBoxListener());
+		weightUnitSelector.setBackground(GUI.BACKGROUND_COLOR);
+		weightUnitSelector.setBorder(GUI.EMPTY_BORDER);
 		weightLine.add(weightUnitSelector);
 
-		weightEntry = new JTextField();
-		if (kilograms)
-			weightEntry.setText("Weight in kg");
-		else
-			weightEntry.setText("Weight in lbs");
-		weightEntry.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				weightEntry.setText("");
-			}
-		});
+		weightEntry = new JSpinner();
+		SpinnerNumberModel weightSelectorModel = new SpinnerNumberModel(0, 0,
+				1400, 1);
+		weightEntry.setModel(weightSelectorModel);
+		weightEntry.setBackground(GUI.BACKGROUND_COLOR);
 		weightLine.add(weightEntry);
 
 		this.add(weightLine);
@@ -99,22 +89,18 @@ public class SettingsPanel extends JPanel {
 		heightLine.setBackground(GUI.BACKGROUND_COLOR);
 		heightLine.add(new JLabel("Height in: "));
 
-		JComboBox<String> heightUnitSelector = new JComboBox<String>(
-				new String[] { "cm", "inches" });
+		heightUnitSelector = new JComboBox<String>(new String[] { "cm",
+				"inches" });
 		heightUnitSelector.setEditable(false);
-		heightUnitSelector.addActionListener(new HeightBoxListener());
+		heightUnitSelector.setBackground(GUI.BACKGROUND_COLOR);
+		heightUnitSelector.setBorder(GUI.EMPTY_BORDER);
 		heightLine.add(heightUnitSelector);
 
-		heightEntry = new JTextField();
-		if (centimeters)
-			heightEntry.setText("Height in cm");
-		else
-			heightEntry.setText("Height in inches");
-		heightEntry.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				heightEntry.setText("");
-			}
-		});
+		heightEntry = new JSpinner();
+		SpinnerNumberModel heightSelectorModel = new SpinnerNumberModel(0, 0,
+				1400, 1);
+		heightEntry.setModel(heightSelectorModel);
+		heightEntry.setBackground(GUI.BACKGROUND_COLOR);
 		heightLine.add(heightEntry);
 
 		this.add(heightLine);
@@ -124,10 +110,11 @@ public class SettingsPanel extends JPanel {
 		ageLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		ageLine.setBackground(GUI.BACKGROUND_COLOR);
 		ageLine.add(new JLabel("How old are you, in years?"));
+
 		ageEntry = new JSpinner();
-		SpinnerNumberModel spinnerListModel = new SpinnerNumberModel(0, 0, 150,
+		SpinnerNumberModel ageSelectorModel = new SpinnerNumberModel(0, 0, 150,
 				1);
-		ageEntry.setModel(spinnerListModel);
+		ageEntry.setModel(ageSelectorModel);
 		ageLine.add(ageEntry);
 
 		this.add(ageLine);
@@ -151,44 +138,17 @@ public class SettingsPanel extends JPanel {
 		this.add(saveButton);
 	}
 
-	class WeightBoxListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JComboBox<String> weightUnitSelector = (JComboBox<String>) e
-					.getSource();
-			String unit = weightUnitSelector.getSelectedItem().toString();
-			if (unit.equals("kg"))
-				kilograms = true;
-			else if (unit.equals("lbs"))
-				kilograms = false;
-		}
-	}
-
-	class HeightBoxListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JComboBox<String> heightUnitSelector = (JComboBox<String>) e
-					.getSource();
-			String unit = heightUnitSelector.getSelectedItem().toString();
-			if (unit.equals("cm"))
-				centimeters = true;
-			else if (unit.equals("lbs"))
-				centimeters = false;
-		}
-	}
-
 	class SaveButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			double weight = 0;
 			try {
-				if (kilograms)
-					weight = Double.parseDouble(weightEntry.getText());
+				if (weightUnitSelector.getEditor().getItem().toString()
+						.equals("kg"))
+					weight = (double) weightEntry.getValue();
 				else
-					weight = Double.parseDouble(weightEntry.getText()) / 2.20462;
+					weight = (double) weightEntry.getValue() / 2.20462;
 			} catch (NumberFormatException nfe) {
 				JOptionPane.showMessageDialog(SettingsPanel.this,
 						"Please enter a weight", "Invalid weight",
@@ -197,10 +157,11 @@ public class SettingsPanel extends JPanel {
 
 			double height = 0;
 			try {
-				if (centimeters)
-					height = Double.parseDouble(heightEntry.getText());
+				if (heightUnitSelector.getEditor().getItem().toString()
+						.equals("cm"))
+					height = (double) heightEntry.getValue();
 				else
-					height = Double.parseDouble(heightEntry.getText()) / 0.393701;
+					height = (double) heightEntry.getValue() / 0.393701;
 			} catch (NumberFormatException exc) {
 				JOptionPane.showMessageDialog(SettingsPanel.this,
 						"Please enter a height", "Invalid height",
