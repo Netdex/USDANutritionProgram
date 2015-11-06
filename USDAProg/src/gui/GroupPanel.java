@@ -36,9 +36,12 @@ public class GroupPanel extends JPanel implements ActionListener {
 		this.add(header);
 
 		// TODO needs to be a way to find a list of all food groups
-		// get a list of all food groups
 		// create buttons for each group (with name), and put buttons into JList
-		JList<FoodGroupButton> groupSelector = new JList<FoodGroupButton>();
+
+		FoodGroupButton[] groupSelectorModel = {};
+		// replace this with a list of all foods under this food group
+		JList<FoodGroupButton> groupSelector = new JList<FoodGroupButton>(
+				groupSelectorModel);
 		this.add(groupSelector);
 	}
 

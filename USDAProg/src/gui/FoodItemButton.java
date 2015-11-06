@@ -49,7 +49,7 @@ public class FoodItemButton extends JButton {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			manager.getInfoPanel().setFoodItem(food);
-			manager.switchToInfoPage();
+			manager.switchToInfoPanel();
 		}
 
 	}

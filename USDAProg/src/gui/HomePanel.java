@@ -109,7 +109,7 @@ public class HomePanel extends JPanel {
 	class SearchButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			manager.switchToSearch();
+			manager.switchToSearchPanel();
 		}
 	}
 

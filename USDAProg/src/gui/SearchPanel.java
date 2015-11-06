@@ -53,7 +53,7 @@ public class SearchPanel extends JPanel {
 	private void findResults(String query) {
 		// go find top 25, then displayResults them
 		
-		ArrayList<FoodItemButton> resultsListModel = new ArrayList<FoodItemButton>();
+		ArrayList<FoodItemButton> resultsListModel = new ArrayList<FoodItemButton>();// go somewhere and get this
 		JList<FoodItemButton> resultsList = new JList<FoodItemButton>();
 		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		resultsList.setLayoutOrientation(JList.VERTICAL);

@@ -14,12 +14,12 @@ import javax.swing.JPanel;
 
 public class BackButton extends JButton {
 
-	private JPanel parent;
+	private JPanel target;
 	private final PanelManager manager;
 
-	public BackButton(JPanel parent, PanelManager manager) {
+	public BackButton(JPanel target, PanelManager manager) {
 		super();
-		this.parent = parent;
+		this.target = target;
 		this.manager = manager;
 		try {
 			// TODO make better icon
@@ -38,7 +38,12 @@ public class BackButton extends JButton {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			manager.switchToPanel((JPanel) parent);
+			if (target instanceof GroupPanel)
+				manager.switchToGroup();
+			else if (target instanceof InfoPanel)
+				manager.switchToInfoPanel();
+			else if (target instanceof SearchPanel)
+				manager.switchToSearchPanel();
 		}
 	}
 }

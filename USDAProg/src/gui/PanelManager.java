@@ -25,22 +25,22 @@ public class PanelManager extends JPanel {
 		this.setLayout(cardLayoutManager);
 		homePanel = new HomePanel(this);
 		groupPanel = new GroupPanel(this);
-		foodListPanel = new FoodListPanel();
+		foodListPanel = new FoodListPanel(this);
 		searchPanel = new SearchPanel(this);
 		settingsPanel = new SettingsPanel(this);
 		aboutPanel = new AboutPanel(this);
 		infoPanel = new InfoPanel();
+		extraInfoPanel = new ExtraInfoPanel(this);
 		helpPanel = new HelpPanel(this);
 
 		this.add(homePanel, "home");
 		this.add(groupPanel, "group");
 		this.add(foodListPanel, "foodList");
 		this.add(searchPanel, "search");
-		// layoutManager.addLayoutComponent(infoPanel, "info");
-		// layoutManager.addLayoutComponent(extraInfoPanel, "extraInfo");
 		this.add(settingsPanel, "settings");
 		this.add(aboutPanel, "about");
 		this.add(helpPanel, "help");
+		this.add(extraInfoPanel, "extraInfo");
 	}
 
 	protected InfoPanel getInfoPanel() {
@@ -51,12 +51,12 @@ public class PanelManager extends JPanel {
 		cardLayoutManager.show(this, "home");
 	}
 
-	protected void switchToSearch() {
+	protected void switchToSearchPanel() {
 		cardLayoutManager.show(this, "search");
 		searchPanel.reset();
 	}
 
-	protected void switchToInfoPage() {
+	protected void switchToInfoPanel() {
 		cardLayoutManager.show(this, "foodInfo");
 	}
 
@@ -81,8 +81,7 @@ public class PanelManager extends JPanel {
 		cardLayoutManager.show(this, "foodList");
 	}
 
-	protected void switchToPanel(JPanel panel) {
-		// get the equivalent panel in the list of panels that cardlayoutmanager
-		// handles, then switches to it
+	protected JPanel getGroupPanel() {
+		return groupPanel;
 	}
 }

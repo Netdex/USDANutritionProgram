@@ -3,7 +3,10 @@ package gui;
 import javax.swing.JPanel;
 
 public class ExtraInfoPanel extends JPanel {
-	public ExtraInfoPanel() {
-		// TODO Auto-generated constructor stub
+
+	PanelManager manager;
+
+	protected ExtraInfoPanel(PanelManager manager) {
+		this.manager = manager;
 	}
 }
