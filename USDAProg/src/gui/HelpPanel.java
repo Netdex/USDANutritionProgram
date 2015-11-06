@@ -4,7 +4,13 @@ import javax.swing.JPanel;
 
 public class HelpPanel extends JPanel {
 
-	public HelpPanel() {
-		// TODO add things for this to do.
+	private PanelManager manager;
+
+	public HelpPanel(PanelManager manager) {
+		super();
+		this.manager = manager;
+		this.add(new HomeButton(manager));
+		// TODO intended for a flowchart of screens to see, as well as general
+		// notes on program operation
 	}
 }

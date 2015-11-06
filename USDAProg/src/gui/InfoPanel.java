@@ -17,7 +17,6 @@ import parser.parsables.FoodItem;
 
 public class InfoPanel extends JPanel {
 
-	SearchPanel searchPanel;
 	FoodItem food;
 	double amountOfFood;
 
@@ -27,9 +26,8 @@ public class InfoPanel extends JPanel {
 	JLabel foodGroupLabel = null;
 	JLabel commonNameLabel = null;
 
-	public InfoPanel(SearchPanel searchPanel) {
+	public InfoPanel() {
 		super();
-		this.searchPanel = searchPanel;
 
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JPanel header = new JPanel();

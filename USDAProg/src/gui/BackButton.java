@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;

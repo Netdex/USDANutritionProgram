@@ -14,17 +14,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 import config.ConfigurationManager;
 
 public class GUI extends JFrame {
-	
+
 	public static ConfigurationManager CONFIG = new ConfigurationManager(
 			new File("config.prop"));
 
 	protected final static Color BACKGROUND_COLOR = new Color(16448250);
-	protected final static Color HEADER_COLOR = new Color(16448250);
+	protected final static Color HEADER_GREY = new Color(14606046);
 
-	protected static final Font TITLE_FONT = new Font("Futura", Font.PLAIN, 32);
-	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.PLAIN, 18);
-	protected static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN, 14);
-	
+	protected static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);
+	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.PLAIN,
+			18);
+	protected static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN,
+			16);
+
 	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
 			.createEmptyBorder();
 

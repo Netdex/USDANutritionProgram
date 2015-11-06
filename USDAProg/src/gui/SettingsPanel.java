@@ -3,8 +3,6 @@ package gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -13,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
@@ -42,7 +39,7 @@ public class SettingsPanel extends JPanel {
 		// header
 		JPanel header = new JPanel();
 		header.setLayout(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(GUI.HEADER_COLOR);
+		header.setBackground(GUI.HEADER_GREY);
 		header.add(new HomeButton(manager));
 		JLabel title = new JLabel("PERSONALIZATION");
 		title.setFont(GUI.TITLE_FONT);
@@ -53,7 +50,10 @@ public class SettingsPanel extends JPanel {
 		// gender selection
 		JPanel genderLine = new JPanel();
 		genderLine.setLayout(new FlowLayout(FlowLayout.LEFT));
-		genderLine.add(new JLabel("What is your biological gender?"));
+		genderLine.setBackground(GUI.BACKGROUND_COLOR);
+		JLabel genderPrompt = new JLabel("What is your biological gender?");
+		genderPrompt.setFont(GUI.CONTENT_FONT);
+		genderLine.add(genderPrompt);
 
 		String[] genderAmounts = { "Male", "Female" };
 		genderSelector = new JComboBox<String>(genderAmounts);
@@ -66,7 +66,9 @@ public class SettingsPanel extends JPanel {
 		JPanel weightLine = new JPanel();
 		weightLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		weightLine.setBackground(GUI.BACKGROUND_COLOR);
-		weightLine.add(new JLabel("Weight in: "));
+		JLabel weightPrompt = new JLabel("Weight in: ");
+		weightPrompt.setFont(GUI.CONTENT_FONT);
+		weightLine.add(weightPrompt);
 
 		weightUnitSelector = new JComboBox<String>(new String[] { "kg", "lbs" });
 		weightUnitSelector.setEditable(false);
@@ -87,7 +89,9 @@ public class SettingsPanel extends JPanel {
 		JPanel heightLine = new JPanel();
 		heightLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		heightLine.setBackground(GUI.BACKGROUND_COLOR);
-		heightLine.add(new JLabel("Height in: "));
+		JLabel heightPrompt = new JLabel("Height in: ");
+		heightPrompt.setFont(GUI.CONTENT_FONT);
+		heightLine.add(heightPrompt);
 
 		heightUnitSelector = new JComboBox<String>(new String[] { "cm",
 				"inches" });
@@ -109,7 +113,9 @@ public class SettingsPanel extends JPanel {
 		JPanel ageLine = new JPanel();
 		ageLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		ageLine.setBackground(GUI.BACKGROUND_COLOR);
-		ageLine.add(new JLabel("How old are you, in years?"));
+		JLabel agePrompt = new JLabel("How old are you, in years?");
+		agePrompt.setFont(GUI.CONTENT_FONT);
+		ageLine.add(agePrompt);
 
 		ageEntry = new JSpinner();
 		SpinnerNumberModel ageSelectorModel = new SpinnerNumberModel(0, 0, 150,
@@ -123,7 +129,10 @@ public class SettingsPanel extends JPanel {
 		JPanel exerciseLine = new JPanel();
 		exerciseLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		exerciseLine.setBackground(GUI.BACKGROUND_COLOR);
-		exerciseLine.add(new JLabel("How many days do you exercise per week?"));
+		JLabel exercisePrompt = new JLabel(
+				"How many days do you exercise per week?");
+		exercisePrompt.setFont(GUI.CONTENT_FONT);
+		exerciseLine.add(exercisePrompt);
 
 		Integer[] exerciseAmounts = { 0, 1, 2, 3, 4, 5, 6, 7 };
 		exerciseSelector = new JComboBox<Integer>(exerciseAmounts);

@@ -30,9 +30,9 @@ public class GroupPanel extends JPanel implements ActionListener {
 
 		JLabel title = new JLabel("FOOD GROUPS");
 		title.setFont(GUI.TITLE_FONT);
-		title.setBackground(GUI.HEADER_COLOR);
+		title.setBackground(GUI.HEADER_GREY);
 		header.add(title);
-		header.setBackground(GUI.HEADER_COLOR);
+		header.setBackground(GUI.HEADER_GREY);
 		this.add(header);
 
 		// TODO needs to be a way to find a list of all food groups

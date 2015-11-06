@@ -8,11 +8,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 import parser.parsables.FoodItem;
@@ -30,15 +31,17 @@ public class SearchPanel extends JPanel {
 
 		JPanel bannerTitlePanel = new JPanel();
 		bannerTitlePanel.setLayout(new FlowLayout());
-		bannerTitlePanel.setBackground(GUI.HEADER_COLOR);
+		bannerTitlePanel.setBackground(GUI.HEADER_GREY);
 		bannerTitlePanel.add(new HomeButton(manager));
 
-		searchBox = new JTextField("Search...", 16);
-		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+		searchBox = new JTextField("Search...", 22);
+		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 		searchBox.setBackground(GUI.BACKGROUND_COLOR);
+		searchBox.setForeground(GUI.HEADER_GREY);
 		searchBox.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				searchBox.setText("");
+				searchBox.setForeground(Color.BLACK);
 			}
 		});
 		bannerTitlePanel.add(searchBox);
@@ -46,28 +49,21 @@ public class SearchPanel extends JPanel {
 		searchBox.addKeyListener(new SearchBoxActionListener());
 	}
 
-	// TODO unbreak this
+	// TODO make searching work
 	private void findResults(String query) {
 		// go find top 25, then displayResults them
-		displayResults(null);
-	}
-
-	// TODO unbreak this
-	private void displayResults(FoodItem[] results) {
-		// create a scrollable JList of JButtons that redirect to their
-		// respective info pages
-		JList<FoodItem> resultsList = new JList<FoodItem>();
+		
+		ArrayList<FoodItemButton> resultsListModel = new ArrayList<FoodItemButton>();
+		JList<FoodItemButton> resultsList = new JList<FoodItemButton>();
 		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		resultsList.setLayoutOrientation(JList.VERTICAL);
-
-		this.add(resultsList);
-
-		// end up getting the FoodItem that is required, and show its info page
-		// DO NOT delete this panel in case they want to go back
+		
+		// when clicked, then switch to it...
 	}
 
 	protected void reset() {
 		searchBox.setText("Search...");
+		searchBox.setForeground(GUI.HEADER_GREY);
 		// clear all previous search results
 	}
 

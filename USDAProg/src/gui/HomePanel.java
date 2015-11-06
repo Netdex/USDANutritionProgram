@@ -9,15 +9,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import javafx.scene.layout.Border;
-
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class HomePanel extends JPanel {

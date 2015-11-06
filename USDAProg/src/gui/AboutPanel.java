@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.io.File;
@@ -12,27 +10,26 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 public class AboutPanel extends JPanel {
 
 	PanelManager manager;
 
 	public AboutPanel(PanelManager manager) {
-		//TODO make this look less gross
+		// TODO make this look less gross
 		super();
 		this.manager = manager;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setAlignmentY(CENTER_ALIGNMENT);
 
 		JPanel header = new JPanel();
-		header.setBackground(GUI.HEADER_COLOR);
+		header.setBackground(GUI.HEADER_GREY);
 		header.setLayout(new FlowLayout(FlowLayout.LEFT));
 		header.add(new HomeButton(manager));
 
 		JLabel title = new JLabel("ABOUT");
 		title.setFont(GUI.TITLE_FONT);
-		title.setBackground(GUI.HEADER_COLOR);
+		title.setBackground(GUI.HEADER_GREY);
 		header.add(title);
 
 		this.add(header);
