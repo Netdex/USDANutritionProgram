@@ -55,6 +55,7 @@ public class InfoPanel extends JPanel {
 		JList<String> nutritionDataList = new JList<String>();
 		Font standardText = new Font(Font.SANS_SERIF, Font.BOLD, 14);
 
+		// TODO move this elsewhere so that it only starts rendering when given an actual FoodItem
 		JLabel commonDescLabel = new JLabel(food.getLongDescription());
 		commonDescLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 18));
 		nutritionDataList.add(commonDescLabel);
