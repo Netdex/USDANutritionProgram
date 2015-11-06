@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,11 +16,13 @@ public class GUI extends JFrame {
 
 	protected static Color BACKGROUND_COLOR = new Color(16448250);
 	protected static Color HEADER_COLOR = new Color(16448250);
+	protected static Font CONTENT_FONT = new Font("Calibri", Font.PLAIN, 14);
+	protected static Font TITLE_FONT = new Font("Futura", Font.PLAIN, 32);
 	public static ConfigurationManager CONFIG = new ConfigurationManager(
 			new File("config.prop"));
 
 	public GUI() {
-		super("USDA FOOD ORGANIZER");
+		super("USDA Food Database");
 		CONFIG.load();
 		this.setSize(480, 640);
 		try {

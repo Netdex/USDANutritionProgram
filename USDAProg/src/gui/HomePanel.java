@@ -147,19 +147,21 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ImageIcon aboutIcon;
-			try {
-				aboutIcon = new ImageIcon(ImageIO.read(
-						new File("images/aboutIcon.png")).getScaledInstance(
-						128, 64, Image.SCALE_SMOOTH));
-			} catch (IOException blargh) {
-				aboutIcon = null;
-			}
-			JOptionPane
-					.showMessageDialog(
-							HomePanel.this,
-							"(C) 2015 Gordon Guan and Vince Ou.\nCreated for ICS4UE Unit 3 Final Project.",
-							"About", JOptionPane.PLAIN_MESSAGE, aboutIcon);
+			manager.switchToAbout();
+			
+//			ImageIcon aboutIcon;
+//			try {
+//				aboutIcon = new ImageIcon(ImageIO.read(
+//						new File("images/aboutIcon.png")).getScaledInstance(
+//						128, 64, Image.SCALE_SMOOTH));
+//			} catch (IOException blargh) {
+//				aboutIcon = null;
+//			}
+//			JOptionPane
+//					.showMessageDialog(
+//							HomePanel.this,
+//							"(C) 2015 Gordon Guan and Vince Ou.\nCreated for ICS4UE Unit 3 Final Project.",
+//							"About", JOptionPane.PLAIN_MESSAGE, aboutIcon);
 		}
 	}
 }

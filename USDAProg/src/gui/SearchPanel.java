@@ -31,10 +31,7 @@ public class SearchPanel extends JPanel {
 		JPanel bannerTitlePanel = new JPanel();
 		bannerTitlePanel.setLayout(new FlowLayout());
 		bannerTitlePanel.setBackground(GUI.HEADER_COLOR);
-		try {
-			bannerTitlePanel.add(new HomeButton(manager));
-		} catch (IOException e) {
-		}
+		bannerTitlePanel.add(new HomeButton(manager));
 
 		searchBox = new JTextField("Search...", 16);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));

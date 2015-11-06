@@ -43,19 +43,15 @@ public class SettingsPanel extends JPanel {
 		this.manager = pManager;
 
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBackground(new Color(250, 250, 250));
+		this.setBackground(GUI.BACKGROUND_COLOR);
 
 		// header
 		JPanel header = new JPanel();
 		header.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-		try {
-			header.add(new HomeButton(manager));
-		} catch (IOException e) {
-		}
-
-		JLabel title = new JLabel("SETTINGS");
-		title.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 32));
+		header.setBackground(GUI.HEADER_COLOR);
+		header.add(new HomeButton(manager));
+		JLabel title = new JLabel("PERSONALIZATION");
+		title.setFont(GUI.TITLE_FONT);
 		header.add(title);
 
 		this.add(header);
@@ -63,6 +59,7 @@ public class SettingsPanel extends JPanel {
 		// gender selection
 		JPanel genderLine = new JPanel();
 		genderLine.setLayout(new FlowLayout(FlowLayout.LEFT));
+		genderLine.setBackground(GUI.BACKGROUND_COLOR);
 		genderLine.add(new JLabel("What is your biological gender?"));
 
 		String[] genderAmounts = { "Male", "Female" };
@@ -73,6 +70,7 @@ public class SettingsPanel extends JPanel {
 		// weight
 		JPanel weightLine = new JPanel();
 		weightLine.setLayout(new FlowLayout(FlowLayout.LEFT));
+		weightLine.setBackground(GUI.BACKGROUND_COLOR);
 		weightLine.add(new JLabel("Weight in: "));
 
 		JComboBox<String> weightUnitSelector = new JComboBox<String>(
@@ -98,6 +96,7 @@ public class SettingsPanel extends JPanel {
 		// height
 		JPanel heightLine = new JPanel();
 		heightLine.setLayout(new FlowLayout(FlowLayout.LEFT));
+		heightLine.setBackground(GUI.BACKGROUND_COLOR);
 		heightLine.add(new JLabel("Height in: "));
 
 		JComboBox<String> heightUnitSelector = new JComboBox<String>(
@@ -123,8 +122,8 @@ public class SettingsPanel extends JPanel {
 		// age
 		JPanel ageLine = new JPanel();
 		ageLine.setLayout(new FlowLayout(FlowLayout.LEFT));
+		ageLine.setBackground(GUI.BACKGROUND_COLOR);
 		ageLine.add(new JLabel("How old are you, in years?"));
-
 		ageEntry = new JSpinner();
 		SpinnerNumberModel spinnerListModel = new SpinnerNumberModel(0, 0, 150,
 				1);
@@ -136,6 +135,7 @@ public class SettingsPanel extends JPanel {
 		// exercise amount
 		JPanel exerciseLine = new JPanel();
 		exerciseLine.setLayout(new FlowLayout(FlowLayout.LEFT));
+		exerciseLine.setBackground(GUI.BACKGROUND_COLOR);
 		exerciseLine.add(new JLabel("How many days do you exercise per week?"));
 
 		Integer[] exerciseAmounts = { 0, 1, 2, 3, 4, 5, 6, 7 };

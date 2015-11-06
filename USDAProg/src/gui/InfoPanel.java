@@ -23,9 +23,8 @@ public class InfoPanel extends JPanel {
 	FoodItem food;
 	double amountOfFood;
 
-	public InfoPanel(FoodItem food, SearchPanel searchPanel) {
+	public InfoPanel(SearchPanel searchPanel) {
 		super();
-		this.food = food;
 		this.searchPanel = searchPanel;
 
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -86,6 +85,10 @@ public class InfoPanel extends JPanel {
 		 */
 
 		this.add(nutritionDataList);
+	}
+
+	protected void setFoodItem(FoodItem food) {
+		this.food = food;
 	}
 
 	class BackButtonListener implements ActionListener {

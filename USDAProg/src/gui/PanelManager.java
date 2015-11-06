@@ -4,6 +4,8 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
+import parser.parsables.FoodGroup;
+
 public class PanelManager extends JPanel {
 
 	private HomePanel homePanel;
@@ -13,6 +15,7 @@ public class PanelManager extends JPanel {
 	private InfoPanel infoPanel;
 	private ExtraInfoPanel extraInfoPanel;
 	private SettingsPanel settingsPanel;
+	private AboutPanel aboutPanel;
 
 	CardLayout cardLayoutManager;
 
@@ -24,6 +27,8 @@ public class PanelManager extends JPanel {
 		foodListPanel = new FoodListPanel();
 		searchPanel = new SearchPanel(this);
 		settingsPanel = new SettingsPanel(this);
+		aboutPanel = new AboutPanel(this);
+		infoPanel = new InfoPanel(searchPanel);
 
 		this.add(homePanel, "home");
 		this.add(groupPanel, "group");
@@ -32,6 +37,7 @@ public class PanelManager extends JPanel {
 		// layoutManager.addLayoutComponent(infoPanel, "info");
 		// layoutManager.addLayoutComponent(extraInfoPanel, "extraInfo");
 		this.add(settingsPanel, "settings");
+		this.add(aboutPanel, "about");
 	}
 
 	protected void switchToHome() {
@@ -39,12 +45,10 @@ public class PanelManager extends JPanel {
 	}
 
 	protected void switchToSearch() {
-		searchPanel.reset();
 		cardLayoutManager.show(this, "search");
 	}
 
 	protected void switchToInfoPage(InfoPanel infoPanel) {
-		this.add(infoPanel, "foodInfo");
 		cardLayoutManager.show(this, "foodInfo");
 	}
 
@@ -58,5 +62,19 @@ public class PanelManager extends JPanel {
 
 	protected void switchToBookmarks() {
 		cardLayoutManager.show(this, "bookmarks");
+	}
+
+	protected void switchToAbout() {
+		cardLayoutManager.show(this, "about");
+
+	}
+
+	protected void switchToFoodList(FoodGroup group) {
+		cardLayoutManager.show(this, "foodList");
+	}
+
+	protected void switchToPanel(JPanel panel) {
+		// get the equivalent panel in the list of panels that cardlayoutmanager
+		// handles, then switches to it
 	}
 }
