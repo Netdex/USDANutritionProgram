@@ -1,21 +1,26 @@
 package gui;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import config.ConfigurationManager;
 
 public class GUI extends JFrame {
 
-	private double userNutritionMultiplier;
-
-	// TODO move this somewhere more appropriate. Also should be saved on the
-	// HDD
+	protected static Color BACKGROUND_COLOR = new Color(16448250);
+	protected static Color HEADER_COLOR = new Color(16448250);
+	public static ConfigurationManager CONFIG = new ConfigurationManager(
+			new File("config.prop"));
 
 	public GUI() {
 		super("USDA FOOD ORGANIZER");
+		CONFIG.load();
 		this.setSize(480, 640);
 		try {
 			// TODO make proper image
@@ -31,7 +36,11 @@ public class GUI extends JFrame {
 		this.setVisible(true);
 	}
 
-	protected void setDailyCal(double dailyCal) {
-		this.userNutritionMultiplier = dailyCal / 2000;
+	public static void main(String[] args) throws ClassNotFoundException,
+			InstantiationException, IllegalAccessException,
+			UnsupportedLookAndFeelException {
+		UIManager
+				.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+		new GUI();
 	}
 }

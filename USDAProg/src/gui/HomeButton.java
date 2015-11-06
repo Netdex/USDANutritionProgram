@@ -1,12 +1,11 @@
 package gui;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-
-import javafx.scene.paint.Color;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -19,7 +18,8 @@ public class HomeButton extends JButton {
 	public HomeButton(PanelManager manager) throws IOException {
 		// TODO make better icon
 		super(new ImageIcon(ImageIO.read(new File("images/homeButton.png"))
-				.getScaledInstance(48, 48, Image.SCALE_DEFAULT)));
+				.getScaledInstance(48, 48, Image.SCALE_SMOOTH)));
+		this.setPreferredSize(new Dimension(48, 48));
 		this.manager = manager;
 		this.setBackground(java.awt.Color.WHITE);
 		addActionListener(new HomeButtonActionListener());

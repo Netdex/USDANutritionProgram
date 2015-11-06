@@ -16,7 +16,10 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import config.ConfigurationManager;
@@ -32,16 +35,12 @@ public class SettingsPanel extends JPanel {
 	private JComboBox<String> genderSelector;
 	private JTextField weightEntry;
 	private JTextField heightEntry;
-	private JTextField ageEntry;
+	private JSpinner ageEntry;
 	private JComboBox<Integer> exerciseSelector;
-
-	private ConfigurationManager config;
 
 	public SettingsPanel(PanelManager pManager) {
 		super();
 		this.manager = pManager;
-		config = new ConfigurationManager(new File("config.txt"));
-		config.load();
 
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBackground(new Color(250, 250, 250));
@@ -126,12 +125,10 @@ public class SettingsPanel extends JPanel {
 		ageLine.setLayout(new FlowLayout(FlowLayout.LEFT));
 		ageLine.add(new JLabel("How old are you, in years?"));
 
-		ageEntry = new JTextField("Age");
-		ageEntry.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				ageEntry.setText("");
-			}
-		});
+		ageEntry = new JSpinner();
+		SpinnerNumberModel spinnerListModel = new SpinnerNumberModel(0, 0, 150,
+				1);
+		ageEntry.setModel(spinnerListModel);
 		ageLine.add(ageEntry);
 
 		this.add(ageLine);
@@ -212,7 +209,7 @@ public class SettingsPanel extends JPanel {
 
 			int age = 0;
 			try {
-				age = Integer.parseInt(ageEntry.getText());
+				age = (int) ageEntry.getValue();
 			} catch (NumberFormatException whee) {
 				JOptionPane.showMessageDialog(SettingsPanel.this,
 						"Please enter an age", "Invalid age",
@@ -238,10 +235,10 @@ public class SettingsPanel extends JPanel {
 				dailyCal = bmr * 1.725;
 			} else
 				dailyCal = bmr * 1.9;
-			
-			config.addItem("weight", kilograms + "");
-			config.addItem("height", centimeters + "");
-			config.addItem("dailyCal", dailyCal + "");
+
+			GUI.CONFIG.addItem("userNutritionMultiplier", dailyCal / 2000);
+
+			GUI.CONFIG.save();
 		}
 	}
 }

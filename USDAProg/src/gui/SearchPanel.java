@@ -26,11 +26,11 @@ public class SearchPanel extends JPanel {
 		super();
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
-		this.setBackground(Color.WHITE);
+		this.setBackground(GUI.BACKGROUND_COLOR);
 
 		JPanel bannerTitlePanel = new JPanel();
 		bannerTitlePanel.setLayout(new FlowLayout());
-		bannerTitlePanel.setBackground(new Color(250, 250, 250));
+		bannerTitlePanel.setBackground(GUI.HEADER_COLOR);
 		try {
 			bannerTitlePanel.add(new HomeButton(manager));
 		} catch (IOException e) {
@@ -38,7 +38,7 @@ public class SearchPanel extends JPanel {
 
 		searchBox = new JTextField("Search...", 16);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
-		searchBox.setBackground(Color.WHITE);
+		searchBox.setBackground(GUI.BACKGROUND_COLOR);
 		searchBox.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				searchBox.setText("");
