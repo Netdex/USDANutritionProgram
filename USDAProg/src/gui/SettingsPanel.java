@@ -1,6 +1,6 @@
 package gui;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -10,9 +10,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -21,27 +19,32 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import com.sun.xml.internal.ws.api.Component;
+import config.ConfigurationManager;
 
 public class SettingsPanel extends JPanel {
 
 	PanelManager manager;
 
-	boolean kilograms;
-	boolean centimeters;
+	private boolean kilograms;
+	private boolean centimeters;
+	private double dailyCal;
 
-	JComboBox<String> genderSelector;
-	JTextField weightEntry;
-	JTextField heightEntry;
-	JTextField ageEntry;
-	JComboBox<Integer> exerciseSelector;
+	private JComboBox<String> genderSelector;
+	private JTextField weightEntry;
+	private JTextField heightEntry;
+	private JTextField ageEntry;
+	private JComboBox<Integer> exerciseSelector;
+
+	private ConfigurationManager config;
 
 	public SettingsPanel(PanelManager pManager) {
 		super();
 		this.manager = pManager;
+		config = new ConfigurationManager(new File("config.txt"));
+		config.load();
 
-		// this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setBackground(new Color(250, 250, 250));
 
 		// header
 		JPanel header = new JPanel();
@@ -225,16 +228,20 @@ public class SettingsPanel extends JPanel {
 						- (4.330 * age);
 
 			int exerciseAmount = exerciseSelector.getSelectedIndex();
-			// if (exerciseAmount == 0) {
-			// manager.setDailyCal(bmr * 1.2);
-			// } else if (exerciseAmount <= 1 && exerciseAmount >= 3) {
-			// manager.setDailyCal(bmr * 1.375);
-			// } else if (exerciseAmount <= 3 && exerciseAmount >= 5) {
-			// manager.setDailyCal(bmr * 1.55);
-			// } else if (exerciseAmount == 6) {
-			// manager.setDailyCal(bmr * 1.725);
-			// } else
-			// manager.setDailyCal(bmr * 1.9);
+			if (exerciseAmount == 0) {
+				dailyCal = bmr * 1.2;
+			} else if (exerciseAmount <= 1 && exerciseAmount >= 3) {
+				dailyCal = bmr * 1.375;
+			} else if (exerciseAmount <= 3 && exerciseAmount >= 5) {
+				dailyCal = bmr * 1.55;
+			} else if (exerciseAmount == 6) {
+				dailyCal = bmr * 1.725;
+			} else
+				dailyCal = bmr * 1.9;
+			
+			config.addItem("weight", kilograms + "");
+			config.addItem("height", centimeters + "");
+			config.addItem("dailyCal", dailyCal + "");
 		}
 	}
 }

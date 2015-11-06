@@ -131,7 +131,7 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// manager.switchToBookmarks();
+			 manager.switchToBookmarks();
 		}
 	}
 

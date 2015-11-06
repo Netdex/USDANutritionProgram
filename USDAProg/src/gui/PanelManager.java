@@ -55,4 +55,8 @@ public class PanelManager extends JPanel {
 	protected void switchToSettings() {
 		cardLayoutManager.show(this, "settings");
 	}
+
+	protected void switchToBookmarks() {
+		cardLayoutManager.show(this, "bookmarks");
+	}
 }

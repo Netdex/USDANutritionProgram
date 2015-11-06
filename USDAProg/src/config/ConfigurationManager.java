@@ -34,10 +34,8 @@ public class ConfigurationManager {
 		try {
 			prop.load(new FileInputStream(config));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -46,10 +44,8 @@ public class ConfigurationManager {
 		try {
 			prop.store(new FileOutputStream(config), "");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
