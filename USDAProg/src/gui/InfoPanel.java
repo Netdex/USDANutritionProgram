@@ -78,8 +78,9 @@ public class InfoPanel extends JPanel {
 		nutritionDataList.add(unitsEntryPrompt);
 
 		/*
-		 * TODO unbreak this Get the number of weight measurement units for each
-		 * food.
+		 * TODO unbreak this
+		 * 
+		 * Get the number of weight measurement units for each food.
 		 * 
 		 * Use a for loop and generate that many text entry boxes, one for each
 		 * unit of measure

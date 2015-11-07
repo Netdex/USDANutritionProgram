@@ -59,6 +59,7 @@ public class SettingsPanel extends JPanel {
 		genderSelector = new JComboBox<String>(genderAmounts);
 		genderSelector.setBackground(GUI.BACKGROUND_COLOR);
 		genderSelector.setBorder(GUI.EMPTY_BORDER);
+		genderSelector.setFont(GUI.CONTENT_FONT);
 		genderLine.add(genderSelector);
 		this.add(genderLine);
 
@@ -74,12 +75,14 @@ public class SettingsPanel extends JPanel {
 		weightUnitSelector.setEditable(false);
 		weightUnitSelector.setBackground(GUI.BACKGROUND_COLOR);
 		weightUnitSelector.setBorder(GUI.EMPTY_BORDER);
+		weightUnitSelector.setFont(GUI.CONTENT_FONT);
 		weightLine.add(weightUnitSelector);
 
 		weightEntry = new JSpinner();
 		SpinnerNumberModel weightSelectorModel = new SpinnerNumberModel(0, 0,
 				1400, 1);
 		weightEntry.setModel(weightSelectorModel);
+		weightEntry.setFont(GUI.CONTENT_FONT);
 		weightLine.add(weightEntry);
 
 		this.add(weightLine);
@@ -97,12 +100,14 @@ public class SettingsPanel extends JPanel {
 		heightUnitSelector.setEditable(false);
 		heightUnitSelector.setBackground(GUI.BACKGROUND_COLOR);
 		heightUnitSelector.setBorder(GUI.EMPTY_BORDER);
+		heightUnitSelector.setFont(GUI.CONTENT_FONT);
 		heightLine.add(heightUnitSelector);
 
 		heightEntry = new JSpinner();
 		SpinnerNumberModel heightSelectorModel = new SpinnerNumberModel(0, 0,
 				300, 1);
 		heightEntry.setModel(heightSelectorModel);
+		heightEntry.setFont(GUI.CONTENT_FONT);
 		heightLine.add(heightEntry);
 
 		this.add(heightLine);
@@ -119,6 +124,7 @@ public class SettingsPanel extends JPanel {
 		SpinnerNumberModel ageSelectorModel = new SpinnerNumberModel(0, 0, 150,
 				1);
 		ageEntry.setModel(ageSelectorModel);
+		ageEntry.setFont(GUI.CONTENT_FONT);
 		ageLine.add(ageEntry);
 
 		this.add(ageLine);
@@ -134,6 +140,7 @@ public class SettingsPanel extends JPanel {
 
 		Integer[] exerciseAmounts = { 0, 1, 2, 3, 4, 5, 6, 7 };
 		exerciseSelector = new JComboBox<Integer>(exerciseAmounts);
+		exerciseSelector.setFont(GUI.CONTENT_FONT);
 		exerciseLine.add(exerciseSelector);
 
 		this.add(exerciseLine);
@@ -166,8 +173,15 @@ public class SettingsPanel extends JPanel {
 						.toString()) / 0.393701;
 
 			int age = 0;
-
 			age = (int) ageEntry.getValue();
+
+			if (age == 0 || weight == 0 || height == 0) {
+				JOptionPane.showConfirmDialog(SettingsPanel.this,
+						"None of the entries can be zero", "Invalid entry",
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 
 			double bmr;
 			if (genderSelector.getSelectedItem().toString().equals("Male"))

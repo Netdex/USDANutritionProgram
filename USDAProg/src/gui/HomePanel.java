@@ -38,7 +38,6 @@ public class HomePanel extends JPanel {
 		buttonQuad.setBackground(Color.BLACK);
 
 		// create five buttons
-		// TODO Proper images need to be created
 		JButton searchButton = new JButton();
 		try {
 			searchButton.setIcon(new ImageIcon(ImageIO.read(

@@ -35,9 +35,9 @@ public class GUI extends JFrame {
 		CONFIG.load();
 		this.setSize(480, 640);
 		try {
-			// TODO make proper image
-			this.setIconImage(ImageIO.read(new File("images/thisIcon.png")));
+			this.setIconImage(ImageIO.read(new File("images/windowIcon.png")));
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		PanelManager manager = new PanelManager();
 		this.add(manager);

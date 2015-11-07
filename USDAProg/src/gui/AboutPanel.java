@@ -18,7 +18,6 @@ public class AboutPanel extends JPanel {
 	PanelManager manager;
 
 	public AboutPanel(PanelManager manager) {
-		// TODO make this look less gross
 		super();
 		this.manager = manager;
 		this.setLayout(new GridLayout(3, 0));

@@ -18,14 +18,12 @@ public class HomeButton extends JButton {
 	public HomeButton(PanelManager manager) {
 		super();
 		try {
-			// TODO make better icon
 			this.setIcon(new ImageIcon(ImageIO.read(
 					new File("images/homeButton.png")).getScaledInstance(48,
 					48, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.setPreferredSize(new Dimension(48, 48));
 		this.manager = manager;
 		this.setBackground(java.awt.Color.WHITE);
 		addActionListener(new HomeButtonActionListener());
