@@ -1,15 +1,17 @@
 package gui;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class AboutPanel extends JPanel {
 
@@ -19,8 +21,9 @@ public class AboutPanel extends JPanel {
 		// TODO make this look less gross
 		super();
 		this.manager = manager;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new GridLayout(3, 0));
 		this.setAlignmentY(CENTER_ALIGNMENT);
+		this.setBackground(GUI.BACKGROUND_COLOR);
 
 		JPanel header = new JPanel();
 		header.setBackground(GUI.HEADER_GREY);
@@ -42,11 +45,13 @@ public class AboutPanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		icon.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(icon);
 
 		JLabel info = new JLabel(
-				"(C) 2015 Gordon Guan and Vince Ou.\nCreated for ICS4UE Unit 3 Final Project.");
-		info.setFont(GUI.CONTENT_FONT);
+				"<html>&copy; 2015 Gordon Guan and Vince Ou.<br>Created for ICS4UE Unit 3 Final Project.<br>Did you enjoy reading in this hideous font?</html>");
+		info.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+		info.setHorizontalAlignment(SwingConstants.RIGHT);
 		info.setBackground(GUI.BACKGROUND_COLOR);
 		this.add(info);
 	}

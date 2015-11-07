@@ -80,7 +80,6 @@ public class SettingsPanel extends JPanel {
 		SpinnerNumberModel weightSelectorModel = new SpinnerNumberModel(0, 0,
 				1400, 1);
 		weightEntry.setModel(weightSelectorModel);
-		weightEntry.setBackground(GUI.BACKGROUND_COLOR);
 		weightLine.add(weightEntry);
 
 		this.add(weightLine);
@@ -102,9 +101,8 @@ public class SettingsPanel extends JPanel {
 
 		heightEntry = new JSpinner();
 		SpinnerNumberModel heightSelectorModel = new SpinnerNumberModel(0, 0,
-				1400, 1);
+				300, 1);
 		heightEntry.setModel(heightSelectorModel);
-		heightEntry.setBackground(GUI.BACKGROUND_COLOR);
 		heightLine.add(heightEntry);
 
 		this.add(heightLine);
@@ -152,42 +150,27 @@ public class SettingsPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 
 			double weight = 0;
-			try {
-				if (weightUnitSelector.getEditor().getItem().toString()
-						.equals("kg"))
-					weight = (double) weightEntry.getValue();
-				else
-					weight = (double) weightEntry.getValue() / 2.20462;
-			} catch (NumberFormatException nfe) {
-				JOptionPane.showMessageDialog(SettingsPanel.this,
-						"Please enter a weight", "Invalid weight",
-						JOptionPane.ERROR_MESSAGE);
-			}
+			if (weightUnitSelector.getSelectedItem().toString().equals("kg"))
+				weight = Double.parseDouble(weightEntry.getModel().getValue()
+						.toString());
+			else
+				weight = Double.parseDouble(weightEntry.getModel().getValue()
+						.toString()) / 2.20462;
 
 			double height = 0;
-			try {
-				if (heightUnitSelector.getEditor().getItem().toString()
-						.equals("cm"))
-					height = (double) heightEntry.getValue();
-				else
-					height = (double) heightEntry.getValue() / 0.393701;
-			} catch (NumberFormatException exc) {
-				JOptionPane.showMessageDialog(SettingsPanel.this,
-						"Please enter a height", "Invalid height",
-						JOptionPane.ERROR_MESSAGE);
-			}
+			if (heightUnitSelector.getSelectedItem().toString().equals("cm"))
+				height = Double.parseDouble(heightEntry.getModel().getValue()
+						.toString());
+			else
+				height = Double.parseDouble(heightEntry.getModel().getValue()
+						.toString()) / 0.393701;
 
 			int age = 0;
-			try {
-				age = (int) ageEntry.getValue();
-			} catch (NumberFormatException whee) {
-				JOptionPane.showMessageDialog(SettingsPanel.this,
-						"Please enter an age", "Invalid age",
-						JOptionPane.ERROR_MESSAGE);
-			}
+
+			age = (int) ageEntry.getValue();
 
 			double bmr;
-			if (genderSelector.getSelectedItem().equals("Male"))
+			if (genderSelector.getSelectedItem().toString().equals("Male"))
 				bmr = 88.362 + (13.397 * weight) + (4.799 * height)
 						- (5.677 * age);
 			else
@@ -205,6 +188,10 @@ public class SettingsPanel extends JPanel {
 				dailyCal = bmr * 1.725;
 			} else
 				dailyCal = bmr * 1.9;
+
+			System.out.println(genderSelector.getSelectedItem() + " weighs "
+					+ weight + "kg, is " + height + "cm tall, exercises "
+					+ exerciseAmount + " times per week");
 
 			GUI.CONFIG.addItem("userNutritionMultiplier", dailyCal / 2000);
 

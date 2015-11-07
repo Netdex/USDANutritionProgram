@@ -14,24 +14,28 @@ public class FoodListPanel extends JPanel {
 	PanelManager manager;
 	FoodGroup group;
 
+	JPanel header;
+
 	protected FoodListPanel(PanelManager manager) {
 		super();
 		this.manager = manager;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setAlignmentY(Component.LEFT_ALIGNMENT);
 
-		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		header = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		header.setBackground(GUI.HEADER_GREY);
 		header.add(new HomeButton(manager));
 		header.add(new BackButton(manager.getGroupPanel(), manager));
 
-		JLabel title = new JLabel();
-		title.setText(group.toString()); // check if this works
-		title.setFont(GUI.TITLE_FONT);
-		title.setOpaque(true);
 	}
 
 	protected void setFoodGroup(FoodGroup group) {
 		this.group = group;
+		JLabel title = new JLabel();
+		title.setText(group.toString()); // check if this works
+		title.setFont(GUI.TITLE_FONT);
+		title.setOpaque(true);
+		header.add(title);
+		// header needs to be added to the panel eventually
 	}
 }

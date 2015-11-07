@@ -35,9 +35,9 @@ public class FoodItemButton extends JButton {
 		foodDescription.setOpaque(false);
 		contents.add(foodDescription);
 
-		JLabel extraInfo = new JLabel(food.getLangualGroup().getLanguaLs()
-				.toString()); // does this return all the LanguaLs in a nice
-								// string separated by semicolons?
+		String languals = food.getLangualGroup().getLanguaLs().toString();
+		JLabel extraInfo = new JLabel(languals.substring(0,
+				languals.lastIndexOf(';', 20)));
 		extraInfo.setFont(GUI.CONTENT_FONT);
 		extraInfo.setForeground(GUI.HEADER_GREY);
 		extraInfo.setOpaque(false);
