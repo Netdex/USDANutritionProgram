@@ -22,7 +22,7 @@ public class GroupPanel extends JPanel implements ActionListener {
 	public GroupPanel(PanelManager manager) {
 		super();
 		this.setLayout(new BorderLayout());
-		this.setBackground(GUI.BACKGROUND_WHITE);
+		this.setBackground(GUI.BACKGROUND_BLUE);
 		this.manager = manager;
 
 		JPanel header = new JPanel();
@@ -31,9 +31,9 @@ public class GroupPanel extends JPanel implements ActionListener {
 
 		JLabel title = new JLabel("FOOD GROUPS");
 		title.setFont(GUI.TITLE_FONT);
-		title.setBackground(GUI.HEADER_GREY);
+		title.setBackground(GUI.HEADER_ORANGE);
 		header.add(title);
-		header.setBackground(GUI.HEADER_GREY);
+		header.setBackground(GUI.HEADER_ORANGE);
 		this.add(header, BorderLayout.NORTH);
 
 		// TODO needs to be a way to find a list of all food groups
@@ -43,7 +43,7 @@ public class GroupPanel extends JPanel implements ActionListener {
 		// replace this with a list of all foods under this food group
 		JList<FoodGroupButton> groupSelector = new JList<FoodGroupButton>(
 				groupSelectorModel);
-		groupSelector.setBackground(GUI.BACKGROUND_WHITE);
+		groupSelector.setBackground(GUI.BACKGROUND_BLUE);
 		this.add(groupSelector);
 	}
 

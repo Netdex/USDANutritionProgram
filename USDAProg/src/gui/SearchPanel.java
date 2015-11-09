@@ -15,26 +15,31 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import parser.DataManager;
+import parser.parsables.FoodItem;
+
 public class SearchPanel extends JPanel {
 
 	PanelManager manager;
 	JTextField searchBox;
 
+	Color searchBoxGray = new Color(2, 2, 2);
+
 	public SearchPanel(PanelManager manager) {
 		super();
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
-		this.setBackground(GUI.BACKGROUND_WHITE);
+		this.setBackground(GUI.BACKGROUND_BLUE);
 
 		JPanel bannerTitlePanel = new JPanel();
 		bannerTitlePanel.setLayout(new FlowLayout());
-		bannerTitlePanel.setBackground(GUI.HEADER_GREY);
+		bannerTitlePanel.setBackground(GUI.HEADER_ORANGE);
 		bannerTitlePanel.add(new HomeButton(manager));
 
 		searchBox = new JTextField("Search...", 22);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-		searchBox.setBackground(GUI.BACKGROUND_WHITE);
-		searchBox.setForeground(GUI.HEADER_GREY);
+		searchBox.setBackground(Color.WHITE);
+		searchBox.setForeground(searchBoxGray);
 		searchBox.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				searchBox.setText("");
@@ -46,12 +51,16 @@ public class SearchPanel extends JPanel {
 		this.add(bannerTitlePanel, BorderLayout.NORTH);
 	}
 
-	// TODO make searching work
 	private void findResults(String query) {
-		// go find top 25, then displayResults them
+		// deal with an empty array
+		FoodItem[] results = GUI.dataManager.searchForItem(query.split(" "));
+		FoodItemButton[] resultsListModel = new FoodItemButton[results.length];
 
-		ArrayList<FoodItemButton> resultsListModel = new ArrayList<FoodItemButton>();
-		JList<FoodItemButton> resultsList = new JList<FoodItemButton>();
+		for (int i = 0; i < results.length; i++) {
+			resultsListModel[i] = new FoodItemButton(results[i], manager);
+		}
+		JList<FoodItemButton> resultsList = new JList<FoodItemButton>(
+				resultsListModel);
 		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		resultsList.setLayoutOrientation(JList.VERTICAL);
 
@@ -60,7 +69,7 @@ public class SearchPanel extends JPanel {
 
 	protected void resetSearchBox() {
 		searchBox.setText("Search...");
-		searchBox.setForeground(GUI.HEADER_GREY);
+		searchBox.setForeground(searchBoxGray);
 		// clear all previous search results
 	}
 

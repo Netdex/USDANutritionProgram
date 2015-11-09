@@ -23,16 +23,16 @@ public class AboutPanel extends JPanel {
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
 		this.setAlignmentY(CENTER_ALIGNMENT);
-		this.setBackground(GUI.BACKGROUND_WHITE);
+		this.setBackground(GUI.BACKGROUND_BLUE);
 
 		JPanel header = new JPanel();
-		header.setBackground(GUI.HEADER_GREY);
+		header.setBackground(GUI.HEADER_ORANGE);
 		header.setLayout(new FlowLayout(FlowLayout.LEFT));
 		header.add(new HomeButton(manager));
 
 		JLabel title = new JLabel("ABOUT");
 		title.setFont(GUI.TITLE_FONT);
-		title.setBackground(GUI.HEADER_GREY);
+		title.setBackground(GUI.HEADER_ORANGE);
 		header.add(title);
 
 		this.add(header, BorderLayout.NORTH);
@@ -52,7 +52,7 @@ public class AboutPanel extends JPanel {
 				"<html>&copy; 2015 Gordon Guan and Vince Ou.<br>Created for ICS4UE Unit 3 Final Project.<br>Did you enjoy reading in this hideous font?</html>");
 		info.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 		info.setHorizontalAlignment(SwingConstants.RIGHT);
-		info.setBackground(GUI.BACKGROUND_WHITE);
+		info.setBackground(GUI.BACKGROUND_BLUE);
 		this.add(info, BorderLayout.SOUTH);
 	}
 }

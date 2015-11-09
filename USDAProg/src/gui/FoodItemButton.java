@@ -21,6 +21,7 @@ public class FoodItemButton extends JButton {
 		super();
 		this.food = food;
 		this.manager = manager;
+		this.setBackground(GUI.ACCENT_YELLOW);
 
 		JPanel contents = new JPanel();
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -39,7 +40,7 @@ public class FoodItemButton extends JButton {
 		JLabel extraInfo = new JLabel(languals.substring(0,
 				languals.lastIndexOf(';', 20)));
 		extraInfo.setFont(GUI.CONTENT_FONT);
-		extraInfo.setForeground(GUI.HEADER_GREY);
+		extraInfo.setForeground(GUI.HEADER_ORANGE);
 		extraInfo.setOpaque(false);
 		contents.add(extraInfo);
 	}

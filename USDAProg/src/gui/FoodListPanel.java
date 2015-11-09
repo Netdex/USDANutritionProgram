@@ -23,7 +23,7 @@ public class FoodListPanel extends JPanel {
 		this.setAlignmentY(Component.LEFT_ALIGNMENT);
 
 		header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(GUI.HEADER_GREY);
+		header.setBackground(GUI.HEADER_ORANGE);
 		header.add(new HomeButton(manager));
 		header.add(new BackButton(manager.getGroupPanel(), manager));
 
