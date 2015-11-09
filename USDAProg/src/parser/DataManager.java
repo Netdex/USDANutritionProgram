@@ -29,6 +29,7 @@ public class DataManager {
 	 */
 	public void init(File... files) {
 		parser = new Parser(files, lwindow);
+		lwindow.setVisible(true);
 		parser.parseData();
 	}
 

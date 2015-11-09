@@ -14,7 +14,7 @@ import javax.swing.border.TitledBorder;
 public class LoadingWindow extends JFrame {
 
 	private JProgressBar progressBar;
-	private final static Color LOADING_BAR_COLOR = new Color(6012382);
+	private static final Color LOADING_BAR_COLOR = new Color(6012382);
 
 	public LoadingWindow() {
 		super("Loading..");
