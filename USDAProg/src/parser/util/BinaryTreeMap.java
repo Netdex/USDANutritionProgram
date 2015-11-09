@@ -3,94 +3,112 @@ package parser.util;
 import parser.util.BinaryTree.BinaryTreeNode;
 
 public class BinaryTreeMap<K extends Comparable<K>, V> {
-	
+
 	public BalancedBinaryTree<HashTableNode<K, V>> tree = new BalancedBinaryTree<HashTableNode<K, V>>();
-	
-	public BinaryTreeMap(){
-		
+
+	public BinaryTreeMap() {
+
 	}
-	
+
 	/**
-	 * Probably the most useful method you will ever have.
-	 * Selects all items from this BinaryTreeMap which match a Selector of type V.
-	 * The selector is given the value, and then the selector can determine whether or not to add
-	 * this item to the list.
+	 * Probably the most useful method you will ever have. Selects all items
+	 * from this BinaryTreeMap which match a Selector of type V. The selector is
+	 * given the value, and then the selector can determine whether or not to
+	 * add this item to the list.
 	 * 
 	 * @param sel The selector to base adding decisions on
 	 * @return The list of selected items
 	 */
-	public DoublyLinkedList<V> selectAllItems(Selector<V> sel){
+	public DoublyLinkedList<V> selectAllItems(Selector<V> sel) {
 		DoublyLinkedList<V> selectedValues = new DoublyLinkedList<V>();
-		Stack <BinaryTreeNode<HashTableNode<K, V>>> stack = new Stack<>();
+		Stack<BinaryTreeNode<HashTableNode<K, V>>> stack = new Stack<>();
 		stack.push(tree.getRootNode());
-		
-		while(!stack.isEmpty()){
+
+		while (!stack.isEmpty()) {
 			BinaryTreeNode<HashTableNode<K, V>> currentNode = stack.pop();
-			if(sel.select(currentNode.getItem().getValue())){
+			if (sel.select(currentNode.getItem().getValue())) {
 				selectedValues.add(currentNode.getItem().getValue());
 			}
-			if(currentNode.getLeft() != null)
+			if (currentNode.getLeft() != null)
 				stack.push(currentNode.getLeft());
-			if(currentNode.getRight() != null)
+			if (currentNode.getRight() != null)
 				stack.push(currentNode.getRight());
 		}
 		return selectedValues;
 	}
-	
-	public DoublyLinkedList<V> getAllValues(){
+
+	public DoublyLinkedList<V> getAllValues() {
 		return selectAllItems(Selector.TRUE_SELECTOR);
 	}
-	
-	public void put(K key, V value){
+
+	public DoublyLinkedList<K> getAllKeys() {
+		DoublyLinkedList<K> selectedValues = new DoublyLinkedList<K>();
+		Stack<BinaryTreeNode<HashTableNode<K, V>>> stack = new Stack<>();
+		stack.push(tree.getRootNode());
+
+		while (!stack.isEmpty()) {
+			BinaryTreeNode<HashTableNode<K, V>> currentNode = stack.pop();
+
+			selectedValues.add(currentNode.getItem().getKey());
+
+			if (currentNode.getLeft() != null)
+				stack.push(currentNode.getLeft());
+			if (currentNode.getRight() != null)
+				stack.push(currentNode.getRight());
+		}
+		return selectedValues;
+	}
+
+	public void put(K key, V value) {
 		HashTableNode<K, V> node = new HashTableNode<>(key, value);
 		tree.add(node);
 	}
-	
-	public V get(K key){
+
+	public V get(K key) {
 		return get(key, tree.getRootNode());
 	}
-	
-	private V get(K key, BinaryTreeNode<HashTableNode<K,V>> node){
-		if(node == null)
+
+	private V get(K key, BinaryTreeNode<HashTableNode<K, V>> node) {
+		if (node == null)
 			return null;
-		if(node.getItem().getKey().equals(key))
+		if (node.getItem().getKey().equals(key))
 			return node.getItem().getValue();
-		if(node.getItem().getKey().compareTo(key) > 0){
+		if (node.getItem().getKey().compareTo(key) > 0) {
 			return get(key, node.getLeft());
-		}
-		else{
+		} else {
 			return get(key, node.getRight());
 		}
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return tree.toString();
 	}
-	
-	public static class HashTableNode<K extends Comparable<K>, V> implements Comparable<HashTableNode<K, V>> {
+
+	public static class HashTableNode<K extends Comparable<K>, V> implements
+			Comparable<HashTableNode<K, V>> {
 		private K key;
 		private V value;
-		
-		public HashTableNode(K key, V value){
+
+		public HashTableNode(K key, V value) {
 			this.key = key;
 			this.value = value;
 		}
-		
-		public K getKey(){
+
+		public K getKey() {
 			return key;
 		}
-		
-		public V getValue(){
+
+		public V getValue() {
 			return value;
 		}
-		
+
 		@Override
 		public int compareTo(HashTableNode<K, V> o) {
 			return this.getKey().compareTo(o.getKey());
 		}
-		
-		public String toString(){
-		return key.toString() + " => " + value.toString();
+
+		public String toString() {
+			return key.toString() + " => " + value.toString();
 		}
 	}
 }

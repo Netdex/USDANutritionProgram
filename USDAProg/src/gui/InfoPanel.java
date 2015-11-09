@@ -68,7 +68,7 @@ public class InfoPanel extends JPanel {
 		foodGroupLabel.setFont(GUI.CONTENT_FONT);
 		nutritionDataList.add(foodGroupLabel);
 
-		commonNameLabel = new JLabel(food.getCommmonName());
+		commonNameLabel = new JLabel(food.getCommonName());
 		commonNameLabel.setFont(GUI.CONTENT_FONT);
 		nutritionDataList.add(commonNameLabel);
 

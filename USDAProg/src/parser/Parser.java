@@ -27,8 +27,8 @@ import parser.util.DoublyLinkedList;
 public class Parser {
 
 	// Various maps for storing indexes to temporary data
-	private BinaryTreeMap<Integer, FoodItem> foodItems = new BinaryTreeMap<>();
-
+	private BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
+	
 	private BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, NutrientDescription> map_nutrDesc = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
@@ -59,12 +59,16 @@ public class Parser {
 		this.file_footnotes = footnotes;
 	}
 
-	public BinaryTreeMap<Integer, FoodItem> getParsedData() {
-		return foodItems;
+	/**
+	 * EXPENSIVE OPERATION
+	 * @return
+	 */
+	public DoublyLinkedList<FoodItem> getParsedData() {
+		return map_foodItems.getAllValues();
 	}
 
-	public BinaryTreeMap<Integer, FoodItem> getFoodItems(){
-		return foodItems;
+	public BinaryTreeMap<Integer, FoodItem> getFoodItemMap(){
+		return map_foodItems;
 	}
 	/**
 	 * Parses all the data in the given files, but asynchronously
@@ -234,7 +238,7 @@ public class Parser {
 			foodItem.setFootnotes(map_footnote.get(ndbNo));
 			
 			foodItem.getFoodGroup().addFood(foodItem);
-			foodItems.put(ndbNo, foodItem);
+			map_foodItems.put(ndbNo, foodItem);
 		}
 		br.close();
 	}

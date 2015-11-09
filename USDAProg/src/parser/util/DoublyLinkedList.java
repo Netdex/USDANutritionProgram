@@ -1,5 +1,7 @@
 package parser.util;
 
+import java.lang.reflect.Array;
+
 public class DoublyLinkedList<E> {
 
 	private DoubleLLNode<E> front;
@@ -94,7 +96,7 @@ public class DoublyLinkedList<E> {
 	public int size() {
 		int count = 0;
 		DoubleLLNode<E> currentItem = front.getNext();
-		while (currentItem != null && currentItem.getNext() != null) {
+		while (currentItem.getNext() != null) {
 			count++;
 			currentItem = currentItem.getNext();
 		}
@@ -134,10 +136,10 @@ public class DoublyLinkedList<E> {
 	 */
 	public E[] toArray() {
 		int size = this.size();
-		E[] arr = (E[]) new Object[size];
-		DoubleLLNode<E> currentNode = front;
+		E[] arr = (E[]) Array.newInstance(front.getNext().getItem().getClass(), size);
+		DoubleLLNode<E> currentNode = front.getNext();
 		int idx = 0;
-		while (front != null) {
+		while (currentNode.getNext() != null) {
 			arr[idx++] = currentNode.getItem();
 			currentNode = currentNode.getNext();
 		}

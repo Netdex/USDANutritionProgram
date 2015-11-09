@@ -226,7 +226,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	/**
 	 * @return A common name for this item
 	 */
-	public String getCommmonName() {
+	public String getCommonName() {
 		return commonName;
 	}
 
