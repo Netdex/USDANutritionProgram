@@ -24,7 +24,7 @@ public class SearchPanel extends JPanel {
 		super();
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
-		this.setBackground(GUI.BACKGROUND_COLOR);
+		this.setBackground(GUI.BACKGROUND_WHITE);
 
 		JPanel bannerTitlePanel = new JPanel();
 		bannerTitlePanel.setLayout(new FlowLayout());
@@ -33,7 +33,7 @@ public class SearchPanel extends JPanel {
 
 		searchBox = new JTextField("Search...", 22);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
-		searchBox.setBackground(GUI.BACKGROUND_COLOR);
+		searchBox.setBackground(GUI.BACKGROUND_WHITE);
 		searchBox.setForeground(GUI.HEADER_GREY);
 		searchBox.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -42,23 +42,23 @@ public class SearchPanel extends JPanel {
 			}
 		});
 		bannerTitlePanel.add(searchBox);
-		this.add(bannerTitlePanel);
 		searchBox.addKeyListener(new SearchBoxActionListener());
+		this.add(bannerTitlePanel, BorderLayout.NORTH);
 	}
 
 	// TODO make searching work
 	private void findResults(String query) {
 		// go find top 25, then displayResults them
-		
-		ArrayList<FoodItemButton> resultsListModel = new ArrayList<FoodItemButton>();// go somewhere and get this
+
+		ArrayList<FoodItemButton> resultsListModel = new ArrayList<FoodItemButton>();
 		JList<FoodItemButton> resultsList = new JList<FoodItemButton>();
 		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		resultsList.setLayoutOrientation(JList.VERTICAL);
-		
+
 		// when clicked, then switch to it...
 	}
 
-	protected void reset() {
+	protected void resetSearchBox() {
 		searchBox.setText("Search...");
 		searchBox.setForeground(GUI.HEADER_GREY);
 		// clear all previous search results

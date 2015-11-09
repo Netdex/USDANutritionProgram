@@ -53,7 +53,7 @@ public class PanelManager extends JPanel {
 
 	protected void switchToSearchPanel() {
 		cardLayoutManager.show(this, "search");
-		searchPanel.reset();
+		searchPanel.resetSearchBox();
 	}
 
 	protected void switchToInfoPanel() {

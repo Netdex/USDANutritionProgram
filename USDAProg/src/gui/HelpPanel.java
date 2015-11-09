@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.io.File;
@@ -10,6 +11,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class HelpPanel extends JPanel {
 
@@ -18,8 +20,8 @@ public class HelpPanel extends JPanel {
 	public HelpPanel(PanelManager manager) {
 		super();
 		this.manager = manager;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBackground(GUI.BACKGROUND_COLOR);
+		this.setLayout(new BorderLayout());
+		this.setBackground(GUI.BACKGROUND_WHITE);
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		header.setBackground(GUI.HEADER_GREY);
@@ -29,10 +31,9 @@ public class HelpPanel extends JPanel {
 		title.setFont(GUI.TITLE_FONT);
 		title.setOpaque(false);
 		header.add(title);
-		this.add(header);
+		this.add(header, BorderLayout.NORTH);
 
 		JLabel helpPicture = new JLabel();
-		//TODO make a proper help image
 		try {
 			helpPicture.setIcon(new ImageIcon(ImageIO.read(
 					new File("images/helpPicture.png")).getScaledInstance(400,
@@ -40,6 +41,7 @@ public class HelpPanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		helpPicture.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(helpPicture);
 	}
 }

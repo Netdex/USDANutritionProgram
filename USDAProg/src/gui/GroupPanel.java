@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +21,8 @@ public class GroupPanel extends JPanel implements ActionListener {
 
 	public GroupPanel(PanelManager manager) {
 		super();
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBackground(GUI.BACKGROUND_COLOR);
+		this.setLayout(new BorderLayout());
+		this.setBackground(GUI.BACKGROUND_WHITE);
 		this.manager = manager;
 
 		JPanel header = new JPanel();
@@ -33,7 +34,7 @@ public class GroupPanel extends JPanel implements ActionListener {
 		title.setBackground(GUI.HEADER_GREY);
 		header.add(title);
 		header.setBackground(GUI.HEADER_GREY);
-		this.add(header);
+		this.add(header, BorderLayout.NORTH);
 
 		// TODO needs to be a way to find a list of all food groups
 		// create buttons for each group (with name), and put buttons into JList
@@ -42,6 +43,7 @@ public class GroupPanel extends JPanel implements ActionListener {
 		// replace this with a list of all foods under this food group
 		JList<FoodGroupButton> groupSelector = new JList<FoodGroupButton>(
 				groupSelectorModel);
+		groupSelector.setBackground(GUI.BACKGROUND_WHITE);
 		this.add(groupSelector);
 	}
 
