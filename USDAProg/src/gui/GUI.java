@@ -18,7 +18,7 @@ public class GUI extends JFrame {
 	public static ConfigurationManager CONFIG = new ConfigurationManager(
 			new File("config.prop"));
 
-	protected final static Color BACKGROUND_COLOR = new Color(16448250);
+	protected final static Color BACKGROUND_WHITE = new Color(16448250);
 	protected final static Color HEADER_GREY = new Color(14606046);
 
 	protected static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);

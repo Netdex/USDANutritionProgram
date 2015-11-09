@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -20,9 +21,9 @@ public class AboutPanel extends JPanel {
 	public AboutPanel(PanelManager manager) {
 		super();
 		this.manager = manager;
-		this.setLayout(new GridLayout(3, 0));
+		this.setLayout(new BorderLayout());
 		this.setAlignmentY(CENTER_ALIGNMENT);
-		this.setBackground(GUI.BACKGROUND_COLOR);
+		this.setBackground(GUI.BACKGROUND_WHITE);
 
 		JPanel header = new JPanel();
 		header.setBackground(GUI.HEADER_GREY);
@@ -34,13 +35,13 @@ public class AboutPanel extends JPanel {
 		title.setBackground(GUI.HEADER_GREY);
 		header.add(title);
 
-		this.add(header);
+		this.add(header, BorderLayout.NORTH);
 
 		JLabel icon = new JLabel();
 		try {
 			icon.setIcon(new ImageIcon(ImageIO.read(
-					new File("images/aboutIcon.png")).getScaledInstance(400,
-					200, Image.SCALE_SMOOTH)));
+					new File("images/aboutIcon.png")).getScaledInstance(460,
+					230, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -51,7 +52,7 @@ public class AboutPanel extends JPanel {
 				"<html>&copy; 2015 Gordon Guan and Vince Ou.<br>Created for ICS4UE Unit 3 Final Project.<br>Did you enjoy reading in this hideous font?</html>");
 		info.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
 		info.setHorizontalAlignment(SwingConstants.RIGHT);
-		info.setBackground(GUI.BACKGROUND_COLOR);
-		this.add(info);
+		info.setBackground(GUI.BACKGROUND_WHITE);
+		this.add(info, BorderLayout.SOUTH);
 	}
 }
