@@ -4,7 +4,6 @@ import parser.InvalidParseDataException;
 
 /**
  * 
- * PLEASE DONT CHANGE THIS SHIT YET IT IS STILL A WORK IN PROGRESS
  *
  * Represents a nutrient, which is contained in a NutrientData. Modify in future
  * to use builder structure, this is temporary to allow my code to work.
@@ -20,18 +19,18 @@ public class Nutrient implements Parsable<Nutrient> {
 		ndbNo = Integer.parseInt(data[0]);
 		nutrNo = Integer.parseInt(data[1]);
 		nutrVal = Double.parseDouble(data[2]);
-		numDataPts = Integer.parseInt(data[3]);
-		stdError = data[4].equals("") ? 0 : Double.parseDouble(data[4]);
-		srcCd = data[5];
-		derivCd = data[6];
-		refNDBNo = data[7].equals("") ? 0 : Integer.parseInt(data[7]);
-		addNutrMark = data[8];
-		numStudies = data[9].equals("") ? 0 : Integer.parseInt(data[9]);
-		min = data[10].equals("") ? 0 : Double.parseDouble(data[10]);
-		max = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
-		df = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
-		lowEB = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
-		upEB = data[14].equals("") ? 0 : Double.parseDouble(data[14]);
+//		numDataPts = Integer.parseInt(data[3]);
+//		stdError = data[4].equals("") ? 0 : Double.parseDouble(data[4]);
+//		srcCd = data[5];
+//		derivCd = data[6];
+//		refNDBNo = data[7].equals("") ? 0 : Integer.parseInt(data[7]);
+//		addNutrMark = data[8];
+//		numStudies = data[9].equals("") ? 0 : Integer.parseInt(data[9]);
+//		min = data[10].equals("") ? 0 : Double.parseDouble(data[10]);
+//		max = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
+//		df = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
+//		lowEB = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
+//		upEB = data[14].equals("") ? 0 : Double.parseDouble(data[14]);
 		statCmt = data[15];
 		addModDate = data[16];
 		confidenceCode = data[17];
