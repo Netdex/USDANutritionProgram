@@ -11,8 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import parser.DataManager;
 import config.ConfigurationManager;
+import parser.DataManager;
 
 public class GUI extends JFrame {
 

@@ -3,7 +3,6 @@ package parser;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
 
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
@@ -43,15 +42,20 @@ public class DataManager {
 	}
 
 	public FoodItem[] searchForItem(String[] keys) {
+		// Check if the user is searching for an NDB number
 		if (keys.length == 1) {
 			if (keys[0].matches("[0-9]{5}")) {
 				return new FoodItem[] { parser.getFoodItemMap().get(Integer.parseInt(keys[0])) };
 			}
 		}
+		// Get the map of food items
 		BinaryTreeMap<Integer, FoodItem> map_foodItems = parser.getFoodItemMap();
+		// Extract the list of food items from the map
 		FoodItem[] foodItems = map_foodItems.getAllValues().toArray();
+		// Create a map to store the score of each food item
 		BinaryTreeMap<FoodItem, Double> map_results = new BinaryTreeMap<>();
 		for (int foodIdx = 0; foodIdx < foodItems.length; foodIdx++) {
+			// Rank each food item by appearance of keys in the text
 			double count = 0;
 			FoodItem fi = foodItems[foodIdx];
 			String[] tokens = foodItems[foodIdx].getLongDescription().replaceAll("[^A-Za-z ]", "")
@@ -60,7 +64,6 @@ public class DataManager {
 				if (foodItems[foodIdx].getLongDescription().toLowerCase()
 						.contains(keys[keyIdx].toLowerCase()))
 					count += 0.5;
-
 				boolean found = false;
 				for (int i = 0; i < tokens.length; i++)
 					if (tokens[i].equalsIgnoreCase(keys[keyIdx])) {
@@ -74,9 +77,11 @@ public class DataManager {
 				map_results.put(fi, count);
 		}
 		// System.out.println(map_results);
+		// Get all the food items which had a score of at least 1
 		FoodItem[] matched = map_results.getAllKeys().toArray();
 		if (matched == null)
 			return new FoodItem[0];
+		// Sort the list of food items by their score
 		Arrays.sort(matched, new Comparator<FoodItem>() {
 			@Override
 			public int compare(FoodItem a, FoodItem b) {
@@ -87,6 +92,7 @@ public class DataManager {
 				return 0;
 			}
 		});
+		// Return a list of matches capped at 25
 		return Arrays.copyOf(matched, Math.min(matched.length, 25));
 	}
 
