@@ -16,6 +16,7 @@ public class DoublyLinkedList<E> {
 
 	public boolean add(E item) {
 		DoubleLLNode<E> newNode = new DoubleLLNode<E>(item);
+		
 		DoubleLLNode<E> currentItem = front;
 		while (currentItem != null && currentItem.getNext().getNext() != null) {
 			currentItem = currentItem.getNext();
@@ -157,14 +158,6 @@ public class DoublyLinkedList<E> {
 			currentItem = currentItem.getNext();
 		}
 		ts += "]";
-		// ts += "\n[";
-		// currentItem = back.getPrevious();
-		// while (currentItem != null && currentItem.getPrevious() != null)
-		// {
-		// ts += currentItem.getItem().toString() + ", ";
-		// currentItem = currentItem.getPrevious();
-		// }
-		// ts += "]";
 		return ts;
 	}
 
