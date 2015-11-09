@@ -178,7 +178,8 @@ public class Parser {
 			System.err.println("PARSING FOOD DESCRIPTIONS");
 			this.parseFoodDescriptions();
 			System.err.println("DONE");
-
+			lwindow.setVisible(false);
+			
 			long end = System.currentTimeMillis() - start;
 			System.err.println("Took " + end + "ms");
 
