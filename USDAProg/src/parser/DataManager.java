@@ -28,6 +28,10 @@ public class DataManager {
 		parser = new Parser(files[0], files[1], files[2], files[3], files[4], files[5], files[6], files[7]);
 		parser.parseData();
 	}
+	public void initAsync(File... files){
+		parser = new Parser(files[0], files[1], files[2], files[3], files[4], files[5], files[6], files[7]);
+		parser.parseDataAsync();
+	}
 	
 	public FoodGroup[] getFoodGroups(){
 		return parser.getFoodGroups().toArray();
@@ -48,6 +52,8 @@ public class DataManager {
 				map_results.put(fi, count);
 		}
 		FoodItem[] matched = map_results.getAllKeys().toArray();
+		if(matched == null)
+			return new FoodItem[0];
 		Arrays.sort(matched, new Comparator<FoodItem>(){
 			@Override
 			public int compare(FoodItem a, FoodItem b) {

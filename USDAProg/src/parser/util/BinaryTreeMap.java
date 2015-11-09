@@ -20,6 +20,8 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 	 * @return The list of selected items
 	 */
 	public DoublyLinkedList<V> selectAllItems(Selector<V> sel) {
+		if(tree.size() == 0)
+			return new DoublyLinkedList<V>();
 		DoublyLinkedList<V> selectedValues = new DoublyLinkedList<V>();
 		Stack<BinaryTreeNode<HashTableNode<K, V>>> stack = new Stack<>();
 		stack.push(tree.getRootNode());
@@ -42,6 +44,8 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 	}
 
 	public DoublyLinkedList<K> getAllKeys() {
+		if(tree.size() == 0)
+			return new DoublyLinkedList<K>();
 		DoublyLinkedList<K> selectedValues = new DoublyLinkedList<K>();
 		Stack<BinaryTreeNode<HashTableNode<K, V>>> stack = new Stack<>();
 		stack.push(tree.getRootNode());
