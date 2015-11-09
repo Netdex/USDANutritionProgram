@@ -16,6 +16,7 @@ import parser.parsables.Nutrient;
 import parser.parsables.NutrientData;
 import parser.parsables.NutrientDescription;
 import parser.util.BinaryTreeMap;
+import parser.util.DoublyLinkedList;
 
 /**
  * Creates data structures out of the given files
@@ -231,6 +232,8 @@ public class Parser {
 			foodItem.setNutrientData(map_nutrData.get(ndbNo));
 			foodItem.setLangualGroup(map_langualGroup.get(ndbNo));
 			foodItem.setFootnotes(map_footnote.get(ndbNo));
+			
+			foodItem.getFoodGroup().addFood(foodItem);
 			foodItems.put(ndbNo, foodItem);
 		}
 		br.close();
@@ -280,5 +283,9 @@ public class Parser {
 			map_nutrData.get(nutr.getNDBNo()).addNutrient(nutr);
 		}
 		br.close();
+	}
+	
+	public DoublyLinkedList<FoodGroup> getFoodGroups(){
+		return map_foodGroup.getAllValues();
 	}
 }

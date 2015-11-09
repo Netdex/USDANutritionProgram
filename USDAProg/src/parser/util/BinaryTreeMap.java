@@ -35,8 +35,12 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 				stack.push(currentNode.getRight());
 		}
 		return selectedValues;
-		
 	}
+	
+	public DoublyLinkedList<V> getAllValues(){
+		return selectAllItems(Selector.TRUE_SELECTOR);
+	}
+	
 	public void put(K key, V value){
 		HashTableNode<K, V> node = new HashTableNode<>(key, value);
 		tree.add(node);

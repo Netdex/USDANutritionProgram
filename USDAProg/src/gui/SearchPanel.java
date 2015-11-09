@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
-
-import parser.parsables.FoodItem;
 
 public class SearchPanel extends JPanel {
 

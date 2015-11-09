@@ -1,6 +1,7 @@
 package parser.parsables;
 
 import parser.InvalidParseDataException;
+import parser.util.DoublyLinkedList;
 
 /**
  * Represents a food group
@@ -10,6 +11,7 @@ import parser.InvalidParseDataException;
 public class FoodGroup implements Parsable<FoodGroup> {
 	
 	private static final int PARSE_DATA_LENGTH = 2;
+	private DoublyLinkedList<FoodItem> foods = new DoublyLinkedList<FoodItem>();
 	
 	@Override
 	public FoodGroup parse(String[] data) throws InvalidParseDataException {
@@ -29,6 +31,14 @@ public class FoodGroup implements Parsable<FoodGroup> {
 
 	}
 
+	public DoublyLinkedList<FoodItem> getFoods(){
+		return foods;
+	}
+	
+	public void addFood(FoodItem fi){
+		this.foods.add(fi);
+	}
+	
 	/**
 	 * @return The ID of this food group
 	 */

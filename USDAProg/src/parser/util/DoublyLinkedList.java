@@ -129,6 +129,21 @@ public class DoublyLinkedList<E> {
 		}
 	}
 
+	/**
+	 * @return a primitive array of this DoublyLinkedList
+	 */
+	public E[] toArray() {
+		int size = this.size();
+		E[] arr = (E[]) new Object[size];
+		DoubleLLNode<E> currentNode = front;
+		int idx = 0;
+		while (front != null) {
+			arr[idx++] = currentNode.getItem();
+			currentNode = currentNode.getNext();
+		}
+		return arr;
+	}
+
 	@Override
 	public String toString() {
 		String ts = "[";
