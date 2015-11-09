@@ -43,31 +43,37 @@ public class DataManager {
 	}
 
 	public FoodItem[] searchForItem(String[] keys) {
+		if (keys.length == 1) {
+			if (keys[0].matches("[0-9]{5}")) {
+				return new FoodItem[] { parser.getFoodItemMap().get(Integer.parseInt(keys[0])) };
+			}
+		}
 		BinaryTreeMap<Integer, FoodItem> map_foodItems = parser.getFoodItemMap();
 		FoodItem[] foodItems = map_foodItems.getAllValues().toArray();
 		BinaryTreeMap<FoodItem, Double> map_results = new BinaryTreeMap<>();
 		for (int foodIdx = 0; foodIdx < foodItems.length; foodIdx++) {
 			double count = 0;
 			FoodItem fi = foodItems[foodIdx];
-			String[] tokens = foodItems[foodIdx].getLongDescription().replaceAll("[^A-Za-z ]", "").split(" ");
+			String[] tokens = foodItems[foodIdx].getLongDescription().replaceAll("[^A-Za-z ]", "")
+					.split(" ");
 			for (int keyIdx = 0; keyIdx < keys.length; keyIdx++) {
 				if (foodItems[foodIdx].getLongDescription().toLowerCase()
 						.contains(keys[keyIdx].toLowerCase()))
 					count += 0.5;
-				
+
 				boolean found = false;
-				for(int i = 0; i < tokens.length; i++)
-					if(tokens[i].equalsIgnoreCase(keys[keyIdx])){
+				for (int i = 0; i < tokens.length; i++)
+					if (tokens[i].equalsIgnoreCase(keys[keyIdx])) {
 						found = true;
 						break;
 					}
-				if(found)
+				if (found)
 					count += 0.5;
 			}
 			if (count > 0)
 				map_results.put(fi, count);
 		}
-//		System.out.println(map_results);
+		// System.out.println(map_results);
 		FoodItem[] matched = map_results.getAllKeys().toArray();
 		if (matched == null)
 			return new FoodItem[0];
