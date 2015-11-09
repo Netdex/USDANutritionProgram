@@ -21,10 +21,10 @@ public class HelpPanel extends JPanel {
 		super();
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
-		this.setBackground(GUI.BACKGROUND_WHITE);
+		this.setBackground(GUI.BACKGROUND_COLOUR);
 
 		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		header.setBackground(GUI.HEADER_GREY);
+		header.setBackground(GUI.HEADER_COLOUR);
 		header.add(new HomeButton(this.manager));
 
 		JLabel title = new JLabel("HELP");
