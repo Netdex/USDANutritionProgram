@@ -75,15 +75,17 @@ public class SearchPanel extends JPanel {
 		FoodItem[] results = GUI.dataManager.searchForItem(query.split(" "));
 
 		for (int i = 0; i < results.length; i++) {
-			System.out.println(resultsPanel);
 			resultsPanel.add(new FoodItemButton(results[i], manager));
 		}
+		// TODO FIX HACK
+		manager.switchToHome();
+		manager.switchToSearchPanel();
 	}
 
 	protected void resetSearchBox() {
 		searchBox.setText("Search...");
 		searchBox.setForeground(searchBoxGray);
-		resultsPanel = null;
+//		resultsPanel = null;
 	}
 
 	class FoodItemButton extends JButton {
