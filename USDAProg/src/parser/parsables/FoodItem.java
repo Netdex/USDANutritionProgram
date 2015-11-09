@@ -19,6 +19,14 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	private Footnote footnotes;
 	
 	@Override
+	public boolean equals(Object o){
+		if(o instanceof FoodItem){
+			return ((FoodItem)o).getNDBNo() == this.getNDBNo();
+		}
+		return false;
+		
+	}
+	@Override
 	public FoodItem parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();

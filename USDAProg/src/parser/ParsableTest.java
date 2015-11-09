@@ -18,7 +18,6 @@ public class ParsableTest {
 	 */
 	public static void main(String[] args) {
 		dataTest();
-		
 	}
 
 	
