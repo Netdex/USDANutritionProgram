@@ -28,7 +28,7 @@ public class Parser {
 
 	// Various maps for storing indexes to temporary data
 	private BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
-	
+
 	private BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, NutrientDescription> map_nutrDesc = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
@@ -47,8 +47,8 @@ public class Parser {
 	private File file_langualDesc;
 	private File file_footnotes;
 
-	public Parser(File foodDesc, File nutrientData, File nutrientDescription, File foodGroup, File foodWeight,
-			File langual, File langualDesc, File footnotes) {
+	public Parser(File foodDesc, File nutrientData, File nutrientDescription, File foodGroup,
+			File foodWeight, File langual, File langualDesc, File footnotes) {
 		this.file_foodDesc = foodDesc;
 		this.file_nutrientData = nutrientData;
 		this.file_nutrientDescription = nutrientDescription;
@@ -61,24 +61,95 @@ public class Parser {
 
 	/**
 	 * EXPENSIVE OPERATION
+	 * 
 	 * @return
 	 */
 	public DoublyLinkedList<FoodItem> getParsedData() {
 		return map_foodItems.getAllValues();
 	}
 
-	public BinaryTreeMap<Integer, FoodItem> getFoodItemMap(){
+	public BinaryTreeMap<Integer, FoodItem> getFoodItemMap() {
 		return map_foodItems;
 	}
+
 	/**
 	 * Parses all the data in the given files, but asynchronously
 	 */
 	public void parseDataAsync() {
-		new Thread() {
-			public void run() {
-				parseData();
+		Thread[] threads = new Thread[5];
+		new Thread(){
+			public void run(){
+				long start = System.currentTimeMillis();
+				try {
+					threads[0] = new Thread() {
+						public void run() {
+							try {
+								System.err.println("PARSING FOOD GROUPS");
+								parseFoodGroups();
+							} catch (Exception e) {
+
+							}
+						}
+					};
+					threads[1] = new Thread() {
+						public void run() {
+							try {
+								System.err.println("PARSING FOOD WEIGHTS");
+								parseFoodWeights();
+							} catch (Exception e) {
+
+							}
+						}
+					};
+					threads[2] = new Thread() {
+						public void run() {
+							try {
+								System.err.println("PARSING FOOTNOTES");
+								parseFootnotes();
+							} catch (Exception e) {
+
+							}
+						}
+					};
+					threads[3] = new Thread() {
+						public void run() {
+							try {
+								System.err.println("PARSING NUTRIENT DEFINITIONS");
+								parseNutrientDefinitions();
+								System.err.println("PARSING NUTRIENT DATA");
+								parseNutrientData();
+							} catch (Exception e) {
+
+							}
+						}
+					};
+					threads[4] = new Thread() {
+						public void run() {
+							try {
+								System.err.println("PARSING LANGUAL DESCRIPTIONS");
+								parseLanguaLDescriptions();
+								System.err.println("PARSING LANGUAL DATA");
+								parseLanguaL();
+							} catch (Exception e) {
+
+							}
+						}
+					};
+					for(int i = 0; i < 5; i++)
+						threads[i].start();
+					for(int i = 0; i < 5; i++)
+						threads[i].join();
+					System.err.println("PARSING FOOD DESCRIPTIONS");
+					parseFoodDescriptions();
+					System.err.println("DONE");
+				} catch (Exception e) {
+
+				}
+				long end = System.currentTimeMillis() - start;
+				System.err.println("Took " + end + "ms");
 			}
 		}.start();
+		
 	}
 
 	/**
@@ -92,6 +163,8 @@ public class Parser {
 			this.parseFoodGroups();
 			System.err.println("PARSING FOOD WEIGHTS");
 			this.parseFoodWeights();
+			System.err.println("PARSING FOOTNOTES");
+			this.parseFootnotes();
 			System.err.println("PARSING NUTRIENT DEFINITIONS");
 			this.parseNutrientDefinitions();
 			System.err.println("PARSING NUTRIENT DATA");
@@ -100,8 +173,6 @@ public class Parser {
 			this.parseLanguaLDescriptions();
 			System.err.println("PARSING LANGUAL DATA");
 			this.parseLanguaL();
-			System.err.println("PARSING FOOTNOTES");
-			this.parseFootnotes();
 			System.err.println("PARSING FOOD DESCRIPTIONS");
 			this.parseFoodDescriptions();
 			System.err.println("DONE");
@@ -236,7 +307,7 @@ public class Parser {
 			foodItem.setNutrientData(map_nutrData.get(ndbNo));
 			foodItem.setLangualGroup(map_langualGroup.get(ndbNo));
 			foodItem.setFootnotes(map_footnote.get(ndbNo));
-			
+
 			foodItem.getFoodGroup().addFood(foodItem);
 			map_foodItems.put(ndbNo, foodItem);
 		}
@@ -278,9 +349,6 @@ public class Parser {
 			String[] items = line.split("\\^", -1);
 			Nutrient nutr = new Nutrient().parse(items);
 			nutr.setNutrientDescription(map_nutrDesc.get(nutr.getNutrNo()));
-			if (nutr.getNDBNo() == 01026) {
-				System.out.println("TEST");
-			}
 			NutrientData nd = map_nutrData.get(nutr.getNDBNo());
 			if (nd == null)
 				map_nutrData.put(nutr.getNDBNo(), new NutrientData());
@@ -288,8 +356,8 @@ public class Parser {
 		}
 		br.close();
 	}
-	
-	public DoublyLinkedList<FoodGroup> getFoodGroups(){
+
+	public DoublyLinkedList<FoodGroup> getFoodGroups() {
 		return map_foodGroup.getAllValues();
 	}
 }
