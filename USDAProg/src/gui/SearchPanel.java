@@ -25,7 +25,6 @@ import parser.parsables.FoodItem;
 public class SearchPanel extends JPanel {
 
 	private PanelManager manager;
-	private JPanel contents;
 	private JTextField searchBox;
 	private JList<FoodItemButton> resultsList;
 	private long prevKeyPressedTime;
@@ -59,24 +58,23 @@ public class SearchPanel extends JPanel {
 		searchBox.addKeyListener(new SearchBoxActionListener());
 		this.add(bannerTitlePanel, BorderLayout.NORTH);
 
-		contents = new JPanel();
-		contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
-		contents.setBackground(GUI.BACKGROUND_COLOUR);
+		resultsList = new JList<FoodItemButton>();
+		resultsList.setBackground(GUI.BACKGROUND_COLOUR);
+		this.add(resultsList);
 	}
 
 	private void findResults(String query) {
 		// TODO deal with an empty array
 		FoodItem[] results = GUI.dataManager.searchForItem(query.split(" "));
 		FoodItemButton[] resultsListModel = new FoodItemButton[results.length];
-		
+
 		for (int i = 0; i < results.length; i++) {
 			resultsListModel[i] = new FoodItemButton(results[i], manager);
 		}
 
 		resultsList = new JList<FoodItemButton>(resultsListModel);
-		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		resultsList.setLayoutOrientation(JList.VERTICAL);
-		contents.add(resultsList);
+//		resultsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		resultsList.setLayoutOrientation(JList.VERTICAL);
 
 		// when button clicked, then switch to it...
 	}
@@ -99,24 +97,16 @@ public class SearchPanel extends JPanel {
 			this.setBackground(GUI.ACCENT_COLOUR);
 			this.addActionListener(new FoodItemButtonListener());
 
-			JPanel contents = new JPanel();
-			BoxLayout layout = new BoxLayout(contents, BoxLayout.Y_AXIS);
-			contents.setAlignmentY(Component.LEFT_ALIGNMENT);
-			contents.setLayout(layout);
-
-			//TODO make this shorter!
+		// TODO make this shorter!
 			JLabel foodDescription = new JLabel(food.getLongDescription());
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
 			foodDescription.setForeground(Color.BLACK);
 			foodDescription.setOpaque(false);
-			contents.add(foodDescription);
+			this.add(foodDescription);
+		}
 
-			JLabel extraInfo = new JLabel(this.food.getFoodGroup()
-					.getDescription());
-			extraInfo.setFont(GUI.CONTENT_FONT);
-			extraInfo.setForeground(GUI.HEADER_COLOUR);
-			extraInfo.setOpaque(false);
-			contents.add(extraInfo);
+		private FoodItem getFood() {
+			return food;
 		}
 
 		class FoodItemButtonListener implements ActionListener {
