@@ -63,25 +63,41 @@ public class DataManager {
 		BinaryTreeMap<FoodItem, Double> map_results = new BinaryTreeMap<>();
 		for (int foodIdx = 0; foodIdx < foodItems.length; foodIdx++) {
 			// Rank each food item by appearance of keys in the text
-			double count = 0;
+			double score = 0;
 			FoodItem fi = foodItems[foodIdx];
-			String[] tokens = foodItems[foodIdx].getLongDescription().replaceAll("[^A-Za-z ]", "")
+			String[] tokens = fi.getLongDescription().replaceAll("[^A-Za-z ]", "")
 					.split(" ");
+			boolean relevant = false;
 			for (int keyIdx = 0; keyIdx < keys.length; keyIdx++) {
-				if (foodItems[foodIdx].getLongDescription().toLowerCase()
-						.contains(keys[keyIdx].toLowerCase()))
-					count += 0.5;
+				// Check if the phrase contains it
+				if (fi.getLongDescription().toLowerCase()
+						.contains(keys[keyIdx].toLowerCase())){
+					score += 0.5;
+					relevant = true;
+				}
+				
+				// Check if the common name contains the key
+				if(fi.getCommonName().toLowerCase().contains(keys[keyIdx].toLowerCase())){
+					score += 1;
+					relevant = true;
+				}
+				
+				// Check for whole tokens of the key
 				boolean found = false;
-				for (int i = 0; i < tokens.length; i++)
+				for (int i = 0; i < tokens.length; i++){
 					if (tokens[i].equalsIgnoreCase(keys[keyIdx])) {
 						found = true;
 						break;
 					}
+				}
 				if (found)
-					count += 0.5;
+					score += 0.5;
 			}
-			if (count > 0)
-				map_results.put(fi, count);
+			if(relevant){
+				score += 1.0 / fi.getLongDescription().length();
+			}
+			if (score > 0)
+				map_results.put(fi, score);
 		}
 		// System.out.println(map_results);
 		// Get all the food items which had a score of at least 1
@@ -100,6 +116,9 @@ public class DataManager {
 			}
 		});
 		// Return a list of matches capped at 25
+//		for(FoodItem s : matched){
+//			System.out.println(s + " " + map_results.get(s));
+//		}
 		return Arrays.copyOf(matched, Math.min(matched.length, 25));
 	}
 
