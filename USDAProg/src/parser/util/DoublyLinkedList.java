@@ -17,10 +17,7 @@ public class DoublyLinkedList<E> {
 	public boolean add(E item) {
 		DoubleLLNode<E> newNode = new DoubleLLNode<E>(item);
 
-		DoubleLLNode<E> currentItem = front;
-		while (currentItem != null && currentItem.getNext().getNext() != null) {
-			currentItem = currentItem.getNext();
-		}
+		DoubleLLNode<E> currentItem = back.getPrevious();
 		currentItem.getNext().setPrevious(newNode);
 		currentItem.setNext(newNode);
 
@@ -36,7 +33,7 @@ public class DoublyLinkedList<E> {
 	private DoubleLLNode<E> getNode(int index) {
 		DoubleLLNode<E> currentItem = front.getNext();
 		for (int i = 0; i < index; i++) {
-			if (currentItem == null || currentItem.getNext().getNext() == null)
+			if (currentItem.getNext().getNext() == null)
 				return null;
 			currentItem = currentItem.getNext();
 		}

@@ -33,7 +33,7 @@ public class LanguaL implements Parsable<LanguaL> {
 	}
 
 	public String toString() {
-		return NDBNo + " " + factorCode;
+		return langualDescription.getDesc();
 	}
 
 	public int getNDBNo() {
