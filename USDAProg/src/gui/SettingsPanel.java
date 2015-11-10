@@ -213,11 +213,13 @@ public class SettingsPanel extends JPanel {
 			} else
 				dailyCal = bmr * 1.9;
 
-			System.out.println(genderSelector.getSelectedItem() + " weighs "
-					+ weight + "kg, is " + height + "cm tall, exercises "
-					+ exerciseAmount + " times per week");
+			double nutritionMultiplier = dailyCal / 2000;
 
-			GUI.CONFIG.addItem("userNutritionMultiplier", dailyCal / 2000);
+			manager.getInfoPanel().setNutritionMultiplier(
+					nutritionMultiplier);
+
+			GUI.CONFIG.addItem("userNutritionMultiplier",
+					nutritionMultiplier);
 
 			GUI.CONFIG.save();
 		}

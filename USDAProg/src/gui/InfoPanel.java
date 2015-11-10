@@ -13,13 +13,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import parser.parsables.FoodItem;
 
 public class InfoPanel extends JPanel {
 
-	FoodItem food;
-	double amountOfFood;
+	private FoodItem food;
+	private double amountOfFood;
+	private double nutritionMultiplier;
 
 	private SearchPanel searchPanel;
 	private PanelManager manager;
@@ -27,6 +33,7 @@ public class InfoPanel extends JPanel {
 	private JPanel header;
 	private JPanel contentPanel;
 	private JLabel titleName;
+	private JSpinner amountEntry;
 
 	public InfoPanel(SearchPanel searchPanel, PanelManager manager) {
 		super();
@@ -59,34 +66,60 @@ public class InfoPanel extends JPanel {
 		BoxLayout contentLayout = new BoxLayout(contentPanel, BoxLayout.Y_AXIS);
 		contentPanel.setLayout(contentLayout);
 		contentPanel.setAlignmentY(LEFT_ALIGNMENT);
+
+		JScrollPane scrollPanel = new JScrollPane();
+		scrollPanel.createVerticalScrollBar();
+		scrollPanel
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
+		scrollPanel.setWheelScrollingEnabled(true);
+		scrollPanel.setHorizontalScrollBar(null);
 		this.add(contentPanel);
+
+		nutritionMultiplier = GUI.CONFIG
+				.getDouble("userNutritionMultiplier");
 	}
 
 	protected void setFoodItem(FoodItem food) {
 		contentPanel.removeAll();
 		this.food = food;
-		String name = food.getLongDescription();
+		String name = this.food.getLongDescription();
 		titleName.setText(name.substring(0, name.indexOf(',')));
 
 		JLabel longDescLabel = new JLabel("<html>" + name + "</html>");
 		longDescLabel.setFont(GUI.SUBTITLE_FONT);
 		contentPanel.add(longDescLabel);
 
-		JLabel foodGroupLabel = new JLabel(food.getFoodGroup().toString());
+		JLabel foodGroupLabel = new JLabel(this.food.getFoodGroup().toString());
 		foodGroupLabel.setFont(GUI.CONTENT_FONT);
 		contentPanel.add(foodGroupLabel);
 
-		JLabel commonNameLabel = new JLabel(food.getCommonName());
+		JLabel commonNameLabel = new JLabel(this.food.getCommonName());
 		commonNameLabel.setFont(GUI.CONTENT_FONT);
 		contentPanel.add(commonNameLabel);
 
 		JLabel unitsEntryPrompt = new JLabel(
-				"<html>Units: enter how much of the food product you are intending to consume.</html>");
+				"<html>Units: which unit of measure are you using?.</html>");
 		unitsEntryPrompt.setFont(GUI.CONTENT_FONT);
 		contentPanel.add(unitsEntryPrompt);
 
+		// TODO get the units used to measure this type of food
+		// use a JComboBox
+
+		JLabel amountEntryPrompt = new JLabel(
+				"<html>How much (in the units above) are you intending to consume?</html>");
+		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
+		contentPanel.add(amountEntryPrompt);
+
+		SpinnerNumberModel amountModel = new SpinnerNumberModel(0.0, 0.0,
+				Integer.MAX_VALUE, 1.0);
+		amountEntry = new JSpinner(amountModel);
+		amountEntry.setFont(GUI.CONTENT_FONT);
+		amountEntry.addChangeListener(new AmountEntryListener());
+		contentPanel.add(amountEntry);
+
 		/*
-		 * TODO unbreak this
+		 * unbreak this
 		 * 
 		 * Get the number of weight measurement units for each food.
 		 * 
@@ -98,6 +131,24 @@ public class InfoPanel extends JPanel {
 		 * Do math with all the nutrients and the universal unit to figure out
 		 * the displayed amount of nutrients
 		 */
+
+	}
+
+	private void updateFields(double newAmount) {
+		amountOfFood = newAmount;
+
+	}
+
+	protected void setNutritionMultiplier(double personalizedMultiplier) {
+		this.nutritionMultiplier = personalizedMultiplier;
+	}
+
+	class AmountEntryListener implements ChangeListener {
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			updateFields((double) amountEntry.getValue());
+		}
 
 	}
 

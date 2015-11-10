@@ -28,7 +28,6 @@ public class SearchPanel extends JPanel {
 	private JScrollPane resultsList;
 	private JPanel resultsPanel;
 	private long prevKeyPressedTime;
-	private static byte SCROLL_SPEED = 20;
 
 	Color searchBoxGray = new Color(2, 2, 2);
 
@@ -70,7 +69,7 @@ public class SearchPanel extends JPanel {
 		resultsList.createVerticalScrollBar();
 		resultsList
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		resultsList.getVerticalScrollBar().setUnitIncrement(SCROLL_SPEED);
+		resultsList.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
 		resultsList.setWheelScrollingEnabled(true);
 		resultsList.setHorizontalScrollBar(null);
 		this.add(resultsList);
@@ -113,7 +112,7 @@ public class SearchPanel extends JPanel {
 			this.setBackground(GUI.ACCENT_COLOUR);
 			this.addActionListener(new FoodItemButtonListener());
 			this.setLayout(new BorderLayout());
-			this.setMaximumSize(new Dimension(470, 128));
+			this.setMaximumSize(new Dimension(460, 128));
 
 			JLabel foodDescription = new JLabel("<html>"
 					+ food.getLongDescription() + "</html>");

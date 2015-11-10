@@ -6,8 +6,6 @@ import java.util.Scanner;
 import parser.parsables.FoodItem;
 import parser.util.BTreeVisualizer;
 import parser.util.BinaryTreeMap;
-import parser.util.DoublyLinkedList;
-import parser.util.Selector;
 
 public class ParsableTest {
 
