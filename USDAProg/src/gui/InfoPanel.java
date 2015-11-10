@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,17 +69,16 @@ public class InfoPanel extends JPanel {
 		contentPanel.setLayout(contentLayout);
 		contentPanel.setAlignmentY(LEFT_ALIGNMENT);
 
-		JScrollPane scrollPanel = new JScrollPane();
+		JScrollPane scrollPanel = new JScrollPane(contentPanel);
 		scrollPanel.createVerticalScrollBar();
 		scrollPanel
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPanel.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
 		scrollPanel.setWheelScrollingEnabled(true);
 		scrollPanel.setHorizontalScrollBar(null);
-		this.add(contentPanel);
+		this.add(scrollPanel);
 
-		nutritionMultiplier = GUI.CONFIG
-				.getDouble("userNutritionMultiplier");
+		nutritionMultiplier = GUI.CONFIG.getDouble("userNutritionMultiplier");
 	}
 
 	protected void setFoodItem(FoodItem food) {
@@ -111,12 +112,15 @@ public class InfoPanel extends JPanel {
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
 		contentPanel.add(amountEntryPrompt);
 
-		SpinnerNumberModel amountModel = new SpinnerNumberModel(0.0, 0.0,
-				Integer.MAX_VALUE, 1.0);
-		amountEntry = new JSpinner(amountModel);
-		amountEntry.setFont(GUI.CONTENT_FONT);
-		amountEntry.addChangeListener(new AmountEntryListener());
-		contentPanel.add(amountEntry);
+//		SpinnerNumberModel amountModel = new SpinnerNumberModel(0.0, 0.0, 999,
+//				1.0);
+//		amountEntry = new JSpinner(amountModel);
+//		amountEntry.setMaximumSize(new Dimension(80, 30));
+//		amountEntry.setFont(GUI.CONTENT_FONT);
+//		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
+//		amountEntry.addChangeListener(new AmountEntryListener());
+//		amountEntry.setAlignmentY(LEFT_ALIGNMENT);
+//		contentPanel.add(amountEntry);
 
 		/*
 		 * unbreak this
