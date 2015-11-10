@@ -119,7 +119,7 @@ public class DataManager {
 //		for(FoodItem s : matched){
 //			System.out.println(s + " " + map_results.get(s));
 //		}
-		return Arrays.copyOf(matched, Math.min(matched.length, 25));
+		return Arrays.copyOf(matched, Math.min(matched.length, 500));
 	}
 
 	public static DataManager getInstance() {

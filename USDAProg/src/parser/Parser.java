@@ -374,7 +374,7 @@ public class Parser {
 			line = line.replace("~", "");
 			String[] items = line.split("\\^", -1);
 			Nutrient nutr = new Nutrient().parse(items);
-			nutr.setNutrientDescription(map_nutrDesc.get(nutr.getNutrNo()));
+			nutr.setNutrientDescription(map_nutrDesc.get((int) nutr.getNutrNo()));
 			NutrientData nd = map_nutrData.get(nutr.getNDBNo());
 			if (nd == null)
 				map_nutrData.put(nutr.getNDBNo(), new NutrientData());

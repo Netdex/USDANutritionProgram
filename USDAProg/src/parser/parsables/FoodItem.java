@@ -35,17 +35,17 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 		nutrientDatabankNumber = Integer.parseInt(data[0]);
 		foodGroupID = Integer.parseInt(data[1]);
 		longDescription = data[2];
-		shortDescription = data[3];
+//		shortDescription = data[3];
 		commonName = data[4];
 		manufacturerName = data[5];
-		isSurvey = data[6].equals("Y");
+//		isSurvey = data[6].equals("Y");
 		refuseDescription = data[7];
 		percentRefuse = data[8].equals("") ? 0 : Double.parseDouble(data[8]);
 		scientificName = data[9];
-		nitrogenFactor = data[10].equals("") ? 0 : Double.parseDouble(data[10]);
-		proteinFactor = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
-		fatFactor = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
-		cholestrolFactor = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
+//		nitrogenFactor = data[10].equals("") ? 0 : Double.parseDouble(data[10]);
+//		proteinFactor = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
+//		fatFactor = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
+//		cholestrolFactor = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
 		return this;
 	}
 

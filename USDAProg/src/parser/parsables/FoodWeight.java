@@ -16,12 +16,12 @@ public class FoodWeight implements Parsable<FoodWeight> {
 		if (data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		ndbNo = Integer.parseInt(data[0]);
-		seq = Integer.parseInt(data[1]);
+//		seq = Integer.parseInt(data[1]);
 		amount = Double.parseDouble(data[2]);
 		desc = data[3];
 		gramWeight = Double.parseDouble(data[4]);
-		numDataPts = data[5].equals("") ? 0 : Integer.parseInt(data[5]);
-		stdDev = data[6].equals("") ? 0 : Double.parseDouble(data[6]);
+//		numDataPts = data[5].equals("") ? 0 : Integer.parseInt(data[5]);
+//		stdDev = data[6].equals("") ? 0 : Double.parseDouble(data[6]);
 		return this;
 	}
 

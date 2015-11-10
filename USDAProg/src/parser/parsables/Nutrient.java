@@ -17,7 +17,7 @@ public class Nutrient implements Parsable<Nutrient> {
 		if (data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		ndbNo = Integer.parseInt(data[0]);
-		nutrNo = Integer.parseInt(data[1]);
+		nutrNo = Short.parseShort(data[1]);
 		nutrVal = Double.parseDouble(data[2]);
 //		numDataPts = Integer.parseInt(data[3]);
 //		stdError = data[4].equals("") ? 0 : Double.parseDouble(data[4]);
@@ -31,9 +31,9 @@ public class Nutrient implements Parsable<Nutrient> {
 //		df = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
 //		lowEB = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
 //		upEB = data[14].equals("") ? 0 : Double.parseDouble(data[14]);
-		statCmt = data[15];
-		addModDate = data[16];
-		confidenceCode = data[17];
+//		statCmt = data[15];
+//		addModDate = data[16];
+//		confidenceCode = data[17];
 		return this;
 	}
 
@@ -41,7 +41,7 @@ public class Nutrient implements Parsable<Nutrient> {
 	/**
 	 * 3 digit unique ID for a nutrient
 	 */
-	private int nutrNo;
+	private short nutrNo;
 
 	/**
 	 * Amount in 100 grams, edible portion
@@ -98,7 +98,7 @@ public class Nutrient implements Parsable<Nutrient> {
 	/**
 	 * @return the nutrNo
 	 */
-	public int getNutrNo() {
+	public short getNutrNo() {
 		return nutrNo;
 	}
 
