@@ -87,7 +87,7 @@ public class SearchPanel extends JPanel {
 							}
 							shouldSearch = false;
 						}
-						Thread.sleep(100);
+						Thread.sleep(50);
 					} catch (Exception e) {
 
 					}
@@ -123,7 +123,7 @@ public class SearchPanel extends JPanel {
 		searchBox.setForeground(searchBoxGray);
 		resetResults();
 	}
-	
+
 	protected void resetResults() {
 		resultsPanel.removeAll();
 		resultsPanel.revalidate();
