@@ -80,13 +80,27 @@ public class InfoPanel extends JPanel {
 
 		// Changes title in header
 		String longDesc = food.getLongDescription();
-		if (longDesc.indexOf(',') != -1)
-			titleName.setText(longDesc.substring(0, longDesc.indexOf(',')));
+		int firstSeparatorIndex = Math.max(longDesc.indexOf(','),
+				longDesc.indexOf('('));
+
+		// ridiculously long string before comma/bracket
+		if (firstSeparatorIndex > 15) {
+			int firstSpaceIndex = longDesc.indexOf(' ');
+			if (firstSpaceIndex > 15)
+				titleName.setText(longDesc.substring(0, 15).trim());
+			else
+				titleName
+						.setToolTipText(longDesc.substring(0, firstSpaceIndex));
+		} else if (firstSeparatorIndex > 0)
+			// normal case
+			titleName
+					.setText(longDesc.substring(0, firstSeparatorIndex).trim());
 		else
-			titleName.setToolTipText(longDesc);
+			// too short (no commas or brackets at all)
+			titleName.setToolTipText(longDesc.trim());
 
 		// adds long name in actual page
-		JLabel longName = new JLabel("<html>" + longDesc + "</html>");
+		JLabel longName = new JLabel("<html>" + longDesc + "<br></html>");
 		longName.setFont(GUI.SUBTITLE_FONT);
 		longName.setForeground(GUI.ACCENT_COLOUR);
 		longName.setAlignmentX(LEFT_ALIGNMENT);
@@ -95,7 +109,7 @@ public class InfoPanel extends JPanel {
 		// adds common name info
 		if (!food.getCommonName().equals("")) {
 			JLabel commonName = new JLabel("<html> Other name(s) include: "
-					+ food.getCommonName().toString() + "</html>");
+					+ food.getCommonName().toString() + "<br></html>");
 			commonName.setFont(GUI.CONTENT_FONT);
 			commonName.setAlignmentX(LEFT_ALIGNMENT);
 			contentPanel.add(commonName);
@@ -103,7 +117,7 @@ public class InfoPanel extends JPanel {
 
 		// adds food group info
 		JLabel foodGroup = new JLabel("Food Group: "
-				+ food.getFoodGroup().toString());
+				+ food.getFoodGroup().toString() + "\n");
 		foodGroup.setFont(GUI.CONTENT_FONT);
 		foodGroup.setAlignmentX(LEFT_ALIGNMENT);
 		contentPanel.add(foodGroup);
@@ -111,7 +125,7 @@ public class InfoPanel extends JPanel {
 		// add scientific name
 		if (!food.getScientificName().equals("")) {
 			JLabel scientificName = new JLabel("<html> Scientific name: "
-					+ food.getScientificName().toString() + "</html>");
+					+ food.getScientificName().toString() + "<br></html>");
 			scientificName.setFont(GUI.SCIENTIFIC_FONT);
 			scientificName.setAlignmentX(LEFT_ALIGNMENT);
 			contentPanel.add(scientificName);
@@ -120,7 +134,7 @@ public class InfoPanel extends JPanel {
 		// add manufacturer name
 		if (!food.getManufacturerName().equals("")) {
 			JLabel manufacName = new JLabel("<html> Manufactured by: "
-					+ food.getManufacturerName().toString() + "</html>");
+					+ food.getManufacturerName().toString() + "<br></html>");
 			manufacName.setFont(GUI.CONTENT_FONT);
 			manufacName.setAlignmentX(LEFT_ALIGNMENT);
 			contentPanel.add(manufacName);
@@ -133,10 +147,11 @@ public class InfoPanel extends JPanel {
 		amountEntryLine.setLayout(amountEntryLayout);
 
 		JLabel amountEntryPrompt = new JLabel(
-				"<html><br>The unit used to measure this item is "
-						// + food.getWeightInfo().getDesc() TODO GORDON fix this
-						+ "UNIT GOES HERE"
-						+ ".<br>Please enter the amount of this food<br>you are intending to consume<html>");
+				"<html>The unit used to measure this item is \""
+						+ food.getWeightInfo().getDesc() // TODO GORDON fix this
+						+ "\" ("
+						+ food.getWeightInfo().getGramWeight()
+						+ " grams).<br>Please enter the amount of this food<br>you are intending to consume<html>");
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
 		amountEntryPrompt.setAlignmentX(LEFT_ALIGNMENT);
 		amountEntryLine.add(amountEntryPrompt);

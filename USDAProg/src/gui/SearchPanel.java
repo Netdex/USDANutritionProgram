@@ -175,7 +175,7 @@ public class SearchPanel extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-
+			// nothing
 		}
 
 		@Override
