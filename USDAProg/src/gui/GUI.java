@@ -16,7 +16,7 @@ import parser.DataManager;
 
 public class GUI extends JFrame {
 
-	public static ConfigurationManager CONFIG = new ConfigurationManager(
+	public static final ConfigurationManager CONFIG = new ConfigurationManager(
 			new File("config.prop"));
 
 	public final static Color BACKGROUND_COLOUR = new Color(255, 255, 255);
@@ -24,10 +24,10 @@ public class GUI extends JFrame {
 	public final static Color ACCENT_COLOUR = new Color(15718468);
 
 	protected static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);
-	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.PLAIN,
-			18);
+	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
+			20);
 	protected static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN,
-			16);
+			17);
 
 	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
 			.createEmptyBorder();

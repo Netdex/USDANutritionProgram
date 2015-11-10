@@ -29,7 +29,7 @@ public class PanelManager extends JPanel {
 		searchPanel = new SearchPanel(this);
 		settingsPanel = new SettingsPanel(this);
 		aboutPanel = new AboutPanel(this);
-		infoPanel = new InfoPanel();
+		infoPanel = new InfoPanel(searchPanel, this);
 		extraInfoPanel = new ExtraInfoPanel(this);
 		helpPanel = new HelpPanel(this);
 
@@ -41,10 +41,7 @@ public class PanelManager extends JPanel {
 		this.add(aboutPanel, "about");
 		this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
-	}
-
-	protected InfoPanel getInfoPanel() {
-		return infoPanel;
+		this.add(infoPanel, "foodInfo");
 	}
 
 	protected void switchToHome() {
@@ -84,4 +81,9 @@ public class PanelManager extends JPanel {
 	protected JPanel getGroupPanel() {
 		return groupPanel;
 	}
+
+	protected InfoPanel getInfoPanel() {
+		return infoPanel;
+	}
+
 }

@@ -2,7 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -28,6 +28,7 @@ public class SearchPanel extends JPanel {
 	private JScrollPane resultsList;
 	private JPanel resultsPanel;
 	private long prevKeyPressedTime;
+	private static byte SCROLL_SPEED = 20;
 
 	Color searchBoxGray = new Color(2, 2, 2);
 
@@ -66,9 +67,13 @@ public class SearchPanel extends JPanel {
 		resultsPanel.setLayout(resultsPanelLayout);
 
 		resultsList = new JScrollPane(resultsPanel);
+		resultsList.createVerticalScrollBar();
 		resultsList
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		this.add(resultsPanel);
+		resultsList.getVerticalScrollBar().setUnitIncrement(SCROLL_SPEED);
+		resultsList.setWheelScrollingEnabled(true);
+		resultsList.setHorizontalScrollBar(null);
+		this.add(resultsList);
 	}
 
 	private void findResults(String query) {
@@ -81,9 +86,12 @@ public class SearchPanel extends JPanel {
 				resultsPanel.add(button);
 				button.repaint();
 			}
-		else
-			resultsPanel.add(new JLabel("No results found"));
-		
+		else {
+			JLabel notFound = new JLabel("No results found");
+			notFound.setFont(GUI.CONTENT_FONT);
+			resultsPanel.add(notFound);
+		}
+
 		resultsPanel.revalidate();
 		resultsPanel.repaint();
 	}
@@ -104,17 +112,15 @@ public class SearchPanel extends JPanel {
 			this.manager = manager;
 			this.setBackground(GUI.ACCENT_COLOUR);
 			this.addActionListener(new FoodItemButtonListener());
+			this.setLayout(new BorderLayout());
+			this.setMaximumSize(new Dimension(470, 128));
 
-			// TODO make this shorter!
-			JLabel foodDescription = new JLabel(food.getLongDescription());
+			JLabel foodDescription = new JLabel("<html>"
+					+ food.getLongDescription() + "</html>");
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
 			foodDescription.setForeground(Color.BLACK);
 			foodDescription.setOpaque(false);
 			this.add(foodDescription);
-		}
-
-		private FoodItem getFood() {
-			return food;
 		}
 
 		class FoodItemButtonListener implements ActionListener {
@@ -139,11 +145,15 @@ public class SearchPanel extends JPanel {
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// long currentTime = System.currentTimeMillis();
-			// if (currentTime - prevKeyPressedTime >= 800) {
-			// findResults(searchBox.getText());
-			// prevKeyPressedTime = currentTime;
-			// }
+			if (e.getKeyCode() != KeyEvent.VK_ENTER) {
+				long currentTime = System.currentTimeMillis();
+				String query = searchBox.getText();
+				if (currentTime - prevKeyPressedTime >= 1000
+						&& query.length() >= 4) {
+					findResults(query);
+					prevKeyPressedTime = currentTime;
+				}
+			}
 		}
 
 		@Override

@@ -17,7 +17,7 @@ public class LoadingWindow extends JFrame {
 	private static final Color LOADING_BAR_COLOR = new Color(6012382);
 
 	public LoadingWindow() {
-		super("Loading..");
+		super("Loading Databas...");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setAlwaysOnTop(true);
