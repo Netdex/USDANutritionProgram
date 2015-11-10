@@ -25,6 +25,7 @@ public class SearchPanel extends JPanel {
 
 	private PanelManager manager;
 	private JTextField searchBox;
+	private JScrollPane resultsList;
 	private JPanel resultsPanel;
 	private long prevKeyPressedTime;
 
@@ -64,7 +65,7 @@ public class SearchPanel extends JPanel {
 		resultsPanel.setAlignmentY(LEFT_ALIGNMENT);
 		resultsPanel.setLayout(resultsPanelLayout);
 
-		JScrollPane resultsList = new JScrollPane(resultsPanel);
+		resultsList = new JScrollPane(resultsPanel);
 		resultsList
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		this.add(resultsPanel);
@@ -74,19 +75,22 @@ public class SearchPanel extends JPanel {
 		resultsPanel.removeAll();
 		// TODO deal with an empty array
 		FoodItem[] results = GUI.dataManager.searchForItem(query.split(" "));
-
-		for (int i = 0; i < results.length; i++) {
-			resultsPanel.add(new FoodItemButton(results[i], manager));
-		}
-		// TODO FIX HACK
-		manager.switchToHome();
-		manager.switchToSearchPanel();
+		if (results.length > 0)
+			for (int i = 0; i < results.length; i++) {
+				FoodItemButton button = new FoodItemButton(results[i], manager);
+				resultsPanel.add(button);
+				button.repaint();
+			}
+		else
+			resultsPanel.add(new JLabel("No results found"));
+		
+		resultsPanel.revalidate();
+		resultsPanel.repaint();
 	}
 
 	protected void resetSearchBox() {
 		searchBox.setText("Search...");
 		searchBox.setForeground(searchBoxGray);
-//		resultsPanel = null;
 	}
 
 	class FoodItemButton extends JButton {
