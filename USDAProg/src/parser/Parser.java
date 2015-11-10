@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import gui.GUI;
 import parser.gui.LoadingWindow;
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
@@ -37,27 +38,24 @@ public class Parser {
 	private BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
 	private BinaryTreeMap<String, LanguaLDescription> map_langualDesc = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, Footnote> map_footnote = new BinaryTreeMap<>();
-	
+
 	/**
 	 * In this order: 0 File foodDesc, 1 File nutrientData, 2 File
 	 * nutrientDescription, 3 File foodGroup, 4 File foodWeight, 5 File langual,
 	 * 6 File langualDesc, 7 File footnotes
 	 */
 	private File[] dataFiles;
-	
+
 	private long totalFileSize = 0;
 	private long processedFileSize = 0;
-	
-	private LoadingWindow lwindow;
+	private GUI gui;
 
-	public Parser(File[] files, LoadingWindow lwindow) {
+	public Parser(File[] files, GUI gui) {
 		this.dataFiles = files;
-		this.lwindow = lwindow;
-		
-		for(File f : files){
+		this.gui = gui;
+		for (File f : files) {
 			totalFileSize += f.length();
 		}
-		lwindow.setPercent(100);
 	}
 
 	/**
@@ -143,9 +141,9 @@ public class Parser {
 					System.err.println("PARSING FOOD DESCRIPTIONS");
 					parseFoodDescriptions();
 					System.err.println("DONE");
-					lwindow.setVisible(false);
+					gui.getPanelManager().LOADING_PERCENTAGE = -1;
 				} catch (Exception e) {
-
+					e.printStackTrace();
 				}
 				long end = System.currentTimeMillis() - start;
 				System.err.println("Took " + end + "ms");
@@ -178,8 +176,8 @@ public class Parser {
 			System.err.println("PARSING FOOD DESCRIPTIONS");
 			this.parseFoodDescriptions();
 			System.err.println("DONE");
-			lwindow.setVisible(false);
-			
+			gui.getPanelManager().LOADING_PERCENTAGE = -1;
+
 			long end = System.currentTimeMillis() - start;
 			System.err.println("Took " + end + "ms");
 
@@ -200,7 +198,8 @@ public class Parser {
 			String[] items = line.split("\\^", -1);
 			Footnote footnote = new Footnote().parse(items);
 			map_footnote.put(footnote.getNdbNo(), footnote);
-			lwindow.setPercent((int)(100.0 * processedFileSize / totalFileSize));
+			updatePercentage();
+			gui.getPanelManager().repaint();
 		}
 		br.close();
 	}
@@ -222,7 +221,8 @@ public class Parser {
 			String[] items = line.split("\\^", -1);
 			LanguaLDescription lld = new LanguaLDescription().parse(items);
 			map_langualDesc.put(lld.getFactorCode(), lld);
-			lwindow.setPercent((int)(100.0 * processedFileSize / totalFileSize));
+			updatePercentage();
+			gui.getPanelManager().repaint();
 		}
 		br.close();
 	}
@@ -247,7 +247,8 @@ public class Parser {
 			if (map_langualGroup.get(ll.getNDBNo()) == null)
 				map_langualGroup.put(ll.getNDBNo(), new LanguaLGroup());
 			map_langualGroup.get(ll.getNDBNo()).addLanguaL(ll);
-			lwindow.setPercent((int)(100.0 * processedFileSize / totalFileSize));
+			updatePercentage();
+			gui.getPanelManager().repaint();
 		}
 		br.close();
 	}
@@ -269,7 +270,8 @@ public class Parser {
 			String[] items = line.split("\\^", -1);
 			FoodWeight foodWeight = new FoodWeight().parse(items);
 			map_foodWeight.put(foodWeight.getNDBNo(), foodWeight);
-			lwindow.setPercent((int)(100.0 * processedFileSize / totalFileSize));
+			updatePercentage();
+			gui.getPanelManager().repaint();
 		}
 		br.close();
 	}
@@ -291,7 +293,8 @@ public class Parser {
 			String[] items = line.split("\\^", -1);
 			FoodGroup foodGroup = new FoodGroup().parse(items);
 			map_foodGroup.put(foodGroup.getFoodGroupID(), foodGroup);
-			lwindow.setPercent((int)(100.0 * processedFileSize / totalFileSize));
+			updatePercentage();
+			gui.getPanelManager().repaint();
 		}
 		br.close();
 	}
@@ -324,7 +327,8 @@ public class Parser {
 
 			foodItem.getFoodGroup().addFood(foodItem);
 			map_foodItems.put(ndbNo, foodItem);
-			lwindow.setPercent((int)(100.0 * processedFileSize / totalFileSize));
+			updatePercentage();
+			gui.getPanelManager().repaint();
 		}
 		br.close();
 	}
@@ -345,7 +349,8 @@ public class Parser {
 			String[] items = line.split("\\^", -1);
 			NutrientDescription nd = new NutrientDescription().parse(items);
 			map_nutrDesc.put(nd.getNutrientNumber(), nd);
-			lwindow.setPercent((int)(100.0 * processedFileSize / totalFileSize));
+			updatePercentage();
+			gui.getPanelManager().repaint();
 		}
 		br.close();
 	}
@@ -371,9 +376,16 @@ public class Parser {
 			if (nd == null)
 				map_nutrData.put(nutr.getNDBNo(), new NutrientData());
 			map_nutrData.get(nutr.getNDBNo()).addNutrient(nutr);
-			lwindow.setPercent((int)(100.0 * processedFileSize / totalFileSize));
+			updatePercentage();
+			gui.getPanelManager().repaint();
 		}
 		br.close();
+	}
+
+	public void updatePercentage() {
+		gui.getPanelManager().LOADING_PERCENTAGE = (int) (100.0 * processedFileSize
+				/ totalFileSize);
+		gui.getPanelManager().repaint();
 	}
 
 	public DoublyLinkedList<FoodGroup> getFoodGroups() {

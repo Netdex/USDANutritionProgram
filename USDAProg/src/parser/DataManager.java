@@ -4,20 +4,24 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import parser.gui.LoadingWindow;
+import gui.GUI;
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
 import parser.util.BinaryTreeMap;
 
 public class DataManager {
 
-	private LoadingWindow lwindow;
 	private static DataManager instance;
 
 	private Parser parser;
+	private GUI gui;
 
 	private DataManager() {
-		lwindow = new LoadingWindow();
+
+	}
+
+	public void bindProgressDisplay(GUI gui) {
+		this.gui = gui;
 	}
 
 	/**
@@ -28,14 +32,12 @@ public class DataManager {
 	 *            langual, File langualDesc, File footnotes
 	 */
 	public void init(File... files) {
-		parser = new Parser(files, lwindow);
-		lwindow.setVisible(true);
+		parser = new Parser(files, gui);
 		parser.parseData();
 	}
 
 	public void initAsync(File... files) {
-		parser = new Parser(files, lwindow);
-		lwindow.setVisible(true);
+		parser = new Parser(files, gui);
 		parser.parseDataAsync();
 	}
 

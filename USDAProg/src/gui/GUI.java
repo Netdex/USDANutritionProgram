@@ -2,17 +2,20 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JViewport;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import parser.DataManager;
 import config.ConfigurationManager;
+import parser.DataManager;
 
 public class GUI extends JFrame {
 
@@ -24,16 +27,17 @@ public class GUI extends JFrame {
 	public final static Color ACCENT_COLOUR = new Color(15718468);
 
 	protected static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);
-	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
-			20);
-	protected static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN,
-			17);
+	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD, 20);
+	protected static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN, 17);
 
 	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
 			.createEmptyBorder();
 	protected static byte SCROLL_SPEED = 20;
 
 	protected static DataManager dataManager;
+	private PanelManager manager;
+
+	
 
 	public GUI() {
 		super("USDA Food Database");
@@ -45,18 +49,17 @@ public class GUI extends JFrame {
 			e.printStackTrace();
 		}
 
-		dataManager = DataManager.getInstance();
-
-		dataManager.initAsync(new File("USDAFiles/FOOD_DES.TXT"), new File(
-				"USDAFiles/NUT_DATA.TXT"), new File("USDAFiles/NUTR_DEF.TXT"),
-				new File("USDAFiles/FD_GROUP.TXT"), new File(
-						"USDAFiles/WEIGHT.TXT"), new File(
-						"USDAFiles/LANGUAL.txt"), new File(
-						"USDAFiles/LANGDESC.TXT"), new File(
-						"USDAFiles/FOOTNOTE.TXT"));
-
-		PanelManager manager = new PanelManager();
+		manager = new PanelManager();
 		this.add(manager);
+
+		dataManager = DataManager.getInstance();
+		dataManager.bindProgressDisplay(this);
+		dataManager.initAsync(new File("USDAFiles/FOOD_DES.TXT"),
+				new File("USDAFiles/NUT_DATA.TXT"), new File("USDAFiles/NUTR_DEF.TXT"),
+				new File("USDAFiles/FD_GROUP.TXT"), new File("USDAFiles/WEIGHT.TXT"),
+				new File("USDAFiles/LANGUAL.txt"), new File("USDAFiles/LANGDESC.TXT"),
+				new File("USDAFiles/FOOTNOTE.TXT"));
+
 		manager.switchToHome();
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,11 +67,13 @@ public class GUI extends JFrame {
 		this.setVisible(true);
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException,
-			UnsupportedLookAndFeelException {
-		UIManager
-				.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+	public PanelManager getPanelManager() {
+		return manager;
+	}
+
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException {
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 		new GUI();
 	}
 }
