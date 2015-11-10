@@ -83,9 +83,7 @@ public class SearchPanel extends JPanel {
 							if (!txt.equals("Search...") && !txt.equals(""))
 								findResults(txt);
 							else {
-								resultsPanel.removeAll();
-								resultsPanel.revalidate();
-								resultsPanel.repaint();
+								resetResults();
 							}
 							shouldSearch = false;
 						}
@@ -123,6 +121,13 @@ public class SearchPanel extends JPanel {
 	protected void resetSearchBox() {
 		searchBox.setText("Search...");
 		searchBox.setForeground(searchBoxGray);
+		resetResults();
+	}
+	
+	protected void resetResults() {
+		resultsPanel.removeAll();
+		resultsPanel.revalidate();
+		resultsPanel.repaint();
 	}
 
 	class FoodItemButton extends JButton {

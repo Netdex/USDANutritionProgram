@@ -23,8 +23,12 @@ public class NutrientData {
 	public DoublyLinkedList<Nutrient> getNutrients() {
 		return nutrients;
 	}
-	
-	public String toString(){
+
+	public Nutrient[] getNutrientArray() {
+		return nutrients.toArray(nutrients.getFirst());
+	}
+
+	public String toString() {
 		return nutrients.toString();
 	}
 }

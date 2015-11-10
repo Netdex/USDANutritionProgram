@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -23,6 +24,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import parser.parsables.FoodItem;
+import parser.parsables.Nutrient;
 
 public class InfoPanel extends JPanel {
 
@@ -38,7 +40,10 @@ public class InfoPanel extends JPanel {
 	private JLabel titleName;
 	private JSpinner amountEntry;
 
+	private NutritionInfoLabel[] nutritionLabels;
+
 	public InfoPanel(SearchPanel searchPanel, PanelManager manager) {
+		// TODO make a config to load the multiplier each time
 		super();
 		this.searchPanel = searchPanel;
 		this.manager = manager;
@@ -76,8 +81,6 @@ public class InfoPanel extends JPanel {
 	protected void setFoodItem(FoodItem item) {
 		contentPanel.removeAll();
 		this.food = item;
-
-		// TODO make alignments work
 
 		// Changes title in header
 		String longDesc = food.getLongDescription();
@@ -127,15 +130,16 @@ public class InfoPanel extends JPanel {
 			contentPanel.add(manufacName);
 		}
 
+		// asks the user for how much food they are consuming
 		JPanel amountEntryLine = new JPanel();
 		amountEntryLine.setOpaque(false);
 		FlowLayout amountEntryLayout = new FlowLayout(FlowLayout.LEFT);
 		amountEntryLine.setLayout(amountEntryLayout);
 
 		JLabel amountEntryPrompt = new JLabel(
-				"<html> The unit used to measure this item is "
-						// + food.getWeightInfo().getDesc() TODO fix this
-						+ "hi"
+				"<html><br>The unit used to measure this item is "
+						// + food.getWeightInfo().getDesc() TODO GORDON fix this
+						+ "UNIT GOES HERE"
 						+ ".<br>Please enter the amount of this food<br>you are intending to consume<html>");
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
 		amountEntryPrompt.setAlignmentX(LEFT_ALIGNMENT);
@@ -147,10 +151,28 @@ public class InfoPanel extends JPanel {
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.setFont(GUI.CONTENT_FONT);
 		amountEntry.setAlignmentX(LEFT_ALIGNMENT);
+		amountEntry.addChangeListener(new AmountEntryListener());
 		amountEntryLine.add(amountEntry);
 
 		amountEntryLine.setAlignmentX(LEFT_ALIGNMENT);
 		contentPanel.add(amountEntryLine);
+
+		// create the base "framework" for nutrients
+		JPanel nutritionPanel = new JPanel();
+		// TODO add a header row
+		BoxLayout nutritionLayout = new BoxLayout(nutritionPanel,
+				BoxLayout.Y_AXIS);
+		nutritionPanel.setLayout(nutritionLayout);
+		Nutrient[] nutrients = food.getNutrientData().getNutrientArray();
+
+		for (int i = 0; i < nutrients.length; i++) {
+			NutritionInfoLabel label = new NutritionInfoLabel(nutrients[i]);
+			nutritionLabels[i] = label;
+			label.updateAmounts(nutritionMultiplier);
+			nutritionPanel.add(label);
+		}
+
+		contentPanel.add(nutritionPanel);
 
 		contentPanel.revalidate();
 		contentPanel.repaint();
@@ -163,6 +185,10 @@ public class InfoPanel extends JPanel {
 
 	protected void setNutritionMultiplier(double personalizedMultiplier) {
 		this.nutritionMultiplier = personalizedMultiplier;
+		// updates all labels
+		for (NutritionInfoLabel label : nutritionLabels) {
+			label.updateAmounts(nutritionMultiplier);
+		}
 	}
 
 	class AmountEntryListener implements ChangeListener {
@@ -181,6 +207,46 @@ public class InfoPanel extends JPanel {
 			// draw the more info dialog over this
 		}
 
+	}
+
+	class NutritionInfoLabel extends JLabel {
+
+		private String name;
+		private double amountPerGram;
+		private double amountInSample;
+
+		private NutritionInfoLabel(Nutrient nutrient) {
+			super();
+			name = nutrient.getNutrientDescription().getNutrientDescription();
+			amountInSample = nutrient.getNutrVal();
+			amountPerGram = amountInSample / 100;
+
+			this.setLayout(new FlowLayout(FlowLayout.LEFT));
+			this.setAlignmentX(LEFT_ALIGNMENT);
+
+			JLabel nameLabel = new JLabel(name);
+			nameLabel.setSize(380, 50);
+			nameLabel.setFont(GUI.CONTENT_FONT);
+			nameLabel.setOpaque(false);
+			this.add(nameLabel);
+
+			JLabel amountInSampleLabel = new JLabel(amountInSample + "");
+			amountInSampleLabel.setSize(50, 50);
+			amountInSampleLabel.setFont(GUI.CONTENT_FONT);
+			amountInSampleLabel.setOpaque(false);
+			this.add(amountInSampleLabel);
+
+			JLabel percentDVLabel = new JLabel();
+			percentDVLabel.setSize(50, 50);
+			percentDVLabel.setFont(GUI.CONTENT_FONT);
+			percentDVLabel.setOpaque(false);
+			this.add(percentDVLabel);
+
+		}
+
+		private void updateAmounts(double multiplier) {
+			amountInSample = amountPerGram * multiplier;
+		}
 	}
 
 }
