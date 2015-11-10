@@ -60,13 +60,15 @@ public class SearchPanel extends JPanel {
 
 		resultsPanel = new JPanel();
 		resultsPanel.setBackground(GUI.BACKGROUND_COLOUR);
-		BoxLayout resultsPanelLayout = new BoxLayout(resultsPanel, BoxLayout.Y_AXIS);
+		BoxLayout resultsPanelLayout = new BoxLayout(resultsPanel,
+				BoxLayout.Y_AXIS);
 		resultsPanel.setAlignmentY(LEFT_ALIGNMENT);
 		resultsPanel.setLayout(resultsPanelLayout);
 
 		resultsList = new JScrollPane(resultsPanel);
 		resultsList.createVerticalScrollBar();
-		resultsList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		resultsList
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		resultsList.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
 		resultsList.setWheelScrollingEnabled(true);
 		resultsList.setHorizontalScrollBar(null);
@@ -75,7 +77,8 @@ public class SearchPanel extends JPanel {
 			public void run() {
 				while (true) {
 					try {
-						if (System.currentTimeMillis() - prevKeyPressedTime > 800 && shouldSearch) {
+						if (System.currentTimeMillis() - prevKeyPressedTime > 800
+								&& shouldSearch) {
 							String txt = searchBox.getText();
 							if (!txt.equals("Search...") && !txt.equals(""))
 								findResults(txt);
@@ -98,6 +101,7 @@ public class SearchPanel extends JPanel {
 
 	private void findResults(String query) {
 		resultsPanel.removeAll();
+		resultsList.getVerticalScrollBar().setValue(0);
 		// TODO deal with an empty array
 		FoodItem[] results = GUI.dataManager.searchForItem(query.split(" "));
 		if (results.length > 0)
@@ -135,7 +139,8 @@ public class SearchPanel extends JPanel {
 			this.setLayout(new BorderLayout());
 			this.setMaximumSize(new Dimension(460, 128));
 
-			JLabel foodDescription = new JLabel("<html>" + food.getLongDescription() + "</html>");
+			JLabel foodDescription = new JLabel("<html>"
+					+ food.getLongDescription() + "</html>");
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
 			foodDescription.setForeground(Color.BLACK);
 			foodDescription.setOpaque(false);
