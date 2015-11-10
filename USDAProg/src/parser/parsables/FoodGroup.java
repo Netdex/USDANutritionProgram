@@ -5,10 +5,12 @@ import parser.util.DoublyLinkedList;
 
 /**
  * Represents a food group
- * @author Netdex
+ * @author Gordon Guan
  *
  */
 public class FoodGroup implements Parsable<FoodGroup> {
+	
+	public static FoodGroup SAMPLE = new FoodGroup();
 	
 	private static final int PARSE_DATA_LENGTH = 2;
 	private DoublyLinkedList<FoodItem> foods = new DoublyLinkedList<FoodItem>();

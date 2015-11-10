@@ -4,7 +4,7 @@ import parser.InvalidParseDataException;
 
 /**
  * A structure storing weight information of this FoodItem
- * @author Netdex
+ * @author Gordon Guan
  *
  */
 public class FoodWeight implements Parsable<FoodWeight> {

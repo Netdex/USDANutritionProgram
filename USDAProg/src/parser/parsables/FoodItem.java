@@ -5,11 +5,13 @@ import parser.InvalidParseDataException;
 /**
  * Represents a single food item
  * 
- * @author Netdex
+ * @author Gordon Guan
  *
  */
 public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 
+	public static FoodItem SAMPLE = new FoodItem();
+	
 	private static final int PARSE_DATA_LENGTH = 14;
 
 	private NutrientData nutrientData = new NutrientData();

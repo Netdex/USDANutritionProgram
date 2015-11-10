@@ -23,7 +23,7 @@ import parser.util.DoublyLinkedList;
 /**
  * Creates data structures out of the given files
  * 
- * @author Netdex
+ * @author Gordon Guan
  *
  */
 public class Parser {
@@ -156,35 +156,38 @@ public class Parser {
 	 * Parses all the data in the given files
 	 */
 	public void parseData() {
-		try {
-			long start = System.currentTimeMillis();
+		new Thread(){
+			public void run(){
+				try {
+					long start = System.currentTimeMillis();
 
-			System.err.println("PARSING FOOD GROUPS");
-			this.parseFoodGroups();
-			System.err.println("PARSING FOOD WEIGHTS");
-			this.parseFoodWeights();
-			System.err.println("PARSING FOOTNOTES");
-			this.parseFootnotes();
-			System.err.println("PARSING NUTRIENT DEFINITIONS");
-			this.parseNutrientDefinitions();
-			System.err.println("PARSING NUTRIENT DATA");
-			this.parseNutrientData();
-			System.err.println("PARSING LANGUAL DESCRIPTIONS");
-			this.parseLanguaLDescriptions();
-			System.err.println("PARSING LANGUAL DATA");
-			this.parseLanguaL();
-			System.err.println("PARSING FOOD DESCRIPTIONS");
-			this.parseFoodDescriptions();
-			System.err.println("DONE");
-			gui.getPanelManager().LOADING_PERCENTAGE = -1;
+					System.err.println("PARSING FOOD GROUPS");
+					parseFoodGroups();
+					System.err.println("PARSING FOOD WEIGHTS");
+					parseFoodWeights();
+					System.err.println("PARSING FOOTNOTES");
+					parseFootnotes();
+					System.err.println("PARSING NUTRIENT DEFINITIONS");
+					parseNutrientDefinitions();
+					System.err.println("PARSING NUTRIENT DATA");
+					parseNutrientData();
+					System.err.println("PARSING LANGUAL DESCRIPTIONS");
+					parseLanguaLDescriptions();
+					System.err.println("PARSING LANGUAL DATA");
+					parseLanguaL();
+					System.err.println("PARSING FOOD DESCRIPTIONS");
+					parseFoodDescriptions();
+					System.err.println("DONE");
+					gui.getPanelManager().LOADING_PERCENTAGE = -1;
 
-			long end = System.currentTimeMillis() - start;
-			System.err.println("Took " + end + "ms");
+					long end = System.currentTimeMillis() - start;
+					System.err.println("Took " + end + "ms");
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
 	}
 
 	private void parseFootnotes() throws IOException, InvalidParseDataException {
@@ -199,7 +202,7 @@ public class Parser {
 			Footnote footnote = new Footnote().parse(items);
 			map_footnote.put(footnote.getNdbNo(), footnote);
 			updatePercentage();
-			gui.getPanelManager().repaint();
+			
 		}
 		br.close();
 	}
@@ -222,7 +225,7 @@ public class Parser {
 			LanguaLDescription lld = new LanguaLDescription().parse(items);
 			map_langualDesc.put(lld.getFactorCode(), lld);
 			updatePercentage();
-			gui.getPanelManager().repaint();
+			
 		}
 		br.close();
 	}
@@ -248,7 +251,7 @@ public class Parser {
 				map_langualGroup.put(ll.getNDBNo(), new LanguaLGroup());
 			map_langualGroup.get(ll.getNDBNo()).addLanguaL(ll);
 			updatePercentage();
-			gui.getPanelManager().repaint();
+			
 		}
 		br.close();
 	}
@@ -271,7 +274,7 @@ public class Parser {
 			FoodWeight foodWeight = new FoodWeight().parse(items);
 			map_foodWeight.put(foodWeight.getNDBNo(), foodWeight);
 			updatePercentage();
-			gui.getPanelManager().repaint();
+			
 		}
 		br.close();
 	}
@@ -294,7 +297,7 @@ public class Parser {
 			FoodGroup foodGroup = new FoodGroup().parse(items);
 			map_foodGroup.put(foodGroup.getFoodGroupID(), foodGroup);
 			updatePercentage();
-			gui.getPanelManager().repaint();
+			
 		}
 		br.close();
 	}
@@ -328,7 +331,7 @@ public class Parser {
 			foodItem.getFoodGroup().addFood(foodItem);
 			map_foodItems.put(ndbNo, foodItem);
 			updatePercentage();
-			gui.getPanelManager().repaint();
+			
 		}
 		br.close();
 	}
@@ -350,7 +353,7 @@ public class Parser {
 			NutrientDescription nd = new NutrientDescription().parse(items);
 			map_nutrDesc.put(nd.getNutrientNumber(), nd);
 			updatePercentage();
-			gui.getPanelManager().repaint();
+			
 		}
 		br.close();
 	}
@@ -377,7 +380,6 @@ public class Parser {
 				map_nutrData.put(nutr.getNDBNo(), new NutrientData());
 			map_nutrData.get(nutr.getNDBNo()).addNutrient(nutr);
 			updatePercentage();
-			gui.getPanelManager().repaint();
 		}
 		br.close();
 	}

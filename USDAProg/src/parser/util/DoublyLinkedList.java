@@ -16,7 +16,7 @@ public class DoublyLinkedList<E> {
 
 	public boolean add(E item) {
 		DoubleLLNode<E> newNode = new DoubleLLNode<E>(item);
-		
+
 		DoubleLLNode<E> currentItem = front;
 		while (currentItem != null && currentItem.getNext().getNext() != null) {
 			currentItem = currentItem.getNext();
@@ -135,11 +135,11 @@ public class DoublyLinkedList<E> {
 	/**
 	 * @return a primitive array of this DoublyLinkedList
 	 */
-	public E[] toArray() {
+	public E[] toArray(E sample) {
 		int size = this.size();
-		if(size == 0)
+		if (size == 0)
 			return null;
-		E[] arr = (E[]) Array.newInstance(front.getNext().getItem().getClass(), size);
+		E[] arr = (E[]) Array.newInstance(sample.getClass(), size);
 		DoubleLLNode<E> currentNode = front.getNext();
 		int idx = 0;
 		while (currentNode.getNext() != null) {
@@ -147,6 +147,17 @@ public class DoublyLinkedList<E> {
 			currentNode = currentNode.getNext();
 		}
 		return arr;
+	}
+
+	public DoublyLinkedList<E> selectAllItems(Selector<E> sel) {
+		DoublyLinkedList<E> selected = new DoublyLinkedList<E>();
+		DoubleLLNode<E> currentNode = front.getNext();
+		while (currentNode.getNext() != null) {
+			if (sel.select(currentNode.getItem()))
+				selected.add(currentNode.getItem());
+			currentNode = currentNode.getNext();
+		}
+		return selected;
 	}
 
 	@Override

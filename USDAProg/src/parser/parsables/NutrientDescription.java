@@ -19,7 +19,7 @@ public class NutrientDescription implements Parsable<NutrientDescription> {
 	 */
 	private String tagName;
 	/**
-	 * Descriptoin of nutrient
+	 * Description of nutrient
 	 */
 	private String nutrDesc;
 	/**

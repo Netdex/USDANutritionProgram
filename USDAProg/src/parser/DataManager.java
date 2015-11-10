@@ -42,20 +42,23 @@ public class DataManager {
 	}
 
 	public FoodGroup[] getFoodGroups() {
-		return parser.getFoodGroups().toArray();
+		return parser.getFoodGroups().toArray(FoodGroup.SAMPLE);
 	}
 
 	public FoodItem[] searchForItem(String[] keys) {
 		// Check if the user is searching for an NDB number
 		if (keys.length == 1) {
 			if (keys[0].matches("[0-9]{5}")) {
-				return new FoodItem[] { parser.getFoodItemMap().get(Integer.parseInt(keys[0])) };
+				if (parser.getFoodItemMap().get(Integer.parseInt(keys[0])) != null)
+					return new FoodItem[] { parser.getFoodItemMap().get(Integer.parseInt(keys[0])) };
+				else
+					return new FoodItem[0];
 			}
 		}
 		// Get the map of food items
 		BinaryTreeMap<Integer, FoodItem> map_foodItems = parser.getFoodItemMap();
 		// Extract the list of food items from the map
-		FoodItem[] foodItems = map_foodItems.getAllValues().toArray();
+		FoodItem[] foodItems = map_foodItems.getAllValues().toArray(FoodItem.SAMPLE);
 		// Create a map to store the score of each food item
 		BinaryTreeMap<FoodItem, Double> map_results = new BinaryTreeMap<>();
 		for (int foodIdx = 0; foodIdx < foodItems.length; foodIdx++) {
@@ -82,7 +85,7 @@ public class DataManager {
 		}
 		// System.out.println(map_results);
 		// Get all the food items which had a score of at least 1
-		FoodItem[] matched = map_results.getAllKeys().toArray();
+		FoodItem[] matched = map_results.getAllKeys().toArray(FoodItem.SAMPLE);
 		if (matched == null)
 			return new FoodItem[0];
 		// Sort the list of food items by their score

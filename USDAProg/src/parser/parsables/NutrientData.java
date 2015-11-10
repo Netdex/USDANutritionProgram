@@ -5,7 +5,7 @@ import parser.util.DoublyLinkedList;
 /**
  * This class contains a list of nutrients which this food item has
  * 
- * @author Netdex
+ * @author Gordon Guan
  *
  */
 
