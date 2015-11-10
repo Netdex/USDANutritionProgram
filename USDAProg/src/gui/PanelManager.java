@@ -56,33 +56,41 @@ public class PanelManager extends JPanel {
 	}
 
 	protected void switchToSearchPanel() {
-		cardLayoutManager.show(this, "search");
-		searchPanel.resetSearchBox();
+		if (LOADING_PERCENTAGE == -1) {
+			cardLayoutManager.show(this, "search");
+			searchPanel.resetSearchBox();
+		}
 	}
 
 	protected void switchToInfoPanel() {
-		cardLayoutManager.show(this, "foodInfo");
+		if (LOADING_PERCENTAGE == -1)
+			cardLayoutManager.show(this, "foodInfo");
 	}
 
 	protected void switchToGroup() {
-		cardLayoutManager.show(this, "group");
+		if (LOADING_PERCENTAGE == -1)
+			cardLayoutManager.show(this, "group");
 	}
 
 	protected void switchToSettings() {
-		cardLayoutManager.show(this, "settings");
+		if (LOADING_PERCENTAGE == -1)
+			cardLayoutManager.show(this, "settings");
 	}
 
 	protected void switchToHelp() {
-		cardLayoutManager.show(this, "help");
+		if (LOADING_PERCENTAGE == -1)
+			cardLayoutManager.show(this, "help");
 	}
 
 	protected void switchToAbout() {
-		cardLayoutManager.show(this, "about");
+		if (LOADING_PERCENTAGE == -1)
+			cardLayoutManager.show(this, "about");
 
 	}
 
 	protected void switchToFoodList(FoodGroup group) {
-		cardLayoutManager.show(this, "foodList");
+		if (LOADING_PERCENTAGE == -1)
+			cardLayoutManager.show(this, "foodList");
 	}
 
 	protected JPanel getGroupPanel() {
@@ -91,6 +99,10 @@ public class PanelManager extends JPanel {
 
 	protected InfoPanel getInfoPanel() {
 		return infoPanel;
+	}
+
+	public HomePanel getHomePanel() {
+		return homePanel;
 	}
 
 	@Override
@@ -120,8 +132,8 @@ public class PanelManager extends JPanel {
 			g.setColor(Color.WHITE);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 36));
 			String perc = LOADING_PERCENTAGE + "%";
-			g.drawString(perc, x + width / 2 - g.getFontMetrics().stringWidth(perc) / 2,
-					y + height / 2 + g.getFontMetrics().getAscent() / 2);
+			g.drawString(perc, x + width / 2 - g.getFontMetrics().stringWidth(perc) / 2, y + height
+					/ 2 + g.getFontMetrics().getAscent() / 2);
 			g.setColor(Color.BLUE);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 			g.drawString("Loading database...", x + 10, y + 20);
