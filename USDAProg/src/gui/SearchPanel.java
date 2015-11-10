@@ -28,7 +28,7 @@ public class SearchPanel extends JPanel {
 	private JScrollPane resultsList;
 	private JPanel resultsPanel;
 	private long prevKeyPressedTime;
-
+	private boolean shouldSearch = true;
 	Color searchBoxGray = new Color(2, 2, 2);
 
 	public SearchPanel(PanelManager manager) {
@@ -60,18 +60,39 @@ public class SearchPanel extends JPanel {
 
 		resultsPanel = new JPanel();
 		resultsPanel.setBackground(GUI.BACKGROUND_COLOUR);
-		BoxLayout resultsPanelLayout = new BoxLayout(resultsPanel,
-				BoxLayout.Y_AXIS);
+		BoxLayout resultsPanelLayout = new BoxLayout(resultsPanel, BoxLayout.Y_AXIS);
 		resultsPanel.setAlignmentY(LEFT_ALIGNMENT);
 		resultsPanel.setLayout(resultsPanelLayout);
 
 		resultsList = new JScrollPane(resultsPanel);
 		resultsList.createVerticalScrollBar();
-		resultsList
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		resultsList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		resultsList.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
 		resultsList.setWheelScrollingEnabled(true);
 		resultsList.setHorizontalScrollBar(null);
+
+		new Thread() {
+			public void run() {
+				while (true) {
+					try {
+						if (System.currentTimeMillis() - prevKeyPressedTime > 800 && shouldSearch) {
+							String txt = searchBox.getText();
+							if (!txt.equals("Search...") && !txt.equals(""))
+								findResults(txt);
+							else {
+								resultsPanel.removeAll();
+								resultsPanel.revalidate();
+								resultsPanel.repaint();
+							}
+							shouldSearch = false;
+						}
+						Thread.sleep(100);
+					} catch (Exception e) {
+
+					}
+				}
+			}
+		}.start();
 		this.add(resultsList);
 	}
 
@@ -114,8 +135,7 @@ public class SearchPanel extends JPanel {
 			this.setLayout(new BorderLayout());
 			this.setMaximumSize(new Dimension(460, 128));
 
-			JLabel foodDescription = new JLabel("<html>"
-					+ food.getLongDescription() + "</html>");
+			JLabel foodDescription = new JLabel("<html>" + food.getLongDescription() + "</html>");
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
 			foodDescription.setForeground(Color.BLACK);
 			foodDescription.setOpaque(false);
@@ -137,25 +157,15 @@ public class SearchPanel extends JPanel {
 
 		@Override
 		public void keyPressed(KeyEvent event) {
-			if (event.getKeyCode() == KeyEvent.VK_ENTER
-					&& !searchBox.getText().equals("Search..."))
+			if (event.getKeyCode() == KeyEvent.VK_ENTER)
 				findResults(searchBox.getText());
+			prevKeyPressedTime = System.currentTimeMillis();
+			shouldSearch = true;
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			if (e.getKeyCode() != KeyEvent.VK_ENTER) {
-				// Find out a way to search when the "user stops typing"
 
-				// ie. after the last press, wait 800ms, then search.
-				long currentTime = System.currentTimeMillis();
-				String query = searchBox.getText();
-				if (currentTime - prevKeyPressedTime >= 800
-						&& query.length() >= 3) {
-					findResults(query);
-					prevKeyPressedTime = currentTime;
-				}
-			}
 		}
 
 		@Override
