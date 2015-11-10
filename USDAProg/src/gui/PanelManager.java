@@ -112,7 +112,8 @@ public class PanelManager extends JPanel {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// For drawing progress bars and stuff
 		if (LOADING_PERCENTAGE != -1) {
-
+			final int size = 70;
+			final int loadOffset = 5;
 			int x = this.getWidth() / 6;
 			int y = this.getHeight() / 3;
 			int width = this.getWidth() * 2 / 3;
@@ -124,12 +125,18 @@ public class PanelManager extends JPanel {
 			g.setColor(Color.DARK_GRAY);
 			g.drawRect(x, y, width, height);
 
-			g.setColor(Color.GRAY);
-			g.fillRect(x + 10, y + height / 2 - 25, width - 20, 50);
+//			g.setColor(Color.GRAY);
+//			g.fillRect(x + 10, y + height / 2 - 25, width - 20, 50);
+//			g.setColor(Color.BLUE);
+//			g.fillRect(x + 10, y + height / 2 - 25,
+//					(int) ((width - 20) * LOADING_PERCENTAGE / 100.0), 50);
+//			g.setColor(Color.WHITE);
 			g.setColor(Color.BLUE);
-			g.fillRect(x + 10, y + height / 2 - 25,
-					(int) ((width - 20) * LOADING_PERCENTAGE / 100.0), 50);
+			g.fillArc(x + width / 2 - size, y + height / 2 - size + loadOffset, 
+					size*2, size*2, 0, (int)(LOADING_PERCENTAGE / 100.0 * 360));
 			g.setColor(Color.WHITE);
+			g.fillOval(x + width / 2 - size /2,  y + height / 2 - size /2 + loadOffset, size, size);
+			g.setColor(Color.DARK_GRAY);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 36));
 			String perc = LOADING_PERCENTAGE + "%";
 			g.drawString(perc, x + width / 2 - g.getFontMetrics().stringWidth(perc) / 2, y + height
