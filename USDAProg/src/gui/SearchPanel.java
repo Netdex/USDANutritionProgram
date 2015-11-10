@@ -77,7 +77,7 @@ public class SearchPanel extends JPanel {
 			public void run() {
 				while (true) {
 					try {
-						if (System.currentTimeMillis() - prevKeyPressedTime > 800
+						if (System.currentTimeMillis() - prevKeyPressedTime >= 500
 								&& shouldSearch) {
 							String txt = searchBox.getText();
 							if (!txt.equals("Search...") && !txt.equals(""))
