@@ -131,7 +131,10 @@ public class PanelManager extends JPanel {
 //			g.fillRect(x + 10, y + height / 2 - 25,
 //					(int) ((width - 20) * LOADING_PERCENTAGE / 100.0), 50);
 //			g.setColor(Color.WHITE);
-			g.setColor(Color.BLUE);
+			g.setColor(new Color(
+					(int)(LOADING_PERCENTAGE / 100.0 * 1024) % 255,
+					(int)(LOADING_PERCENTAGE / 100.0 * 2048) % 255,
+					(int)(LOADING_PERCENTAGE / 100.0 * 4096) % 255));
 			g.fillArc(x + width / 2 - size, y + height / 2 - size + loadOffset, 
 					size*2, size*2, 0, (int)(LOADING_PERCENTAGE / 100.0 * 360));
 			g.setColor(Color.WHITE);

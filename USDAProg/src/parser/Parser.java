@@ -149,7 +149,7 @@ public class Parser {
 				System.err.println("Took " + end + "ms");
 			}
 		}.start();
-
+		System.out.println();
 	}
 
 	/**

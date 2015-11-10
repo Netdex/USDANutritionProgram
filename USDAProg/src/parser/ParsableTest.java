@@ -26,7 +26,6 @@ public class ParsableTest {
 				new File("USDAFiles/LANGUAL.txt"), new File("USDAFiles/LANGDESC.TXT"),
 				new File("USDAFiles/FOOTNOTE.TXT"));
 		for (;;) {
-
 			FoodItem[] items = DataManager.getInstance().searchForItem(sc.nextLine().split(" "));
 			for (FoodItem fi : items) {
 				System.out.println(fi);
