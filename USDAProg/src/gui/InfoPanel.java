@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -15,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
@@ -64,82 +62,87 @@ public class InfoPanel extends JPanel {
 		this.add(header, BorderLayout.NORTH);
 
 		contentPanel = new JPanel();
-		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
 		BoxLayout contentLayout = new BoxLayout(contentPanel, BoxLayout.Y_AXIS);
 		contentPanel.setLayout(contentLayout);
-		contentPanel.setAlignmentY(LEFT_ALIGNMENT);
+		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
+		contentPanel.setOpaque(false);
 
-		JScrollPane scrollPanel = new JScrollPane(contentPanel);
-		scrollPanel.createVerticalScrollBar();
-		scrollPanel
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scrollPanel.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
-		scrollPanel.setWheelScrollingEnabled(true);
-		scrollPanel.setHorizontalScrollBar(null);
-		this.add(scrollPanel);
-
-		nutritionMultiplier = GUI.CONFIG.getDouble("userNutritionMultiplier");
+		this.add(contentPanel);
 	}
 
-	protected void setFoodItem(FoodItem food) {
+	protected void setFoodItem(FoodItem item) {
 		contentPanel.removeAll();
-		this.food = food;
-		String name = this.food.getLongDescription();
-		if (name.indexOf(',') != -1)
-			titleName.setText(name.substring(0, name.indexOf(',')));
+		this.food = item;
+
+		// Changes title in header
+		String longDesc = food.getLongDescription();
+		if (longDesc.indexOf(',') != -1)
+			titleName.setText(longDesc.substring(0, longDesc.indexOf(',')));
 		else
-			titleName.setText(name);
+			titleName.setToolTipText(longDesc);
 
-		JLabel longDescLabel = new JLabel("<html>" + name + "</html>");
-		longDescLabel.setFont(GUI.SUBTITLE_FONT);
-		contentPanel.add(longDescLabel);
+		// adds long name in actual page
+		JLabel longName = new JLabel("<html>" + longDesc + "</html>");
+		longName.setFont(GUI.SUBTITLE_FONT);
+		longName.setForeground(GUI.ACCENT_COLOUR);
+		contentPanel.add(longName);
 
-		JLabel foodGroupLabel = new JLabel(this.food.getFoodGroup().toString());
-		foodGroupLabel.setFont(GUI.CONTENT_FONT);
-		contentPanel.add(foodGroupLabel);
+		// adds food group info
+		JLabel foodGroup = new JLabel(food.getFoodGroup().toString());
+		foodGroup.setFont(GUI.CONTENT_FONT);
+		contentPanel.add(foodGroup);
 
-		JLabel commonNameLabel = new JLabel(this.food.getCommonName());
-		commonNameLabel.setFont(GUI.CONTENT_FONT);
-		contentPanel.add(commonNameLabel);
+		// adds LanguaLs
+		if (food.getLangualGroup() != null) {
+			JLabel langualsList = new JLabel("<html>" + food.getLangualGroup()
+					.getLanguaLs().toString() + "</html>");
+			langualsList.setFont(GUI.CONTENT_FONT);
+			contentPanel.add(langualsList);
+		}
 
-		JLabel unitsEntryPrompt = new JLabel(
-				"<html>Units: which unit of measure are you using?.</html>");
-		unitsEntryPrompt.setFont(GUI.CONTENT_FONT);
-		contentPanel.add(unitsEntryPrompt);
+		// adds common name info
+		if (!food.getCommonName().equals("")) {
+			JLabel commonName = new JLabel("<html>"
+					+ food.getCommonName().toString() + "</html>");
+			commonName.setFont(GUI.CONTENT_FONT);
+			contentPanel.add(commonName);
+		}
 
-		// TODO get the units used to measure this type of food
-		// use a JComboBox
+		// add manufacturer name
+		if (!food.getManufacturerName().equals("")) {
+			JLabel manufacName = new JLabel("<html>"
+					+ food.getManufacturerName().toString() + "</html>");
+			manufacName.setFont(GUI.CONTENT_FONT);
+			contentPanel.add(manufacName);
+		}
+
+		// add scientific name
+		if (!food.getScientificName().equals("")) {
+			JLabel scientificName = new JLabel("<html>"
+					+ food.getScientificName().toString() + "</html>");
+			scientificName.setFont(GUI.SCIENTIFIC_FONT);
+			contentPanel.add(scientificName);
+		}
+
+		JPanel amountEntryLine = new JPanel();
+		FlowLayout amountEntryLayout = new FlowLayout(FlowLayout.LEFT);
+		amountEntryLine.setLayout(amountEntryLayout);
 
 		JLabel amountEntryPrompt = new JLabel(
-				"<html>How much (in the units above) are you intending to consume?</html>");
-		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
-		contentPanel.add(amountEntryPrompt);
+				"<html> The unit used to measure this item is "
+						+ food.getWeightInfo().getDesc()
+						+ ".<br>Please enter the amount of this food you are intending to consume:<html>");
+		amountEntryLine.add(amountEntryPrompt);
 
-		// SpinnerNumberModel amountModel = new SpinnerNumberModel(0.0, 0.0,
-		// 999,
-		// 1.0);
-		// amountEntry = new JSpinner(amountModel);
-		// amountEntry.setMaximumSize(new Dimension(80, 30));
-		// amountEntry.setFont(GUI.CONTENT_FONT);
-		// amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
-		// amountEntry.addChangeListener(new AmountEntryListener());
-		// amountEntry.setAlignmentY(LEFT_ALIGNMENT);
-		// contentPanel.add(amountEntry);
+		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(0, 0, 999,
+				1);
+		JSpinner amountEntry = new JSpinner(amountEntryModel);
+		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
+		amountEntryLine.add(amountEntry);
+		contentPanel.add(amountEntryLine);
 
-		/*
-		 * unbreak this
-		 * 
-		 * Get the number of weight measurement units for each food.
-		 * 
-		 * Use a for loop and generate that many text entry boxes, one for each
-		 * unit of measure
-		 * 
-		 * Convert the most recently entered value to the universal unit
-		 * 
-		 * Do math with all the nutrients and the universal unit to figure out
-		 * the displayed amount of nutrients
-		 */
-
+		contentPanel.revalidate();
+		contentPanel.repaint();
 	}
 
 	private void updateFields(double newAmount) {
