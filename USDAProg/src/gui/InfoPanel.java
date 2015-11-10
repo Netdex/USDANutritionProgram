@@ -1,17 +1,14 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -164,6 +160,7 @@ public class InfoPanel extends JPanel {
 				BoxLayout.Y_AXIS);
 		nutritionPanel.setLayout(nutritionLayout);
 		Nutrient[] nutrients = food.getNutrientData().getNutrientArray();
+		nutritionLabels = new NutritionInfoLabel[nutrients.length];
 
 		for (int i = 0; i < nutrients.length; i++) {
 			NutritionInfoLabel label = new NutritionInfoLabel(nutrients[i]);
