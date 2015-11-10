@@ -26,7 +26,7 @@ public class PanelManager extends JPanel {
 	CardLayout cardLayoutManager;
 
 	public int LOADING_PERCENTAGE = -1;
-	
+
 	public PanelManager() {
 		cardLayoutManager = new CardLayout();
 		this.setLayout(cardLayoutManager);
@@ -100,17 +100,20 @@ public class PanelManager extends JPanel {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// For drawing progress bars and stuff
 		if (LOADING_PERCENTAGE != -1) {
-			g.setColor(Color.WHITE);
+
 			int x = this.getWidth() / 6;
 			int y = this.getHeight() / 3;
 			int width = this.getWidth() * 2 / 3;
 			int height = this.getHeight() / 3;
+			g.setColor(new Color(0, 0, 0, 128));
+			g.fillRect(x + 10, y + 10, width, height);
+			g.setColor(Color.WHITE);
 			g.fillRect(x, y, width, height);
 			g.setColor(Color.DARK_GRAY);
 			g.drawRect(x, y, width, height);
 
 			g.setColor(Color.GRAY);
-			g.fillRect(x + 10, y + height / 2 - 25, (int) ((width - 20)), 50);
+			g.fillRect(x + 10, y + height / 2 - 25, width - 20, 50);
 			g.setColor(Color.BLUE);
 			g.fillRect(x + 10, y + height / 2 - 25,
 					(int) ((width - 20) * LOADING_PERCENTAGE / 100.0), 50);
@@ -120,7 +123,7 @@ public class PanelManager extends JPanel {
 			g.drawString(perc, x + width / 2 - g.getFontMetrics().stringWidth(perc) / 2,
 					y + height / 2 + g.getFontMetrics().getAscent() / 2);
 			g.setColor(Color.BLUE);
-			g.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 			g.drawString("Loading database...", x + 10, y + 20);
 		}
 	}
