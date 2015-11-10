@@ -85,7 +85,10 @@ public class InfoPanel extends JPanel {
 		contentPanel.removeAll();
 		this.food = food;
 		String name = this.food.getLongDescription();
-		titleName.setText(name.substring(0, name.indexOf(',')));
+		if (name.indexOf(',') != -1)
+			titleName.setText(name.substring(0, name.indexOf(',')));
+		else
+			titleName.setText(name);
 
 		JLabel longDescLabel = new JLabel("<html>" + name + "</html>");
 		longDescLabel.setFont(GUI.SUBTITLE_FONT);
@@ -112,15 +115,16 @@ public class InfoPanel extends JPanel {
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
 		contentPanel.add(amountEntryPrompt);
 
-//		SpinnerNumberModel amountModel = new SpinnerNumberModel(0.0, 0.0, 999,
-//				1.0);
-//		amountEntry = new JSpinner(amountModel);
-//		amountEntry.setMaximumSize(new Dimension(80, 30));
-//		amountEntry.setFont(GUI.CONTENT_FONT);
-//		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
-//		amountEntry.addChangeListener(new AmountEntryListener());
-//		amountEntry.setAlignmentY(LEFT_ALIGNMENT);
-//		contentPanel.add(amountEntry);
+		// SpinnerNumberModel amountModel = new SpinnerNumberModel(0.0, 0.0,
+		// 999,
+		// 1.0);
+		// amountEntry = new JSpinner(amountModel);
+		// amountEntry.setMaximumSize(new Dimension(80, 30));
+		// amountEntry.setFont(GUI.CONTENT_FONT);
+		// amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
+		// amountEntry.addChangeListener(new AmountEntryListener());
+		// amountEntry.setAlignmentY(LEFT_ALIGNMENT);
+		// contentPanel.add(amountEntry);
 
 		/*
 		 * unbreak this

@@ -145,10 +145,13 @@ public class SearchPanel extends JPanel {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			if (e.getKeyCode() != KeyEvent.VK_ENTER) {
+				// Find out a way to search when the "user stops typing"
+
+				// ie. after the last press, wait 800ms, then search.
 				long currentTime = System.currentTimeMillis();
 				String query = searchBox.getText();
-				if (currentTime - prevKeyPressedTime >= 1000
-						&& query.length() >= 4) {
+				if (currentTime - prevKeyPressedTime >= 800
+						&& query.length() >= 3) {
 					findResults(query);
 					prevKeyPressedTime = currentTime;
 				}
