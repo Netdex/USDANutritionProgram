@@ -53,7 +53,7 @@ public class PanelManager extends JPanel {
 		this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
 		this.add(infoPanel, "foodInfo");
-		img = ImageExtract.getSearchImage("banana");
+		img = ImageExtract.getSearchImage("Catsup, low sodium");
 	}
 
 	protected void switchToHome() {

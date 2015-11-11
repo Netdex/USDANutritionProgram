@@ -19,6 +19,7 @@ public class ImageExtract {
 			URL url = new URL(uri);
 			image = ImageIO.read(url);
 		} catch (IOException e) {
+			System.err.println(e.getMessage());
 		}
 		return image;
 	}
@@ -31,7 +32,7 @@ public class ImageExtract {
 		Pattern p = Pattern.compile("\"unescapedUrl\":\"(.*?)\"");
 		Matcher m = p.matcher(json);
 		String url = "";
-		if(m.find())
+		if (m.find())
 			url = m.group(1);
 		return url;
 	}
@@ -48,7 +49,7 @@ public class ImageExtract {
 			}
 			return result;
 		} catch (Exception e) {
-
+			System.err.println(e.getMessage());
 		}
 		return "";
 	}
