@@ -4,7 +4,7 @@ import parser.InvalidParseDataException;
 
 public class NutrientDescription implements Parsable<NutrientDescription> {
 
-	private static final int PARSE_DATA_LENGTH = 6;
+	public static final int PARSE_DATA_LENGTH = 6;
 	
 	/**
 	 * Nutrient Number

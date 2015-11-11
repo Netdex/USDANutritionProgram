@@ -4,7 +4,7 @@ import parser.util.BinaryTree.BinaryTreeNode;
 
 public class BinaryTreeMap<K extends Comparable<K>, V> {
 
-	public BalancedBinaryTree<HashTableNode<K, V>> tree = new BalancedBinaryTree<HashTableNode<K, V>>();
+	public BalancedBinaryTree<BinaryTreeMapNode<K, V>> tree = new BalancedBinaryTree<BinaryTreeMapNode<K, V>>();
 
 	public BinaryTreeMap() {
 
@@ -23,11 +23,11 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 		if(tree.size() == 0)
 			return new DoublyLinkedList<V>();
 		DoublyLinkedList<V> selectedValues = new DoublyLinkedList<V>();
-		Stack<BinaryTreeNode<HashTableNode<K, V>>> stack = new Stack<>();
+		Stack<BinaryTreeNode<BinaryTreeMapNode<K, V>>> stack = new Stack<>();
 		stack.push(tree.getRootNode());
 
 		while (!stack.isEmpty()) {
-			BinaryTreeNode<HashTableNode<K, V>> currentNode = stack.pop();
+			BinaryTreeNode<BinaryTreeMapNode<K, V>> currentNode = stack.pop();
 			if (sel.select(currentNode.getItem().getValue())) {
 				selectedValues.add(currentNode.getItem().getValue());
 			}
@@ -47,11 +47,11 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 		if(tree.size() == 0)
 			return new DoublyLinkedList<K>();
 		DoublyLinkedList<K> selectedValues = new DoublyLinkedList<K>();
-		Stack<BinaryTreeNode<HashTableNode<K, V>>> stack = new Stack<>();
+		Stack<BinaryTreeNode<BinaryTreeMapNode<K, V>>> stack = new Stack<>();
 		stack.push(tree.getRootNode());
 
 		while (!stack.isEmpty()) {
-			BinaryTreeNode<HashTableNode<K, V>> currentNode = stack.pop();
+			BinaryTreeNode<BinaryTreeMapNode<K, V>> currentNode = stack.pop();
 
 			selectedValues.add(currentNode.getItem().getKey());
 
@@ -64,7 +64,7 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 	}
 
 	public void put(K key, V value) {
-		HashTableNode<K, V> node = new HashTableNode<>(key, value);
+		BinaryTreeMapNode<K, V> node = new BinaryTreeMapNode<>(key, value);
 		tree.add(node);
 	}
 
@@ -72,7 +72,7 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 		return get(key, tree.getRootNode());
 	}
 
-	private V get(K key, BinaryTreeNode<HashTableNode<K, V>> node) {
+	private V get(K key, BinaryTreeNode<BinaryTreeMapNode<K, V>> node) {
 		if (node == null)
 			return null;
 		if (node.getItem().getKey().equals(key))
@@ -88,12 +88,12 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 		return tree.toString();
 	}
 
-	public static class HashTableNode<K extends Comparable<K>, V> implements
-			Comparable<HashTableNode<K, V>> {
+	public static class BinaryTreeMapNode<K extends Comparable<K>, V> implements
+			Comparable<BinaryTreeMapNode<K, V>> {
 		private K key;
 		private V value;
 
-		public HashTableNode(K key, V value) {
+		public BinaryTreeMapNode(K key, V value) {
 			this.key = key;
 			this.value = value;
 		}
@@ -107,7 +107,7 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 		}
 
 		@Override
-		public int compareTo(HashTableNode<K, V> o) {
+		public int compareTo(BinaryTreeMapNode<K, V> o) {
 			return this.getKey().compareTo(o.getKey());
 		}
 

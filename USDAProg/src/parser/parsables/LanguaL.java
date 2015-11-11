@@ -4,7 +4,7 @@ import parser.InvalidParseDataException;
 
 public class LanguaL implements Parsable<LanguaL> {
 
-	private static final int PARSE_DATA_LENGTH = 2;
+	public static final int PARSE_DATA_LENGTH = 2;
 
 	private LanguaLDescription langualDescription;
 	

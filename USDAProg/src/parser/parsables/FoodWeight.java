@@ -9,7 +9,7 @@ import parser.InvalidParseDataException;
  */
 public class FoodWeight implements Parsable<FoodWeight> {
 
-	private static final int PARSE_DATA_LENGTH = 7;
+	public static final int PARSE_DATA_LENGTH = 7;
 
 	@Override
 	public FoodWeight parse(String[] data) throws InvalidParseDataException {

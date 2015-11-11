@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import gui.GUI;
-import parser.gui.LoadingWindow;
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
 import parser.parsables.FoodWeight;
@@ -198,7 +197,7 @@ public class Parser {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
 			// using .split now since stringtokenizer ignores empty values
-			String[] items = line.split("\\^", -1);
+			String[] items = splitTokens(line, "^", Footnote.PARSE_DATA_LENGTH);
 			Footnote footnote = new Footnote().parse(items);
 			map_footnote.put(footnote.getNdbNo(), footnote);
 			updatePercentage();
@@ -221,7 +220,7 @@ public class Parser {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
 			// using .split now since stringtokenizer ignores empty values
-			String[] items = line.split("\\^", -1);
+			String[] items = splitTokens(line, "^", LanguaLDescription.PARSE_DATA_LENGTH);
 			LanguaLDescription lld = new LanguaLDescription().parse(items);
 			map_langualDesc.put(lld.getFactorCode(), lld);
 			updatePercentage();
@@ -244,7 +243,7 @@ public class Parser {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
 			// using .split now since stringtokenizer ignores empty values
-			String[] items = line.split("\\^", -1);
+			String[] items = splitTokens(line, "^", LanguaL.PARSE_DATA_LENGTH);
 			LanguaL ll = new LanguaL().parse(items);
 			ll.setLangualDescription(map_langualDesc.get(ll.getFactorCode()));
 			if (map_langualGroup.get(ll.getNDBNo()) == null)
@@ -270,7 +269,7 @@ public class Parser {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
 			// using .split now since stringtokenizer ignores empty values
-			String[] items = line.split("\\^", -1);
+			String[] items = splitTokens(line, "^", FoodWeight.PARSE_DATA_LENGTH);
 			FoodWeight foodWeight = new FoodWeight().parse(items);
 			map_foodWeight.put(foodWeight.getNDBNo(), foodWeight);
 			updatePercentage();
@@ -293,7 +292,7 @@ public class Parser {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
 			// using .split now since stringtokenizer ignores empty values
-			String[] items = line.split("\\^", -1);
+			String[] items = splitTokens(line, "^", 2);
 			FoodGroup foodGroup = new FoodGroup().parse(items);
 			map_foodGroup.put(foodGroup.getFoodGroupID(), foodGroup);
 			updatePercentage();
@@ -317,7 +316,7 @@ public class Parser {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
 			// using .split now since stringtokenizer ignores empty values
-			String[] items = line.split("\\^", -1);
+			String[] items = splitTokens(line, "^", FoodItem.PARSE_DATA_LENGTH);
 			FoodItem foodItem = new FoodItem().parse(items);
 
 			// Set the appropriate items in the food item
@@ -349,7 +348,7 @@ public class Parser {
 		while ((line = br.readLine()) != null) {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
-			String[] items = line.split("\\^", -1);
+			String[] items = splitTokens(line, "^", NutrientDescription.PARSE_DATA_LENGTH);
 			NutrientDescription nd = new NutrientDescription().parse(items);
 			map_nutrDesc.put(nd.getNutrientNumber(), nd);
 			updatePercentage();
@@ -372,7 +371,7 @@ public class Parser {
 		while ((line = br.readLine()) != null) {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
-			String[] items = line.split("\\^", -1);
+			String[] items = splitTokens(line, "^", Nutrient.PARSE_DATA_LENGTH);
 			Nutrient nutr = new Nutrient().parse(items);
 			nutr.setNutrientDescription(map_nutrDesc.get((int) nutr.getNutrNo()));
 			NutrientData nd = map_nutrData.get(nutr.getNDBNo());
@@ -384,6 +383,17 @@ public class Parser {
 		br.close();
 	}
 
+	private String[] splitTokens(String item, String delim, int length){
+		String[] items = new String[length];
+		int lastIdx = 0;
+		for(int i = 0; i < length; i++){
+			int idx = item.indexOf("^", lastIdx);
+			items[i] = item.substring(lastIdx, idx == -1 ? item.length() : idx);
+			lastIdx = idx + delim.length();
+		}
+		return items;
+	}
+	
 	public void updatePercentage() {
 		gui.getPanelManager().LOADING_PERCENTAGE = (int) (100.0 * processedFileSize
 				/ totalFileSize);

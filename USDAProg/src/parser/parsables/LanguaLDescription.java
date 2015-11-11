@@ -4,7 +4,7 @@ import parser.InvalidParseDataException;
 
 public class LanguaLDescription implements Parsable<LanguaLDescription> {
 
-	private static final int PARSE_DATA_LENGTH = 2;
+	public static final int PARSE_DATA_LENGTH = 2;
 	@Override
 	public LanguaLDescription parse(String[] data) throws InvalidParseDataException {
 		if(data.length != PARSE_DATA_LENGTH)

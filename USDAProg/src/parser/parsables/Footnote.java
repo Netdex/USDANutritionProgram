@@ -4,7 +4,7 @@ import parser.InvalidParseDataException;
 
 public class Footnote implements Parsable<Footnote>{
 
-	private static final int PARSE_DATA_LENGTH = 5;
+	public static final int PARSE_DATA_LENGTH = 5;
 	
 	@Override
 	public Footnote parse(String[] data) throws InvalidParseDataException {

@@ -37,7 +37,7 @@ public class ParsableTest {
 	public static void hashTest() {
 		BinaryTreeMap<Integer, String> ht = new BinaryTreeMap<>();
 
-		BTreeVisualizer<BinaryTreeMap.HashTableNode<Integer, String>> btv = new BTreeVisualizer<BinaryTreeMap.HashTableNode<Integer, String>>(
+		BTreeVisualizer<BinaryTreeMap.BinaryTreeMapNode<Integer, String>> btv = new BTreeVisualizer<BinaryTreeMap.BinaryTreeMapNode<Integer, String>>(
 				ht.tree);
 		btv.pack();
 		btv.setVisible(true);

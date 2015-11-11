@@ -14,7 +14,7 @@ public class DoublyLinkedList<E> {
 		back.setPrevious(front);
 	}
 
-	public boolean add(E item) {
+	public void add(E item) {
 		DoubleLLNode<E> newNode = new DoubleLLNode<E>(item);
 
 		DoubleLLNode<E> currentItem = back.getPrevious();
@@ -23,7 +23,6 @@ public class DoublyLinkedList<E> {
 
 		newNode.setPrevious(currentItem);
 		newNode.setNext(back);
-		return true;
 	}
 
 	public E get(int index) {
@@ -31,10 +30,12 @@ public class DoublyLinkedList<E> {
 	}
 
 	private DoubleLLNode<E> getNode(int index) {
+		if (index < 0)
+			throw new ArrayIndexOutOfBoundsException();
 		DoubleLLNode<E> currentItem = front.getNext();
 		for (int i = 0; i < index; i++) {
 			if (currentItem.getNext().getNext() == null)
-				return null;
+				throw new ArrayIndexOutOfBoundsException();
 			currentItem = currentItem.getNext();
 		}
 		return currentItem;
@@ -62,15 +63,14 @@ public class DoublyLinkedList<E> {
 
 	public E remove(int index) {
 		DoubleLLNode<E> currentItem = front.getNext();
-		for (int i = 0; i < index - 1; i++) {
-			if (currentItem == back)
+		for (int i = 0; i < index; i++) {
+			if (currentItem.getNext().getNext() == null)
 				return null;
 			currentItem = currentItem.getNext();
 		}
-		DoubleLLNode<E> itemToReturn = currentItem.getNext();
-		currentItem.setNext(currentItem.getNext().getNext());
-		currentItem.getNext().setPrevious(currentItem);
-		return itemToReturn.getItem();
+		currentItem.getPrevious().setNext(currentItem.getNext());
+		currentItem.getNext().setPrevious(currentItem.getPrevious());
+		return currentItem.getItem();
 	}
 
 	public boolean remove(E item) {

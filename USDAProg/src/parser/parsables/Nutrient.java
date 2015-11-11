@@ -10,7 +10,7 @@ import parser.InvalidParseDataException;
  */
 public class Nutrient implements Parsable<Nutrient> {
 
-	private static final int PARSE_DATA_LENGTH = 18;
+	public static final int PARSE_DATA_LENGTH = 18;
 
 	@Override
 	public Nutrient parse(String[] data) throws InvalidParseDataException {

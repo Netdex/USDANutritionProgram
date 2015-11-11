@@ -12,7 +12,7 @@ public class FoodGroup implements Parsable<FoodGroup> {
 	
 	public static FoodGroup SAMPLE = new FoodGroup();
 	
-	private static final int PARSE_DATA_LENGTH = 2;
+	public static final int PARSE_DATA_LENGTH = 2;
 	private DoublyLinkedList<FoodItem> foods = new DoublyLinkedList<FoodItem>();
 	
 	@Override

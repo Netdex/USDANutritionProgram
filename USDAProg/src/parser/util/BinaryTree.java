@@ -12,7 +12,7 @@ public class BinaryTree<E extends Comparable<E>> {
 		return findNode(item) != null;
 	}
 
-	BinaryTreeNode<E> findNode(E item) {
+	protected BinaryTreeNode<E> findNode(E item) {
 		if (isEmpty())
 			return null;
 		Stack<BinaryTreeNode<E>> stack = new Stack<>();
