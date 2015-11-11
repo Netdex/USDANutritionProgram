@@ -1,9 +1,5 @@
 package parser;
 
-import gui.GUI;
-import gui.InfoPanel;
-
-import java.awt.Component;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +12,8 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+
+import gui.GUI;
 
 public class ImageExtract {
 
@@ -31,17 +28,14 @@ public class ImageExtract {
 				try {
 					Image img = getSearchImage(key);
 					if (img != null) {
-
-						image.setHorizontalAlignment(SwingConstants.CENTER);
+						image.setSize(480,
+								IMAGE_HEIGHT);
+						image.setBorder(IMAGE_BORDER);
 						double ratio = (double) IMAGE_HEIGHT
 								/ img.getHeight(null);
 						image.setIcon(new ImageIcon(img.getScaledInstance(
 								(int) (img.getWidth(null) * ratio),
 								IMAGE_HEIGHT, Image.SCALE_SMOOTH)));
-						image.setSize(image.getIcon().getIconWidth(),
-								IMAGE_HEIGHT);
-						image.setAlignmentX(Component.LEFT_ALIGNMENT);
-						image.setBorder(IMAGE_BORDER);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

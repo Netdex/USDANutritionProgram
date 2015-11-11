@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -116,6 +117,10 @@ public class InfoPanel extends JPanel {
 
 		// adds an image
 		JLabel image = new JLabel();
+		image.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		image.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
 		ImageExtract.injectImage(
 				image,
 				food.getLongDescription().substring(
