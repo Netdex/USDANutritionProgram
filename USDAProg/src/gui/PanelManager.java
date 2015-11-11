@@ -29,7 +29,7 @@ public class PanelManager extends JPanel {
 
 	public int LOADING_PERCENTAGE = -1;
 
-	private Image img;
+//	private Image img;
 	
 	public PanelManager() {
 		cardLayoutManager = new CardLayout();
@@ -53,7 +53,7 @@ public class PanelManager extends JPanel {
 		this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
 		this.add(infoPanel, "foodInfo");
-		img = ImageExtract.getSearchImage("Catsup, low sodium");
+//		img = ImageExtract.getSearchImage("apple");
 	}
 
 	protected void switchToHome() {
@@ -116,8 +116,6 @@ public class PanelManager extends JPanel {
 		Graphics2D g = (Graphics2D) gr;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		if(img != null)
-			g.drawImage(img, 0, 0, 300, 300, 0, 0, img.getWidth(null), img.getHeight(null), null);
 		// For drawing progress bars and stuff
 		if (LOADING_PERCENTAGE != -1) {
 			final int size = 70;
@@ -135,8 +133,8 @@ public class PanelManager extends JPanel {
 
 			
 			try {
-				g.setColor(new Color((int) (LOADING_PERCENTAGE / 100.0 * 1024) % 255,
-						(int) (LOADING_PERCENTAGE / 100.0 * 2000) % 255,
+				g.setColor(new Color(255- (int) (LOADING_PERCENTAGE / 100.0 * 1024) % 255,
+						255-(int) (LOADING_PERCENTAGE / 100.0 * 2000) % 255,
 						(int) (LOADING_PERCENTAGE / 100.0 * 4000) % 255));
 			} catch (Exception e) {
 				System.err.println(e.getMessage());

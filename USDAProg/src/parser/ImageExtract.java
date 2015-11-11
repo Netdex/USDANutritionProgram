@@ -21,6 +21,7 @@ public class ImageExtract {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
+		System.out.println("searching for " + key);
 		return image;
 	}
 
@@ -39,9 +40,11 @@ public class ImageExtract {
 
 	private static String getJSONResult(String key) {
 		try {
-			URL remote = new URL("http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-					+ key + "&imgsz=small");
-			BufferedReader br = new BufferedReader(new InputStreamReader(remote.openStream()));
+			URL remote = new URL(
+					"http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
+							+ key + "&imgsz=small");
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					remote.openStream()));
 			String result = "";
 			String line;
 			while ((line = br.readLine()) != null) {
