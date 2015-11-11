@@ -1,5 +1,8 @@
 package parser;
 
+import gui.InfoPanel;
+
+import java.awt.Component;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +12,37 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class ImageExtract {
+
+	public static void injectImage(JLabel image, String key) {
+		new Thread() {
+			public void run() {
+				try {
+					Image img = getSearchImage(key);
+					if (img != null) {
+
+						image.setHorizontalAlignment(SwingConstants.CENTER);
+						double ratio = (double) InfoPanel.IMAGE_HEIGHT
+								/ img.getHeight(null);
+						image.setIcon(new ImageIcon(img.getScaledInstance(
+								(int) (img.getWidth(null) * ratio),
+								InfoPanel.IMAGE_HEIGHT, Image.SCALE_SMOOTH)));
+						image.setSize(image.getIcon().getIconWidth(),
+								InfoPanel.IMAGE_HEIGHT);
+						image.setAlignmentX(Component.LEFT_ALIGNMENT);
+						image.setBorder(InfoPanel.IMAGE_BORDER);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+
+	}
 
 	public static Image getSearchImage(String key) {
 		String uri = getSearchResult(key);
@@ -19,7 +51,7 @@ public class ImageExtract {
 			URL url = new URL(uri);
 			image = ImageIO.read(url);
 		} catch (IOException e) {
-			System.err.println(e.getMessage());
+			System.err.println(e.getMessage() + key);
 		}
 		System.out.println("searching for " + key);
 		return image;

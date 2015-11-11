@@ -21,6 +21,8 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.sun.javafx.iio.ImageLoadListener;
+
 import parser.ImageExtract;
 import parser.parsables.FoodItem;
 import parser.parsables.Nutrient;
@@ -40,8 +42,10 @@ public class InfoPanel extends JPanel {
 	private JLabel titleName;
 	private JSpinner amountEntry;
 
-	protected static final javax.swing.border.Border IMAGE_BORDER = BorderFactory.createLineBorder(
-			GUI.ACCENT_COLOUR, 3);
+	public static int IMAGE_HEIGHT = 192;
+
+	public static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
+			.createLineBorder(GUI.ACCENT_COLOUR, 3);
 
 	private NutritionInfoLabel[] nutritionLabels;
 
@@ -60,8 +64,9 @@ public class InfoPanel extends JPanel {
 		header.add(titleName);
 		JButton moreInfo = new JButton();
 		try {
-			moreInfo.setIcon(new ImageIcon(ImageIO.read(new File("images/moreInfoButton.png"))
-					.getScaledInstance(48, 48, Image.SCALE_SMOOTH)));
+			moreInfo.setIcon(new ImageIcon(ImageIO.read(
+					new File("images/moreInfoButton.png")).getScaledInstance(
+					48, 48, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 		}
 		moreInfo.addActionListener(new MoreInfoButtonListener());
@@ -111,22 +116,16 @@ public class InfoPanel extends JPanel {
 			// no commas or brackets at all
 			titleName.setText(longDesc);
 
-		// adds image
-		Image img = ImageExtract.getSearchImage(food.getLongDescription().substring(
-				0,
-				food.getLongDescription().indexOf(",") == -1 ? food.getLongDescription().length()
-						: food.getLongDescription().indexOf(",")));
-		if (img != null) {
-			JLabel image = new JLabel("", JLabel.CENTER);
-			image.setHorizontalAlignment(SwingConstants.CENTER);
-			double ratio = 64.0 / img.getHeight(null);
-			image.setIcon(new ImageIcon(img.getScaledInstance((int) (img.getWidth(null) * ratio),
-					64, Image.SCALE_SMOOTH)));
-			image.setSize(480, 64);
-//			image.setAlignmentX(CENTER_ALIGNMENT);
-			image.setBorder(IMAGE_BORDER);
-			contentPanel.add(image);
-		}
+		// adds an image
+		JLabel image = new JLabel();
+		ImageExtract.injectImage(
+				image,
+				food.getLongDescription().substring(
+						0,
+						food.getLongDescription().indexOf(",") == -1 ? food
+								.getLongDescription().length() : food
+								.getLongDescription().indexOf(",")));
+		contentPanel.add(image);
 
 		// adds long name in actual page
 		JLabel longName = new JLabel("<html>" + longDesc + "<br></html>");
@@ -145,7 +144,8 @@ public class InfoPanel extends JPanel {
 		}
 
 		// adds food group info
-		JLabel foodGroup = new JLabel("Food Group: " + food.getFoodGroup().toString() + "\n");
+		JLabel foodGroup = new JLabel("Food Group: "
+				+ food.getFoodGroup().toString() + "\n");
 		foodGroup.setFont(GUI.CONTENT_FONT);
 		foodGroup.setAlignmentX(LEFT_ALIGNMENT);
 		contentPanel.add(foodGroup);
@@ -177,7 +177,8 @@ public class InfoPanel extends JPanel {
 		String promptText;
 		if (food.getWeightInfo() != null)
 			promptText = "The unit used to measure this item is:<br>\""
-					+ food.getWeightInfo().getDesc().toString() + "\" ("
+					+ food.getWeightInfo().getDesc().toString()
+					+ "\" ("
 					+ food.getWeightInfo().getGramWeight()
 					+ " grams).<br>Please enter the amount (in the provided units above)<br>"
 					+ "you are intending to consume";
@@ -188,7 +189,8 @@ public class InfoPanel extends JPanel {
 		amountEntryPrompt.setAlignmentX(LEFT_ALIGNMENT);
 		amountEntryLine.add(amountEntryPrompt);
 
-		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(0, 0, 999, 1);
+		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(0, 0, 999,
+				1);
 		amountEntry = new JSpinner(amountEntryModel);
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.setFont(GUI.CONTENT_FONT);
@@ -202,7 +204,8 @@ public class InfoPanel extends JPanel {
 		// create the base "framework" for nutrients
 		nutritionPanel = new JPanel();
 		// TODO add a header row
-		BoxLayout nutritionLayout = new BoxLayout(nutritionPanel, BoxLayout.Y_AXIS);
+		BoxLayout nutritionLayout = new BoxLayout(nutritionPanel,
+				BoxLayout.Y_AXIS);
 		nutritionPanel.setLayout(nutritionLayout);
 		Nutrient[] nutrients = food.getNutrientData().getNutrientArray();
 		nutritionLabels = new NutritionInfoLabel[nutrients.length];
@@ -224,7 +227,8 @@ public class InfoPanel extends JPanel {
 
 	private void updateFields(double newAmountInArbitraryUnits) {
 		if (food.getWeightInfo() != null)
-			gramsOfFood = newAmountInArbitraryUnits * food.getWeightInfo().getGramWeight();
+			gramsOfFood = newAmountInArbitraryUnits
+					* food.getWeightInfo().getGramWeight();
 		else
 			// actually in grams
 			gramsOfFood = newAmountInArbitraryUnits;
@@ -278,7 +282,8 @@ public class InfoPanel extends JPanel {
 		private NutritionInfoLabel(Nutrient nutrient) {
 			super();
 			this.nutrient = nutrient;
-			name = this.nutrient.getNutrientDescription().getNutrientDescription();
+			name = this.nutrient.getNutrientDescription()
+					.getNutrientDescription();
 			// starts by assuming 100g sample (default)
 			actualAmount = this.nutrient.getNutrVal();
 			amountPerGram = actualAmount / 100;
