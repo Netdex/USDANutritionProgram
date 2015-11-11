@@ -6,10 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import parser.ImageExtract;
 import parser.parsables.FoodItem;
 
 public class FoodItemButton extends JButton {
@@ -35,10 +37,10 @@ public class FoodItemButton extends JButton {
 		foodDescription.setForeground(Color.BLACK);
 		foodDescription.setOpaque(false);
 		contents.add(foodDescription);
-
+		foodDescription.setIcon(new ImageIcon(ImageExtract.getSearchImage(food.getLongDescription()
+				.substring(0, food.getLongDescription().indexOf(",")))));
 		String languals = food.getLangualGroup().getLanguaLs().toString();
-		JLabel extraInfo = new JLabel(languals.substring(0,
-				languals.lastIndexOf(';', 20)));
+		JLabel extraInfo = new JLabel(languals.substring(0, languals.lastIndexOf(';', 20)));
 		extraInfo.setFont(GUI.CONTENT_FONT);
 		extraInfo.setForeground(GUI.HEADER_COLOUR);
 		extraInfo.setOpaque(false);
