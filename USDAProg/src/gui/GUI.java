@@ -33,6 +33,8 @@ public class GUI extends JFrame {
 
 	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
 			.createEmptyBorder();
+	protected static final javax.swing.border.Border DEBUG_BORDER = BorderFactory
+			.createLineBorder(Color.BLACK, 3);
 	protected static byte SCROLL_SPEED = 20;
 
 	protected static DataManager dataManager;
@@ -48,7 +50,7 @@ public class GUI extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		manager = new PanelManager();
 		this.add(manager);
 

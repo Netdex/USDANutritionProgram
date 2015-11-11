@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -42,20 +43,17 @@ public class InfoPanel extends JPanel {
 	private JLabel titleName;
 	private JSpinner amountEntry;
 
-	public static int IMAGE_HEIGHT = 192;
-
-	public static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
-			.createLineBorder(GUI.ACCENT_COLOUR, 3);
-
 	private NutritionInfoLabel[] nutritionLabels;
 
 	public InfoPanel(SearchPanel searchPanel, PanelManager manager) {
-		// TODO make a config to load the multiplier each time
 		super();
 		this.searchPanel = searchPanel;
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
 		this.setBackground(GUI.BACKGROUND_COLOUR);
+
+		GUI.CONFIG.load();
+		nutritionMultiplier = GUI.CONFIG.getDouble("userNutritionMultiplier");
 
 		header = new JPanel();
 		header.add(new BackButton(this.searchPanel, this.manager));
@@ -302,20 +300,10 @@ public class InfoPanel extends JPanel {
 			amountInSampleLabel.setFont(GUI.CONTENT_FONT);
 			amountInSampleLabel.setOpaque(false);
 			this.add(amountInSampleLabel);
-
-			percentDVLabel = new JLabel();
-			percentDVLabel.setSize(50, 50);
-			percentDVLabel.setFont(GUI.CONTENT_FONT);
-			percentDVLabel.setOpaque(false);
-			this.add(percentDVLabel);
-
 		}
 
 		private void updateAmounts(double grams) {
 			actualAmount = amountPerGram * grams;
-			// percentDV = actualAmount / nutrient.
-
-			// is there a percent recommended field?
 		}
 	}
 

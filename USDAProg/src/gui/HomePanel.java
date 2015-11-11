@@ -71,16 +71,16 @@ public class HomePanel extends JPanel {
 		helpButton.setBackground(new Color(8174056));
 		helpButton.setBorder(GUI.EMPTY_BORDER);
 
-		JButton settingsButton = new JButton();
-		try {
-			settingsButton.setIcon(new ImageIcon(ImageIO.read(
-					new File("images/settingsButton.png")).getScaledInstance(
-					200, 200, Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		settingsButton.setBackground(Color.DARK_GRAY);
-		settingsButton.setBorder(GUI.EMPTY_BORDER);
+		// JButton settingsButton = new JButton();
+		// try {
+		// settingsButton.setIcon(new ImageIcon(ImageIO.read(
+		// new File("images/settingsButton.png")).getScaledInstance(
+		// 200, 200, Image.SCALE_SMOOTH)));
+		// } catch (IOException e) {
+		// e.printStackTrace();
+		// }
+		// settingsButton.setBackground(Color.DARK_GRAY);
+		// settingsButton.setBorder(GUI.EMPTY_BORDER);
 
 		JButton aboutButton = new JButton("About");
 		aboutButton.setBackground(Color.BLACK);
@@ -90,12 +90,12 @@ public class HomePanel extends JPanel {
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
 		buttonQuad.add(helpButton);
-		buttonQuad.add(settingsButton);
+//		buttonQuad.add(settingsButton);
 
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
 		helpButton.addActionListener(new HelpButtonListener());
-		settingsButton.addActionListener(new SettingsButtonListener());
+		// settingsButton.addActionListener(new SettingsButtonListener());
 		aboutButton.addActionListener(new AboutButtonListener());
 
 		this.add(bannerLabel);
@@ -128,13 +128,13 @@ public class HomePanel extends JPanel {
 		}
 	}
 
-	class SettingsButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			manager.switchToSettings();
-		}
-	}
+	// class SettingsButtonListener implements ActionListener {
+	//
+	// @Override
+	// public void actionPerformed(ActionEvent e) {
+	// manager.switchToSettings();
+	// }
+	// }
 
 	class AboutButtonListener implements ActionListener {
 

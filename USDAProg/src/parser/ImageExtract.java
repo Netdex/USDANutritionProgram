@@ -1,5 +1,6 @@
 package parser;
 
+import gui.GUI;
 import gui.InfoPanel;
 
 import java.awt.Component;
@@ -12,11 +13,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class ImageExtract {
+
+	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
+			.createLineBorder(GUI.ACCENT_COLOUR, 3);
+
+	private static int IMAGE_HEIGHT = 192;
 
 	public static void injectImage(JLabel image, String key) {
 		new Thread() {
@@ -26,15 +33,15 @@ public class ImageExtract {
 					if (img != null) {
 
 						image.setHorizontalAlignment(SwingConstants.CENTER);
-						double ratio = (double) InfoPanel.IMAGE_HEIGHT
+						double ratio = (double) IMAGE_HEIGHT
 								/ img.getHeight(null);
 						image.setIcon(new ImageIcon(img.getScaledInstance(
 								(int) (img.getWidth(null) * ratio),
-								InfoPanel.IMAGE_HEIGHT, Image.SCALE_SMOOTH)));
+								IMAGE_HEIGHT, Image.SCALE_SMOOTH)));
 						image.setSize(image.getIcon().getIconWidth(),
-								InfoPanel.IMAGE_HEIGHT);
+								IMAGE_HEIGHT);
 						image.setAlignmentX(Component.LEFT_ALIGNMENT);
-						image.setBorder(InfoPanel.IMAGE_BORDER);
+						image.setBorder(IMAGE_BORDER);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
