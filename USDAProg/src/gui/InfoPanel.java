@@ -23,6 +23,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.sun.javafix.iio.ImageLoadListener;
+
 import parser.ImageExtract;
 import parser.parsables.FoodItem;
 import parser.parsables.Nutrient;
