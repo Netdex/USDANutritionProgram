@@ -15,7 +15,7 @@ public class ParsableTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		dataTest();
+		
 	}
 
 	public static void dataTest() {

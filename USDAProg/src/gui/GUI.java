@@ -2,20 +2,17 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JViewport;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import config.ConfigurationManager;
 import parser.DataManager;
+import config.ConfigurationManager;
 
 public class GUI extends JFrame {
 
@@ -51,7 +48,7 @@ public class GUI extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		manager = new PanelManager();
 		this.add(manager);
 

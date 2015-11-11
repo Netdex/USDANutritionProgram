@@ -5,10 +5,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+import parser.ImageExtract;
 import parser.parsables.FoodGroup;
 
 public class PanelManager extends JPanel {
@@ -27,6 +29,8 @@ public class PanelManager extends JPanel {
 
 	public int LOADING_PERCENTAGE = -1;
 
+	private Image img;
+	
 	public PanelManager() {
 		cardLayoutManager = new CardLayout();
 		this.setLayout(cardLayoutManager);
@@ -49,6 +53,7 @@ public class PanelManager extends JPanel {
 		this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
 		this.add(infoPanel, "foodInfo");
+		img = ImageExtract.getSearchImage("banana");
 	}
 
 	protected void switchToHome() {
@@ -110,6 +115,9 @@ public class PanelManager extends JPanel {
 		super.paint(gr);
 		Graphics2D g = (Graphics2D) gr;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		
+		if(img != null)
+			g.drawImage(img, 0, 0, 300, 300, 0, 0, img.getWidth(null), img.getHeight(null), null);
 		// For drawing progress bars and stuff
 		if (LOADING_PERCENTAGE != -1) {
 			final int size = 70;
@@ -125,12 +133,7 @@ public class PanelManager extends JPanel {
 			g.setColor(Color.DARK_GRAY);
 			g.drawRect(x, y, width, height);
 
-			// g.setColor(Color.GRAY);
-			// g.fillRect(x + 10, y + height / 2 - 25, width - 20, 50);
-			// g.setColor(Color.BLUE);
-			// g.fillRect(x + 10, y + height / 2 - 25,
-			// (int) ((width - 20) * LOADING_PERCENTAGE / 100.0), 50);
-			// g.setColor(Color.WHITE);
+			
 			try {
 				g.setColor(new Color((int) (LOADING_PERCENTAGE / 100.0 * 1024) % 255,
 						(int) (LOADING_PERCENTAGE / 100.0 * 2000) % 255,
