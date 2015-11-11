@@ -21,7 +21,7 @@ public class GUI extends JFrame {
 
 	public final static Color BACKGROUND_COLOUR = new Color(255, 255, 255);
 	public final static Color HEADER_COLOUR = new Color(192, 192, 192);
-	public final static Color ACCENT_COLOUR = new Color(15718468);
+	public final static Color ACCENT_COLOUR = new Color(6084351);
 
 	protected static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);
 	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
@@ -33,8 +33,6 @@ public class GUI extends JFrame {
 
 	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
 			.createEmptyBorder();
-	protected static final javax.swing.border.Border DEBUG_BORDER = BorderFactory
-			.createLineBorder(Color.BLACK, 3);
 	protected static byte SCROLL_SPEED = 20;
 
 	protected static DataManager dataManager;

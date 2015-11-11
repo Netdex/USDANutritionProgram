@@ -23,7 +23,7 @@ public class PanelManager extends JPanel {
 	private ExtraInfoPanel extraInfoPanel;
 	// private SettingsPanel settingsPanel;
 	private AboutPanel aboutPanel;
-	private HelpPanel helpPanel;
+//	private HelpPanel helpPanel;
 
 	CardLayout cardLayoutManager;
 
@@ -42,7 +42,7 @@ public class PanelManager extends JPanel {
 		aboutPanel = new AboutPanel(this);
 		infoPanel = new InfoPanel(searchPanel, this);
 		extraInfoPanel = new ExtraInfoPanel(this);
-		helpPanel = new HelpPanel(this);
+//		helpPanel = new HelpPanel(this);
 
 		this.add(homePanel, "home");
 		this.add(groupPanel, "group");
@@ -50,7 +50,7 @@ public class PanelManager extends JPanel {
 		this.add(searchPanel, "search");
 		// this.add(settingsPanel, "settings");
 		this.add(aboutPanel, "about");
-		this.add(helpPanel, "help");
+//		this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
 		this.add(infoPanel, "foodInfo");
 		// img = ImageExtract.getSearchImage("apple");
@@ -82,10 +82,10 @@ public class PanelManager extends JPanel {
 //			cardLayoutManager.show(this, "settings");
 //	}
 
-	protected void switchToHelp() {
-		if (LOADING_PERCENTAGE == -1)
-			cardLayoutManager.show(this, "help");
-	}
+//	protected void switchToHelp() {
+//		if (LOADING_PERCENTAGE == -1)
+//			cardLayoutManager.show(this, "help");
+//	}
 
 	protected void switchToAbout() {
 		if (LOADING_PERCENTAGE == -1)

@@ -65,7 +65,7 @@ public class SearchPanel extends JPanel {
 		resultsPanel.setBackground(GUI.BACKGROUND_COLOUR);
 		BoxLayout resultsPanelLayout = new BoxLayout(resultsPanel,
 				BoxLayout.Y_AXIS);
-		resultsPanel.setAlignmentY(LEFT_ALIGNMENT);
+		resultsPanel.setAlignmentX(LEFT_ALIGNMENT);
 		resultsPanel.setLayout(resultsPanelLayout);
 
 		resultsList = new JScrollPane(resultsPanel);

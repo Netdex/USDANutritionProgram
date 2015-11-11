@@ -21,9 +21,9 @@ import javax.swing.SwingConstants;
 public class ImageExtract {
 
 	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
-			.createLineBorder(GUI.ACCENT_COLOUR, 3);
+			.createLineBorder(GUI.ACCENT_COLOUR, 5);
 
-	private static int IMAGE_HEIGHT = 192;
+	private static int IMAGE_WIDTH = 400;
 
 	public static void injectImage(JLabel image, String key) {
 		new Thread() {
@@ -33,13 +33,14 @@ public class ImageExtract {
 					if (img != null) {
 
 						image.setHorizontalAlignment(SwingConstants.CENTER);
-						double ratio = (double) IMAGE_HEIGHT
-								/ img.getHeight(null);
+						double ratio = (double) IMAGE_WIDTH
+								/ img.getWidth(null);
 						image.setIcon(new ImageIcon(img.getScaledInstance(
-								(int) (img.getWidth(null) * ratio),
-								IMAGE_HEIGHT, Image.SCALE_SMOOTH)));
-						image.setSize(image.getIcon().getIconWidth(),
-								IMAGE_HEIGHT);
+								IMAGE_WIDTH,
+								(int) (img.getHeight(null) * ratio),
+								Image.SCALE_SMOOTH)));
+						image.setSize(IMAGE_WIDTH, image.getIcon()
+								.getIconHeight());
 						image.setAlignmentX(Component.LEFT_ALIGNMENT);
 						image.setBorder(IMAGE_BORDER);
 					}
@@ -80,8 +81,8 @@ public class ImageExtract {
 	private static String getJSONResult(String key) {
 		try {
 			URL remote = new URL(
-					"http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=food%20"
-							+ key.replace(" ", "%20") + "&imgsz=medium");
+					"http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
+							+ key.replace(" ", "%20") + "%20food&imgsz=medium");
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					remote.openStream()));
 			String result = "";

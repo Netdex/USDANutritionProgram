@@ -60,16 +60,16 @@ public class HomePanel extends JPanel {
 		groupButton.setBackground(Color.ORANGE);
 		groupButton.setBorder(GUI.EMPTY_BORDER);
 
-		JButton helpButton = new JButton();
-		try {
-			helpButton = new JButton(new ImageIcon(ImageIO.read(
-					new File("images/helpButton.png")).getScaledInstance(200,
-					200, Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		helpButton.setBackground(new Color(8174056));
-		helpButton.setBorder(GUI.EMPTY_BORDER);
+//		JButton helpButton = new JButton();
+//		try {
+//			helpButton = new JButton(new ImageIcon(ImageIO.read(
+//					new File("images/helpButton.png")).getScaledInstance(200,
+//					200, Image.SCALE_SMOOTH)));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		helpButton.setBackground(new Color(8174056));
+//		helpButton.setBorder(GUI.EMPTY_BORDER);
 
 		// JButton settingsButton = new JButton();
 		// try {
@@ -89,12 +89,12 @@ public class HomePanel extends JPanel {
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
-		buttonQuad.add(helpButton);
+//		buttonQuad.add(helpButton);
 //		buttonQuad.add(settingsButton);
 
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
-		helpButton.addActionListener(new HelpButtonListener());
+//		helpButton.addActionListener(new HelpButtonListener());
 		// settingsButton.addActionListener(new SettingsButtonListener());
 		aboutButton.addActionListener(new AboutButtonListener());
 
@@ -120,13 +120,13 @@ public class HomePanel extends JPanel {
 		}
 	}
 
-	class HelpButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			manager.switchToHelp();
-		}
-	}
+	// class HelpButtonListener implements ActionListener {
+	//
+	// @Override
+	// public void actionPerformed(ActionEvent e) {
+	// manager.switchToHelp();
+	// }
+	// }
 
 	// class SettingsButtonListener implements ActionListener {
 	//
