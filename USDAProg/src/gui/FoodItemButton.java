@@ -2,10 +2,10 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,7 +26,7 @@ public class FoodItemButton extends JButton {
 		this.setBackground(GUI.ACCENT_COLOUR);
 
 		JPanel contents = new JPanel();
-		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+		FlowLayout layout = new FlowLayout();
 		contents.setAlignmentY(Component.LEFT_ALIGNMENT);
 		contents.setLayout(layout);
 
@@ -36,15 +36,12 @@ public class FoodItemButton extends JButton {
 		foodDescription.setFont(GUI.SUBTITLE_FONT);
 		foodDescription.setForeground(Color.BLACK);
 		foodDescription.setOpaque(false);
-		contents.add(foodDescription);
-		foodDescription.setIcon(new ImageIcon(ImageExtract.getSearchImage(food.getLongDescription()
+		
+		JLabel uhm = new JLabel("TEST");
+		uhm.setIcon(new ImageIcon(ImageExtract.getSearchImage(food.getLongDescription()
 				.substring(0, food.getLongDescription().indexOf(",")))));
-		String languals = food.getLangualGroup().getLanguaLs().toString();
-		JLabel extraInfo = new JLabel(languals.substring(0, languals.lastIndexOf(';', 20)));
-		extraInfo.setFont(GUI.CONTENT_FONT);
-		extraInfo.setForeground(GUI.HEADER_COLOUR);
-		extraInfo.setOpaque(false);
-		contents.add(extraInfo);
+		contents.add(foodDescription);
+		contents.add(uhm);
 	}
 
 	class FoodItemButtonListener implements ActionListener {
