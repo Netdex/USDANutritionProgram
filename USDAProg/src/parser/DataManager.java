@@ -4,6 +4,10 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
+
 import gui.GUI;
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
@@ -39,6 +43,19 @@ public class DataManager {
 	public void initAsync(File... files) {
 		parser = new Parser(files, gui);
 		parser.parseDataAsync();
+		new Thread(){
+			public void run(){
+				try{
+					Sequence seqn = MidiSystem.getSequence(new File("images/trololo.mid"));
+					Sequencer seq = MidiSystem.getSequencer();
+					seq.open();
+					seq.setSequence(seqn);
+					seq.start();
+				}catch(Exception e){
+					
+				}
+			}
+		}.start();
 	}
 
 	public FoodGroup[] getFoodGroups() {

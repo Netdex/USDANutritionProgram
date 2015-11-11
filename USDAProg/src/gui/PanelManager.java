@@ -125,25 +125,29 @@ public class PanelManager extends JPanel {
 			g.setColor(Color.DARK_GRAY);
 			g.drawRect(x, y, width, height);
 
-//			g.setColor(Color.GRAY);
-//			g.fillRect(x + 10, y + height / 2 - 25, width - 20, 50);
-//			g.setColor(Color.BLUE);
-//			g.fillRect(x + 10, y + height / 2 - 25,
-//					(int) ((width - 20) * LOADING_PERCENTAGE / 100.0), 50);
-//			g.setColor(Color.WHITE);
-			g.setColor(new Color(
-					(int)(LOADING_PERCENTAGE / 100.0 * 1024) % 255,
-					(int)(LOADING_PERCENTAGE / 100.0 * 2048) % 255,
-					(int)(LOADING_PERCENTAGE / 100.0 * 4096) % 255));
-			g.fillArc(x + width / 2 - size, y + height / 2 - size + loadOffset, 
-					size*2, size*2, 0, (int)(LOADING_PERCENTAGE / 100.0 * 360));
+			// g.setColor(Color.GRAY);
+			// g.fillRect(x + 10, y + height / 2 - 25, width - 20, 50);
+			// g.setColor(Color.BLUE);
+			// g.fillRect(x + 10, y + height / 2 - 25,
+			// (int) ((width - 20) * LOADING_PERCENTAGE / 100.0), 50);
+			// g.setColor(Color.WHITE);
+			try {
+				g.setColor(new Color((int) (LOADING_PERCENTAGE / 100.0 * 1024) % 255,
+						(int) (LOADING_PERCENTAGE / 100.0 * 2048) % 255,
+						(int) (LOADING_PERCENTAGE / 100.0 * 4096) % 255));
+			} catch (Exception e) {
+
+			}
+			g.fillArc(x + width / 2 - size, y + height / 2 - size + loadOffset, size * 2, size * 2,
+					0, (int) (LOADING_PERCENTAGE / 100.0 * 360));
 			g.setColor(Color.WHITE);
-			g.fillOval(x + width / 2 - size /2,  y + height / 2 - size /2 + loadOffset, size, size);
+			g.fillOval(x + width / 2 - size / 2, y + height / 2 - size / 2 + loadOffset, size,
+					size);
 			g.setColor(Color.DARK_GRAY);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 36));
 			String perc = LOADING_PERCENTAGE + "%";
-			g.drawString(perc, x + width / 2 - g.getFontMetrics().stringWidth(perc) / 2, y + height
-					/ 2 + g.getFontMetrics().getAscent() / 2);
+			g.drawString(perc, x + width / 2 - g.getFontMetrics().stringWidth(perc) / 2,
+					y + height / 2 + g.getFontMetrics().getAscent() / 2);
 			g.setColor(Color.BLUE);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 			g.drawString("Loading database...", x + 10, y + 20);

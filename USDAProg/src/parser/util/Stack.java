@@ -1,7 +1,5 @@
 package parser.util;
 
-import parser.util.DoublyLinkedList.DoubleLLNode;
-
 public class Stack<E> {
 	private DoublyLinkedList<E> linkedList;
 

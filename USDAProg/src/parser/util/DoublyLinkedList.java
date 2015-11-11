@@ -52,7 +52,7 @@ public class DoublyLinkedList<E> {
 	public int indexOf(E item) {
 		DoubleLLNode<E> currentItem = front.getNext();
 		int count = 0;
-		while (currentItem != null && currentItem.getNext() != null) {
+		while (currentItem.getNext() != null) {
 			if (currentItem.getItem().equals(item))
 				return count;
 			count++;
@@ -136,6 +136,7 @@ public class DoublyLinkedList<E> {
 		int size = this.size();
 		if (size == 0)
 			return null;
+		@SuppressWarnings("unchecked")
 		E[] arr = (E[]) Array.newInstance(sample.getClass(), size);
 		DoubleLLNode<E> currentNode = front.getNext();
 		int idx = 0;
