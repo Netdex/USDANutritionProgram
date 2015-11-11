@@ -62,6 +62,9 @@ public class DataManager {
 		return parser.getFoodGroups().toArray(FoodGroup.SAMPLE);
 	}
 
+	public Parser getParser(){
+		return parser;
+	}
 	public FoodItem[] searchForItem(String[] keys) {
 		// Check if the user is searching for an NDB number
 		if (keys.length == 1) {

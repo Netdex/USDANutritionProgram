@@ -140,12 +140,19 @@ public class Parser {
 					System.err.println("PARSING FOOD DESCRIPTIONS");
 					parseFoodDescriptions();
 					System.err.println("DONE");
-					gui.getPanelManager().LOADING_PERCENTAGE = -1;
+					gui.getPanelManager().LOADING_PERCENTAGE = 100;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				long end = System.currentTimeMillis() - start;
 				System.err.println("Took " + end + "ms");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				gui.getPanelManager().LOADING_PERCENTAGE = -1;
+				gui.getPanelManager().repaint();
 			}
 		}.start();
 		System.out.println();

@@ -133,8 +133,8 @@ public class PanelManager extends JPanel {
 			// g.setColor(Color.WHITE);
 			try {
 				g.setColor(new Color((int) (LOADING_PERCENTAGE / 100.0 * 1024) % 255,
-						(int) (LOADING_PERCENTAGE / 100.0 * 2048) % 255,
-						(int) (LOADING_PERCENTAGE / 100.0 * 4096) % 255));
+						(int) (LOADING_PERCENTAGE / 100.0 * 2000) % 255,
+						(int) (LOADING_PERCENTAGE / 100.0 * 4000) % 255));
 			} catch (Exception e) {
 
 			}
@@ -151,6 +151,7 @@ public class PanelManager extends JPanel {
 			g.setColor(Color.BLUE);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 			g.drawString("Loading database...", x + 10, y + 20);
+			g.drawString("Loaded " + GUI.dataManager.getParser().getFoodItemMap().getInternalTree().size() + " food(s)", x + 10, y + height - 10);
 		}
 	}
 }
