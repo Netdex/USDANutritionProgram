@@ -41,8 +41,8 @@ public class ImageExtract {
 	private static String getJSONResult(String key) {
 		try {
 			URL remote = new URL(
-					"http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-							+ key + "&imgsz=small");
+					"http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=food%20"
+							+ key.replace(" ", "%20") + "&imgsz=medium");
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					remote.openStream()));
 			String result = "";

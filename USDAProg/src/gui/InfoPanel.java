@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +20,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import parser.ImageExtract;
 import parser.parsables.FoodItem;
 import parser.parsables.Nutrient;
 
@@ -36,6 +38,9 @@ public class InfoPanel extends JPanel {
 	private JPanel nutritionPanel;
 	private JLabel titleName;
 	private JSpinner amountEntry;
+
+	protected static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
+			.createLineBorder(GUI.ACCENT_COLOUR, 3);
 
 	private NutritionInfoLabel[] nutritionLabels;
 
@@ -105,6 +110,20 @@ public class InfoPanel extends JPanel {
 		} else
 			// no commas or brackets at all
 			titleName.setText(longDesc);
+
+		// adds image
+		Image img = ImageExtract.getSearchImage(food.getLongDescription()
+				.substring(0, 
+						food.getLongDescription().indexOf(",") == - 1?  food.getLongDescription().length() : food.getLongDescription().indexOf(",")
+						));
+		if (img != null) {
+			JLabel image = new JLabel();
+			image.setIcon(new ImageIcon(img.getScaledInstance(256, 256,
+					Image.SCALE_SMOOTH)));
+			image.setAlignmentX(LEFT_ALIGNMENT);
+			image.setBorder(IMAGE_BORDER);
+			contentPanel.add(image);
+		}
 
 		// adds long name in actual page
 		JLabel longName = new JLabel("<html>" + longDesc + "<br></html>");
@@ -218,7 +237,7 @@ public class InfoPanel extends JPanel {
 			label.revalidate();
 			label.repaint();
 		}
-		
+
 		nutritionPanel.revalidate();
 		nutritionPanel.repaint();
 	}
@@ -293,7 +312,7 @@ public class InfoPanel extends JPanel {
 		private void updateAmounts(double grams) {
 			actualAmount = amountPerGram * grams;
 			// percentDV = actualAmount / nutrient.
-			
+
 			// is there a percent recommended field?
 		}
 	}
