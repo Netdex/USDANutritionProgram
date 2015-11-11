@@ -70,6 +70,7 @@ public class SearchPanel extends JPanel {
 		resultsList
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		resultsList.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
+		resultsList.getVerticalScrollBar().setBackground(GUI.BACKGROUND_COLOUR);
 		resultsList.setWheelScrollingEnabled(true);
 		resultsList.setHorizontalScrollBar(null);
 
@@ -121,7 +122,6 @@ public class SearchPanel extends JPanel {
 	protected void resetSearchBox() {
 		searchBox.setText("Search...");
 		searchBox.setForeground(searchBoxGray);
-		resetResults();
 	}
 
 	protected void resetResults() {
