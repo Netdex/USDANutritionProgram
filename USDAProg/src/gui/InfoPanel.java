@@ -33,6 +33,7 @@ public class InfoPanel extends JPanel {
 
 	private JPanel header;
 	private JPanel contentPanel;
+	private JPanel nutritionPanel;
 	private JLabel titleName;
 	private JSpinner amountEntry;
 
@@ -70,6 +71,8 @@ public class InfoPanel extends JPanel {
 		contentPanel.setLayout(contentLayout);
 		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
 		contentPanel.setOpaque(false);
+
+		// TODO make contentPanel scrollable
 
 		this.add(contentPanel, BorderLayout.CENTER);
 	}
@@ -167,7 +170,7 @@ public class InfoPanel extends JPanel {
 
 		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(0, 0, 999,
 				1);
-		JSpinner amountEntry = new JSpinner(amountEntryModel);
+		amountEntry = new JSpinner(amountEntryModel);
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.setFont(GUI.CONTENT_FONT);
 		amountEntry.setAlignmentX(LEFT_ALIGNMENT);
@@ -178,7 +181,7 @@ public class InfoPanel extends JPanel {
 		contentPanel.add(amountEntryLine);
 
 		// create the base "framework" for nutrients
-		JPanel nutritionPanel = new JPanel();
+		nutritionPanel = new JPanel();
 		// TODO add a header row
 		BoxLayout nutritionLayout = new BoxLayout(nutritionPanel,
 				BoxLayout.Y_AXIS);
@@ -188,39 +191,50 @@ public class InfoPanel extends JPanel {
 
 		for (int i = 0; i < nutrients.length; i++) {
 			NutritionInfoLabel label = new NutritionInfoLabel(nutrients[i]);
-			nutritionLabels[i] = label;
-			label.updateAmounts(nutritionMultiplier);
 			label.setAlignmentX(LEFT_ALIGNMENT);
+			nutritionLabels[i] = label;
 			nutritionPanel.add(label);
 		}
 
+		nutritionPanel.revalidate();
+		nutritionPanel.repaint();
 		contentPanel.add(nutritionPanel);
 
 		contentPanel.revalidate();
 		contentPanel.repaint();
 	}
 
-	private void updateFields(double newAmount) {
+	private void updateFields(double newAmountInArbitraryUnits) {
 		if (food.getWeightInfo() != null)
-			gramsOfFood = newAmount * food.getWeightInfo().getGramWeight();
+			gramsOfFood = newAmountInArbitraryUnits
+					* food.getWeightInfo().getGramWeight();
 		else
-			gramsOfFood = newAmount;
-		
+			// actually in grams
+			gramsOfFood = newAmountInArbitraryUnits;
+
 		// update all of the labels
 		for (NutritionInfoLabel label : nutritionLabels) {
-			label.updateAmounts(nutritionMultiplier);
+			label.updateAmounts(gramsOfFood);
+			label.revalidate();
+			label.repaint();
 		}
+		
+		nutritionPanel.revalidate();
+		nutritionPanel.repaint();
 	}
 
 	protected void setNutritionMultiplier(double personalizedMultiplier) {
 		this.nutritionMultiplier = personalizedMultiplier;
+		for (NutritionInfoLabel label : nutritionLabels) {
+			label.updateAmounts(gramsOfFood);
+		}
 	}
 
 	class AmountEntryListener implements ChangeListener {
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			updateFields((double) amountEntry.getValue());
+			updateFields(Double.parseDouble(amountEntry.getValue().toString()));
 		}
 
 	}
@@ -229,22 +243,29 @@ public class InfoPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// draw the more info dialog over this
+			// TODO draw the more info dialog
 		}
 
 	}
 
 	class NutritionInfoLabel extends JLabel {
 
+		private Nutrient nutrient;
 		private String name;
 		private double amountPerGram;
-		private double amountInSample;
+		private double actualAmount;
+		private double percentDV;
+
+		private JLabel percentDVLabel;
 
 		private NutritionInfoLabel(Nutrient nutrient) {
 			super();
-			name = nutrient.getNutrientDescription().getNutrientDescription();
-			amountInSample = nutrient.getNutrVal();
-			amountPerGram = amountInSample / 100;
+			this.nutrient = nutrient;
+			name = this.nutrient.getNutrientDescription()
+					.getNutrientDescription();
+			// starts by assuming 100g sample (default)
+			actualAmount = this.nutrient.getNutrVal();
+			amountPerGram = actualAmount / 100;
 
 			this.setLayout(new FlowLayout(FlowLayout.LEFT));
 			this.setAlignmentX(LEFT_ALIGNMENT);
@@ -255,13 +276,13 @@ public class InfoPanel extends JPanel {
 			nameLabel.setOpaque(false);
 			this.add(nameLabel);
 
-			JLabel amountInSampleLabel = new JLabel(amountInSample + "");
+			JLabel amountInSampleLabel = new JLabel(actualAmount + "");
 			amountInSampleLabel.setSize(50, 50);
 			amountInSampleLabel.setFont(GUI.CONTENT_FONT);
 			amountInSampleLabel.setOpaque(false);
 			this.add(amountInSampleLabel);
 
-			JLabel percentDVLabel = new JLabel();
+			percentDVLabel = new JLabel();
 			percentDVLabel.setSize(50, 50);
 			percentDVLabel.setFont(GUI.CONTENT_FONT);
 			percentDVLabel.setOpaque(false);
@@ -269,10 +290,12 @@ public class InfoPanel extends JPanel {
 
 		}
 
-		private void updateAmounts(double multiplier) {
-			amountInSample = amountPerGram * multiplier;
+		private void updateAmounts(double grams) {
+			actualAmount = amountPerGram * grams;
+			// percentDV = actualAmount / nutrient.
+			
+			// is there a percent recommended field?
 		}
 	}
 
 }
-// symbolab
