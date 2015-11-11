@@ -34,19 +34,7 @@ public class ParsableTest {
 
 	}
 
-	public static void hashTest() {
-		BinaryTreeMap<Integer, String> ht = new BinaryTreeMap<>();
-
-		BTreeVisualizer<BinaryTreeMap.BinaryTreeMapNode<Integer, String>> btv = new BTreeVisualizer<BinaryTreeMap.BinaryTreeMapNode<Integer, String>>(
-				ht.tree);
-		btv.pack();
-		btv.setVisible(true);
-
-		for (int i = 0; i < 100; i++) {
-			ht.put(i, "TEST" + i);
-		}
-		System.out.println(ht.get(10));
-	}
+	
 
 	
 }

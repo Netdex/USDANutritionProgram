@@ -4,12 +4,15 @@ import parser.util.BinaryTree.BinaryTreeNode;
 
 public class BinaryTreeMap<K extends Comparable<K>, V> {
 
-	public BalancedBinaryTree<BinaryTreeMapNode<K, V>> tree = new BalancedBinaryTree<BinaryTreeMapNode<K, V>>();
+	private BalancedBinaryTree<BinaryTreeMapNode<K, V>> tree = new BalancedBinaryTree<BinaryTreeMapNode<K, V>>();
 
 	public BinaryTreeMap() {
 
 	}
 
+	public BalancedBinaryTree<BinaryTreeMapNode<K, V>> getInternalTree(){
+		return tree;
+	}
 	/**
 	 * Probably the most useful method you will ever have. Selects all items
 	 * from this BinaryTreeMap which match a Selector of type V. The selector is
