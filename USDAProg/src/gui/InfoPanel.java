@@ -25,7 +25,7 @@ import parser.parsables.Nutrient;
 public class InfoPanel extends JPanel {
 
 	private FoodItem food;
-	private double amountOfFood;
+	private double gramsOfFood;
 	private double nutritionMultiplier;
 
 	private SearchPanel searchPanel;
@@ -80,24 +80,28 @@ public class InfoPanel extends JPanel {
 
 		// Changes title in header
 		String longDesc = food.getLongDescription();
-		int firstSeparatorIndex = Math.max(longDesc.indexOf(','),
-				longDesc.indexOf('('));
+		int firstSeparatorIndex = longDesc.indexOf(',');
+
+		int alternateFirstSeparator = longDesc.indexOf('(');
+		if ((alternateFirstSeparator > 0 && alternateFirstSeparator < firstSeparatorIndex)
+				|| firstSeparatorIndex == -1)
+			firstSeparatorIndex = alternateFirstSeparator;
 
 		// ridiculously long string before comma/bracket
 		if (firstSeparatorIndex > 15) {
 			int firstSpaceIndex = longDesc.indexOf(' ');
 			if (firstSpaceIndex > 15)
-				titleName.setText(longDesc.substring(0, 15).trim());
+				// if the first space is still too long, force cut
+				titleName.setText(longDesc.substring(0, 15));
 			else
-				titleName
-						.setToolTipText(longDesc.substring(0, firstSpaceIndex));
-		} else if (firstSeparatorIndex > 0)
+				// use space instead of the other separators then...
+				titleName.setText(longDesc.substring(0, firstSpaceIndex));
+		} else if (firstSeparatorIndex > 0) {
 			// normal case
-			titleName
-					.setText(longDesc.substring(0, firstSeparatorIndex).trim());
-		else
-			// too short (no commas or brackets at all)
-			titleName.setToolTipText(longDesc.trim());
+			titleName.setText(longDesc.substring(0, firstSeparatorIndex));
+		} else
+			// no commas or brackets at all
+			titleName.setText(longDesc);
 
 		// adds long name in actual page
 		JLabel longName = new JLabel("<html>" + longDesc + "<br></html>");
@@ -146,12 +150,17 @@ public class InfoPanel extends JPanel {
 		FlowLayout amountEntryLayout = new FlowLayout(FlowLayout.LEFT);
 		amountEntryLine.setLayout(amountEntryLayout);
 
-		JLabel amountEntryPrompt = new JLabel(
-				"<html>The unit used to measure this item is \""
-						+ food.getWeightInfo().getDesc() // TODO GORDON fix this
-						+ "\" ("
-						+ food.getWeightInfo().getGramWeight()
-						+ " grams).<br>Please enter the amount of this food<br>you are intending to consume<html>");
+		String promptText;
+		if (food.getWeightInfo() != null)
+			promptText = "The unit used to measure this item is:<br>\""
+					+ food.getWeightInfo().getDesc().toString()
+					+ "\" ("
+					+ food.getWeightInfo().getGramWeight()
+					+ " grams).<br>Please enter the amount (in the provided units above)<br>"
+					+ "you are intending to consume";
+		else
+			promptText = "This item is measured in grams.<br>Please enter the number of grams you are consuming.<br>";
+		JLabel amountEntryPrompt = new JLabel("<html>" + promptText + "</html>");
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
 		amountEntryPrompt.setAlignmentX(LEFT_ALIGNMENT);
 		amountEntryLine.add(amountEntryPrompt);
@@ -181,6 +190,7 @@ public class InfoPanel extends JPanel {
 			NutritionInfoLabel label = new NutritionInfoLabel(nutrients[i]);
 			nutritionLabels[i] = label;
 			label.updateAmounts(nutritionMultiplier);
+			label.setAlignmentX(LEFT_ALIGNMENT);
 			nutritionPanel.add(label);
 		}
 
@@ -191,16 +201,19 @@ public class InfoPanel extends JPanel {
 	}
 
 	private void updateFields(double newAmount) {
-		amountOfFood = newAmount;
-
+		if (food.getWeightInfo() != null)
+			gramsOfFood = newAmount * food.getWeightInfo().getGramWeight();
+		else
+			gramsOfFood = newAmount;
+		
+		// update all of the labels
+		for (NutritionInfoLabel label : nutritionLabels) {
+			label.updateAmounts(nutritionMultiplier);
+		}
 	}
 
 	protected void setNutritionMultiplier(double personalizedMultiplier) {
 		this.nutritionMultiplier = personalizedMultiplier;
-		// updates all labels
-		for (NutritionInfoLabel label : nutritionLabels) {
-			label.updateAmounts(nutritionMultiplier);
-		}
 	}
 
 	class AmountEntryListener implements ChangeListener {
