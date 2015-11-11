@@ -43,7 +43,7 @@ public class BackButton extends JButton {
 			else if (target instanceof InfoPanel)
 				manager.switchToInfoPanel();
 			else if (target instanceof SearchPanel)
-				manager.switchToSearchPanel();
+				manager.switchToSearchPanel(false);
 		}
 	}
 }

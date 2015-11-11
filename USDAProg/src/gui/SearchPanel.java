@@ -131,6 +131,11 @@ public class SearchPanel extends JPanel {
 		resultsPanel.removeAll();
 		resultsPanel.revalidate();
 		resultsPanel.repaint();
+		JLabel searchPrompt = new JLabel(
+				"<html>Type something in the search box to get started...</html>");
+		searchPrompt.setFont(GUI.SUBTITLE_FONT);
+		searchPrompt.setForeground(GUI.ACCENT_COLOUR);
+		resultsPanel.add(searchPrompt);
 	}
 
 	class FoodItemButton extends JButton {

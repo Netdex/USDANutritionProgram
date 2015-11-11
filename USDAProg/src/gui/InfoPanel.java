@@ -1,4 +1,3 @@
-
 package gui;
 
 import java.awt.BorderLayout;
@@ -42,6 +41,7 @@ public class InfoPanel extends JPanel {
 	private JPanel nutritionPanel;
 	private JLabel titleNameLabel;
 	private JSpinner amountEntry;
+	private JScrollPane contentScrollbar;
 
 	protected static final javax.swing.border.Border BLACK_BORDER = BorderFactory
 			.createLineBorder(Color.DARK_GRAY, 2);
@@ -84,18 +84,18 @@ public class InfoPanel extends JPanel {
 		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
 		contentPanel.setOpaque(false);
 
-		JScrollPane contentScrollable = new JScrollPane(contentPanel);
-		contentScrollable.createVerticalScrollBar();
-		contentScrollable.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
-		contentScrollable
+		contentScrollbar = new JScrollPane(contentPanel);
+		contentScrollbar.createVerticalScrollBar();
+		contentScrollbar.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
+		contentScrollbar
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		contentScrollable.getVerticalScrollBar().setUnitIncrement(
+		contentScrollbar.getVerticalScrollBar().setUnitIncrement(
 				GUI.SCROLL_SPEED);
-		contentScrollable.getVerticalScrollBar().setBackground(
+		contentScrollbar.getVerticalScrollBar().setBackground(
 				GUI.BACKGROUND_COLOUR);
-		contentScrollable.setWheelScrollingEnabled(true);
+		contentScrollbar.setWheelScrollingEnabled(true);
 
-		this.add(contentScrollable, BorderLayout.CENTER);
+		this.add(contentScrollbar, BorderLayout.CENTER);
 	}
 
 	protected void setFoodItem(FoodItem item) {
@@ -105,27 +105,29 @@ public class InfoPanel extends JPanel {
 		// Changes title in header
 		String longDesc = food.getLongDescription();
 		int firstSeparatorIndex = longDesc.indexOf(',');
-
 		int alternateFirstSeparator = longDesc.indexOf('(');
 		if ((alternateFirstSeparator > 0 && alternateFirstSeparator < firstSeparatorIndex)
 				|| firstSeparatorIndex == -1)
 			firstSeparatorIndex = alternateFirstSeparator;
+
 		String titleName;
-		// ridiculously long string before comma/bracket
-		if (firstSeparatorIndex > 17) {
+		// ridiculously long string before comma/bracket or none
+		if (firstSeparatorIndex > 17 || firstSeparatorIndex == -1) {
 			int firstSpaceIndex = longDesc.indexOf(' ');
-			if (firstSpaceIndex > 17)
-				// if the first space is still too long, force cut
-				titleName = longDesc.substring(0, 17);
-			else
-				// use space instead of the other separators then...
-				titleName = longDesc.substring(0, firstSpaceIndex);
-		} else if (firstSeparatorIndex > 0) {
+			if (longDesc.length() <= 17)
+				titleName = longDesc;
+			else {
+				if (firstSpaceIndex > 17)
+					// if the first space is still too long, force cut
+					titleName = longDesc.substring(0, 17);
+				else
+					// use space instead of the other separators then...
+					titleName = longDesc.substring(0, firstSpaceIndex);
+			}
+		} else {
 			// normal case
 			titleName = longDesc.substring(0, firstSeparatorIndex);
-		} else
-			// no commas or brackets at all
-			titleName = longDesc;
+		}
 		titleNameLabel.setText(titleName);
 
 		// adds an image
@@ -138,7 +140,6 @@ public class InfoPanel extends JPanel {
 		longName.setFont(GUI.SUBTITLE_FONT);
 		longName.setForeground(GUI.ACCENT_COLOUR);
 		longName.setAlignmentX(LEFT_ALIGNMENT);
-		longName.setPreferredSize(new Dimension(470, 50));
 		contentPanel.add(longName);
 
 		// adds common name info
@@ -147,7 +148,6 @@ public class InfoPanel extends JPanel {
 					+ food.getCommonName().toString() + "<br></html>");
 			commonName.setFont(GUI.CONTENT_FONT);
 			commonName.setAlignmentX(LEFT_ALIGNMENT);
-			commonName.setPreferredSize(new Dimension(470, 50));
 			contentPanel.add(commonName);
 		}
 
@@ -156,7 +156,6 @@ public class InfoPanel extends JPanel {
 				+ food.getFoodGroup().toString() + "\n");
 		foodGroup.setFont(GUI.CONTENT_FONT);
 		foodGroup.setAlignmentX(LEFT_ALIGNMENT);
-		foodGroup.setPreferredSize(new Dimension(470, 50));
 		contentPanel.add(foodGroup);
 
 		// add scientific name
@@ -165,7 +164,6 @@ public class InfoPanel extends JPanel {
 					+ food.getScientificName().toString() + "<br></html>");
 			scientificName.setFont(GUI.SCIENTIFIC_FONT);
 			scientificName.setAlignmentX(LEFT_ALIGNMENT);
-			scientificName.setPreferredSize(new Dimension(470, 50));
 			contentPanel.add(scientificName);
 		}
 
@@ -175,13 +173,11 @@ public class InfoPanel extends JPanel {
 					+ food.getManufacturerName().toString() + "<br></html>");
 			manufacName.setFont(GUI.CONTENT_FONT);
 			manufacName.setAlignmentX(LEFT_ALIGNMENT);
-			manufacName.setPreferredSize(new Dimension(470, 50));
 			contentPanel.add(manufacName);
 		}
 
 		// asks the user for how much food they are consuming
 		JPanel amountEntryLine = new JPanel();
-		amountEntryLine.setPreferredSize(new Dimension(470, 150));
 		amountEntryLine.setOpaque(false);
 		FlowLayout amountEntryLayout = new FlowLayout(FlowLayout.LEFT);
 		amountEntryLine.setLayout(amountEntryLayout);
@@ -234,11 +230,13 @@ public class InfoPanel extends JPanel {
 		// nutritionPanel.repaint();
 		contentPanel.add(nutritionPanel);
 
+		contentScrollbar.getVerticalScrollBar().setValue(0);
 		contentPanel.revalidate();
 		contentPanel.repaint();
 	}
 
-	// protected void setNutritionMultiplier(double personalizedMultiplier) {
+	// protected void setNutritionMultiplier(double personalizedMultiplier)
+	// {
 	// this.nutritionMultiplier = personalizedMultiplier;
 	// for (NutritionInfoLabel label : nutritionLabels) {
 	// label.updateAmounts(gramsOfFood);
