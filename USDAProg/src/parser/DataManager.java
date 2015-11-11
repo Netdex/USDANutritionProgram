@@ -43,19 +43,6 @@ public class DataManager {
 	public void initAsync(File... files) {
 		parser = new Parser(files, gui);
 		parser.parseDataAsync();
-		new Thread(){
-			public void run(){
-				try{
-					Sequence seqn = MidiSystem.getSequence(new File("images/trololo.mid"));
-					Sequencer seq = MidiSystem.getSequencer();
-					seq.open();
-					seq.setSequence(seqn);
-					seq.start();
-				}catch(Exception e){
-					
-				}
-			}
-		}.start();
 	}
 
 	public FoodGroup[] getFoodGroups() {

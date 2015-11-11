@@ -136,7 +136,7 @@ public class PanelManager extends JPanel {
 						(int) (LOADING_PERCENTAGE / 100.0 * 2000) % 255,
 						(int) (LOADING_PERCENTAGE / 100.0 * 4000) % 255));
 			} catch (Exception e) {
-
+				System.err.println(e.getMessage());
 			}
 			g.fillArc(x + width / 2 - size, y + height / 2 - size + loadOffset, size * 2, size * 2,
 					0, (int) (LOADING_PERCENTAGE / 100.0 * 360));
