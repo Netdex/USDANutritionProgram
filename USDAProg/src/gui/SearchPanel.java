@@ -84,11 +84,13 @@ public class SearchPanel extends JPanel {
 							if (!txt.equals("Search...") && !txt.equals(""))
 								findResults(txt);
 							else {
-								resetResults();
+								resultsPanel.removeAll();
+								resultsPanel.revalidate();
+								resultsPanel.repaint();
 							}
 							shouldSearch = false;
 						}
-						Thread.sleep(50);
+						Thread.sleep(100);
 					} catch (Exception e) {
 
 					}
@@ -101,7 +103,7 @@ public class SearchPanel extends JPanel {
 	private void findResults(String query) {
 		resultsPanel.removeAll();
 		resultsList.getVerticalScrollBar().setValue(0);
-		// TODO deal with an empty array
+
 		FoodItem[] results = GUI.dataManager.searchForItem(query.split(" "));
 		if (results.length > 0)
 			for (int i = 0; i < results.length; i++) {
@@ -122,12 +124,6 @@ public class SearchPanel extends JPanel {
 	protected void resetSearchBox() {
 		searchBox.setText("Search...");
 		searchBox.setForeground(searchBoxGray);
-	}
-
-	protected void resetResults() {
-		resultsPanel.removeAll();
-		resultsPanel.revalidate();
-		resultsPanel.repaint();
 	}
 
 	class FoodItemButton extends JButton {
