@@ -53,6 +53,8 @@ public class DataManager {
 		return parser;
 	}
 	public FoodItem[] searchForItem(String[] keys) {
+		if(keys.length == 0)
+			return new FoodItem[0];
 		// Check if the user is searching for an NDB number
 		if (keys.length == 1) {
 			if (keys[0].matches("[0-9]{5}")) {
