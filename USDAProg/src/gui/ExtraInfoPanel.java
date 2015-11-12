@@ -36,6 +36,7 @@ public class ExtraInfoPanel extends JPanel {
 		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
 		BoxLayout contentLayout = new BoxLayout(contentPanel, BoxLayout.Y_AXIS);
 		contentPanel.setLayout(contentLayout);
+		contentPanel.setMaximumSize(new Dimension(470, Short.MAX_VALUE));
 		contentPanel.setOpaque(false);
 
 		JScrollPane scrollPane = new JScrollPane(contentPanel);
@@ -45,6 +46,7 @@ public class ExtraInfoPanel extends JPanel {
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
 		scrollPane.getVerticalScrollBar().setBackground(GUI.BACKGROUND_COLOUR);
+		scrollPane.setHorizontalScrollBar(null);
 
 		scrollPane.setWheelScrollingEnabled(true);
 		this.add(scrollPane, BorderLayout.CENTER);
