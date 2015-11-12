@@ -29,7 +29,7 @@ public class BackButton extends JButton {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		this.setPreferredSize(new Dimension(48, 48));
+		this.setSize(new Dimension(48, 48));
 		this.setBackground(java.awt.Color.WHITE);
 		this.addActionListener(new BackButtonActionListener());
 	}

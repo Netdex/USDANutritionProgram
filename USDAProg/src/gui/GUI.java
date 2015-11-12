@@ -27,7 +27,7 @@ public class GUI extends JFrame {
 	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
 			20);
 	protected static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN,
-			17);
+			16);
 	protected static final Font SCIENTIFIC_FONT = new Font("Calibri",
 			Font.ITALIC, 14);
 
