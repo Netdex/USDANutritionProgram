@@ -49,9 +49,12 @@ public class GUI extends JFrame {
 			e.printStackTrace();
 		}
 
+		manager = new PanelManager();
+		this.add(manager);
+		
 		dataManager = DataManager.getInstance();
 		dataManager.bindProgressDisplay(this);
-		dataManager.initAsync(new File("USDAFiles/FOOD_DES.TXT"), new File(
+		dataManager.init(new File("USDAFiles/FOOD_DES.TXT"), new File(
 				"USDAFiles/NUT_DATA.TXT"), new File("USDAFiles/NUTR_DEF.TXT"),
 				new File("USDAFiles/FD_GROUP.TXT"), new File(
 						"USDAFiles/WEIGHT.TXT"), new File(
@@ -59,8 +62,7 @@ public class GUI extends JFrame {
 						"USDAFiles/LANGDESC.TXT"), new File(
 						"USDAFiles/FOOTNOTE.TXT"));
 		
-		manager = new PanelManager();
-		this.add(manager);
+		
 		
 		manager.switchToHome();
 		this.setResizable(false);

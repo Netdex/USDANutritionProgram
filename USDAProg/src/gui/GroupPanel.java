@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,15 +45,20 @@ public class GroupPanel extends JPanel {
 		BoxLayout groupsLayout = new BoxLayout(groupsList, BoxLayout.Y_AXIS);
 		groupsList.setLayout(groupsLayout);
 
-		FoodGroup[] foodGroups = DataManager.getInstance().getFoodGroups();
+		Runnable r = new Runnable(){
+			public void run(){
+				FoodGroup[] foodGroups = DataManager.getInstance().getFoodGroups();
+				for (int i = 0; i < foodGroups.length; i++) {
+					FoodGroupButton button = new FoodGroupButton(foodGroups[i]);
+					button.setAlignmentX(LEFT_ALIGNMENT);
+					groupsList.add(button);
+					System.out.println(foodGroups[i].getDescription());
+				}
+			}
+		};
+		DataManager.getInstance().registerSyncEvent(r);
 
-		for (int i = 0; i < foodGroups.length; i++) {
-			FoodGroupButton button = new FoodGroupButton(foodGroups[i]);
-			button.setAlignmentX(LEFT_ALIGNMENT);
-			groupsList.add(button);
-		}
-
-		JScrollPane groupsScrollable = new JScrollPane();
+		JScrollPane groupsScrollable = new JScrollPane(groupsList);
 		groupsScrollable.createVerticalScrollBar();
 		groupsScrollable.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
 		groupsScrollable
@@ -73,7 +79,7 @@ public class GroupPanel extends JPanel {
 			super();
 			this.group = foodGroup;
 			this.addActionListener(new FoodGroupButtonListener());
-
+			this.setMaximumSize(new Dimension(460, 128));
 			JTextArea name = new JTextArea(group.getDescription());
 			name.setFont(GUI.CONTENT_FONT);
 			name.setBackground(GUI.ACCENT_COLOUR);

@@ -1,22 +1,22 @@
 package parser;
 
+import gui.GUI;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
-
-import gui.GUI;
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
 import parser.util.BinaryTreeMap;
+import parser.util.DoublyLinkedList;
 
 public class DataManager {
 
 	private static DataManager instance;
 
+	private DoublyLinkedList<Runnable> hooks = new DoublyLinkedList<>();
+	
 	private Parser parser;
 	private GUI gui;
 
@@ -37,14 +37,25 @@ public class DataManager {
 	 */
 	public void init(File... files) {
 		parser = new Parser(files, gui);
-		parser.parseData();
+		new Thread(){
+			public void run(){
+				parser.parseData();
+				for(int i = 0; i < hooks.size(); i++){
+					Runnable r = hooks.get(i);
+					r.run();
+				}
+			}
+		}.start();
 	}
 
-	public void initAsync(File... files) {
-		parser = new Parser(files, gui);
-		parser.parseDataAsync();
+	/**
+	 * Runs code after the parsing is done
+	 * @param r The runnable containing the event to run
+	 */
+	public void registerSyncEvent(Runnable r){
+		hooks.add(r);
 	}
-
+	
 	public FoodGroup[] getFoodGroups() {
 		return parser.getFoodGroups().toArray(FoodGroup.SAMPLE);
 	}

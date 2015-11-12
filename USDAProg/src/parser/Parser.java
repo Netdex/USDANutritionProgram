@@ -71,129 +71,40 @@ public class Parser {
 	}
 
 	/**
-	 * Parses all the data in the given files, but asynchronously
-	 */
-	public void parseDataAsync() {
-		Thread[] threads = new Thread[5];
-		new Thread() {
-			public void run() {
-				long start = System.currentTimeMillis();
-				try {
-					threads[0] = new Thread() {
-						public void run() {
-							try {
-								System.err.println("PARSING FOOD GROUPS");
-								parseFoodGroups();
-							} catch (Exception e) {
-
-							}
-						}
-					};
-					threads[1] = new Thread() {
-						public void run() {
-							try {
-								System.err.println("PARSING FOOD WEIGHTS");
-								parseFoodWeights();
-							} catch (Exception e) {
-
-							}
-						}
-					};
-					threads[2] = new Thread() {
-						public void run() {
-							try {
-								System.err.println("PARSING FOOTNOTES");
-								parseFootnotes();
-							} catch (Exception e) {
-
-							}
-						}
-					};
-					threads[3] = new Thread() {
-						public void run() {
-							try {
-								System.err.println("PARSING NUTRIENT DEFINITIONS");
-								parseNutrientDefinitions();
-								System.err.println("PARSING NUTRIENT DATA");
-								parseNutrientData();
-							} catch (Exception e) {
-
-							}
-						}
-					};
-					threads[4] = new Thread() {
-						public void run() {
-							try {
-								System.err.println("PARSING LANGUAL DESCRIPTIONS");
-								parseLanguaLDescriptions();
-								System.err.println("PARSING LANGUAL DATA");
-								parseLanguaL();
-							} catch (Exception e) {
-
-							}
-						}
-					};
-					for (int i = 0; i < 5; i++)
-						threads[i].start();
-					for (int i = 0; i < 5; i++)
-						threads[i].join();
-					System.err.println("PARSING FOOD DESCRIPTIONS");
-					parseFoodDescriptions();
-					System.err.println("DONE");
-					gui.getPanelManager().LOADING_PERCENTAGE = 100;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				long end = System.currentTimeMillis() - start;
-				System.err.println("Took " + end + "ms");
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				gui.getPanelManager().LOADING_PERCENTAGE = -1;
-				gui.getPanelManager().repaint();
-			}
-		}.start();
-		System.out.println();
-	}
-
-	/**
 	 * Parses all the data in the given files
 	 */
 	public void parseData() {
-		new Thread(){
-			public void run(){
-				try {
-					long start = System.currentTimeMillis();
+		try {
+			long start = System.currentTimeMillis();
 
-					System.err.println("PARSING FOOD GROUPS");
-					parseFoodGroups();
-					System.err.println("PARSING FOOD WEIGHTS");
-					parseFoodWeights();
-					System.err.println("PARSING FOOTNOTES");
-					parseFootnotes();
-					System.err.println("PARSING NUTRIENT DEFINITIONS");
-					parseNutrientDefinitions();
-					System.err.println("PARSING NUTRIENT DATA");
-					parseNutrientData();
-					System.err.println("PARSING LANGUAL DESCRIPTIONS");
-					parseLanguaLDescriptions();
-					System.err.println("PARSING LANGUAL DATA");
-					parseLanguaL();
-					System.err.println("PARSING FOOD DESCRIPTIONS");
-					parseFoodDescriptions();
-					System.err.println("DONE");
-					gui.getPanelManager().LOADING_PERCENTAGE = -1;
+			System.err.println("PARSING FOOD GROUPS");
+			parseFoodGroups();
+			System.err.println("PARSING FOOD WEIGHTS");
+			parseFoodWeights();
+			System.err.println("PARSING FOOTNOTES");
+			parseFootnotes();
+			System.err.println("PARSING NUTRIENT DEFINITIONS");
+			parseNutrientDefinitions();
+			System.err.println("PARSING NUTRIENT DATA");
+			parseNutrientData();
+			System.err.println("PARSING LANGUAL DESCRIPTIONS");
+			parseLanguaLDescriptions();
+			System.err.println("PARSING LANGUAL DATA");
+			parseLanguaL();
+			System.err.println("PARSING FOOD DESCRIPTIONS");
+			parseFoodDescriptions();
+			System.err.println("DONE");
+			gui.getPanelManager().LOADING_PERCENTAGE = 100;
 
-					long end = System.currentTimeMillis() - start;
-					System.err.println("Took " + end + "ms");
+			long end = System.currentTimeMillis() - start;
+			System.err.println("Took " + end + "ms");
+			Thread.sleep(1000);
+			gui.getPanelManager().LOADING_PERCENTAGE = -1;
+			gui.getPanelManager().repaint();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}.start();
 	}
 
 	private void parseFootnotes() throws IOException, InvalidParseDataException {
@@ -208,7 +119,7 @@ public class Parser {
 			Footnote footnote = new Footnote().parse(items);
 			map_footnote.put(footnote.getNdbNo(), footnote);
 			updatePercentage();
-			
+
 		}
 		br.close();
 	}
@@ -231,7 +142,7 @@ public class Parser {
 			LanguaLDescription lld = new LanguaLDescription().parse(items);
 			map_langualDesc.put(lld.getFactorCode(), lld);
 			updatePercentage();
-			
+
 		}
 		br.close();
 	}
@@ -257,7 +168,7 @@ public class Parser {
 				map_langualGroup.put(ll.getNDBNo(), new LanguaLGroup());
 			map_langualGroup.get(ll.getNDBNo()).addLanguaL(ll);
 			updatePercentage();
-			
+
 		}
 		br.close();
 	}
@@ -280,7 +191,7 @@ public class Parser {
 			FoodWeight foodWeight = new FoodWeight().parse(items);
 			map_foodWeight.put(foodWeight.getNDBNo(), foodWeight);
 			updatePercentage();
-			
+
 		}
 		br.close();
 	}
@@ -303,7 +214,7 @@ public class Parser {
 			FoodGroup foodGroup = new FoodGroup().parse(items);
 			map_foodGroup.put(foodGroup.getFoodGroupID(), foodGroup);
 			updatePercentage();
-			
+
 		}
 		br.close();
 	}
@@ -337,7 +248,7 @@ public class Parser {
 			foodItem.getFoodGroup().addFood(foodItem);
 			map_foodItems.put(ndbNo, foodItem);
 			updatePercentage();
-			
+
 		}
 		br.close();
 	}
@@ -359,7 +270,7 @@ public class Parser {
 			NutrientInfo nd = new NutrientInfo().parse(items);
 			map_nutrDesc.put(nd.getNutrientNumber(), nd);
 			updatePercentage();
-			
+
 		}
 		br.close();
 	}
@@ -390,20 +301,19 @@ public class Parser {
 		br.close();
 	}
 
-	private String[] splitTokens(String item, String delim, int length){
+	private String[] splitTokens(String item, String delim, int length) {
 		String[] items = new String[length];
 		int lastIdx = 0;
-		for(int i = 0; i < length; i++){
+		for (int i = 0; i < length; i++) {
 			int idx = item.indexOf("^", lastIdx);
 			items[i] = item.substring(lastIdx, idx == -1 ? item.length() : idx);
 			lastIdx = idx + delim.length();
 		}
 		return items;
 	}
-	
+
 	public void updatePercentage() {
-		gui.getPanelManager().LOADING_PERCENTAGE = (int) (100.0 * processedFileSize
-				/ totalFileSize);
+		gui.getPanelManager().LOADING_PERCENTAGE = (int) (100.0 * processedFileSize / totalFileSize);
 		gui.getPanelManager().repaint();
 	}
 

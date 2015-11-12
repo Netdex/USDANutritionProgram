@@ -248,13 +248,6 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	}
 
 	/**
-	 * @return Whether this document is in a USDA survey
-	 */
-	public boolean isSurvey() {
-		return isSurvey;
-	}
-
-	/**
 	 * @return A description of the refuse in this food item
 	 */
 	public String getRefuseDescription() {
