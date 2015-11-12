@@ -10,6 +10,8 @@ import parser.InvalidParseDataException;
  */
 public class Nutrient implements Parsable<Nutrient> {
 
+	public static Nutrient SAMPLE = new Nutrient();
+	
 	public static final int PARSE_DATA_LENGTH = 18;
 
 	private int ndbNo;

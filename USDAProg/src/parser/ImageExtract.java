@@ -18,13 +18,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import parser.util.DoublyLinkedList;
+
 public class ImageExtract {
 
 	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
 			.createLineBorder(GUI.ACCENT_COLOUR, 3);
 
 	private static int IMAGE_WIDTH = 400;
-
+	private static DoublyLinkedList<Runnable> hooks = new DoublyLinkedList<>();
+	
+	public static void registerImageCompletionHook(Runnable r){
+		hooks.add(r);
+	}
+	
 	public static void injectImage(JLabel image, String key) {
 		new Thread() {
 			public void run() {
@@ -40,9 +47,14 @@ public class ImageExtract {
 						image.setAlignmentX(Component.LEFT_ALIGNMENT);
 						image.setBorder(IMAGE_BORDER);
 					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				for(int i = 0; i < hooks.size(); i++){
+					hooks.get(i).run();
+				}
+				hooks.clear();
 			}
 		}.start();
 

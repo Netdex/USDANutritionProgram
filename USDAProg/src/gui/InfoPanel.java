@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -101,6 +101,7 @@ public class InfoPanel extends JPanel {
 		contentScrollbar.getVerticalScrollBar().setBackground(
 				GUI.BACKGROUND_COLOUR);
 		contentScrollbar.setWheelScrollingEnabled(true);
+		contentScrollbar.setHorizontalScrollBar(null);
 
 		this.add(contentScrollbar, BorderLayout.CENTER);
 	}
@@ -241,30 +242,32 @@ public class InfoPanel extends JPanel {
 		contentPanel.add(amountEntryLine);
 
 		// create the base "framework" for displaying nutrients
-		nutritionPanel = new JPanel();
 		// TODO add a header row
 		// TODO render properly
+		nutritionPanel = new JPanel();
+		nutritionPanel
+				.setLayout(new BoxLayout(nutritionPanel, BoxLayout.Y_AXIS));
+		nutritionPanel.setMinimumSize(new Dimension(480, 120));
 		nutritionPanel.setBorder(BLACK_BORDER);
-		Nutrient[] nutrients = food.getNutrientData().getNutrientArray();
-		nutritionLabels = new NutrientInfoLabel[nutrients.length];
-		GridLayout nutritionLayout = new GridLayout(nutrients.length, 1, 0, 2);
-		nutritionPanel.setLayout(nutritionLayout);
+		nutritionPanel.setAlignmentX(LEFT_ALIGNMENT);
+		nutritionPanel.setBackground(GUI.BACKGROUND_COLOUR);
 
+		Nutrient[] nutrients = food.getNutrientData().getNutrients()
+				.toArray(Nutrient.SAMPLE);
+		nutritionLabels = new NutrientInfoLabel[nutrients.length];
 		for (int i = 0; i < nutrients.length; i++) {
 			NutrientInfoLabel label = new NutrientInfoLabel(nutrients[i]);
 			label.setAlignmentX(LEFT_ALIGNMENT);
 			nutritionLabels[i] = label;
 			nutritionPanel.add(label);
-			contentPanel.add(label);
 		}
-
-		// nutritionPanel.revalidate();
-		// nutritionPanel.repaint();
+		nutritionPanel.revalidate();
+		nutritionPanel.repaint();
 		contentPanel.add(nutritionPanel);
 
-		contentScrollbar.getVerticalScrollBar().setValue(0);
 		contentPanel.revalidate();
 		contentPanel.repaint();
+		contentScrollbar.getVerticalScrollBar().setValue(0);
 	}
 
 	// protected void setNutritionMultiplier(double personalizedMultiplier)
@@ -314,58 +317,35 @@ public class InfoPanel extends JPanel {
 	class NutrientInfoLabel extends JLabel {
 
 		private Nutrient nutrient;
-		private String name;
-		private double gramsOfNutrientPerGramOfFood;
-		private double gramsOfNutrientInSample;
+		private double amountPerGram;
 
-		private JTextArea gramsOfNutrientLabel;
+		private JLabel amount;
 
-		// private double percentDV;
-		// private JLabel percentDVLabel;
-
-		private NutrientInfoLabel(Nutrient nutrient) {
+		private NutrientInfoLabel(Nutrient nut) {
 			super();
-			this.nutrient = nutrient;
-			name = this.nutrient.getNutrientInfo().getNutrientName();
-			gramsOfNutrientPerGramOfFood = this.nutrient.getNutrVal() / 100.0;
-			gramsOfNutrientInSample = gramsOfNutrientPerGramOfFood
-					* gramsOfFood;
-
-			this.setLayout(new FlowLayout(FlowLayout.LEFT));
-			// this.setAlignmentX(LEFT_ALIGNMENT);
+			this.nutrient = nut;
+			this.amountPerGram = nutrient.getNutrVal() / 100;
 			this.setBackground(GUI.ACCENT_COLOUR);
+			this.setBorder(GUI.EMPTY_BORDER);
+			this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-			JTextArea nameLabel = new JTextArea(name);
-			nameLabel.setPreferredSize(new Dimension(380, 50));
-			nameLabel.setWrapStyleWord(true);
-			nameLabel.setLineWrap(true);
-			nameLabel.setEditable(false);
-			nameLabel.setFocusable(false);
+			JLabel nameLabel = new JLabel(nutrient.getNutrientInfo()
+					.getNutrientName());
 			nameLabel.setOpaque(false);
+			nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			nameLabel.setFont(GUI.CONTENT_FONT);
-			nameLabel.setOpaque(false);
 			this.add(nameLabel);
 
-			gramsOfNutrientLabel = new JTextArea();
-			gramsOfNutrientLabel.setText(gramsOfNutrientInSample + "");
-			gramsOfNutrientLabel.setPreferredSize(new Dimension(50, 50));
-			gramsOfNutrientLabel.setFont(GUI.CONTENT_FONT);
-			gramsOfNutrientLabel.setOpaque(false);
-			gramsOfNutrientLabel.setWrapStyleWord(true);
-			gramsOfNutrientLabel.setLineWrap(true);
-			gramsOfNutrientLabel.setEditable(false);
-			gramsOfNutrientLabel.setFocusable(false);
-			gramsOfNutrientLabel.setOpaque(false);
-			this.add(gramsOfNutrientLabel);
+			amount = new JLabel();
+			amount.setText(Double.toString(amountPerGram * gramsOfFood));
+			amount.setFont(GUI.CONTENT_FONT);
+			amount.setOpaque(false);
+			this.add(amount);
 		}
 
 		private void updateAmounts() {
-			gramsOfNutrientLabel.setText(gramsOfNutrientPerGramOfFood
-					* gramsOfFood + "");
-		}
+			amount.setText(Double.toString(amountPerGram * gramsOfFood));
 
-		private Nutrient getNutrient() {
-			return nutrient;
 		}
 	}
 }

@@ -13,6 +13,7 @@ import parser.ImageExtract;
 import parser.parsables.FoodItem;
 
 public class ExtraInfoPanel extends JPanel {
+	//TODO add footnotes info
 
 	private PanelManager manager;
 	private FoodItem food;
@@ -58,20 +59,28 @@ public class ExtraInfoPanel extends JPanel {
 
 		// adds an image
 		JLabel imageLabel = new JLabel();
+		ImageExtract.registerImageCompletionHook(new Runnable() {
+			public void run() {
+				if (imageLabel.getIcon() != null)
+					contentPanel.add(imageLabel);
+				else {
+					System.err.println("image not found for "
+							+ titleName);
+					JTextArea imageNotFound = new JTextArea("Image not found");
+					imageNotFound.setFont(GUI.CONTENT_FONT);
+					imageNotFound.setAlignmentX(LEFT_ALIGNMENT);
+					imageNotFound.setWrapStyleWord(true);
+					imageNotFound.setLineWrap(true);
+					imageNotFound.setEditable(false);
+					imageNotFound.setFocusable(false);
+					imageNotFound.setOpaque(false);
+					contentPanel.add(imageNotFound);
+				}
+				contentPanel.revalidate();
+				contentPanel.repaint();
+			}
+		});
 		ImageExtract.injectImage(imageLabel, titleName);
-		if (imageLabel.getIcon() != null)
-			contentPanel.add(imageLabel);
-		else {
-			JTextArea imageNotFound = new JTextArea("Image not found");
-			imageNotFound.setFont(GUI.CONTENT_FONT);
-			imageNotFound.setAlignmentX(LEFT_ALIGNMENT);
-			imageNotFound.setWrapStyleWord(true);
-			imageNotFound.setLineWrap(true);
-			imageNotFound.setEditable(false);
-			imageNotFound.setFocusable(false);
-			imageNotFound.setOpaque(false);
-			contentPanel.add(imageNotFound);
-		}
 
 		// adds LanguaLs
 		JTextArea languaLsList;

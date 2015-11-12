@@ -24,10 +24,6 @@ public class NutrientData {
 		return nutrients;
 	}
 
-	public Nutrient[] getNutrientArray() {
-		return nutrients.toArray(nutrients.getFirst());
-	}
-
 	public String toString() {
 		return nutrients.toString();
 	}
