@@ -156,7 +156,6 @@ public class InfoPanel extends JPanel {
 		contentPanel.add(imageLabel);
 		contentPanel.revalidate();
 		contentPanel.repaint();
-		ImageExtract.injectImage(imageLabel, titleName);
 
 		// adds long name in actual page
 		JTextArea longName = new JTextArea(longDesc);

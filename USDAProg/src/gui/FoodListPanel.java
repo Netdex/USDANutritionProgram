@@ -67,6 +67,7 @@ public class FoodListPanel extends JPanel {
 		this.group = foodGroup;
 		title.setText(group.getDescription());
 		foodsScrollable.getVerticalScrollBar().setValue(0);
+		foodsList.removeAll();
 
 		FoodItem[] foods = group.getFoods().toArray(new FoodItem());
 

@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -46,6 +48,12 @@ public class GroupPanel extends JPanel {
 		Runnable r = new Runnable(){
 			public void run(){
 				FoodGroup[] foodGroups = DataManager.getInstance().getFoodGroups();
+				Arrays.sort(foodGroups, new Comparator<FoodGroup>(){
+					@Override
+					public int compare(FoodGroup a, FoodGroup b){
+						return a.getDescription().compareTo(b.getDescription());
+					}
+				});
 				for (int i = 0; i < foodGroups.length; i++) {
 					FoodGroupButton button = new FoodGroupButton(foodGroups[i]);
 					button.setAlignmentX(LEFT_ALIGNMENT);

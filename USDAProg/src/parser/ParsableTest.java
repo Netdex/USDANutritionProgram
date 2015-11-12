@@ -1,7 +1,12 @@
 package parser;
 
+import java.awt.Image;
 import java.io.File;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Scanner;
+
+import javax.imageio.ImageIO;
 
 import parser.parsables.FoodItem;
 
@@ -13,9 +18,12 @@ public class ParsableTest {
 	 * @param args
 	 * @throws InvalidParseDataException 
 	 */
-	public static void main(String[] args) throws InvalidParseDataException {
-		FoodItem fi = new FoodItem().parse("~01001~^~0100~^~Butter, salted~^~BUTTER,WITH SALT~^~~^~~^~Y~^~~^0^~~^6.38^4.27^8.79^3.87".replace("~", "").split("\\^", -1));
-		System.out.println(fi.getFormat());
+	public static void main(String[] args) throws Exception {
+		URL url = new URL("http://authoritynutrition.com/wp-content/uploads/2013/08/bottles-of-vegetable-oil.jpg");
+		URLConnection conn = url.openConnection();
+		conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1");
+		Image img = ImageIO.read(conn.getInputStream());
+		System.out.println(img);
 	}
 
 	public static void dataTest() {

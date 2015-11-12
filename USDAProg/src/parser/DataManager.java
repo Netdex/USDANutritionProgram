@@ -136,13 +136,17 @@ public class DataManager {
 				// Check for whole tokens of the key
 				boolean found = false;
 				for (int i = 0; i < tokens.length; i++) {
-					if (tokens[i].equalsIgnoreCase(keys[keyIdx])) {
+					String currentToken = tokens[i];
+					if(tokens[i].toLowerCase().endsWith("s") && !keys[keyIdx].toLowerCase().endsWith("s")){
+						currentToken = currentToken.substring(0, currentToken.length() - 1);
+					}
+					if (currentToken.equalsIgnoreCase(keys[keyIdx])) {
 						found = true;
 						break;
 					}
 				}
 				if (found)
-					score += 0.5;
+					score += 1.1;
 			}
 			if (relevant) {
 				score += 1.0 / fi.getLongDescription().length();
