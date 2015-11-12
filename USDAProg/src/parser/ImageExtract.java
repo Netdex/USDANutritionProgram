@@ -1,6 +1,8 @@
 
 package parser;
 
+import gui.GUI;
+
 import java.awt.Component;
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -15,8 +17,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-
-import gui.GUI;
 
 public class ImageExtract {
 

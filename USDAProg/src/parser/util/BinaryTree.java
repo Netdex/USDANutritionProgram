@@ -1,5 +1,6 @@
 package parser.util;
 
+import parser.util.Stack;
 public class BinaryTree<E extends Comparable<E>> {
 
 	private BinaryTreeNode<E> root;

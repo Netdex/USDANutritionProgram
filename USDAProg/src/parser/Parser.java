@@ -1,11 +1,12 @@
 package parser;
 
+import gui.GUI;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-import gui.GUI;
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
 import parser.parsables.FoodWeight;
