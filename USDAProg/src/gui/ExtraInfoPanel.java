@@ -29,8 +29,16 @@ public class ExtraInfoPanel extends JPanel {
 		header.add(titleNameLabel);
 		this.add(header, BorderLayout.NORTH);
 		contentPane = new JPanel();
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.add(contentPane);
+		JScrollPane scrollPane = new JScrollPane(contentPane);
+		scrollPane.createVerticalScrollBar();
+		scrollPane.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
+		scrollPane
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(
+				GUI.SCROLL_SPEED);
+		scrollPane.getVerticalScrollBar().setBackground(
+				GUI.BACKGROUND_COLOUR);
+		scrollPane.setWheelScrollingEnabled(true);
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
 
