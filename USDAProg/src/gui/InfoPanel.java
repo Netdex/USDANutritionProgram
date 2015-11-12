@@ -44,6 +44,7 @@ public class InfoPanel extends JPanel {
 	private JLabel titleNameLabel;
 	private JSpinner amountEntry;
 	private JScrollPane contentScrollbar;
+	private BackButton back;
 
 	protected static final javax.swing.border.Border BLACK_BORDER = BorderFactory
 			.createLineBorder(Color.DARK_GRAY, 2);
@@ -64,8 +65,8 @@ public class InfoPanel extends JPanel {
 
 		header = new JPanel();
 		header.setLayout(new BorderLayout());
-		header.add(new BackButton(this.searchPanel, this.manager),
-				BorderLayout.WEST);
+		back = new BackButton(this.searchPanel, this.manager);
+		header.add(back, BorderLayout.WEST);
 
 		titleNameLabel = new JLabel();
 		titleNameLabel.setFont(GUI.TITLE_FONT);
@@ -284,6 +285,10 @@ public class InfoPanel extends JPanel {
 		contentScrollbar.getVerticalScrollBar().setValue(0);
 	}
 
+	protected BackButton getBackButton() {
+		return back;
+	}
+
 	// protected void setNutritionMultiplier(double personalizedMultiplier)
 	// {
 	// this.nutritionMultiplier = personalizedMultiplier;
@@ -361,7 +366,7 @@ public class InfoPanel extends JPanel {
 
 		private void updateFields() {
 			amount.setText(Double.toString(Math.round(1000 * amountPerGram
-					* gramsOfFood) / 1000));
+					* gramsOfFood) / 1000.0));
 			amount.revalidate();
 			amount.repaint();
 		}

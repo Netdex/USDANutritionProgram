@@ -13,7 +13,7 @@ import parser.ImageExtract;
 import parser.parsables.FoodItem;
 
 public class ExtraInfoPanel extends JPanel {
-	//TODO add footnotes info
+	// TODO add footnotes info
 
 	private PanelManager manager;
 	private FoodItem food;
@@ -64,10 +64,9 @@ public class ExtraInfoPanel extends JPanel {
 				if (imageLabel.getIcon() != null)
 					contentPanel.add(imageLabel);
 				else {
-					System.err.println("image not found for "
-							+ titleName);
+					System.err.println("image not found for " + titleName);
 					JTextArea imageNotFound = new JTextArea("Image not found");
-					imageNotFound.setFont(GUI.CONTENT_FONT);
+					imageNotFound.setFont(GUI.SUBTITLE_FONT);
 					imageNotFound.setAlignmentX(LEFT_ALIGNMENT);
 					imageNotFound.setWrapStyleWord(true);
 					imageNotFound.setLineWrap(true);

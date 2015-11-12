@@ -34,6 +34,10 @@ public class BackButton extends JButton {
 		this.addActionListener(new BackButtonActionListener());
 	}
 
+	protected void setTarget(JPanel panel) {
+		target = panel;
+	}
+
 	class BackButtonActionListener implements ActionListener {
 
 		@Override

@@ -149,14 +149,21 @@ public class SearchPanel extends JPanel {
 			this.setBackground(GUI.ACCENT_COLOUR);
 			this.addActionListener(new FoodItemButtonListener());
 			this.setLayout(new BorderLayout());
-			this.setMaximumSize(new Dimension(460, 128));
+			this.setMaximumSize(new Dimension(460, Short.MAX_VALUE));
 
 			JLabel foodDescription = new JLabel("<html>"
 					+ food.getLongDescription() + "</html>");
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
 			foodDescription.setForeground(Color.BLACK);
 			foodDescription.setOpaque(false);
-			this.add(foodDescription);
+			this.add(foodDescription, BorderLayout.CENTER);
+
+			JLabel foodGroupName = new JLabel("<html>"
+					+ food.getFoodGroup().toString() + "</html>");
+			foodGroupName.setFont(GUI.CONTENT_FONT);
+			foodGroupName.setForeground(Color.BLACK);
+			foodGroupName.setOpaque(false);
+			this.add(foodGroupName, BorderLayout.SOUTH);
 		}
 
 		class FoodItemButtonListener implements ActionListener {
@@ -164,6 +171,8 @@ public class SearchPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				manager.getInfoPanel().setFoodItem(food);
+				manager.getInfoPanel().getBackButton()
+						.setTarget(SearchPanel.this);
 				manager.switchToInfoPanel();
 			}
 

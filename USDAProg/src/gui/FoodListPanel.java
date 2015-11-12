@@ -1,15 +1,24 @@
 package gui;
 
+import gui.SearchPanel.FoodItemButton.FoodItemButtonListener;
+
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import parser.parsables.FoodGroup;
+import parser.parsables.FoodItem;
+import parser.parsables.Nutrient;
 
 public class FoodListPanel extends JPanel {
 
@@ -59,5 +68,49 @@ public class FoodListPanel extends JPanel {
 	protected void setFoodGroup(FoodGroup group) {
 		this.group = group;
 		title.setText(group.getDescription());
+
+		FoodItem[] foods = group.getFoods().toArray(new FoodItem());
+
+		for (int i = 0; i < foods.length; i++) {
+			FoodButton button = new FoodButton(foods[i], manager);
+			foodsList.add(button);
+		}
+
+		foodsList.revalidate();
+		foodsList.repaint();
+	}
+
+	class FoodButton extends JButton {
+		FoodItem food;
+		PanelManager manager;
+
+		public FoodButton(FoodItem food, PanelManager manager) {
+			super();
+			this.food = food;
+			this.manager = manager;
+			this.setBackground(GUI.ACCENT_COLOUR);
+			this.addActionListener(new FoodButtonListener());
+			this.setLayout(new BorderLayout());
+			this.setMaximumSize(new Dimension(460, Short.MAX_VALUE));
+
+			JLabel foodDescription = new JLabel("<html>"
+					+ food.getLongDescription() + "</html>");
+			foodDescription.setFont(GUI.SUBTITLE_FONT);
+			foodDescription.setForeground(Color.BLACK);
+			foodDescription.setOpaque(false);
+			this.add(foodDescription, BorderLayout.CENTER);
+		}
+
+		class FoodButtonListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				manager.getInfoPanel().setFoodItem(food);
+				manager.getInfoPanel().getBackButton()
+						.setTarget(FoodListPanel.this);
+				manager.switchToInfoPanel();
+			}
+
+		}
 	}
 }
