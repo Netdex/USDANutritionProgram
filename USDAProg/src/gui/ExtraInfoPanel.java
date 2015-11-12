@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -9,11 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import parser.ImageExtract;
 import parser.parsables.FoodItem;
 
 public class ExtraInfoPanel extends JPanel {
-	// TODO add footnotes info
 
 	private PanelManager manager;
 	private FoodItem food;
@@ -26,11 +25,17 @@ public class ExtraInfoPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		JPanel header = new JPanel();
 		header.setBackground(GUI.HEADER_COLOUR);
-		header.add(new BackButton(manager.getInfoPanel(), this.manager));
+		header.setLayout(new BorderLayout());
+		
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		buttonPanel.setBackground(GUI.HEADER_COLOUR);
+		buttonPanel.add(new HomeButton(manager));
+		buttonPanel.add(new BackButton(manager.getInfoPanel(), this.manager));
+		header.add(buttonPanel, BorderLayout.WEST);
 
-		JLabel titleNameLabel = new JLabel("EXTRA INFO");
+		JLabel titleNameLabel = new JLabel("Extra Info");
 		titleNameLabel.setFont(GUI.TITLE_FONT);
-		header.add(titleNameLabel);
+		header.add(titleNameLabel, BorderLayout.CENTER);
 		this.add(header, BorderLayout.NORTH);
 
 		contentPanel = new JPanel();
@@ -57,36 +62,11 @@ public class ExtraInfoPanel extends JPanel {
 		contentPanel.removeAll();
 		this.food = item;
 
-		// adds an image
-		JLabel imageLabel = new JLabel();
-		ImageExtract.registerImageCompletionHook(new Runnable() {
-			public void run() {
-				if (imageLabel.getIcon() != null)
-					contentPanel.add(imageLabel);
-				else {
-					System.err.println("image not found for " + titleName);
-					JTextArea imageNotFound = new JTextArea("Image not found");
-					imageNotFound.setFont(GUI.SUBTITLE_FONT);
-					imageNotFound.setAlignmentX(LEFT_ALIGNMENT);
-					imageNotFound.setWrapStyleWord(true);
-					imageNotFound.setLineWrap(true);
-					imageNotFound.setEditable(false);
-					imageNotFound.setFocusable(false);
-					imageNotFound.setOpaque(false);
-					contentPanel.add(imageNotFound);
-				}
-				contentPanel.revalidate();
-				contentPanel.repaint();
-			}
-		});
-		ImageExtract.injectImage(imageLabel, titleName);
-
 		// adds LanguaLs
 		JTextArea languaLsList;
 		if (food.getLangualGroup() != null) {
-			System.out.println("adding languals for " + food.toString());
 			languaLsList = new JTextArea(
-					"The LanguaL descriptors for this food are: "
+					"The LanguaL descriptors for this food are: \n\n"
 							+ food.getLangualGroup().getLanguaLs().toString());
 		} else {
 			languaLsList = new JTextArea(
@@ -102,6 +82,23 @@ public class ExtraInfoPanel extends JPanel {
 		languaLsList.setFocusable(false);
 		languaLsList.setOpaque(false);
 		contentPanel.add(languaLsList);
+
+		// adds footnotes
+		JTextArea footnotes = new JTextArea();
+		if (food.getFootnotes() != null)
+			footnotes.setText("The footnotes for this food: \n\n"
+					+ food.getFootnotes().getFootnoteText());
+		else
+			footnotes.setText("There are no footnotes for " + food.toString());
+		footnotes.setMaximumSize(new Dimension(470, Short.MAX_VALUE));
+		footnotes.setFont(GUI.CONTENT_FONT);
+		footnotes.setAlignmentX(LEFT_ALIGNMENT);
+		footnotes.setWrapStyleWord(true);
+		footnotes.setLineWrap(true);
+		footnotes.setEditable(false);
+		footnotes.setFocusable(false);
+		footnotes.setOpaque(false);
+		contentPanel.add(footnotes);
 
 	}
 }

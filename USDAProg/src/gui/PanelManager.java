@@ -9,8 +9,6 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
-import parser.parsables.FoodItem;
-
 public class PanelManager extends JPanel {
 
 	private HomePanel homePanel;
@@ -97,7 +95,7 @@ public class PanelManager extends JPanel {
 
 	}
 
-	protected void switchToFoodList() {
+	protected void switchToFoodListPanel() {
 		cardLayoutManager.show(this, "foodList");
 	}
 

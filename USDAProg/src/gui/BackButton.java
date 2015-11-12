@@ -30,7 +30,7 @@ public class BackButton extends JButton {
 			e.printStackTrace();
 		}
 		this.setSize(new Dimension(48, 48));
-		this.setBackground(java.awt.Color.WHITE);
+		this.setBackground(GUI.BACKGROUND_COLOUR);
 		this.addActionListener(new BackButtonActionListener());
 	}
 
@@ -48,6 +48,8 @@ public class BackButton extends JButton {
 				manager.switchToInfoPanel();
 			else if (target instanceof SearchPanel)
 				manager.switchToSearchPanel(false);
+			else if (target instanceof FoodListPanel)
+				manager.switchToFoodListPanel();
 		}
 	}
 }

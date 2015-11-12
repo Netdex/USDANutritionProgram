@@ -102,7 +102,6 @@ public class SearchPanel extends JPanel {
 	private void findResults(String query) {
 		resultsPanel.removeAll();
 		resultsList.getVerticalScrollBar().setValue(0);
-		// TODO deal with an empty array
 		FoodItem[] results = GUI.dataManager.searchForItem(query.split(" "));
 		if (results.length > 0)
 			for (int i = 0; i < results.length; i++) {

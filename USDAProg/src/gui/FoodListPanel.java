@@ -1,7 +1,5 @@
 package gui;
 
-import gui.SearchPanel.FoodItemButton.FoodItemButtonListener;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -18,17 +16,17 @@ import javax.swing.JScrollPane;
 
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
-import parser.parsables.Nutrient;
 
 public class FoodListPanel extends JPanel {
 
-	PanelManager manager;
-	FoodGroup group;
+	private PanelManager manager;
+	private FoodGroup group;
 
-	JLabel title;
-	JPanel header;
+	private JLabel title;
+	private JPanel header;
 
-	JPanel foodsList;
+	private JPanel foodsList;
+	private JScrollPane foodsScrollable;
 
 	protected FoodListPanel(PanelManager manager) {
 		super();
@@ -50,7 +48,7 @@ public class FoodListPanel extends JPanel {
 		foodsList.setLayout(groupsLayout);
 		foodsList.setBackground(GUI.BACKGROUND_COLOUR);
 
-		JScrollPane foodsScrollable = new JScrollPane(foodsList);
+		foodsScrollable = new JScrollPane(foodsList);
 		foodsScrollable.createVerticalScrollBar();
 		foodsScrollable.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
 		foodsScrollable
@@ -65,9 +63,10 @@ public class FoodListPanel extends JPanel {
 		this.add(foodsScrollable, BorderLayout.CENTER);
 	}
 
-	protected void setFoodGroup(FoodGroup group) {
-		this.group = group;
+	protected void setFoodGroup(FoodGroup foodGroup) {
+		this.group = foodGroup;
 		title.setText(group.getDescription());
+		foodsScrollable.getVerticalScrollBar().setValue(0);
 
 		FoodItem[] foods = group.getFoods().toArray(new FoodItem());
 

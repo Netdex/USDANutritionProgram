@@ -31,15 +31,13 @@ public class GroupPanel extends JPanel {
 		header.setLayout(new FlowLayout(FlowLayout.LEFT));
 		header.add(new HomeButton(manager));
 
-		JLabel title = new JLabel("FOOD GROUPS");
+		JLabel title = new JLabel("Food Groups");
 		title.setFont(GUI.TITLE_FONT);
 		title.setBackground(GUI.HEADER_COLOUR);
 		header.add(title);
 		header.setBackground(GUI.HEADER_COLOUR);
 		this.add(header, BorderLayout.NORTH);
 
-		// TODO create buttons for each group (with name), and put buttons into
-		// scrollable list
 		JPanel groupsList = new JPanel();
 		BoxLayout groupsLayout = new BoxLayout(groupsList, BoxLayout.Y_AXIS);
 		groupsList.setLayout(groupsLayout);
@@ -80,7 +78,7 @@ public class GroupPanel extends JPanel {
 			this.addActionListener(new FoodGroupButtonListener());
 			this.setMaximumSize(new Dimension(460, 128));
 			JLabel name = new JLabel(group.getDescription());
-			name.setFont(GUI.CONTENT_FONT);
+			name.setFont(GUI.SUBTITLE_FONT);
 			this.setBackground(GUI.ACCENT_COLOUR);
 			name.setAlignmentX(LEFT_ALIGNMENT);
 			name.setFocusable(false);
@@ -97,7 +95,7 @@ public class GroupPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				manager.getFoodListPanel().setFoodGroup(getFoodGroup());
-				manager.switchToFoodList();
+				manager.switchToFoodListPanel();
 			}
 
 		}

@@ -1,4 +1,3 @@
-
 package parser;
 
 import gui.GUI;
@@ -18,43 +17,37 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import parser.util.DoublyLinkedList;
-
 public class ImageExtract {
 
 	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
 			.createLineBorder(GUI.ACCENT_COLOUR, 3);
 
 	private static int IMAGE_WIDTH = 400;
-	private static DoublyLinkedList<Runnable> hooks = new DoublyLinkedList<>();
-	
-	public static void registerImageCompletionHook(Runnable r){
-		hooks.add(r);
-	}
-	
-	public static void injectImage(JLabel image, String key) {
+
+	public static void injectImage(JLabel imageLabel, String key) {
 		new Thread() {
 			public void run() {
 				try {
 					Image img = getSearchImage(key);
 					if (img != null) {
 
-						image.setHorizontalAlignment(SwingConstants.CENTER);
-						double ratio = (double) IMAGE_WIDTH / img.getWidth(null);
-						image.setIcon(new ImageIcon(img.getScaledInstance(IMAGE_WIDTH,
-								(int) (img.getHeight(null) * ratio), Image.SCALE_SMOOTH)));
-						image.setSize(IMAGE_WIDTH, image.getIcon().getIconHeight());
-						image.setAlignmentX(Component.LEFT_ALIGNMENT);
-						image.setBorder(IMAGE_BORDER);
+						imageLabel
+								.setHorizontalAlignment(SwingConstants.CENTER);
+						double ratio = (double) IMAGE_WIDTH
+								/ img.getWidth(null);
+						imageLabel.setIcon(new ImageIcon(img.getScaledInstance(
+								IMAGE_WIDTH,
+								(int) (img.getHeight(null) * ratio),
+								Image.SCALE_SMOOTH)));
+						imageLabel.setSize(IMAGE_WIDTH, imageLabel.getIcon()
+								.getIconHeight());
+						imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+						imageLabel.setBorder(IMAGE_BORDER);
 					}
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				for(int i = 0; i < hooks.size(); i++){
-					hooks.get(i).run();
-				}
-				hooks.clear();
 			}
 		}.start();
 
@@ -83,7 +76,9 @@ public class ImageExtract {
 		Pattern p = Pattern.compile("\"unescapedUrl\":\"(.*?)\"");
 		Matcher m = p.matcher(json);
 		String url = "";
-		while (m.find() && !(url.endsWith("jpg") || url.endsWith("png") || url.endsWith("gif")))
+		while (m.find()
+				&& !(url.endsWith("jpg") || url.endsWith("png") || url
+						.endsWith("gif")))
 			url = m.group(1);
 		return url;
 	}
@@ -93,7 +88,8 @@ public class ImageExtract {
 			URL remote = new URL(
 					"http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=food%20"
 							+ key.replace(" ", "%20") + "&imgsz=medium");
-			BufferedReader br = new BufferedReader(new InputStreamReader(remote.openStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					remote.openStream()));
 			String result = "";
 			String line;
 			while ((line = br.readLine()) != null) {

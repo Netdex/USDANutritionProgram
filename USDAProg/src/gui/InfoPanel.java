@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import parser.ImageExtract;
 import parser.parsables.FoodItem;
 import parser.parsables.Nutrient;
 
@@ -65,8 +66,12 @@ public class InfoPanel extends JPanel {
 
 		header = new JPanel();
 		header.setLayout(new BorderLayout());
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		buttonPanel.setBackground(GUI.HEADER_COLOUR);
+		buttonPanel.add(new HomeButton(manager));
 		back = new BackButton(this.searchPanel, this.manager);
-		header.add(back, BorderLayout.WEST);
+		buttonPanel.add(back);
+		header.add(buttonPanel, BorderLayout.WEST);
 
 		titleNameLabel = new JLabel();
 		titleNameLabel.setFont(GUI.TITLE_FONT);
@@ -142,7 +147,16 @@ public class InfoPanel extends JPanel {
 			// normal case
 			titleName = longDesc.substring(0, firstSeparatorIndex);
 		}
+		titleName = toTitleCase(titleName);
 		titleNameLabel.setText(titleName);
+
+		// adds an image
+		JLabel imageLabel = new JLabel();
+		ImageExtract.injectImage(imageLabel, titleName);
+		contentPanel.add(imageLabel);
+		contentPanel.revalidate();
+		contentPanel.repaint();
+		ImageExtract.injectImage(imageLabel, titleName);
 
 		// adds long name in actual page
 		JTextArea longName = new JTextArea(longDesc);
@@ -226,10 +240,11 @@ public class InfoPanel extends JPanel {
 		String promptText;
 		if (food.getWeightInfo() != null)
 			promptText = "The unit used to measure this item is: \""
-					+ food.getWeightInfo().getDesc().toString()
-					+ "\" ("
+					+ food.getWeightInfo().getDesc().toString() + "\" ("
 					+ food.getWeightInfo().getGramWeight()
-					+ " grams).\nPlease enter the amount (in the provided units above) you are intending to consume";
+					+ " grams).\nPlease enter the amount (in "
+					+ food.getWeightInfo().getDesc().toString()
+					+ ") you are intending to consume";
 		else
 			promptText = "This item is measured in grams.\nPlease enter the number of grams you are consuming.";
 
@@ -257,8 +272,6 @@ public class InfoPanel extends JPanel {
 		contentPanel.add(amountEntryLine);
 
 		// create the base "framework" for displaying nutrients
-		// TODO add a header row
-		// TODO render properly
 		nutritionPanel = new JPanel();
 		nutritionPanel
 				.setLayout(new BoxLayout(nutritionPanel, BoxLayout.Y_AXIS));
@@ -283,6 +296,18 @@ public class InfoPanel extends JPanel {
 		contentPanel.revalidate();
 		contentPanel.repaint();
 		contentScrollbar.getVerticalScrollBar().setValue(0);
+	}
+
+	private String toTitleCase(String str) {
+		char[] array = str.toCharArray();
+		String out = "";
+		for (int i = 0; i < str.length(); i++) {
+			if (i == 0 || array[i - 1] == ' ')
+				out += Character.toUpperCase(array[i]);
+			else
+				out += Character.toLowerCase(array[i]);
+		}
+		return out;
 	}
 
 	protected BackButton getBackButton() {
