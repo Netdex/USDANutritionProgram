@@ -31,6 +31,7 @@ public class ExtraInfoPanel extends JPanel {
 		titleNameLabel.setFont(GUI.TITLE_FONT);
 		header.add(titleNameLabel);
 		this.add(header, BorderLayout.NORTH);
+<<<<<<< HEAD
 
 		contentPanel = new JPanel();
 		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
@@ -45,6 +46,18 @@ public class ExtraInfoPanel extends JPanel {
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
 		scrollPane.getVerticalScrollBar().setBackground(GUI.BACKGROUND_COLOUR);
+=======
+		contentPane = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(contentPane);
+		scrollPane.createVerticalScrollBar();
+		scrollPane.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
+		scrollPane
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(
+				GUI.SCROLL_SPEED);
+		scrollPane.getVerticalScrollBar().setBackground(
+				GUI.BACKGROUND_COLOUR);
+>>>>>>> branch 'master' of https://github.com/Netdex/USDANutritionProgram.git
 		scrollPane.setWheelScrollingEnabled(true);
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
