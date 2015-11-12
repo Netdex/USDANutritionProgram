@@ -1,11 +1,17 @@
 package parser.parsables;
 
+import parser.Formattable;
 import parser.util.DoublyLinkedList;
 
-public class LanguaLGroup {
+public class LanguaLGroup implements Formattable {
 
 	private DoublyLinkedList<LanguaL> languals = new DoublyLinkedList<>();
-	
+
+	@Override
+	public String getFormat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	public LanguaLGroup(){
 		
 	}

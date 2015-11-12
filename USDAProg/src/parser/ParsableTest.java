@@ -11,9 +11,11 @@ public class ParsableTest {
 	 * THIS CLASS DOES NOTHING BUT TEST MY CODE KTHXBYE
 	 * 
 	 * @param args
+	 * @throws InvalidParseDataException 
 	 */
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws InvalidParseDataException {
+		FoodItem fi = new FoodItem().parse("~01001~^~0100~^~Butter, salted~^~BUTTER,WITH SALT~^~~^~~^~Y~^~~^0^~~^6.38^4.27^8.79^3.87".replace("~", "").split("\\^", -1));
+		System.out.println(fi.getFormat());
 	}
 
 	public static void dataTest() {

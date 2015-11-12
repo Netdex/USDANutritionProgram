@@ -1,5 +1,6 @@
 package parser.parsables;
 
+import parser.Formattable;
 import parser.InvalidParseDataException;
 
 /**
@@ -8,7 +9,7 @@ import parser.InvalidParseDataException;
  * Represents a nutrient, which is contained in a NutrientData. Modify in future
  * to use builder structure, this is temporary to allow my code to work.
  */
-public class Nutrient implements Parsable<Nutrient> {
+public class Nutrient implements Parsable<Nutrient>, Formattable {
 
 	public static Nutrient SAMPLE = new Nutrient();
 	
@@ -218,6 +219,12 @@ public class Nutrient implements Parsable<Nutrient> {
 
 	public String toString() {
 		return this.desc.toString();
+	}
+
+	@Override
+	public String getFormat() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
