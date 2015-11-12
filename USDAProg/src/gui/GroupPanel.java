@@ -44,7 +44,8 @@ public class GroupPanel extends JPanel {
 		JPanel groupsList = new JPanel();
 		BoxLayout groupsLayout = new BoxLayout(groupsList, BoxLayout.Y_AXIS);
 		groupsList.setLayout(groupsLayout);
-
+		groupsList.setBackground(GUI.BACKGROUND_COLOUR);
+		
 		Runnable r = new Runnable(){
 			public void run(){
 				FoodGroup[] foodGroups = DataManager.getInstance().getFoodGroups();
@@ -80,13 +81,10 @@ public class GroupPanel extends JPanel {
 			this.group = foodGroup;
 			this.addActionListener(new FoodGroupButtonListener());
 			this.setMaximumSize(new Dimension(460, 128));
-			JTextArea name = new JTextArea(group.getDescription());
+			JLabel name = new JLabel(group.getDescription());
 			name.setFont(GUI.CONTENT_FONT);
-			name.setBackground(GUI.ACCENT_COLOUR);
+			this.setBackground(GUI.ACCENT_COLOUR);
 			name.setAlignmentX(LEFT_ALIGNMENT);
-			name.setWrapStyleWord(true);
-			name.setLineWrap(true);
-			name.setEditable(false);
 			name.setFocusable(false);
 			name.setOpaque(false);
 			this.add(name);
@@ -100,7 +98,8 @@ public class GroupPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				manager.switchToFoodList(getFoodGroup());
+				manager.getFoodListPanel().setFoodGroup(getFoodGroup());
+				manager.switchToFoodList();
 			}
 
 		}

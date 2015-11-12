@@ -100,9 +100,8 @@ public class PanelManager extends JPanel {
 
 	}
 
-	protected void switchToFoodList(FoodGroup group) {
-		if (LOADING_PERCENTAGE == -1)
-			cardLayoutManager.show(this, "foodList");
+	protected void switchToFoodList() {
+		cardLayoutManager.show(this, "foodList");
 	}
 
 	protected JPanel getGroupPanel() {
@@ -117,6 +116,10 @@ public class PanelManager extends JPanel {
 		return homePanel;
 	}
 
+	protected FoodListPanel getFoodListPanel(){
+		return foodListPanel;
+	}
+	
 	protected ExtraInfoPanel getExtraInfoPanel() {
 		return extraInfoPanel;
 	}
