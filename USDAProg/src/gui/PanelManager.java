@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import parser.ImageExtract;
 import parser.parsables.FoodGroup;
+import parser.parsables.FoodItem;
 
 public class PanelManager extends JPanel {
 
@@ -56,9 +57,10 @@ public class PanelManager extends JPanel {
 		// img = ImageExtract.getSearchImage("apple");
 	}
 
-	protected void switchToExtraInfo(){
+	protected void switchToExtraInfo() {
 		cardLayoutManager.show(this, "extraInfo");
 	}
+
 	protected void switchToHome() {
 		cardLayoutManager.show(this, "home");
 	}
@@ -111,13 +113,19 @@ public class PanelManager extends JPanel {
 		return infoPanel;
 	}
 
-	public HomePanel getHomePanel() {
+	protected HomePanel getHomePanel() {
 		return homePanel;
 	}
 
-	public ExtraInfoPanel getExtraInfoPanel(){
+	protected ExtraInfoPanel getExtraInfoPanel() {
 		return extraInfoPanel;
 	}
+
+	protected void newExtraInfoPanel(FoodItem food, String name) {
+		extraInfoPanel.setFood(food, name);
+		;
+	}
+
 	@Override
 	public void paint(Graphics gr) {
 		super.paint(gr);

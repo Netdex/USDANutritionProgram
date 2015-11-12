@@ -6,14 +6,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
+import parser.DataManager;
 import parser.parsables.FoodGroup;
 
-public class GroupPanel extends JPanel implements ActionListener {
+public class GroupPanel extends JPanel {
 
 	PanelManager manager;
 	ArrayList<FoodGroupButton> foodGroupButtons;
@@ -35,34 +38,65 @@ public class GroupPanel extends JPanel implements ActionListener {
 		header.setBackground(GUI.HEADER_COLOUR);
 		this.add(header, BorderLayout.NORTH);
 
-		// TODO needs to be a way to find a list of all food groups
-		// create buttons for each group (with name), and put buttons into JList
+		// TODO create buttons for each group (with name), and put buttons into
+		// scrollable list
+		JPanel groupsList = new JPanel();
+		BoxLayout groupsLayout = new BoxLayout(groupsList, BoxLayout.Y_AXIS);
+		groupsList.setLayout(groupsLayout);
 
-		FoodGroupButton[] groupSelectorModel = {};
-		// replace this with a list of all foods under this food group
-		JList<FoodGroupButton> groupSelector = new JList<FoodGroupButton>(
-				groupSelectorModel);
-		groupSelector.setBackground(GUI.BACKGROUND_COLOUR);
-		this.add(groupSelector);
-	}
+		FoodGroup[] foodGroups = DataManager.getInstance().getFoodGroups();
 
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		FoodGroupButton source = (FoodGroupButton) event.getSource();
+		for (int i = 0; i < foodGroups.length; i++) {
+			FoodGroupButton button = new FoodGroupButton(foodGroups[i]);
+			button.setAlignmentX(LEFT_ALIGNMENT);
+			groupsList.add(button);
+		}
 
-		manager.switchToFoodList(source.getFoodGroup());
+		JScrollPane groupsScrollable = new JScrollPane();
+		groupsScrollable.createVerticalScrollBar();
+		groupsScrollable.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
+		groupsScrollable
+				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		groupsScrollable.getVerticalScrollBar().setUnitIncrement(
+				GUI.SCROLL_SPEED);
+		groupsScrollable.getVerticalScrollBar().setBackground(
+				GUI.BACKGROUND_COLOUR);
+		groupsScrollable.setWheelScrollingEnabled(true);
+
+		this.add(groupsScrollable, BorderLayout.CENTER);
 	}
 
 	class FoodGroupButton extends JButton {
-		FoodGroup foodGroup;
+		FoodGroup group;
 
 		public FoodGroupButton(FoodGroup foodGroup) {
 			super();
-			this.foodGroup = foodGroup;
+			this.group = foodGroup;
+			this.addActionListener(new FoodGroupButtonListener());
+
+			JTextArea name = new JTextArea(group.getDescription());
+			name.setFont(GUI.CONTENT_FONT);
+			name.setBackground(GUI.ACCENT_COLOUR);
+			name.setAlignmentX(LEFT_ALIGNMENT);
+			name.setWrapStyleWord(true);
+			name.setLineWrap(true);
+			name.setEditable(false);
+			name.setFocusable(false);
+			name.setOpaque(false);
+			this.add(name);
 		}
 
 		private FoodGroup getFoodGroup() {
-			return foodGroup;
+			return group;
+		}
+
+		class FoodGroupButtonListener implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manager.switchToFoodList(getFoodGroup());
+			}
+
 		}
 	}
 }

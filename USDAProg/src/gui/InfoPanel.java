@@ -25,7 +25,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import parser.ImageExtract;
 import parser.parsables.FoodItem;
 import parser.parsables.Nutrient;
 
@@ -38,6 +37,7 @@ public class InfoPanel extends JPanel {
 	private SearchPanel searchPanel;
 	private PanelManager manager;
 
+	private String titleName;
 	private JPanel header;
 	private JPanel contentPanel;
 	private JPanel nutritionPanel;
@@ -65,9 +65,12 @@ public class InfoPanel extends JPanel {
 		header.setLayout(new BorderLayout());
 		header.add(new BackButton(this.searchPanel, this.manager),
 				BorderLayout.WEST);
+
 		titleNameLabel = new JLabel();
 		titleNameLabel.setFont(GUI.TITLE_FONT);
+		titleNameLabel.setAlignmentX(CENTER_ALIGNMENT);
 		header.add(titleNameLabel, BorderLayout.CENTER);
+
 		JButton moreInfo = new JButton();
 		try {
 			moreInfo.setIcon(new ImageIcon(ImageIO.read(
@@ -103,7 +106,6 @@ public class InfoPanel extends JPanel {
 	}
 
 	protected void setFoodItem(FoodItem item) {
-		// TODO Make long labels word wrap
 		contentPanel.removeAll();
 		this.food = item;
 
@@ -115,7 +117,6 @@ public class InfoPanel extends JPanel {
 				|| firstSeparatorIndex == -1)
 			firstSeparatorIndex = alternateFirstSeparator;
 
-		String titleName;
 		// ridiculously long string before comma/bracket or none
 		if (firstSeparatorIndex > 17 || firstSeparatorIndex == -1) {
 			int firstSpaceIndex = longDesc.indexOf(' ');
@@ -209,14 +210,14 @@ public class InfoPanel extends JPanel {
 
 		String promptText;
 		if (food.getWeightInfo() != null)
-			promptText = "The unit used to measure this item is:\n\""
+			promptText = "The unit used to measure this item is: \""
 					+ food.getWeightInfo().getDesc().toString()
 					+ "\" ("
 					+ food.getWeightInfo().getGramWeight()
-					+ " grams).\nPlease enter the amount (in the provided units above)\n"
-					+ "you are intending to consume";
+					+ " grams).\nPlease enter the amount (in the provided units above) you are intending to consume";
 		else
 			promptText = "This item is measured in grams.\nPlease enter the number of grams you are consuming.\n";
+
 		JTextArea amountEntryPrompt = new JTextArea(promptText);
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
 		amountEntryPrompt.setAlignmentX(LEFT_ALIGNMENT);
@@ -254,6 +255,7 @@ public class InfoPanel extends JPanel {
 			label.setAlignmentX(LEFT_ALIGNMENT);
 			nutritionLabels[i] = label;
 			nutritionPanel.add(label);
+			contentPanel.add(label);
 		}
 
 		// nutritionPanel.revalidate();
@@ -263,6 +265,8 @@ public class InfoPanel extends JPanel {
 		contentScrollbar.getVerticalScrollBar().setValue(0);
 		contentPanel.revalidate();
 		contentPanel.repaint();
+
+		manager.newExtraInfoPanel(food, titleName);
 	}
 
 	// protected void setNutritionMultiplier(double personalizedMultiplier)
@@ -303,7 +307,7 @@ public class InfoPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			manager.getExtraInfoPanel().setFood(food);
+			manager.getExtraInfoPanel().setFood(food, titleName);
 			manager.switchToExtraInfo();
 		}
 
@@ -324,9 +328,7 @@ public class InfoPanel extends JPanel {
 		private NutrientInfoLabel(Nutrient nutrient) {
 			super();
 			this.nutrient = nutrient;
-			name = this.nutrient.getNutrientInfo()
-					.getNutrientName();
-			System.out.println("creating new nutrient named " + name);
+			name = this.nutrient.getNutrientInfo().getNutrientName();
 			gramsOfNutrientPerGramOfFood = this.nutrient.getNutrVal() / 100.0;
 			gramsOfNutrientInSample = gramsOfNutrientPerGramOfFood
 					* gramsOfFood;
@@ -357,7 +359,6 @@ public class InfoPanel extends JPanel {
 			gramsOfNutrientLabel.setFocusable(false);
 			gramsOfNutrientLabel.setOpaque(false);
 			this.add(gramsOfNutrientLabel);
-
 		}
 
 		private void updateAmounts() {
