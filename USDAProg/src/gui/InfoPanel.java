@@ -325,7 +325,7 @@ public class InfoPanel extends JPanel {
 			super();
 			this.nutrient = nutrient;
 			name = this.nutrient.getNutrientDescription()
-					.getNutrientDescription();
+					.getNutrientName();
 			gramsOfNutrientPerGramOfFood = this.nutrient.getNutrVal() / 100.0;
 			gramsOfNutrientInSample = gramsOfNutrientPerGramOfFood
 					* gramsOfFood;
