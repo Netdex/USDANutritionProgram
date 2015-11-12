@@ -2,7 +2,14 @@ package parser.parsables;
 
 import parser.InvalidParseDataException;
 
-public class NutrientDescription implements Parsable<NutrientDescription> {
+/**
+ * Contains information about a certain nutrient. Each Nutrient has a
+ * corresponding NutrientInfo.
+ * 
+ * @author Gordon Guan
+ *
+ */
+public class NutrientInfo implements Parsable<NutrientInfo> {
 
 	public static final int PARSE_DATA_LENGTH = 6;
 
@@ -32,8 +39,7 @@ public class NutrientDescription implements Parsable<NutrientDescription> {
 	private int srOrder;
 
 	@Override
-	public NutrientDescription parse(String[] data)
-			throws InvalidParseDataException {
+	public NutrientInfo parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		nutrNo = Integer.parseInt(data[0]);
@@ -45,7 +51,7 @@ public class NutrientDescription implements Parsable<NutrientDescription> {
 		return this;
 	}
 
-	public NutrientDescription() {
+	public NutrientInfo() {
 
 	}
 

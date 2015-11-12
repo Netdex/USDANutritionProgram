@@ -56,7 +56,7 @@ public class Nutrient implements Parsable<Nutrient> {
 	private double upEB;
 	private String statCmt;
 	private String addModDate;
-	private NutrientDescription desc;
+	private NutrientInfo desc;
 
 	public Nutrient() {
 
@@ -206,11 +206,11 @@ public class Nutrient implements Parsable<Nutrient> {
 		return addModDate;
 	}
 
-	public void setNutrientDescription(NutrientDescription nd) {
+	public void setNutrientDescription(NutrientInfo nd) {
 		this.desc = nd;
 	}
 
-	public NutrientDescription getNutrientDescription() {
+	public NutrientInfo getNutrientDescription() {
 		return this.desc;
 	}
 
