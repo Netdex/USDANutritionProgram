@@ -135,11 +135,6 @@ public class InfoPanel extends JPanel {
 		}
 		titleNameLabel.setText(titleName);
 
-		// adds an image
-		JLabel image = new JLabel();
-		ImageExtract.injectImage(image, titleName);
-		contentPanel.add(image);
-
 		// adds long name in actual page
 		JTextArea longName = new JTextArea(longDesc);
 		longName.setFont(GUI.SUBTITLE_FONT);
@@ -308,7 +303,8 @@ public class InfoPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO draw the more info dialog
+			manager.getExtraInfoPanel().setFood(food);
+			manager.switchToExtraInfo();
 		}
 
 	}

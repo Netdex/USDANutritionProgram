@@ -56,6 +56,9 @@ public class PanelManager extends JPanel {
 		// img = ImageExtract.getSearchImage("apple");
 	}
 
+	protected void switchToExtraInfo(){
+		cardLayoutManager.show(this, "extraInfo");
+	}
 	protected void switchToHome() {
 		cardLayoutManager.show(this, "home");
 	}
@@ -112,6 +115,9 @@ public class PanelManager extends JPanel {
 		return homePanel;
 	}
 
+	public ExtraInfoPanel getExtraInfoPanel(){
+		return extraInfoPanel;
+	}
 	@Override
 	public void paint(Graphics gr) {
 		super.paint(gr);
