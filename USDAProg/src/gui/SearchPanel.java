@@ -78,7 +78,9 @@ public class SearchPanel extends JPanel {
 			public void run() {
 				while (true) {
 					try {
-						if (shouldSearch && System.currentTimeMillis() - prevKeyPressedTime >= 500) {
+						if (shouldSearch
+								&& System.currentTimeMillis()
+										- prevKeyPressedTime >= 500) {
 							String txt = searchBox.getText();
 							if (!txt.equals("Search...") && !txt.equals(""))
 								findResults(txt);
@@ -110,7 +112,8 @@ public class SearchPanel extends JPanel {
 			}
 		else {
 			JLabel notFound = new JLabel("No results found");
-			notFound.setFont(GUI.CONTENT_FONT);
+			notFound.setPreferredSize(new Dimension(450, 100));
+			notFound.setFont(GUI.SUBTITLE_FONT);
 			resultsPanel.add(notFound);
 		}
 
@@ -129,8 +132,8 @@ public class SearchPanel extends JPanel {
 		resultsPanel.repaint();
 		JLabel searchPrompt = new JLabel(
 				"<html>Type something in the search box to get started...</html>");
+		searchPrompt.setPreferredSize(new Dimension(450, 100));
 		searchPrompt.setFont(GUI.SUBTITLE_FONT);
-		searchPrompt.setForeground(GUI.ACCENT_COLOUR);
 		resultsPanel.add(searchPrompt);
 	}
 

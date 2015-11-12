@@ -1,6 +1,7 @@
 
 package parser.parsables;
 
+import parser.Formattable;
 import parser.util.DoublyLinkedList;
 
 /**
@@ -10,7 +11,7 @@ import parser.util.DoublyLinkedList;
  *
  */
 
-public class NutrientData {
+public class NutrientData implements Formattable {
 	private DoublyLinkedList<Nutrient> nutrients = new DoublyLinkedList<Nutrient>();
 
 	public NutrientData() {
@@ -27,5 +28,11 @@ public class NutrientData {
 
 	public String toString() {
 		return nutrients.toString();
+	}
+
+	@Override
+	public String getFormat() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

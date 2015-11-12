@@ -20,7 +20,7 @@ public class FoodListPanel extends JPanel {
 	JPanel header;
 
 	JPanel foodsList;
-	
+
 	protected FoodListPanel(PanelManager manager) {
 		super();
 		this.manager = manager;
@@ -34,14 +34,13 @@ public class FoodListPanel extends JPanel {
 		title = new JLabel();
 		title.setFont(GUI.SUBTITLE_FONT);
 		header.add(title);
-
 		this.add(header, BorderLayout.NORTH);
-		
+
 		foodsList = new JPanel();
 		BoxLayout groupsLayout = new BoxLayout(foodsList, BoxLayout.Y_AXIS);
 		foodsList.setLayout(groupsLayout);
 		foodsList.setBackground(GUI.BACKGROUND_COLOUR);
-		
+
 		JScrollPane foodsScrollable = new JScrollPane(foodsList);
 		foodsScrollable.createVerticalScrollBar();
 		foodsScrollable.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
@@ -52,6 +51,7 @@ public class FoodListPanel extends JPanel {
 		foodsScrollable.getVerticalScrollBar().setBackground(
 				GUI.BACKGROUND_COLOUR);
 		foodsScrollable.setWheelScrollingEnabled(true);
+		foodsScrollable.setHorizontalScrollBar(null);
 
 		this.add(foodsScrollable, BorderLayout.CENTER);
 	}
