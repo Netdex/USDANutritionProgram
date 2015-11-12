@@ -210,7 +210,7 @@ public class Nutrient implements Parsable<Nutrient> {
 		this.desc = nd;
 	}
 
-	public NutrientInfo getNutrientDescription() {
+	public NutrientInfo getNutrientInfo() {
 		return this.desc;
 	}
 
