@@ -15,7 +15,7 @@ import parser.parsables.LanguaLDescription;
 import parser.parsables.LanguaLGroup;
 import parser.parsables.Nutrient;
 import parser.parsables.NutrientData;
-import parser.parsables.NutrientDescription;
+import parser.parsables.NutrientInfo;
 import parser.util.BinaryTreeMap;
 import parser.util.DoublyLinkedList;
 
@@ -31,7 +31,7 @@ public class Parser {
 	private BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
 
 	private BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
-	private BinaryTreeMap<Integer, NutrientDescription> map_nutrDesc = new BinaryTreeMap<>();
+	private BinaryTreeMap<Integer, NutrientInfo> map_nutrDesc = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
 	private BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
@@ -355,8 +355,8 @@ public class Parser {
 		while ((line = br.readLine()) != null) {
 			processedFileSize += line.getBytes().length + 1;
 			line = line.replace("~", "");
-			String[] items = splitTokens(line, "^", NutrientDescription.PARSE_DATA_LENGTH);
-			NutrientDescription nd = new NutrientDescription().parse(items);
+			String[] items = splitTokens(line, "^", NutrientInfo.PARSE_DATA_LENGTH);
+			NutrientInfo nd = new NutrientInfo().parse(items);
 			map_nutrDesc.put(nd.getNutrientNumber(), nd);
 			updatePercentage();
 			

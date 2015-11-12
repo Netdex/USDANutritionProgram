@@ -56,8 +56,7 @@ public class Nutrient implements Parsable<Nutrient> {
 	private double upEB;
 	private String statCmt;
 	private String addModDate;
-	private String confidenceCode;
-	private NutrientDescription desc;
+	private NutrientInfo desc;
 
 	public Nutrient() {
 
@@ -207,18 +206,11 @@ public class Nutrient implements Parsable<Nutrient> {
 		return addModDate;
 	}
 
-	/**
-	 * @return the confidenceCode
-	 */
-	public String getConfidenceCode() {
-		return confidenceCode;
-	}
-
-	public void setNutrientDescription(NutrientDescription nd) {
+	public void setNutrientDescription(NutrientInfo nd) {
 		this.desc = nd;
 	}
 
-	public NutrientDescription getNutrientDescription() {
+	public NutrientInfo getNutrientInfo() {
 		return this.desc;
 	}
 
