@@ -1,11 +1,16 @@
 package parser.parsables;
 
+import parser.Formattable;
 import parser.InvalidParseDataException;
 
-public class Footnote implements Parsable<Footnote>{
+public class Footnote implements Parsable<Footnote>, Formattable{
 
 	public static final int PARSE_DATA_LENGTH = 5;
-	
+	@Override
+	public String getFormat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public Footnote parse(String[] data) throws InvalidParseDataException {
 		if(data.length != PARSE_DATA_LENGTH)

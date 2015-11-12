@@ -62,8 +62,6 @@ public class GUI extends JFrame {
 						"USDAFiles/LANGDESC.TXT"), new File(
 						"USDAFiles/FOOTNOTE.TXT"));
 		
-		
-		
 		manager.switchToHome();
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

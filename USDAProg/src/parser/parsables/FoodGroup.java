@@ -1,5 +1,6 @@
 package parser.parsables;
 
+import parser.Formattable;
 import parser.InvalidParseDataException;
 import parser.util.DoublyLinkedList;
 
@@ -8,7 +9,7 @@ import parser.util.DoublyLinkedList;
  * @author Gordon Guan
  *
  */
-public class FoodGroup implements Parsable<FoodGroup> {
+public class FoodGroup implements Parsable<FoodGroup>, Formattable {
 	
 	public static FoodGroup SAMPLE = new FoodGroup();
 	
@@ -23,6 +24,11 @@ public class FoodGroup implements Parsable<FoodGroup> {
 		desc = data[1];
 		
 		return this;
+	}
+	@Override
+	public String getFormat() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private int foodGroupID;

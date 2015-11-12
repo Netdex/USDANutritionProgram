@@ -1,5 +1,6 @@
 package parser.parsables;
 
+import parser.Formattable;
 import parser.InvalidParseDataException;
 
 /**
@@ -8,10 +9,10 @@ import parser.InvalidParseDataException;
  * @author Gordon Guan
  *
  */
-public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
+public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>, Formattable {
 
 	public static FoodItem SAMPLE = new FoodItem();
-	
+
 	public static final int PARSE_DATA_LENGTH = 14;
 
 	private NutrientData nutrientData = new NutrientData();
@@ -19,15 +20,29 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	private FoodWeight foodWeight;
 	private LanguaLGroup langualGroup;
 	private Footnote footnotes;
-	
+
 	@Override
-	public boolean equals(Object o){
-		if(o instanceof FoodItem){
-			return ((FoodItem)o).getNDBNo() == this.getNDBNo();
+	public String getFormat() {
+		return Formattable.getFileFormatted(String.format("~%05d~", nutrientDatabankNumber),
+				String.format("~%04d~", foodGroupID), "~" + longDescription + "~", "~~", "~"
+						+ commonName + "~", "~" + manufacturerName + "~", "~~", "~"
+						+ refuseDescription + "~", percentRefuse + "", "~" + scientificName + "~",
+				"", "", "", "");
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof FoodItem) {
+			return ((FoodItem) o).getNDBNo() == this.getNDBNo();
 		}
 		return false;
-		
 	}
+
+	public Formattable[] getFormattableData() {
+		return new Formattable[] { this, nutrientData, foodGroup, foodWeight, langualGroup,
+				footnotes };
+	}
+
 	@Override
 	public FoodItem parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)
@@ -35,17 +50,20 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 		nutrientDatabankNumber = Integer.parseInt(data[0]);
 		foodGroupID = Integer.parseInt(data[1]);
 		longDescription = data[2];
-//		shortDescription = data[3];
+		// shortDescription = data[3];
 		commonName = data[4];
 		manufacturerName = data[5];
-//		isSurvey = data[6].equals("Y");
+		// isSurvey = data[6].equals("Y");
 		refuseDescription = data[7];
 		percentRefuse = data[8].equals("") ? 0 : Double.parseDouble(data[8]);
 		scientificName = data[9];
-//		nitrogenFactor = data[10].equals("") ? 0 : Double.parseDouble(data[10]);
-//		proteinFactor = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
-//		fatFactor = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
-//		cholestrolFactor = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
+		// nitrogenFactor = data[10].equals("") ? 0 :
+		// Double.parseDouble(data[10]);
+		// proteinFactor = data[11].equals("") ? 0 :
+		// Double.parseDouble(data[11]);
+		// fatFactor = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
+		// cholestrolFactor = data[13].equals("") ? 0 :
+		// Double.parseDouble(data[13]);
 		return this;
 	}
 
@@ -53,7 +71,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	public int compareTo(FoodItem o) {
 		return this.getNDBNo() - o.getNDBNo();
 	}
-	
+
 	/**
 	 * @return Gets the nutritional data of this FoodItem
 	 */
@@ -62,8 +80,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	}
 
 	/**
-	 * @param nutrientData
-	 *            the nutrientData to set
+	 * @param nutrientData the nutrientData to set
 	 */
 	public void setNutrientData(NutrientData nutrientData) {
 		this.nutrientData = nutrientData;
@@ -77,8 +94,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	}
 
 	/**
-	 * @param foodGroup
-	 *            the foodGroup to set
+	 * @param foodGroup the foodGroup to set
 	 */
 	public void setFoodGroup(FoodGroup foodGroup) {
 		this.foodGroup = foodGroup;
@@ -96,14 +112,15 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	}
 
 	// All the fields start here
-	
+
 	/**
-	 * @return The LanguaLGroup of this FoodItem, containing all LanguaL descriptions
+	 * @return The LanguaLGroup of this FoodItem, containing all LanguaL
+	 *         descriptions
 	 */
 	public LanguaLGroup getLangualGroup() {
 		return langualGroup;
 	}
-	
+
 	public void setLangualGroup(LanguaLGroup langualGroup) {
 		this.langualGroup = langualGroup;
 	}
@@ -295,14 +312,12 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem> {
 	public double getCholestrolFactor() {
 		return cholestrolFactor;
 	}
-	
+
 	/**
 	 * @return The factor
 	 */
-	public String toString(){
+	public String toString() {
 		return this.getLongDescription();
 	}
-
-	
 
 }

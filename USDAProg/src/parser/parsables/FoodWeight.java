@@ -1,5 +1,6 @@
 package parser.parsables;
 
+import parser.Formattable;
 import parser.InvalidParseDataException;
 
 /**
@@ -7,7 +8,7 @@ import parser.InvalidParseDataException;
  * @author Gordon Guan
  *
  */
-public class FoodWeight implements Parsable<FoodWeight> {
+public class FoodWeight implements Parsable<FoodWeight>, Formattable {
 
 	public static final int PARSE_DATA_LENGTH = 7;
 
@@ -23,6 +24,11 @@ public class FoodWeight implements Parsable<FoodWeight> {
 //		numDataPts = data[5].equals("") ? 0 : Integer.parseInt(data[5]);
 //		stdDev = data[6].equals("") ? 0 : Double.parseDouble(data[6]);
 		return this;
+	}
+	@Override
+	public String getFormat() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	private int ndbNo;
