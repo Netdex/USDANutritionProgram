@@ -113,17 +113,12 @@ public class PanelManager extends JPanel {
 		return homePanel;
 	}
 
-	protected FoodListPanel getFoodListPanel(){
+	protected FoodListPanel getFoodListPanel() {
 		return foodListPanel;
 	}
-	
+
 	protected ExtraInfoPanel getExtraInfoPanel() {
 		return extraInfoPanel;
-	}
-
-	protected void newExtraInfoPanel(FoodItem food, String name) {
-		extraInfoPanel.setFood(food, name);
-		;
 	}
 
 	@Override

@@ -52,7 +52,6 @@ public class GroupPanel extends JPanel {
 					FoodGroupButton button = new FoodGroupButton(foodGroups[i]);
 					button.setAlignmentX(LEFT_ALIGNMENT);
 					groupsList.add(button);
-					System.out.println(foodGroups[i].getDescription());
 				}
 			}
 		};

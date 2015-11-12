@@ -57,9 +57,21 @@ public class ExtraInfoPanel extends JPanel {
 		this.food = item;
 
 		// adds an image
-		JLabel image = new JLabel();
-		ImageExtract.injectImage(image, titleName);
-		contentPanel.add(image);
+		JLabel imageLabel = new JLabel();
+		ImageExtract.injectImage(imageLabel, titleName);
+		if (imageLabel.getIcon() != null)
+			contentPanel.add(imageLabel);
+		else {
+			JTextArea imageNotFound = new JTextArea("Image not found");
+			imageNotFound.setFont(GUI.CONTENT_FONT);
+			imageNotFound.setAlignmentX(LEFT_ALIGNMENT);
+			imageNotFound.setWrapStyleWord(true);
+			imageNotFound.setLineWrap(true);
+			imageNotFound.setEditable(false);
+			imageNotFound.setFocusable(false);
+			imageNotFound.setOpaque(false);
+			contentPanel.add(imageNotFound);
+		}
 
 		// adds LanguaLs
 		JTextArea languaLsList;

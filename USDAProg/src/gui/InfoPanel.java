@@ -151,7 +151,7 @@ public class InfoPanel extends JPanel {
 		// adds common name info
 		if (!food.getCommonName().equals("")) {
 			JTextArea commonName = new JTextArea("Other name(s) include: "
-					+ food.getCommonName().toString() + "\n");
+					+ food.getCommonName().toString());
 			commonName.setFont(GUI.CONTENT_FONT);
 			commonName.setWrapStyleWord(true);
 			commonName.setEditable(false);
@@ -164,7 +164,7 @@ public class InfoPanel extends JPanel {
 
 		// adds food group info
 		JTextArea gramsOfNutrientLabel = new JTextArea("Food Group: "
-				+ food.getFoodGroup().toString() + "\n");
+				+ food.getFoodGroup().toString());
 		gramsOfNutrientLabel.setFont(GUI.CONTENT_FONT);
 		gramsOfNutrientLabel.setAlignmentX(LEFT_ALIGNMENT);
 		gramsOfNutrientLabel.setWrapStyleWord(true);
@@ -177,7 +177,7 @@ public class InfoPanel extends JPanel {
 		// add scientific name
 		if (!food.getScientificName().equals("")) {
 			JTextArea scientificName = new JTextArea("Scientific name: "
-					+ food.getScientificName().toString() + "\n");
+					+ food.getScientificName().toString());
 			scientificName.setFont(GUI.SCIENTIFIC_FONT);
 			scientificName.setAlignmentX(LEFT_ALIGNMENT);
 			scientificName.setWrapStyleWord(true);
@@ -191,7 +191,7 @@ public class InfoPanel extends JPanel {
 		// add manufacturer name
 		if (!food.getManufacturerName().equals("")) {
 			JTextArea manufacName = new JTextArea("Manufactured by: "
-					+ food.getManufacturerName().toString() + "\n");
+					+ food.getManufacturerName().toString());
 			manufacName.setFont(GUI.CONTENT_FONT);
 			manufacName.setAlignmentX(LEFT_ALIGNMENT);
 			manufacName.setWrapStyleWord(true);
@@ -216,7 +216,7 @@ public class InfoPanel extends JPanel {
 					+ food.getWeightInfo().getGramWeight()
 					+ " grams).\nPlease enter the amount (in the provided units above) you are intending to consume";
 		else
-			promptText = "This item is measured in grams.\nPlease enter the number of grams you are consuming.\n";
+			promptText = "This item is measured in grams.\nPlease enter the number of grams you are consuming.";
 
 		JTextArea amountEntryPrompt = new JTextArea(promptText);
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
@@ -265,8 +265,6 @@ public class InfoPanel extends JPanel {
 		contentScrollbar.getVerticalScrollBar().setValue(0);
 		contentPanel.revalidate();
 		contentPanel.repaint();
-
-		manager.newExtraInfoPanel(food, titleName);
 	}
 
 	// protected void setNutritionMultiplier(double personalizedMultiplier)
