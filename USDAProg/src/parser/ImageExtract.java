@@ -1,7 +1,5 @@
 package parser;
 
-import gui.GUI;
-
 import java.awt.Component;
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -18,9 +16,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import parser.util.DoublyLinkedList;
+import gui.GUI;
+import parser.util.BinaryTreeMap;
 
 public class ImageExtract {
+
+	private static BinaryTreeMap<String, Image> imageCache = new BinaryTreeMap<String, Image>();
 
 	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
 			.createLineBorder(GUI.ACCENT_COLOUR, 3);
@@ -33,21 +34,21 @@ public class ImageExtract {
 		new Thread() {
 			public void run() {
 				try {
-					Image img = getSearchImage(key);
-					if (img != null) {
-
-						imageLabel
-								.setHorizontalAlignment(SwingConstants.CENTER);
-						double ratio = (double) IMAGE_WIDTH
-								/ img.getWidth(null);
-						imageLabel.setIcon(new ImageIcon(img.getScaledInstance(
-								IMAGE_WIDTH,
-								(int) (img.getHeight(null) * ratio),
-								Image.SCALE_SMOOTH)));
-						imageLabel.setSize(IMAGE_WIDTH, imageLabel.getIcon()
-								.getIconHeight());
-						imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-						imageLabel.setBorder(IMAGE_BORDER);
+					System.out.println("injecting " + key + " into label");
+					if (imageCache.get(key.toLowerCase()) != null) {
+						System.out.println("loaded image from cache");
+						insertImage(imageCache.get(key.toLowerCase()), imageLabel);
+					} else {
+						Image img = getSearchImage(key);
+						System.out.println("searching for image");
+						if (img != null) {
+							System.out.println("found image");
+							insertImage(img, imageLabel);
+							imageCache.put(key.toLowerCase(), img);
+						}
+						else{
+							System.out.println("no image found");
+						}
 					}
 
 				} catch (Exception e) {
@@ -58,10 +59,19 @@ public class ImageExtract {
 
 	}
 
+	private static void insertImage(Image img, JLabel imageLabel) {
+		imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		double ratio = (double) IMAGE_WIDTH / img.getWidth(null);
+		imageLabel.setIcon(new ImageIcon(img.getScaledInstance(IMAGE_WIDTH,
+				(int) (img.getHeight(null) * ratio), Image.SCALE_SMOOTH)));
+		imageLabel.setSize(IMAGE_WIDTH, imageLabel.getIcon().getIconHeight());
+		imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		imageLabel.setBorder(IMAGE_BORDER);
+	}
+
 	public static Image getSearchImage(String key) {
 		String uri = getSearchResult(key);
 		Image image = null;
-		System.out.println("searching for " + key + "\n" + uri);
 		try {
 			URL url = new URL(uri);
 			URLConnection conn = url.openConnection();
@@ -81,9 +91,7 @@ public class ImageExtract {
 	}
 
 	private static String getImageURL(String json) {
-		System.out.println(json);
-		Pattern p = Pattern
-				.compile("height\":\"([0-9]*)\",.*?,\"unescapedUrl\":\"(.*?)\"");
+		Pattern p = Pattern.compile("height\":\"([0-9]*)\",.*?,\"unescapedUrl\":\"(.*?)\"");
 		Matcher m = p.matcher(json);
 		String selectedURL = "";
 		int minimumHeight = Integer.MAX_VALUE;
@@ -97,18 +105,14 @@ public class ImageExtract {
 				}
 			}
 		}
-		System.out.println(selectedURL);
 		return selectedURL;
 	}
 
 	private static String getJSONResult(String key) {
 		try {
-			URL remote = new URL((
-					"http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-							+ ADDITIONAL_KEYWORD + "%20"
-							+ key).replace(" ", "%20"));
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					remote.openStream()));
+			URL remote = new URL(("http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
+					+ ADDITIONAL_KEYWORD + "%20" + key).replace(" ", "%20"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(remote.openStream()));
 			String result = "";
 			String line;
 			while ((line = br.readLine()) != null) {
