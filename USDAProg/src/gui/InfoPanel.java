@@ -243,7 +243,7 @@ public class InfoPanel extends JPanel {
 					+ food.getWeightInfo().getGramWeight()
 					+ " grams).\nPlease enter the amount (in "
 					+ food.getWeightInfo().getDesc().toString()
-					+ ") you are intending to consume";
+					+ "(s)) you are intending to consume";
 		else
 			promptText = "This item is measured in grams.\nPlease enter the number of grams you are consuming.";
 

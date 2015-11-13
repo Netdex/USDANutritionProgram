@@ -117,22 +117,27 @@ public class DataManager {
 		for (int foodIdx = 0; foodIdx < foodItems.length; foodIdx++) {
 			// Rank each food item by appearance of keys in the text
 			double score = 0;
-			FoodItem fi = foodItems[foodIdx];
-			String[] tokens = fi.getLongDescription().replaceAll("[^A-Za-z ]", "").split(" ");
+			FoodItem foodItem = foodItems[foodIdx];
+			String[] tokens = foodItem.getLongDescription().replaceAll("[^A-Za-z ]", "").split(" ");
 			boolean relevant = false;
-			for (int keyIdx = 0; keyIdx < keys.length; keyIdx++) {
+			for (int keyIdx = 0; keyIdx < Math.min(keys.length, 5); keyIdx++) {
 				// Check if the phrase contains it
-				if (fi.getLongDescription().toLowerCase().contains(keys[keyIdx].toLowerCase())) {
+				if (foodItem.getLongDescription().toLowerCase().contains(keys[keyIdx].toLowerCase())) {
 					score += 0.5;
 					relevant = true;
 				}
 
 				// Check if the common name contains the key
-				if (fi.getCommonName().toLowerCase().contains(keys[keyIdx].toLowerCase())) {
+				if (foodItem.getCommonName().toLowerCase().contains(keys[keyIdx].toLowerCase())) {
 					score += 1;
 					relevant = true;
 				}
-
+				
+				if(foodItem.getLongDescription().toLowerCase().startsWith(keys[keyIdx].toLowerCase())){
+					score += 0.2;
+					relevant = true;
+				}
+				
 				// Check for whole tokens of the key
 				boolean found = false;
 				for (int i = 0; i < tokens.length; i++) {
@@ -149,10 +154,10 @@ public class DataManager {
 					score += 1.1;
 			}
 			if (relevant) {
-				score += 1.0 / fi.getLongDescription().length();
+				score += 1.0 / foodItem.getLongDescription().length();
 			}
 			if (score > 0)
-				map_results.put(fi, score);
+				map_results.put(foodItem, score);
 		}
 		// System.out.println(map_results);
 		// Get all the food items which had a score of at least 1

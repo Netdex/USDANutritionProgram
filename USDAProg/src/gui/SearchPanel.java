@@ -148,7 +148,7 @@ public class SearchPanel extends JPanel {
 			this.setBackground(GUI.ACCENT_COLOUR);
 			this.addActionListener(new FoodItemButtonListener());
 			this.setLayout(new BorderLayout());
-			this.setMaximumSize(new Dimension(460, 200));
+			this.setMaximumSize(new Dimension(460, 150));
 
 			JLabel foodDescription = new JLabel("<html>"
 					+ food.getLongDescription() + "</html>");
