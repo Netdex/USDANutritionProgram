@@ -24,7 +24,6 @@ public class AddFoodPanel extends JPanel {
 	private JPanel contentPanel;
 	private JScrollPane contentScrollbar;
 
-	private DoublyLinkedList<Component> entryBoxes;
 	private JTextField nameEntry;
 	private JTextField commonNameEntry;
 	private JTextField manufacNameEntry;
@@ -35,7 +34,6 @@ public class AddFoodPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.manager = pManager;
 		this.setBackground(GUI.BACKGROUND_COLOUR);
-		entryBoxes = new DoublyLinkedList<Component>();
 
 		JPanel header = new JPanel();
 		header.setBackground(GUI.HEADER_COLOUR);
@@ -66,13 +64,14 @@ public class AddFoodPanel extends JPanel {
 		namePrompt.setFont(GUI.CONTENT_FONT);
 		namePrompt.setOpaque(false);
 		namePrompt.setAlignmentX(LEFT_ALIGNMENT);
+		namePrompt.setMaximumSize(new Dimension(325, 200));
 		nameLine.add(namePrompt, BorderLayout.CENTER);
 
 		nameEntry = new JTextField("Name");
 		// TODO set these to change colour on click (ugh!) and also make text
 		// disappear on click
 		nameEntry.setFont(GUI.CONTENT_FONT);
-		entryBoxes.add(nameEntry);
+		nameEntry.setPreferredSize(new Dimension(175, 50));
 		nameLine.add(nameEntry, BorderLayout.EAST);
 		contentPanel.add(nameLine);
 
@@ -86,11 +85,12 @@ public class AddFoodPanel extends JPanel {
 		commonNamePrompt.setFont(GUI.CONTENT_FONT);
 		commonNamePrompt.setOpaque(false);
 		commonNamePrompt.setAlignmentX(LEFT_ALIGNMENT);
+		commonNamePrompt.setMaximumSize(new Dimension(325, 200));
 		commonNameLine.add(commonNamePrompt, BorderLayout.CENTER);
 
 		commonNameEntry = new JTextField("Common Name");
 		commonNameEntry.setFont(GUI.CONTENT_FONT);
-		entryBoxes.add(commonNameEntry);
+		commonNameEntry.setPreferredSize(new Dimension(175, 50));
 		commonNameLine.add(commonNameEntry, BorderLayout.EAST);
 		contentPanel.add(commonNameLine);
 
@@ -104,6 +104,7 @@ public class AddFoodPanel extends JPanel {
 		foodGroupPrompt.setFont(GUI.CONTENT_FONT);
 		foodGroupPrompt.setOpaque(false);
 		foodGroupPrompt.setAlignmentX(LEFT_ALIGNMENT);
+		foodGroupPrompt.setMaximumSize(new Dimension(325, 200));
 		foodGroupLine.add(foodGroupPrompt, BorderLayout.CENTER);
 
 		DataManager.getInstance().registerSyncEvent(new Runnable() {
@@ -111,29 +112,30 @@ public class AddFoodPanel extends JPanel {
 				foodGroupEntry = new JComboBox<FoodGroup>(DataManager
 						.getInstance().getFoodGroups());
 				foodGroupEntry.setFont(GUI.CONTENT_FONT);
-				entryBoxes.add(foodGroupEntry);
+				foodGroupEntry.setPreferredSize(new Dimension(175, 50));
 				foodGroupLine.add(foodGroupEntry, BorderLayout.EAST);
 				contentPanel.add(foodGroupLine);
+
+				// manufacName
+				JPanel manufacNameLine = new JPanel();
+				manufacNameLine.setLayout(new BorderLayout());
+				manufacNameLine.setBackground(GUI.BACKGROUND_COLOUR);
+
+				JLabel manufacNamePrompt = new JLabel(
+						"What is the manufacturer name of your new food?");
+				manufacNamePrompt.setFont(GUI.CONTENT_FONT);
+				manufacNamePrompt.setOpaque(false);
+				manufacNamePrompt.setAlignmentX(LEFT_ALIGNMENT);
+				manufacNamePrompt.setMaximumSize(new Dimension(325, 200));
+				manufacNameLine.add(manufacNamePrompt, BorderLayout.CENTER);
+
+				manufacNameEntry = new JTextField("Manufacturer Name");
+				manufacNameEntry.setFont(GUI.CONTENT_FONT);
+				manufacNameEntry.setPreferredSize(new Dimension(175, 50));
+				manufacNameLine.add(manufacNameEntry, BorderLayout.EAST);
+				contentPanel.add(manufacNameLine);
 			}
 		});
-
-		// manufacName
-		JPanel manufacNameLine = new JPanel();
-		manufacNameLine.setLayout(new BorderLayout());
-		manufacNameLine.setBackground(GUI.BACKGROUND_COLOUR);
-
-		JLabel manufacNamePrompt = new JLabel(
-				"What is the manufacturer name of your new food?");
-		manufacNamePrompt.setFont(GUI.CONTENT_FONT);
-		manufacNamePrompt.setOpaque(false);
-		manufacNamePrompt.setAlignmentX(LEFT_ALIGNMENT);
-		manufacNameLine.add(manufacNamePrompt, BorderLayout.CENTER);
-
-		manufacNameEntry = new JTextField("Manufacturer Name");
-		manufacNameEntry.setFont(GUI.CONTENT_FONT);
-		entryBoxes.add(manufacNameEntry);
-		manufacNameLine.add(manufacNameEntry, BorderLayout.EAST);
-		contentPanel.add(manufacNameLine);
 
 		contentScrollbar = new JScrollPane(contentPanel);
 		contentScrollbar.createVerticalScrollBar();
