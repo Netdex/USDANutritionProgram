@@ -1,5 +1,6 @@
 package parser.parsables;
 
+import parser.Formattable;
 import parser.InvalidParseDataException;
 
 /**
@@ -8,8 +9,56 @@ import parser.InvalidParseDataException;
  * Represents a nutrient, which is contained in a NutrientData. Modify in future
  * to use builder structure, this is temporary to allow my code to work.
  */
-public class Nutrient implements Parsable<Nutrient> {
+public class Nutrient implements Parsable<Nutrient>, Formattable {
 
+	public String getFormat(){
+		return Formattable.getFileFormatted(
+				String.format("~%05d~", ndbNo),
+				String.format("~%03d~", nutrNo),
+				nutrVal + "",
+				"0",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				"",
+				""
+				);
+	}
+	
+	@Override
+	public Nutrient parse(String[] data) throws InvalidParseDataException {
+		if (data.length != PARSE_DATA_LENGTH)
+			throw new InvalidParseDataException();
+		ndbNo = Integer.parseInt(data[0]);
+		nutrNo = Short.parseShort(data[1]);
+		nutrVal = Double.parseDouble(data[2]);
+		// numDataPts = Integer.parseInt(data[3]);
+		// stdError = data[4].equals("") ? 0 : Double.parseDouble(data[4]);
+		// srcCd = data[5];
+		// derivCd = data[6];
+		// refNDBNo = data[7].equals("") ? 0 : Integer.parseInt(data[7]);
+		// addNutrMark = data[8];
+		// numStudies = data[9].equals("") ? 0 : Integer.parseInt(data[9]);
+		// min = data[10].equals("") ? 0 : Double.parseDouble(data[10]);
+		// max = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
+		// df = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
+		// lowEB = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
+		// upEB = data[14].equals("") ? 0 : Double.parseDouble(data[14]);
+		// statCmt = data[15];
+		// addModDate = data[16];
+		// confidenceCode = data[17];
+		return this;
+	}
+	
+	
 	public static final int PARSE_DATA_LENGTH = 18;
 
 	private int ndbNo;
@@ -62,30 +111,7 @@ public class Nutrient implements Parsable<Nutrient> {
 
 	}
 
-	@Override
-	public Nutrient parse(String[] data) throws InvalidParseDataException {
-		if (data.length != PARSE_DATA_LENGTH)
-			throw new InvalidParseDataException();
-		ndbNo = Integer.parseInt(data[0]);
-		nutrNo = Short.parseShort(data[1]);
-		nutrVal = Double.parseDouble(data[2]);
-		// numDataPts = Integer.parseInt(data[3]);
-		// stdError = data[4].equals("") ? 0 : Double.parseDouble(data[4]);
-		// srcCd = data[5];
-		// derivCd = data[6];
-		// refNDBNo = data[7].equals("") ? 0 : Integer.parseInt(data[7]);
-		// addNutrMark = data[8];
-		// numStudies = data[9].equals("") ? 0 : Integer.parseInt(data[9]);
-		// min = data[10].equals("") ? 0 : Double.parseDouble(data[10]);
-		// max = data[11].equals("") ? 0 : Double.parseDouble(data[11]);
-		// df = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
-		// lowEB = data[13].equals("") ? 0 : Double.parseDouble(data[13]);
-		// upEB = data[14].equals("") ? 0 : Double.parseDouble(data[14]);
-		// statCmt = data[15];
-		// addModDate = data[16];
-		// confidenceCode = data[17];
-		return this;
-	}
+	
 
 	/**
 	 * @return the ndbNo

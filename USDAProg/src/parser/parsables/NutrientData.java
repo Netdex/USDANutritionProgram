@@ -15,8 +15,11 @@ public class NutrientData implements Formattable {
 
 	@Override
 	public String getFormat() {
-		// TODO Auto-generated method stub
-		return null;
+		String str = "";
+		for(int i = 0; i < nutrients.size(); i++){
+			str += nutrients.get(i).getFormat() + "\n";
+		}
+		return str;
 	}
 	public NutrientData() {
 
