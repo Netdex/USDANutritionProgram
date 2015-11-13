@@ -34,10 +34,10 @@ public class HomePanel extends JPanel {
 					128, Image.SCALE_SMOOTH)));
 		} catch (IOException e1) {
 		}
-		JPanel buttonQuad = new JPanel(new GridLayout(2, 2, 8, 8));
+		JPanel buttonQuad = new JPanel(new GridLayout(3, 2, 8, 8));
 		buttonQuad.setBackground(Color.BLACK);
 
-		// create five buttons
+		// search
 		JButton searchButton = new JButton();
 		try {
 			searchButton.setIcon(new ImageIcon(ImageIO.read(
@@ -49,6 +49,7 @@ public class HomePanel extends JPanel {
 		searchButton.setBackground(Color.GREEN);
 		searchButton.setBorder(GUI.EMPTY_BORDER);
 
+		// group
 		JButton groupButton = new JButton();
 		try {
 			groupButton.setIcon(new ImageIcon(ImageIO.read(
@@ -60,6 +61,19 @@ public class HomePanel extends JPanel {
 		groupButton.setBackground(Color.ORANGE);
 		groupButton.setBorder(GUI.EMPTY_BORDER);
 
+		// add
+		JButton addFoodButton = new JButton();
+		try {
+			addFoodButton = new JButton(new ImageIcon(ImageIO.read(
+					new File("images/addFoodButton.png")).getScaledInstance(
+					200, 200, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		addFoodButton.setBackground(new Color(3793803));
+		addFoodButton.setBorder(GUI.EMPTY_BORDER);
+
+		// help
 		JButton helpButton = new JButton();
 		try {
 			helpButton = new JButton(new ImageIcon(ImageIO.read(
@@ -70,39 +84,48 @@ public class HomePanel extends JPanel {
 		}
 		helpButton.setBackground(new Color(8174056));
 		helpButton.setBorder(GUI.EMPTY_BORDER);
-		
-		JButton addFoodButton = new JButton();
+
+		// quit
+		JButton quitButton = new JButton();
 		try {
-			addFoodButton = new JButton(new ImageIcon(ImageIO.read(
-					new File("images/addFoodButton.png")).getScaledInstance(200,
+			quitButton = new JButton(new ImageIcon(ImageIO.read(
+					new File("images/quitButton.png")).getScaledInstance(200,
 					200, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		addFoodButton.setBackground(new Color(3793803));
-		addFoodButton.setBorder(GUI.EMPTY_BORDER);
+		quitButton.setBackground(new Color(14046292));
+		quitButton.setBorder(GUI.EMPTY_BORDER);
 
-		JButton aboutButton = new JButton("About");
-		aboutButton.setBackground(Color.BLACK);
-		aboutButton.setForeground(Color.WHITE);
+		// about
+		JButton aboutButton = new JButton();
+		try {
+			aboutButton = new JButton(new ImageIcon(ImageIO.read(
+					new File("images/moreInfoButton.png")).getScaledInstance(
+					200, 200, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		aboutButton.setBackground(new Color(14046411));
 		aboutButton.setBorder(GUI.EMPTY_BORDER);
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
-		buttonQuad.add(helpButton);
 		buttonQuad.add(addFoodButton);
+		buttonQuad.add(helpButton);
+		buttonQuad.add(aboutButton);
+		buttonQuad.add(quitButton);
 
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
 		helpButton.addActionListener(new HelpButtonListener());
 		addFoodButton.addActionListener(new AddFoodButtonListener());
-		
+		quitButton.addActionListener(new QuitButtonListener());
 		aboutButton.addActionListener(new AboutButtonListener());
 
 		this.add(bannerLabel);
 		bannerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(buttonQuad);
-		this.add(aboutButton);
 		aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 
@@ -136,12 +159,20 @@ public class HomePanel extends JPanel {
 			manager.switchToAbout();
 		}
 	}
-	
+
 	class AddFoodButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			manager.switchToAddFood();
+		}
+	}
+
+	class QuitButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
 		}
 	}
 }

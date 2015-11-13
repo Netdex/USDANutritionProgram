@@ -41,6 +41,7 @@ public class GUI extends JFrame {
 	public GUI() {
 		super("USDA Food Database");
 		CONFIG.load();
+		// this doesn't actually set the correct height, but whatever.
 		this.setSize(480, 640);
 		this.setLocation(100, 100);
 		try {
@@ -51,7 +52,7 @@ public class GUI extends JFrame {
 
 		manager = new PanelManager();
 		this.add(manager);
-		
+
 		dataManager = DataManager.getInstance();
 		dataManager.bindProgressDisplay(this);
 		dataManager.init(new File("USDAFiles/FOOD_DES.TXT"), new File(
@@ -61,7 +62,7 @@ public class GUI extends JFrame {
 						"USDAFiles/LANGUAL.txt"), new File(
 						"USDAFiles/LANGDESC.TXT"), new File(
 						"USDAFiles/FOOTNOTE.TXT"));
-		
+
 		manager.switchToHome();
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
