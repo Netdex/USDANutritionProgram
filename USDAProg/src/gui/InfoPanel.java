@@ -25,9 +25,11 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import parser.FattyAcid;
 import parser.ImageExtract;
 import parser.parsables.FoodItem;
 import parser.parsables.Nutrient;
+import parser.util.DoublyLinkedList;
 
 public class InfoPanel extends JPanel {
 
@@ -51,7 +53,7 @@ public class InfoPanel extends JPanel {
 			.createLineBorder(Color.DARK_GRAY, 2);
 
 	private Nutrient[] nutrients;
-	private NutrientInfo[] nutritionLabels;
+	private NutrientInfoPanel[] nutritionLabels;
 
 	public InfoPanel(SearchPanel searchPanel, PanelManager manager) {
 		super();
@@ -281,9 +283,9 @@ public class InfoPanel extends JPanel {
 
 		nutrients = food.getNutrientData().getNutrients()
 				.toArray(Nutrient.SAMPLE);
-		nutritionLabels = new NutrientInfo[nutrients.length];
+		nutritionLabels = new NutrientInfoPanel[nutrients.length];
 		for (int i = 0; i < nutrients.length; i++) {
-			NutrientInfo nutrientPanel = new NutrientInfo(nutrients[i]);
+			NutrientInfoPanel nutrientPanel = new NutrientInfoPanel(nutrients[i]);
 			nutritionLabels[i] = nutrientPanel;
 			nutritionPanel.add(nutrientPanel);
 		}
@@ -335,7 +337,7 @@ public class InfoPanel extends JPanel {
 				gramsOfFood = newAmountInArbitraryUnits;
 
 			// update all of the labels
-			for (NutrientInfo nutPanel : nutritionLabels) {
+			for (NutrientInfoPanel nutPanel : nutritionLabels) {
 				nutPanel.updateFields();
 			}
 
@@ -355,14 +357,14 @@ public class InfoPanel extends JPanel {
 
 	}
 
-	class NutrientInfo extends JPanel {
+	class NutrientInfoPanel extends JPanel {
 
 		private Nutrient nutrient;
 		private double amountPerGram;
 
 		private JLabel amount;
 
-		private NutrientInfo(Nutrient nut) {
+		private NutrientInfoPanel(Nutrient nut) {
 			super();
 			this.nutrient = nut;
 			this.amountPerGram = nutrient.getNutrVal() / 100;
@@ -372,10 +374,17 @@ public class InfoPanel extends JPanel {
 			this.setOpaque(false);
 			this.setMaximumSize(new Dimension(400, Short.MAX_VALUE));
 
-			JLabel nameLabel = new JLabel(nutrient.getNutrientInfo()
-					.getNutrientName()
-					+ " ("
-					+ nutrient.getNutrientInfo().getUnit() + ")");
+			String nutrientName = nutrient.getNutrientInfo().getNutrientName();
+			if(nutrientName.matches("[0-9]*:[0-9]*")){
+				FattyAcid[] proteinNames = FattyAcid.lookupByCDRatio(nutrientName);
+				if(proteinNames.length > 0){
+					nutrientName = "";
+					for(FattyAcid fa : proteinNames){
+						nutrientName += fa.getName() + "; ";
+					}
+				}
+			}
+			JLabel nameLabel = new JLabel(nutrientName + " (" + nutrient.getNutrientInfo().getUnit() + ")");
 			nameLabel.setOpaque(false);
 			nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			nameLabel.setFont(GUI.CONTENT_FONT);

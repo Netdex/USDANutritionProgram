@@ -31,12 +31,12 @@ public enum FattyAcid {
 		this.name = name;
 	}
 
-	public FattyAcid[] lookupByCDRatio(String cd) {
+	public static FattyAcid[] lookupByCDRatio(String cd) {
 		StringTokenizer st = new StringTokenizer(cd, ":");
 		return lookupByCDRatio(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
 	}
 
-	public FattyAcid[] lookupByCDRatio(int cn, int dn) {
+	public static FattyAcid[] lookupByCDRatio(int cn, int dn) {
 
 		DoublyLinkedList<FattyAcid> matches = new DoublyLinkedList<>();
 
