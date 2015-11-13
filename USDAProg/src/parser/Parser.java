@@ -95,13 +95,17 @@ public class Parser {
 			System.err.println("PARSING FOOD DESCRIPTIONS");
 			parseFoodDescriptions();
 			System.err.println("DONE");
+			if (gui != null) {
 			gui.getPanelManager().LOADING_PERCENTAGE = 100;
+			}
 
 			long end = System.currentTimeMillis() - start;
 			System.err.println("Took " + end + "ms");
 			Thread.sleep(1000);
-			gui.getPanelManager().LOADING_PERCENTAGE = -1;
-			gui.getPanelManager().repaint();
+			if (gui != null) {
+				gui.getPanelManager().LOADING_PERCENTAGE = -1;
+				gui.getPanelManager().repaint();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -238,22 +242,24 @@ public class Parser {
 			String[] items = splitTokens(line, "^", FoodItem.PARSE_DATA_LENGTH);
 			FoodItem foodItem = new FoodItem().parse(items);
 
-			// Set the appropriate items in the food item
-			int ndbNo = foodItem.getNDBNo();
-			foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
-			foodItem.setWeightInfo(map_foodWeight.get(ndbNo));
-			foodItem.setNutrientData(map_nutrData.get(ndbNo));
-			foodItem.setLangualGroup(map_langualGroup.get(ndbNo));
-			foodItem.setFootnotes(map_footnote.get(ndbNo));
-
-			foodItem.getFoodGroup().addFood(foodItem);
-			map_foodItems.put(ndbNo, foodItem);
-			updatePercentage();
+			addFoodItem(foodItem);
 
 		}
 		br.close();
 	}
 
+	public void addFoodItem(FoodItem foodItem){
+		int ndbNo = foodItem.getNDBNo();
+		foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
+		foodItem.setWeightInfo(map_foodWeight.get(ndbNo));
+		foodItem.setNutrientData(map_nutrData.get(ndbNo));
+		foodItem.setLangualGroup(map_langualGroup.get(ndbNo));
+		foodItem.setFootnotes(map_footnote.get(ndbNo));
+
+		foodItem.getFoodGroup().addFood(foodItem);
+		map_foodItems.put(ndbNo, foodItem);
+	}
+	
 	/**
 	 * Parses all the nutrient definitions
 	 * 
@@ -314,8 +320,10 @@ public class Parser {
 	}
 
 	public void updatePercentage() {
-		gui.getPanelManager().LOADING_PERCENTAGE = (int) (100.0 * processedFileSize / totalFileSize);
-		gui.getPanelManager().repaint();
+		if (gui != null) {
+			gui.getPanelManager().LOADING_PERCENTAGE = (int) (100.0 * processedFileSize / totalFileSize);
+			gui.getPanelManager().repaint();
+		}
 	}
 
 	public DoublyLinkedList<FoodGroup> getFoodGroups() {
