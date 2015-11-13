@@ -18,7 +18,8 @@ public class PanelManager extends JPanel {
 	private InfoPanel infoPanel;
 	private ExtraInfoPanel extraInfoPanel;
 	private AboutPanel aboutPanel;
-	 private HelpPanel helpPanel;
+	private HelpPanel helpPanel;
+	private AddFoodPanel addFoodPanel;
 
 	CardLayout cardLayoutManager;
 
@@ -34,16 +35,18 @@ public class PanelManager extends JPanel {
 		aboutPanel = new AboutPanel(this);
 		infoPanel = new InfoPanel(searchPanel, this);
 		extraInfoPanel = new ExtraInfoPanel(this);
-		 helpPanel = new HelpPanel(this);
+		helpPanel = new HelpPanel(this);
+		addFoodPanel = new AddFoodPanel(this);
 
 		this.add(homePanel, "home");
 		this.add(groupPanel, "group");
 		this.add(foodListPanel, "foodList");
 		this.add(searchPanel, "search");
 		this.add(aboutPanel, "about");
-		 this.add(helpPanel, "help");
+		this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
 		this.add(infoPanel, "foodInfo");
+		this.add(addFoodPanel, "addFood");
 	}
 
 	protected void switchToExtraInfo() {
@@ -73,19 +76,22 @@ public class PanelManager extends JPanel {
 			cardLayoutManager.show(this, "group");
 	}
 
-	 protected void switchToHelp() {
-	 if (LOADING_PERCENTAGE == -1)
-	 cardLayoutManager.show(this, "help");
-	 }
+	protected void switchToHelp() {
+		if (LOADING_PERCENTAGE == -1)
+			cardLayoutManager.show(this, "help");
+	}
 
 	protected void switchToAbout() {
 		if (LOADING_PERCENTAGE == -1)
 			cardLayoutManager.show(this, "about");
-
 	}
 
 	protected void switchToFoodListPanel() {
 		cardLayoutManager.show(this, "foodList");
+	}
+
+	protected void switchToAddFood() {
+		cardLayoutManager.show(this, "addFood");
 	}
 
 	protected JPanel getGroupPanel() {

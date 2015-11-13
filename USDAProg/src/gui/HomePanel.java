@@ -70,6 +70,17 @@ public class HomePanel extends JPanel {
 		}
 		helpButton.setBackground(new Color(8174056));
 		helpButton.setBorder(GUI.EMPTY_BORDER);
+		
+		JButton addFoodButton = new JButton();
+		try {
+			addFoodButton = new JButton(new ImageIcon(ImageIO.read(
+					new File("images/addFoodButton.png")).getScaledInstance(200,
+					200, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		addFoodButton.setBackground(new Color(3793803));
+		addFoodButton.setBorder(GUI.EMPTY_BORDER);
 
 		JButton aboutButton = new JButton("About");
 		aboutButton.setBackground(Color.BLACK);
@@ -79,10 +90,13 @@ public class HomePanel extends JPanel {
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
 		buttonQuad.add(helpButton);
+		buttonQuad.add(addFoodButton);
 
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
 		helpButton.addActionListener(new HelpButtonListener());
+		addFoodButton.addActionListener(new AddFoodButtonListener());
+		
 		aboutButton.addActionListener(new AboutButtonListener());
 
 		this.add(bannerLabel);
@@ -120,6 +134,14 @@ public class HomePanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			manager.switchToAbout();
+		}
+	}
+	
+	class AddFoodButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			manager.switchToAddFood();
 		}
 	}
 }
