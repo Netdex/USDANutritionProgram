@@ -96,7 +96,7 @@ public class Parser {
 			parseFoodDescriptions();
 			System.err.println("DONE");
 			if (gui != null) {
-			gui.getPanelManager().LOADING_PERCENTAGE = 100;
+				gui.getPanelManager().LOADING_PERCENTAGE = 100;
 			}
 
 			long end = System.currentTimeMillis() - start;
@@ -241,14 +241,13 @@ public class Parser {
 			// using .split now since stringtokenizer ignores empty values
 			String[] items = splitTokens(line, "^", FoodItem.PARSE_DATA_LENGTH);
 			FoodItem foodItem = new FoodItem().parse(items);
-
 			addFoodItem(foodItem);
-
+			updatePercentage();
 		}
 		br.close();
 	}
 
-	public void addFoodItem(FoodItem foodItem){
+	public void addFoodItem(FoodItem foodItem) {
 		int ndbNo = foodItem.getNDBNo();
 		foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
 		foodItem.setWeightInfo(map_foodWeight.get(ndbNo));
@@ -259,7 +258,7 @@ public class Parser {
 		foodItem.getFoodGroup().addFood(foodItem);
 		map_foodItems.put(ndbNo, foodItem);
 	}
-	
+
 	/**
 	 * Parses all the nutrient definitions
 	 * 
