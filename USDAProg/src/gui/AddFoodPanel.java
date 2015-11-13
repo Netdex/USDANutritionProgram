@@ -12,10 +12,16 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 
 import parser.DataManager;
 import parser.parsables.FoodGroup;
+import parser.parsables.Nutrient;
+import parser.parsables.NutrientData;
+import parser.parsables.NutrientInfo;
 import parser.util.DoublyLinkedList;
 
 public class AddFoodPanel extends JPanel {
@@ -27,6 +33,8 @@ public class AddFoodPanel extends JPanel {
 	private JTextField nameEntry;
 	private JTextField commonNameEntry;
 	private JTextField manufacNameEntry;
+	private JTextField weightUnitEntry;
+	private JSpinner gramsPerEntry;
 	private JComboBox<FoodGroup> foodGroupEntry;
 
 	protected AddFoodPanel(PanelManager pManager) {
@@ -56,16 +64,11 @@ public class AddFoodPanel extends JPanel {
 		contentPanel.setMaximumSize(new Dimension(465, Short.MAX_VALUE));
 
 		// longDesc
-		JPanel nameLine = new JPanel();
-		nameLine.setLayout(new BorderLayout());
+		JPanel nameLine = new JPanel(new BorderLayout());
 		nameLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-		JLabel namePrompt = new JLabel("What is the name of your new food?");
-		namePrompt.setFont(GUI.CONTENT_FONT);
-		namePrompt.setOpaque(false);
-		namePrompt.setAlignmentX(LEFT_ALIGNMENT);
-		namePrompt.setMaximumSize(new Dimension(325, 200));
-		nameLine.add(namePrompt, BorderLayout.CENTER);
+		nameLine.add(new CustomizedJTextArea(
+				"What is the name of your new food?"), BorderLayout.CENTER);
 
 		nameEntry = new JTextField("Name");
 		// TODO set these to change colour on click (ugh!) and also make text
@@ -76,17 +79,13 @@ public class AddFoodPanel extends JPanel {
 		contentPanel.add(nameLine);
 
 		// commonName
-		JPanel commonNameLine = new JPanel();
-		commonNameLine.setLayout(new BorderLayout());
+		JPanel commonNameLine = new JPanel(new BorderLayout());
 		commonNameLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-		JLabel commonNamePrompt = new JLabel(
-				"What are some of the other names for your new food?");
-		commonNamePrompt.setFont(GUI.CONTENT_FONT);
-		commonNamePrompt.setOpaque(false);
-		commonNamePrompt.setAlignmentX(LEFT_ALIGNMENT);
-		commonNamePrompt.setMaximumSize(new Dimension(325, 200));
-		commonNameLine.add(commonNamePrompt, BorderLayout.CENTER);
+		commonNameLine
+				.add(new CustomizedJTextArea(
+						"What are some of the other names for your new food? Leave blank if none."),
+						BorderLayout.CENTER);
 
 		commonNameEntry = new JTextField("Common Name");
 		commonNameEntry.setFont(GUI.CONTENT_FONT);
@@ -95,17 +94,12 @@ public class AddFoodPanel extends JPanel {
 		contentPanel.add(commonNameLine);
 
 		// foodGrp
-		JPanel foodGroupLine = new JPanel();
-		foodGroupLine.setLayout(new BorderLayout());
+		JPanel foodGroupLine = new JPanel(new BorderLayout());
 		foodGroupLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-		JLabel foodGroupPrompt = new JLabel(
-				"What is the food group of your new food?");
-		foodGroupPrompt.setFont(GUI.CONTENT_FONT);
-		foodGroupPrompt.setOpaque(false);
-		foodGroupPrompt.setAlignmentX(LEFT_ALIGNMENT);
-		foodGroupPrompt.setMaximumSize(new Dimension(325, 200));
-		foodGroupLine.add(foodGroupPrompt, BorderLayout.CENTER);
+		foodGroupLine.add(new CustomizedJTextArea(
+				"What is the food group of your new food?"),
+				BorderLayout.CENTER);
 
 		DataManager.getInstance().registerSyncEvent(new Runnable() {
 			public void run() {
@@ -117,23 +111,75 @@ public class AddFoodPanel extends JPanel {
 				contentPanel.add(foodGroupLine);
 
 				// manufacName
-				JPanel manufacNameLine = new JPanel();
-				manufacNameLine.setLayout(new BorderLayout());
+				JPanel manufacNameLine = new JPanel(new BorderLayout());
 				manufacNameLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-				JLabel manufacNamePrompt = new JLabel(
-						"What is the manufacturer name of your new food?");
-				manufacNamePrompt.setFont(GUI.CONTENT_FONT);
-				manufacNamePrompt.setOpaque(false);
-				manufacNamePrompt.setAlignmentX(LEFT_ALIGNMENT);
-				manufacNamePrompt.setMaximumSize(new Dimension(325, 200));
-				manufacNameLine.add(manufacNamePrompt, BorderLayout.CENTER);
+				manufacNameLine.add(new CustomizedJTextArea(
+						"What is the manufacturer name of your new food?"),
+						BorderLayout.CENTER);
 
 				manufacNameEntry = new JTextField("Manufacturer Name");
 				manufacNameEntry.setFont(GUI.CONTENT_FONT);
 				manufacNameEntry.setPreferredSize(new Dimension(175, 50));
 				manufacNameLine.add(manufacNameEntry, BorderLayout.EAST);
 				contentPanel.add(manufacNameLine);
+
+				// weightUnit
+				JPanel weightUnitLine = new JPanel(new BorderLayout());
+				weightUnitLine.setBackground(GUI.BACKGROUND_COLOUR);
+
+				weightUnitLine.add(new CustomizedJTextArea(
+						"What is the unit used to measure your new food?"),
+						BorderLayout.CENTER);
+
+				weightUnitEntry = new JTextField("Unit");
+				weightUnitEntry.setFont(GUI.CONTENT_FONT);
+				weightUnitEntry.setPreferredSize(new Dimension(175, 50));
+				weightUnitLine.add(weightUnitEntry, BorderLayout.EAST);
+				contentPanel.add(weightUnitLine);
+
+				// grams per weightUnit
+				JPanel gramsPerLine = new JPanel(new BorderLayout());
+				gramsPerLine.setBackground(GUI.BACKGROUND_COLOUR);
+
+				gramsPerLine
+						.add(new CustomizedJTextArea(
+								"How many grams are in each unit (as indicated above)?"),
+								BorderLayout.CENTER);
+
+				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1, 0, 999,
+						1));
+				gramsPerEntry.setFont(GUI.CONTENT_FONT);
+				gramsPerEntry.setPreferredSize(new Dimension(175, 50));
+				gramsPerLine.add(gramsPerEntry, BorderLayout.EAST);
+				contentPanel.add(gramsPerLine);
+
+				// prompts for all nutrients
+				CustomizedJTextArea nutrEntryPrompt = new CustomizedJTextArea(
+						"\nBelow, enter information about the nutrients in your new food.\n"
+								+ "For each nutrient, enter the units it's measuered in,\n"
+								+ "and the amount of each unit is in one gram of food.");
+				nutrEntryPrompt.setAlignmentX(CENTER_ALIGNMENT);
+				Dimension nutrSize = new Dimension(400, 150);
+				nutrEntryPrompt.setPreferredSize(nutrSize);
+				nutrEntryPrompt.setMaximumSize(nutrSize);
+				contentPanel.add(nutrEntryPrompt);
+				
+				JPanel nutrientAdd = new JPanel();
+				nutrientAdd.setOpaque(false);
+				nutrientAdd.setLayout(new BoxLayout(nutrientAdd,
+						BoxLayout.Y_AXIS));
+
+				Nutrient[] listOfNutrients = { new Nutrient() };
+				DoublyLinkedList<NutrientEntryLine> nutrientEntries = new DoublyLinkedList<NutrientEntryLine>();
+				// TODO get the list of all nutrients here
+				for (Nutrient nutrient : listOfNutrients) {
+					NutrientEntryLine line = new NutrientEntryLine(nutrient);
+					nutrientEntries.add(line);
+					nutrientAdd.add(line);
+				}
+				nutrientAdd.setAlignmentX(LEFT_ALIGNMENT);
+				contentPanel.add(nutrientAdd);
 			}
 		});
 
@@ -157,6 +203,57 @@ public class AddFoodPanel extends JPanel {
 		saveButton.addActionListener(new SaveButtonActionListener());
 		saveButton.setPreferredSize(new Dimension(150, 50));
 		this.add(saveButton, BorderLayout.SOUTH);
+	}
+
+	class CustomizedJTextArea extends JTextArea {
+
+		private CustomizedJTextArea(String displayText) {
+			super(displayText);
+			this.setFont(GUI.CONTENT_FONT);
+			this.setWrapStyleWord(true);
+			this.setEditable(false);
+			this.setLineWrap(true);
+			this.setOpaque(false);
+			this.setFocusable(false);
+			this.setAlignmentX(LEFT_ALIGNMENT);
+			this.setMaximumSize(new Dimension(325, 150));
+		}
+	}
+
+	class NutrientEntryLine extends JPanel {
+
+		private JTextField nutrientUnit;
+		private JSpinner amount; // TODO remember to multiply amount by 100
+									// before giving it to Gordon
+
+		private NutrientEntryLine(Nutrient nutrient) {
+			super(new BorderLayout());
+			this.setBackground(GUI.BACKGROUND_COLOUR);
+
+			this.add(new CustomizedJTextArea(nutrient.getNutrientInfo()
+					.getNutrientName()), BorderLayout.WEST);
+
+			nutrientUnit = new JTextField("Unit");
+			nutrientUnit.setFont(GUI.CONTENT_FONT);
+			nutrientUnit.setOpaque(false);
+			nutrientUnit.setPreferredSize(new Dimension(75, 50));
+			this.add(nutrientUnit, BorderLayout.CENTER);
+
+			amount = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 1));
+			amount.setFont(GUI.CONTENT_FONT);
+			amount.setOpaque(false);
+			this.add(amount, BorderLayout.WEST);
+		}
+
+		private JTextField getNutrientUnit() {
+			return nutrientUnit;
+		}
+
+		private JSpinner getAmount() {
+			return amount;
+		}
+		
+		
 	}
 
 	class SaveButtonActionListener implements ActionListener {
