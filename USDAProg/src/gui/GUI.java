@@ -33,7 +33,7 @@ public class GUI extends JFrame {
 
 	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
 			.createEmptyBorder();
-	protected static byte SCROLL_SPEED = 20;
+	protected static final byte SCROLL_SPEED = 20;
 
 	protected static DataManager dataManager;
 	private PanelManager manager;
