@@ -106,12 +106,16 @@ public class AddFoodPanel extends JPanel {
 		foodGroupPrompt.setAlignmentX(LEFT_ALIGNMENT);
 		foodGroupLine.add(foodGroupPrompt, BorderLayout.CENTER);
 
-		foodGroupEntry = new JComboBox<FoodGroup>(DataManager.getInstance()
-				.getFoodGroups());
-		foodGroupEntry.setFont(GUI.CONTENT_FONT);
-		entryBoxes.add(foodGroupEntry);
-		foodGroupLine.add(foodGroupEntry, BorderLayout.EAST);
-		contentPanel.add(foodGroupLine);
+		DataManager.getInstance().registerSyncEvent(new Runnable() {
+			public void run() {
+				foodGroupEntry = new JComboBox<FoodGroup>(DataManager
+						.getInstance().getFoodGroups());
+				foodGroupEntry.setFont(GUI.CONTENT_FONT);
+				entryBoxes.add(foodGroupEntry);
+				foodGroupLine.add(foodGroupEntry, BorderLayout.EAST);
+				contentPanel.add(foodGroupLine);
+			}
+		});
 
 		// manufacName
 		JPanel manufacNameLine = new JPanel();
