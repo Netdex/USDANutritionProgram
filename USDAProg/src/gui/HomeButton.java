@@ -24,7 +24,7 @@ public class HomeButton extends JButton {
 			e.printStackTrace();
 		}
 		this.manager = manager;
-		this.setBackground(java.awt.Color.WHITE);
+		this.setBackground(GUI.BACKGROUND_COLOUR);
 		addActionListener(new HomeButtonActionListener());
 	}
 

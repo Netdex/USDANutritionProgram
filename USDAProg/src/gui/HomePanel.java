@@ -60,27 +60,16 @@ public class HomePanel extends JPanel {
 		groupButton.setBackground(Color.ORANGE);
 		groupButton.setBorder(GUI.EMPTY_BORDER);
 
-//		JButton helpButton = new JButton();
-//		try {
-//			helpButton = new JButton(new ImageIcon(ImageIO.read(
-//					new File("images/helpButton.png")).getScaledInstance(200,
-//					200, Image.SCALE_SMOOTH)));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		helpButton.setBackground(new Color(8174056));
-//		helpButton.setBorder(GUI.EMPTY_BORDER);
-
-		// JButton settingsButton = new JButton();
-		// try {
-		// settingsButton.setIcon(new ImageIcon(ImageIO.read(
-		// new File("images/settingsButton.png")).getScaledInstance(
-		// 200, 200, Image.SCALE_SMOOTH)));
-		// } catch (IOException e) {
-		// e.printStackTrace();
-		// }
-		// settingsButton.setBackground(Color.DARK_GRAY);
-		// settingsButton.setBorder(GUI.EMPTY_BORDER);
+		JButton helpButton = new JButton();
+		try {
+			helpButton = new JButton(new ImageIcon(ImageIO.read(
+					new File("images/helpButton.png")).getScaledInstance(200,
+					200, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		helpButton.setBackground(new Color(8174056));
+		helpButton.setBorder(GUI.EMPTY_BORDER);
 
 		JButton aboutButton = new JButton("About");
 		aboutButton.setBackground(Color.BLACK);
@@ -89,13 +78,11 @@ public class HomePanel extends JPanel {
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
-//		buttonQuad.add(helpButton);
-//		buttonQuad.add(settingsButton);
+		buttonQuad.add(helpButton);
 
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
-//		helpButton.addActionListener(new HelpButtonListener());
-		// settingsButton.addActionListener(new SettingsButtonListener());
+		helpButton.addActionListener(new HelpButtonListener());
 		aboutButton.addActionListener(new AboutButtonListener());
 
 		this.add(bannerLabel);
@@ -120,21 +107,13 @@ public class HomePanel extends JPanel {
 		}
 	}
 
-	// class HelpButtonListener implements ActionListener {
-	//
-	// @Override
-	// public void actionPerformed(ActionEvent e) {
-	// manager.switchToHelp();
-	// }
-	// }
+	class HelpButtonListener implements ActionListener {
 
-	// class SettingsButtonListener implements ActionListener {
-	//
-	// @Override
-	// public void actionPerformed(ActionEvent e) {
-	// manager.switchToSettings();
-	// }
-	// }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			manager.switchToHelp();
+		}
+	}
 
 	class AboutButtonListener implements ActionListener {
 

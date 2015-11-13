@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,16 +21,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import parser.ImageExtract;
 import parser.parsables.FoodItem;
 import parser.parsables.Nutrient;
 
 public class InfoPanel extends JPanel {
 
 	private FoodItem food;
-	private double gramsOfFood;
+	private double gramsOfFood = 1;
 	// private double nutritionMultiplier;
 
 	private SearchPanel searchPanel;
@@ -44,11 +45,13 @@ public class InfoPanel extends JPanel {
 	private JLabel titleNameLabel;
 	private JSpinner amountEntry;
 	private JScrollPane contentScrollbar;
+	private BackButton back;
 
 	protected static final javax.swing.border.Border BLACK_BORDER = BorderFactory
 			.createLineBorder(Color.DARK_GRAY, 2);
 
-	private NutrientInfoLabel[] nutritionLabels;
+	private Nutrient[] nutrients;
+	private NutrientInfo[] nutritionLabels;
 
 	public InfoPanel(SearchPanel searchPanel, PanelManager manager) {
 		super();
@@ -63,8 +66,12 @@ public class InfoPanel extends JPanel {
 
 		header = new JPanel();
 		header.setLayout(new BorderLayout());
-		header.add(new BackButton(this.searchPanel, this.manager),
-				BorderLayout.WEST);
+		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		buttonPanel.setBackground(GUI.HEADER_COLOUR);
+		buttonPanel.add(new HomeButton(manager));
+		back = new BackButton(this.searchPanel, this.manager);
+		buttonPanel.add(back);
+		header.add(buttonPanel, BorderLayout.WEST);
 
 		titleNameLabel = new JLabel();
 		titleNameLabel.setFont(GUI.TITLE_FONT);
@@ -90,6 +97,7 @@ public class InfoPanel extends JPanel {
 		contentPanel.setLayout(contentLayout);
 		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
 		contentPanel.setOpaque(false);
+		contentPanel.setMaximumSize(new Dimension(465, Short.MAX_VALUE));
 
 		contentScrollbar = new JScrollPane(contentPanel);
 		contentScrollbar.createVerticalScrollBar();
@@ -101,6 +109,7 @@ public class InfoPanel extends JPanel {
 		contentScrollbar.getVerticalScrollBar().setBackground(
 				GUI.BACKGROUND_COLOUR);
 		contentScrollbar.setWheelScrollingEnabled(true);
+		contentScrollbar.setHorizontalScrollBar(null);
 
 		this.add(contentScrollbar, BorderLayout.CENTER);
 	}
@@ -108,6 +117,10 @@ public class InfoPanel extends JPanel {
 	protected void setFoodItem(FoodItem item) {
 		contentPanel.removeAll();
 		this.food = item;
+		if (food.getWeightInfo() != null)
+			gramsOfFood = food.getWeightInfo().getGramWeight();
+		else
+			gramsOfFood = 1;
 
 		// Changes title in header
 		String longDesc = food.getLongDescription();
@@ -134,10 +147,19 @@ public class InfoPanel extends JPanel {
 			// normal case
 			titleName = longDesc.substring(0, firstSeparatorIndex);
 		}
+		titleName = toTitleCase(titleName);
 		titleNameLabel.setText(titleName);
+
+		// adds an image
+		JLabel imageLabel = new JLabel();
+		ImageExtract.injectImage(imageLabel, titleName);
+		contentPanel.add(imageLabel);
+		contentPanel.revalidate();
+		contentPanel.repaint();
 
 		// adds long name in actual page
 		JTextArea longName = new JTextArea(longDesc);
+		longName.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 		longName.setFont(GUI.SUBTITLE_FONT);
 		longName.setWrapStyleWord(true);
 		longName.setEditable(false);
@@ -152,6 +174,7 @@ public class InfoPanel extends JPanel {
 		if (!food.getCommonName().equals("")) {
 			JTextArea commonName = new JTextArea("Other name(s) include: "
 					+ food.getCommonName().toString());
+			commonName.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 			commonName.setFont(GUI.CONTENT_FONT);
 			commonName.setWrapStyleWord(true);
 			commonName.setEditable(false);
@@ -165,6 +188,8 @@ public class InfoPanel extends JPanel {
 		// adds food group info
 		JTextArea gramsOfNutrientLabel = new JTextArea("Food Group: "
 				+ food.getFoodGroup().toString());
+		gramsOfNutrientLabel
+				.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 		gramsOfNutrientLabel.setFont(GUI.CONTENT_FONT);
 		gramsOfNutrientLabel.setAlignmentX(LEFT_ALIGNMENT);
 		gramsOfNutrientLabel.setWrapStyleWord(true);
@@ -178,6 +203,7 @@ public class InfoPanel extends JPanel {
 		if (!food.getScientificName().equals("")) {
 			JTextArea scientificName = new JTextArea("Scientific name: "
 					+ food.getScientificName().toString());
+			scientificName.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 			scientificName.setFont(GUI.SCIENTIFIC_FONT);
 			scientificName.setAlignmentX(LEFT_ALIGNMENT);
 			scientificName.setWrapStyleWord(true);
@@ -192,6 +218,7 @@ public class InfoPanel extends JPanel {
 		if (!food.getManufacturerName().equals("")) {
 			JTextArea manufacName = new JTextArea("Manufactured by: "
 					+ food.getManufacturerName().toString());
+			manufacName.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 			manufacName.setFont(GUI.CONTENT_FONT);
 			manufacName.setAlignmentX(LEFT_ALIGNMENT);
 			manufacName.setWrapStyleWord(true);
@@ -207,18 +234,21 @@ public class InfoPanel extends JPanel {
 		amountEntryLine.setOpaque(false);
 		FlowLayout amountEntryLayout = new FlowLayout(FlowLayout.LEFT);
 		amountEntryLine.setLayout(amountEntryLayout);
+		amountEntryLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 
 		String promptText;
 		if (food.getWeightInfo() != null)
 			promptText = "The unit used to measure this item is: \""
-					+ food.getWeightInfo().getDesc().toString()
-					+ "\" ("
+					+ food.getWeightInfo().getDesc().toString() + "\" ("
 					+ food.getWeightInfo().getGramWeight()
-					+ " grams).\nPlease enter the amount (in the provided units above) you are intending to consume";
+					+ " grams).\nPlease enter the amount (in "
+					+ food.getWeightInfo().getDesc().toString()
+					+ ") you are intending to consume";
 		else
 			promptText = "This item is measured in grams.\nPlease enter the number of grams you are consuming.";
 
 		JTextArea amountEntryPrompt = new JTextArea(promptText);
+		amountEntryPrompt.setPreferredSize(new Dimension(350, 80));
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
 		amountEntryPrompt.setAlignmentX(LEFT_ALIGNMENT);
 		amountEntryPrompt.setWrapStyleWord(true);
@@ -228,7 +258,7 @@ public class InfoPanel extends JPanel {
 		amountEntryPrompt.setOpaque(false);
 		amountEntryLine.add(amountEntryPrompt);
 
-		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(1, 0, 999,
+		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(1, 1, 999,
 				1);
 		amountEntry = new JSpinner(amountEntryModel);
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
@@ -242,29 +272,45 @@ public class InfoPanel extends JPanel {
 
 		// create the base "framework" for displaying nutrients
 		nutritionPanel = new JPanel();
-		// TODO add a header row
-		// TODO render properly
+		nutritionPanel
+				.setLayout(new BoxLayout(nutritionPanel, BoxLayout.Y_AXIS));
+		// nutritionPanel.setMinimumSize(new Dimension(480, 120));
 		nutritionPanel.setBorder(BLACK_BORDER);
-		Nutrient[] nutrients = food.getNutrientData().getNutrientArray();
-		nutritionLabels = new NutrientInfoLabel[nutrients.length];
-		GridLayout nutritionLayout = new GridLayout(nutrients.length, 1, 0, 2);
-		nutritionPanel.setLayout(nutritionLayout);
+		nutritionPanel.setAlignmentX(LEFT_ALIGNMENT);
+		nutritionPanel.setBackground(GUI.BACKGROUND_COLOUR);
 
+		nutrients = food.getNutrientData().getNutrients()
+				.toArray(Nutrient.SAMPLE);
+		nutritionLabels = new NutrientInfo[nutrients.length];
 		for (int i = 0; i < nutrients.length; i++) {
-			NutrientInfoLabel label = new NutrientInfoLabel(nutrients[i]);
-			label.setAlignmentX(LEFT_ALIGNMENT);
-			nutritionLabels[i] = label;
-			nutritionPanel.add(label);
-			contentPanel.add(label);
+			NutrientInfo nutrientPanel = new NutrientInfo(nutrients[i]);
+			nutritionLabels[i] = nutrientPanel;
+			nutritionPanel.add(nutrientPanel);
 		}
-
-		// nutritionPanel.revalidate();
-		// nutritionPanel.repaint();
+		nutritionPanel.setMaximumSize(new Dimension(460, Short.MAX_VALUE));
+		nutritionPanel.revalidate();
+		nutritionPanel.repaint();
 		contentPanel.add(nutritionPanel);
 
-		contentScrollbar.getVerticalScrollBar().setValue(0);
 		contentPanel.revalidate();
 		contentPanel.repaint();
+		contentScrollbar.getVerticalScrollBar().setValue(0);
+	}
+
+	private String toTitleCase(String str) {
+		char[] array = str.toCharArray();
+		String out = "";
+		for (int i = 0; i < str.length(); i++) {
+			if (i == 0 || array[i - 1] == ' ')
+				out += Character.toUpperCase(array[i]);
+			else
+				out += Character.toLowerCase(array[i]);
+		}
+		return out;
+	}
+
+	protected BackButton getBackButton() {
+		return back;
 	}
 
 	// protected void setNutritionMultiplier(double personalizedMultiplier)
@@ -289,10 +335,8 @@ public class InfoPanel extends JPanel {
 				gramsOfFood = newAmountInArbitraryUnits;
 
 			// update all of the labels
-			for (NutrientInfoLabel label : nutritionLabels) {
-				label.updateAmounts();
-				label.revalidate();
-				label.repaint();
+			for (NutrientInfo nutPanel : nutritionLabels) {
+				nutPanel.updateFields();
 			}
 
 			nutritionPanel.revalidate();
@@ -311,61 +355,44 @@ public class InfoPanel extends JPanel {
 
 	}
 
-	class NutrientInfoLabel extends JLabel {
+	class NutrientInfo extends JPanel {
 
 		private Nutrient nutrient;
-		private String name;
-		private double gramsOfNutrientPerGramOfFood;
-		private double gramsOfNutrientInSample;
+		private double amountPerGram;
 
-		private JTextArea gramsOfNutrientLabel;
+		private JLabel amount;
 
-		// private double percentDV;
-		// private JLabel percentDVLabel;
-
-		private NutrientInfoLabel(Nutrient nutrient) {
+		private NutrientInfo(Nutrient nut) {
 			super();
-			this.nutrient = nutrient;
-			name = this.nutrient.getNutrientInfo().getNutrientName();
-			gramsOfNutrientPerGramOfFood = this.nutrient.getNutrVal() / 100.0;
-			gramsOfNutrientInSample = gramsOfNutrientPerGramOfFood
-					* gramsOfFood;
-
-			this.setLayout(new FlowLayout(FlowLayout.LEFT));
-			// this.setAlignmentX(LEFT_ALIGNMENT);
+			this.nutrient = nut;
+			this.amountPerGram = nutrient.getNutrVal() / 100;
 			this.setBackground(GUI.ACCENT_COLOUR);
+			this.setBorder(GUI.EMPTY_BORDER);
+			this.setLayout(new BorderLayout());
+			this.setOpaque(false);
+			this.setMaximumSize(new Dimension(400, Short.MAX_VALUE));
 
-			JTextArea nameLabel = new JTextArea(name);
-			nameLabel.setPreferredSize(new Dimension(380, 50));
-			nameLabel.setWrapStyleWord(true);
-			nameLabel.setLineWrap(true);
-			nameLabel.setEditable(false);
-			nameLabel.setFocusable(false);
+			JLabel nameLabel = new JLabel(nutrient.getNutrientInfo()
+					.getNutrientName()
+					+ " ("
+					+ nutrient.getNutrientInfo().getUnit() + ")");
 			nameLabel.setOpaque(false);
+			nameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			nameLabel.setFont(GUI.CONTENT_FONT);
-			nameLabel.setOpaque(false);
-			this.add(nameLabel);
+			this.add(nameLabel, BorderLayout.WEST);
 
-			gramsOfNutrientLabel = new JTextArea();
-			gramsOfNutrientLabel.setText(gramsOfNutrientInSample + "");
-			gramsOfNutrientLabel.setPreferredSize(new Dimension(50, 50));
-			gramsOfNutrientLabel.setFont(GUI.CONTENT_FONT);
-			gramsOfNutrientLabel.setOpaque(false);
-			gramsOfNutrientLabel.setWrapStyleWord(true);
-			gramsOfNutrientLabel.setLineWrap(true);
-			gramsOfNutrientLabel.setEditable(false);
-			gramsOfNutrientLabel.setFocusable(false);
-			gramsOfNutrientLabel.setOpaque(false);
-			this.add(gramsOfNutrientLabel);
+			amount = new JLabel();
+			updateFields();
+			amount.setFont(GUI.CONTENT_FONT);
+			amount.setOpaque(false);
+			this.add(amount, BorderLayout.EAST);
 		}
 
-		private void updateAmounts() {
-			gramsOfNutrientLabel.setText(gramsOfNutrientPerGramOfFood
-					* gramsOfFood + "");
-		}
-
-		private Nutrient getNutrient() {
-			return nutrient;
+		private void updateFields() {
+			amount.setText(Double.toString(Math.round(1000 * amountPerGram
+					* gramsOfFood) / 1000.0));
+			amount.revalidate();
+			amount.repaint();
 		}
 	}
 }

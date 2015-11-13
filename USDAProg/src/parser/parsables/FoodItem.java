@@ -9,7 +9,8 @@ import parser.InvalidParseDataException;
  * @author Gordon Guan
  *
  */
-public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>, Formattable {
+public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
+		Formattable {
 
 	public static FoodItem SAMPLE = new FoodItem();
 
@@ -23,10 +24,12 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>, Forma
 
 	@Override
 	public String getFormat() {
-		return Formattable.getFileFormatted(String.format("~%05d~", nutrientDatabankNumber),
-				String.format("~%04d~", foodGroupID), "~" + longDescription + "~", "~~", "~"
-						+ commonName + "~", "~" + manufacturerName + "~", "~~", "~"
-						+ refuseDescription + "~", percentRefuse + "", "~" + scientificName + "~",
+		return Formattable.getFileFormatted(
+				String.format("~%05d~", nutrientDatabankNumber),
+				String.format("~%04d~", foodGroupID), "~" + longDescription
+						+ "~", "~~", "~" + commonName + "~", "~"
+						+ manufacturerName + "~", "~~", "~" + refuseDescription
+						+ "~", percentRefuse + "", "~" + scientificName + "~",
 				"", "", "", "");
 	}
 
@@ -39,8 +42,8 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>, Forma
 	}
 
 	public Formattable[] getFormattableData() {
-		return new Formattable[] { this, nutrientData, foodGroup, foodWeight, langualGroup,
-				footnotes };
+		return new Formattable[] { this, nutrientData, foodGroup, foodWeight,
+				langualGroup, footnotes };
 	}
 
 	@Override
@@ -80,7 +83,8 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>, Forma
 	}
 
 	/**
-	 * @param nutrientData the nutrientData to set
+	 * @param nutrientData
+	 *            the nutrientData to set
 	 */
 	public void setNutrientData(NutrientData nutrientData) {
 		this.nutrientData = nutrientData;
@@ -94,7 +98,8 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>, Forma
 	}
 
 	/**
-	 * @param foodGroup the foodGroup to set
+	 * @param foodGroup
+	 *            the foodGroup to set
 	 */
 	public void setFoodGroup(FoodGroup foodGroup) {
 		this.foodGroup = foodGroup;
@@ -133,7 +138,8 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>, Forma
 	}
 
 	/**
-	 * @param footnotes the footnotes to set
+	 * @param footnotes
+	 *            the footnotes to set
 	 */
 	public void setFootnotes(Footnote footnotes) {
 		this.footnotes = footnotes;

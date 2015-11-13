@@ -1,3 +1,4 @@
+
 package parser.parsables;
 
 import parser.Formattable;
@@ -11,6 +12,8 @@ import parser.InvalidParseDataException;
  */
 public class Nutrient implements Parsable<Nutrient>, Formattable {
 
+	public static Nutrient SAMPLE = new Nutrient();
+	
 	public String getFormat(){
 		return Formattable.getFileFormatted(
 				String.format("~%05d~", ndbNo),
