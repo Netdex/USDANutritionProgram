@@ -39,9 +39,9 @@ public class DataManager {
 	/**
 	 * Initialize the parser with the given data files.
 	 * 
-	 * @param files In this order: File foodDesc, File nutrientData, File
-	 *            nutrientDescription, File foodGroup, File foodWeight, File
-	 *            langual, File langualDesc, File footnotes
+	 * @param files In this order: 0 File foodDesc, 1 File nutrientData, 2 File
+	 *            nutrientDescription, 3 File foodGroup, 4 File foodWeight, 5
+	 *            File langual, 6 File langualDesc, 7 File footnotes
 	 */
 	public void init(File... files) {
 		this.files = files;
@@ -66,49 +66,37 @@ public class DataManager {
 		hooks.add(r);
 	}
 
-	public int getUnusedNDBNumber(){
+	public int getUnusedNDBNumber() {
 		return -1;
 	}
-	
+
 	public void addFoodItem(FoodItem fi) {
 		NutrientData nd = fi.getNutrientData();
 		Footnote fn = fi.getFootnotes();
-		LanguaLGroup lg = fi.getLangualGroup();
 		FoodWeight wi = fi.getWeightInfo();
 
+		addFormattable(files[0], fi);
+		if (fn != null)
+			addFormattable(files[7], fn);
+		if (wi != null)
+			addFormattable(files[4], wi);
+		if (nd != null)
+			for (int i = 0; i < nd.getNutrients().size(); i++) {
+				addFormattable(files[1], nd.getNutrients().get(i));
+			}
+		parser.addFoodItem(fi);
+	}
+
+	public void addFormattable(File file, Formattable form) {
 		try {
-			PrintStream ps_foodItem = new PrintStream(new FileOutputStream(files[0], true));
-
-			
-			PrintStream ps_nutrientDesc = new PrintStream(new FileOutputStream(files[2], true));
-			PrintStream ps_footNotes = new PrintStream(new FileOutputStream(files[7], true));
-			PrintStream ps_languals = new PrintStream(new FileOutputStream(files[5], true));
-			PrintStream ps_langualDesc = new PrintStream(new FileOutputStream(files[6], true));
-			PrintStream ps_weightInfo = new PrintStream(new FileOutputStream(files[4], true));
-			ps_foodItem.println("");
-
+			PrintStream ps = new PrintStream(new FileOutputStream(file, true));
+			ps.println(form.getFormat());
+			ps.close();
 		} catch (Exception e) {
 
 		}
 	}
 
-	public void addNutrientData(NutrientData nd){
-		try{
-			PrintStream ps_nutrientData = new PrintStream(new FileOutputStream(files[1], true));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	public void addFoodGroup(FoodGroup fg) {
-		try {
-			PrintStream ps_foodGroup = new PrintStream(new FileOutputStream(files[3], true));
-			ps_foodGroup.println(fg.getFormat());
-			ps_foodGroup.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public FoodGroup[] getFoodGroups() {
 		return parser.getFoodGroups().toArray(FoodGroup.SAMPLE);
 	}

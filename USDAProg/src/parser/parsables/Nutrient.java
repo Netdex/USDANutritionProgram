@@ -1,4 +1,3 @@
-
 package parser.parsables;
 
 import parser.Formattable;
@@ -13,29 +12,13 @@ import parser.InvalidParseDataException;
 public class Nutrient implements Parsable<Nutrient>, Formattable {
 
 	public static Nutrient SAMPLE = new Nutrient();
-	
-	public String getFormat(){
-		return Formattable.getFileFormatted(
-				String.format("~%05d~", ndbNo),
-				String.format("~%03d~", nutrNo),
-				nutrVal + "",
-				"0",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				"",
-				""
-				);
+
+	public String getFormat() {
+		return Formattable.getFileFormatted(String.format("~%05d~", ndbNo),
+				String.format("~%03d~", nutrNo), nutrVal + "", "0", "", "", "", "", "", "", "", "",
+				"", "", "", "", "");
 	}
-	
+
 	@Override
 	public Nutrient parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)
@@ -60,8 +43,7 @@ public class Nutrient implements Parsable<Nutrient>, Formattable {
 		// confidenceCode = data[17];
 		return this;
 	}
-	
-	
+
 	public static final int PARSE_DATA_LENGTH = 18;
 
 	private int ndbNo;
@@ -113,8 +95,6 @@ public class Nutrient implements Parsable<Nutrient>, Formattable {
 	public Nutrient() {
 
 	}
-
-	
 
 	/**
 	 * @return the ndbNo
