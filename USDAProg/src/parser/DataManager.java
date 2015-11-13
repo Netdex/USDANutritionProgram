@@ -134,6 +134,25 @@ public class DataManager {
 				if (foodItem.getLongDescription().toLowerCase()
 						.contains(keys[keyIdx].toLowerCase())) {
 					score += 0.5;
+					if (foodItem.getLongDescription().toLowerCase()
+							.startsWith(keys[keyIdx].toLowerCase())) {
+						score += 0.2;
+					}
+					// Check for whole tokens of the key
+					boolean found = false;
+					for (int i = 0; i < tokens.length; i++) {
+						String currentToken = tokens[i];
+						if (tokens[i].toLowerCase().endsWith("s")
+								&& !keys[keyIdx].toLowerCase().endsWith("s")) {
+							currentToken = currentToken.substring(0, currentToken.length() - 1);
+						}
+						if (currentToken.equalsIgnoreCase(keys[keyIdx])) {
+							found = true;
+							break;
+						}
+					}
+					if (found)
+						score += 1.1;
 					relevant = true;
 				}
 
@@ -143,27 +162,7 @@ public class DataManager {
 					relevant = true;
 				}
 
-				if (foodItem.getLongDescription().toLowerCase()
-						.startsWith(keys[keyIdx].toLowerCase())) {
-					score += 0.2;
-					relevant = true;
-				}
-
-				// Check for whole tokens of the key
-				boolean found = false;
-				for (int i = 0; i < tokens.length; i++) {
-					String currentToken = tokens[i];
-					if (tokens[i].toLowerCase().endsWith("s")
-							&& !keys[keyIdx].toLowerCase().endsWith("s")) {
-						currentToken = currentToken.substring(0, currentToken.length() - 1);
-					}
-					if (currentToken.equalsIgnoreCase(keys[keyIdx])) {
-						found = true;
-						break;
-					}
-				}
-				if (found)
-					score += 1.1;
+				
 			}
 			if (relevant) {
 				score += 1.0 / foodItem.getLongDescription().length();
