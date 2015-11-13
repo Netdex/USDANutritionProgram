@@ -27,7 +27,7 @@ import parser.util.DoublyLinkedList;
  *
  */
 public class Parser {
-
+	//lol
 	// Various maps for storing indexes to temporary data
 	private BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
 

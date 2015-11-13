@@ -67,8 +67,8 @@ public class AddFoodPanel extends JPanel {
 		JPanel nameLine = new JPanel(new BorderLayout());
 		nameLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-		nameLine.add(new CustomizedJTextArea(
-				"What is the name of your new food?"), BorderLayout.CENTER);
+		nameLine.add(new CustomizedJTextArea("What is the name of your new food?"),
+				BorderLayout.CENTER);
 
 		nameEntry = new JTextField("Name");
 		// TODO set these to change colour on click (ugh!) and also make text
@@ -82,10 +82,10 @@ public class AddFoodPanel extends JPanel {
 		JPanel commonNameLine = new JPanel(new BorderLayout());
 		commonNameLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-		commonNameLine
-				.add(new CustomizedJTextArea(
+		commonNameLine.add(
+				new CustomizedJTextArea(
 						"What are some of the other names for your new food? Leave blank if none."),
-						BorderLayout.CENTER);
+				BorderLayout.CENTER);
 
 		commonNameEntry = new JTextField("Common Name");
 		commonNameEntry.setFont(GUI.CONTENT_FONT);
@@ -97,14 +97,13 @@ public class AddFoodPanel extends JPanel {
 		JPanel foodGroupLine = new JPanel(new BorderLayout());
 		foodGroupLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-		foodGroupLine.add(new CustomizedJTextArea(
-				"What is the food group of your new food?"),
+		foodGroupLine.add(new CustomizedJTextArea("What is the food group of your new food?"),
 				BorderLayout.CENTER);
 
 		DataManager.getInstance().registerSyncEvent(new Runnable() {
 			public void run() {
-				foodGroupEntry = new JComboBox<FoodGroup>(DataManager
-						.getInstance().getFoodGroups());
+				foodGroupEntry = new JComboBox<FoodGroup>(
+						DataManager.getInstance().getFoodGroups());
 				foodGroupEntry.setFont(GUI.CONTENT_FONT);
 				foodGroupEntry.setPreferredSize(new Dimension(175, 50));
 				foodGroupLine.add(foodGroupEntry, BorderLayout.EAST);
@@ -114,8 +113,8 @@ public class AddFoodPanel extends JPanel {
 				JPanel manufacNameLine = new JPanel(new BorderLayout());
 				manufacNameLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-				manufacNameLine.add(new CustomizedJTextArea(
-						"What is the manufacturer name of your new food?"),
+				manufacNameLine.add(
+						new CustomizedJTextArea("What is the manufacturer name of your new food?"),
 						BorderLayout.CENTER);
 
 				manufacNameEntry = new JTextField("Manufacturer Name");
@@ -128,8 +127,8 @@ public class AddFoodPanel extends JPanel {
 				JPanel weightUnitLine = new JPanel(new BorderLayout());
 				weightUnitLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-				weightUnitLine.add(new CustomizedJTextArea(
-						"What is the unit used to measure your new food?"),
+				weightUnitLine.add(
+						new CustomizedJTextArea("What is the unit used to measure your new food?"),
 						BorderLayout.CENTER);
 
 				weightUnitEntry = new JTextField("Unit");
@@ -142,13 +141,12 @@ public class AddFoodPanel extends JPanel {
 				JPanel gramsPerLine = new JPanel(new BorderLayout());
 				gramsPerLine.setBackground(GUI.BACKGROUND_COLOUR);
 
-				gramsPerLine
-						.add(new CustomizedJTextArea(
+				gramsPerLine.add(
+						new CustomizedJTextArea(
 								"How many grams are in each unit (as indicated above)?"),
-								BorderLayout.CENTER);
+						BorderLayout.CENTER);
 
-				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1, 0, 999,
-						1));
+				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1, 0, 999, 1));
 				gramsPerEntry.setFont(GUI.CONTENT_FONT);
 				gramsPerEntry.setPreferredSize(new Dimension(175, 50));
 				gramsPerLine.add(gramsPerEntry, BorderLayout.EAST);
@@ -164,11 +162,10 @@ public class AddFoodPanel extends JPanel {
 				nutrEntryPrompt.setPreferredSize(nutrSize);
 				nutrEntryPrompt.setMaximumSize(nutrSize);
 				contentPanel.add(nutrEntryPrompt);
-				
+
 				JPanel nutrientAdd = new JPanel();
 				nutrientAdd.setOpaque(false);
-				nutrientAdd.setLayout(new BoxLayout(nutrientAdd,
-						BoxLayout.Y_AXIS));
+				nutrientAdd.setLayout(new BoxLayout(nutrientAdd, BoxLayout.Y_AXIS));
 
 				Nutrient[] listOfNutrients = { new Nutrient() };
 				DoublyLinkedList<NutrientEntryLine> nutrientEntries = new DoublyLinkedList<NutrientEntryLine>();
@@ -186,12 +183,9 @@ public class AddFoodPanel extends JPanel {
 		contentScrollbar = new JScrollPane(contentPanel);
 		contentScrollbar.createVerticalScrollBar();
 		contentScrollbar.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
-		contentScrollbar
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		contentScrollbar.getVerticalScrollBar().setUnitIncrement(
-				GUI.SCROLL_SPEED);
-		contentScrollbar.getVerticalScrollBar().setBackground(
-				GUI.BACKGROUND_COLOUR);
+		contentScrollbar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		contentScrollbar.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
+		contentScrollbar.getVerticalScrollBar().setBackground(GUI.BACKGROUND_COLOUR);
 		contentScrollbar.setWheelScrollingEnabled(true);
 		contentScrollbar.setHorizontalScrollBar(null);
 
@@ -230,19 +224,20 @@ public class AddFoodPanel extends JPanel {
 			super(new BorderLayout());
 			this.setBackground(GUI.BACKGROUND_COLOUR);
 
-			this.add(new CustomizedJTextArea(nutrient.getNutrientInfo()
-					.getNutrientName()), BorderLayout.WEST);
+			add(new CustomizedJTextArea(nutrient.getNutrientInfo().getNutrientName()),
+					BorderLayout.WEST);
 
 			nutrientUnit = new JTextField("Unit");
 			nutrientUnit.setFont(GUI.CONTENT_FONT);
 			nutrientUnit.setOpaque(false);
 			nutrientUnit.setPreferredSize(new Dimension(75, 50));
-			this.add(nutrientUnit, BorderLayout.CENTER);
+			add(nutrientUnit, BorderLayout.CENTER);
 
 			amount = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 1));
 			amount.setFont(GUI.CONTENT_FONT);
 			amount.setOpaque(false);
-			this.add(amount, BorderLayout.WEST);
+			add(amount, BorderLayout.WEST);
+
 		}
 
 		private JTextField getNutrientUnit() {
@@ -252,8 +247,7 @@ public class AddFoodPanel extends JPanel {
 		private JSpinner getAmount() {
 			return amount;
 		}
-		
-		
+
 	}
 
 	class SaveButtonActionListener implements ActionListener {
