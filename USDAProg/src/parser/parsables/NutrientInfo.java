@@ -1,5 +1,6 @@
 package parser.parsables;
 
+import parser.Formattable;
 import parser.InvalidParseDataException;
 
 /**
@@ -9,10 +10,36 @@ import parser.InvalidParseDataException;
  * @author Gordon Guan
  *
  */
-public class NutrientInfo implements Parsable<NutrientInfo> {
+public class NutrientInfo implements Parsable<NutrientInfo>, Formattable {
 
 	public static final int PARSE_DATA_LENGTH = 6;
-
+	
+	@Override
+	public NutrientInfo parse(String[] data) throws InvalidParseDataException {
+		if (data.length != PARSE_DATA_LENGTH)
+			throw new InvalidParseDataException();
+		nutrNo = Integer.parseInt(data[0]);
+		unit = data[1];
+		tagName = data[2];
+		nutrDesc = data[3];
+		numDec = Integer.parseInt(data[4]);
+//		srOrder = Integer.parseInt(data[5]);
+		return this;
+	}
+	
+	@Override
+	public String getFormat() {
+		return Formattable.getFileFormatted(
+				"~" + String.format("%03d", nutrNo) + "~",
+				"~" + unit + "~",
+				"~" + tagName + "~",
+				"~" + nutrDesc + "~",
+				numDec + "",
+				"~~"
+				);
+				
+	}
+	
 	/**
 	 * Nutrient Number
 	 */
@@ -38,19 +65,7 @@ public class NutrientInfo implements Parsable<NutrientInfo> {
 	 */
 	private int srOrder;
 
-	@Override
-	public NutrientInfo parse(String[] data) throws InvalidParseDataException {
-		if (data.length != PARSE_DATA_LENGTH)
-			throw new InvalidParseDataException();
-		nutrNo = Integer.parseInt(data[0]);
-		unit = data[1];
-		tagName = data[2];
-		nutrDesc = data[3];
-		numDec = Integer.parseInt(data[4]);
-		srOrder = Integer.parseInt(data[5]);
-		return this;
-	}
-
+	
 	public NutrientInfo() {
 
 	}
@@ -107,4 +122,6 @@ public class NutrientInfo implements Parsable<NutrientInfo> {
 	public String toString() {
 		return this.getNutrientName();
 	}
+
+	
 }

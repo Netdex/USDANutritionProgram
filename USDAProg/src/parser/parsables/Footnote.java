@@ -8,8 +8,11 @@ public class Footnote implements Parsable<Footnote>, Formattable{
 	public static final int PARSE_DATA_LENGTH = 5;
 	@Override
 	public String getFormat() {
-		// TODO Auto-generated method stub
-		return null;
+		return Formattable.getFileFormatted(
+				String.format("~%05d~", ndbNo),
+				String.format("~%02d~", seqNo)
+//				String.format(, args)
+				);
 	}
 	@Override
 	public Footnote parse(String[] data) throws InvalidParseDataException {
