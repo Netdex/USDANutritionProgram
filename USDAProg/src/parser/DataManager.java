@@ -16,6 +16,7 @@ import parser.parsables.LanguaLGroup;
 import parser.parsables.NutrientData;
 import parser.util.BinaryTreeMap;
 import parser.util.DoublyLinkedList;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class DataManager {
 
@@ -65,8 +66,11 @@ public class DataManager {
 		hooks.add(r);
 	}
 
+	public int getUnusedNDBNumber(){
+		return -1;
+	}
+	
 	public void addFoodItem(FoodItem fi) {
-		FoodGroup fg = fi.getFoodGroup();
 		NutrientData nd = fi.getNutrientData();
 		Footnote fn = fi.getFootnotes();
 		LanguaLGroup lg = fi.getLangualGroup();
@@ -74,20 +78,37 @@ public class DataManager {
 
 		try {
 			PrintStream ps_foodItem = new PrintStream(new FileOutputStream(files[0], true));
-			PrintStream ps_foodGroup = new PrintStream(new FileOutputStream(files[3], true));
-			PrintStream ps_nutrientData = new PrintStream(new FileOutputStream(files[1], true));
+
+			
 			PrintStream ps_nutrientDesc = new PrintStream(new FileOutputStream(files[2], true));
 			PrintStream ps_footNotes = new PrintStream(new FileOutputStream(files[7], true));
 			PrintStream ps_languals = new PrintStream(new FileOutputStream(files[5], true));
 			PrintStream ps_langualDesc = new PrintStream(new FileOutputStream(files[6], true));
 			PrintStream ps_weightInfo = new PrintStream(new FileOutputStream(files[4], true));
 			ps_foodItem.println("");
-			
+
 		} catch (Exception e) {
 
 		}
 	}
 
+	public void addNutrientData(NutrientData nd){
+		try{
+			PrintStream ps_nutrientData = new PrintStream(new FileOutputStream(files[1], true));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	public void addFoodGroup(FoodGroup fg) {
+		try {
+			PrintStream ps_foodGroup = new PrintStream(new FileOutputStream(files[3], true));
+			ps_foodGroup.println(fg.getFormat());
+			ps_foodGroup.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public FoodGroup[] getFoodGroups() {
 		return parser.getFoodGroups().toArray(FoodGroup.SAMPLE);
 	}
@@ -122,7 +143,8 @@ public class DataManager {
 			boolean relevant = false;
 			for (int keyIdx = 0; keyIdx < Math.min(keys.length, 5); keyIdx++) {
 				// Check if the phrase contains it
-				if (foodItem.getLongDescription().toLowerCase().contains(keys[keyIdx].toLowerCase())) {
+				if (foodItem.getLongDescription().toLowerCase()
+						.contains(keys[keyIdx].toLowerCase())) {
 					score += 0.5;
 					relevant = true;
 				}
@@ -132,17 +154,19 @@ public class DataManager {
 					score += 1;
 					relevant = true;
 				}
-				
-				if(foodItem.getLongDescription().toLowerCase().startsWith(keys[keyIdx].toLowerCase())){
+
+				if (foodItem.getLongDescription().toLowerCase()
+						.startsWith(keys[keyIdx].toLowerCase())) {
 					score += 0.2;
 					relevant = true;
 				}
-				
+
 				// Check for whole tokens of the key
 				boolean found = false;
 				for (int i = 0; i < tokens.length; i++) {
 					String currentToken = tokens[i];
-					if(tokens[i].toLowerCase().endsWith("s") && !keys[keyIdx].toLowerCase().endsWith("s")){
+					if (tokens[i].toLowerCase().endsWith("s")
+							&& !keys[keyIdx].toLowerCase().endsWith("s")) {
 						currentToken = currentToken.substring(0, currentToken.length() - 1);
 					}
 					if (currentToken.equalsIgnoreCase(keys[keyIdx])) {

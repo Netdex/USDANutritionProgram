@@ -22,6 +22,7 @@ public class NutrientData implements Formattable {
 		}
 		return str;
 	}
+	
 	public NutrientData() {
 
 	}

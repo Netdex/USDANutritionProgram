@@ -41,11 +41,6 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
 		return false;
 	}
 
-	public Formattable[] getFormattableData() {
-		return new Formattable[] { this, nutrientData, foodGroup, foodWeight,
-				langualGroup, footnotes };
-	}
-
 	@Override
 	public FoodItem parse(String[] data) throws InvalidParseDataException {
 		if (data.length != PARSE_DATA_LENGTH)

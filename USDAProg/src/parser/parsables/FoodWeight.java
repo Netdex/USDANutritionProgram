@@ -5,6 +5,7 @@ import parser.InvalidParseDataException;
 
 /**
  * A structure storing weight information of this FoodItem
+ * 
  * @author Gordon Guan
  *
  */
@@ -17,18 +18,20 @@ public class FoodWeight implements Parsable<FoodWeight>, Formattable {
 		if (data.length != PARSE_DATA_LENGTH)
 			throw new InvalidParseDataException();
 		ndbNo = Integer.parseInt(data[0]);
-//		seq = Integer.parseInt(data[1]);
+		// seq = Integer.parseInt(data[1]);
 		amount = Double.parseDouble(data[2]);
 		desc = data[3];
 		gramWeight = Double.parseDouble(data[4]);
-//		numDataPts = data[5].equals("") ? 0 : Integer.parseInt(data[5]);
-//		stdDev = data[6].equals("") ? 0 : Double.parseDouble(data[6]);
+		// numDataPts = data[5].equals("") ? 0 : Integer.parseInt(data[5]);
+		// stdDev = data[6].equals("") ? 0 : Double.parseDouble(data[6]);
 		return this;
 	}
+
 	@Override
 	public String getFormat() {
-		// TODO Auto-generated method stub
-		return null;
+		return Formattable.getFileFormatted(String.format("~%05d~", ndbNo), "0", amount + "", "~"
+				+ desc + "~", gramWeight + "", "0", "0");
+
 	}
 
 	private int ndbNo;
@@ -95,8 +98,8 @@ public class FoodWeight implements Parsable<FoodWeight>, Formattable {
 	public double getStdDev() {
 		return stdDev;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return this.getAmount() + " " + this.getDesc();
 	}
 }
