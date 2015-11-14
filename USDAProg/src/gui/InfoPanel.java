@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
@@ -23,7 +22,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -88,6 +86,7 @@ public class InfoPanel extends JPanel {
 					48, 48, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 		}
+		moreInfo.setFocusable(false);
 		moreInfo.addActionListener(new MoreInfoButtonListener());
 		moreInfo.setBackground(GUI.BACKGROUND_COLOUR);
 		header.add(moreInfo, BorderLayout.EAST);
@@ -267,6 +266,7 @@ public class InfoPanel extends JPanel {
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.setFont(GUI.CONTENT_FONT);
 		amountEntry.setAlignmentX(LEFT_ALIGNMENT);
+		amountEntry.setFocusable(false);
 		amountEntry.addChangeListener(new AmountEntryListener());
 		amountEntryLine.add(amountEntry);
 
@@ -402,6 +402,7 @@ public class InfoPanel extends JPanel {
 					+ nutrient.getNutrientInfo().getUnit() + ")</html>");
 			nameLabel.setFont(GUI.CONTENT_FONT);
 			nameLabel.setOpaque(false);
+			nameLabel.setFocusable(false);
 			nameLabel.setPreferredSize(new Dimension(300, 40));
 			this.add(nameLabel, BorderLayout.WEST);
 

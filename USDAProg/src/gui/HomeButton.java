@@ -25,6 +25,7 @@ public class HomeButton extends JButton {
 		}
 		this.manager = manager;
 		this.setBackground(GUI.BACKGROUND_COLOUR);
+		this.setFocusable(false);
 		addActionListener(new HomeButtonActionListener());
 	}
 

@@ -44,13 +44,14 @@ public class GroupPanel extends JPanel {
 		BoxLayout groupsLayout = new BoxLayout(groupsList, BoxLayout.Y_AXIS);
 		groupsList.setLayout(groupsLayout);
 		groupsList.setBackground(GUI.BACKGROUND_COLOUR);
-		
-		Runnable r = new Runnable(){
-			public void run(){
-				FoodGroup[] foodGroups = DataManager.getInstance().getFoodGroups();
-				Arrays.sort(foodGroups, new Comparator<FoodGroup>(){
+
+		Runnable r = new Runnable() {
+			public void run() {
+				FoodGroup[] foodGroups = DataManager.getInstance()
+						.getFoodGroups();
+				Arrays.sort(foodGroups, new Comparator<FoodGroup>() {
 					@Override
-					public int compare(FoodGroup a, FoodGroup b){
+					public int compare(FoodGroup a, FoodGroup b) {
 						return a.getDescription().compareTo(b.getDescription());
 					}
 				});
@@ -85,6 +86,9 @@ public class GroupPanel extends JPanel {
 			this.group = foodGroup;
 			this.addActionListener(new FoodGroupButtonListener());
 			this.setMaximumSize(new Dimension(460, 128));
+			this.setFocusable(false);
+			this.setBorder(GUI.BUTTON_BORDER);
+
 			JLabel name = new JLabel(group.getDescription());
 			name.setFont(GUI.SUBTITLE_FONT);
 			this.setBackground(GUI.ACCENT_COLOUR);

@@ -1,7 +1,6 @@
 
 package parser.parsables;
 
-import parser.Formattable;
 import parser.util.DoublyLinkedList;
 
 /**

@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -37,77 +36,15 @@ public class HomePanel extends JPanel {
 		JPanel buttonQuad = new JPanel(new GridLayout(3, 2, 8, 8));
 		buttonQuad.setOpaque(false);
 
-		// search
-		JButton searchButton = new JButton();
-		try {
-			searchButton.setIcon(new ImageIcon(ImageIO.read(
-					new File("images/searchButton.png")).getScaledInstance(200,
-					200, Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		searchButton.setBackground(GUI.BACKGROUND_COLOUR);
-		searchButton.setBorder(GUI.EMPTY_BORDER);
-
-		// group
-		JButton groupButton = new JButton();
-		try {
-			groupButton.setIcon(new ImageIcon(ImageIO.read(
-					new File("images/groupButton.png")).getScaledInstance(200,
-					200, Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		groupButton.setBackground(GUI.BACKGROUND_COLOUR);
-		groupButton.setBorder(GUI.EMPTY_BORDER);
-
-		// add
-		JButton addFoodButton = new JButton();
-		try {
-			addFoodButton = new JButton(new ImageIcon(ImageIO.read(
-					new File("images/addFoodButton.png")).getScaledInstance(
-					200, 200, Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		addFoodButton.setBackground(GUI.BACKGROUND_COLOUR);
-		addFoodButton.setBorder(GUI.EMPTY_BORDER);
-
-		// help
-		JButton helpButton = new JButton();
-		try {
-			helpButton = new JButton(new ImageIcon(ImageIO.read(
-					new File("images/helpButton.png")).getScaledInstance(200,
-					200, Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		helpButton.setBackground(GUI.BACKGROUND_COLOUR);
-		helpButton.setBorder(GUI.EMPTY_BORDER);
-
-		// quit
-		JButton quitButton = new JButton();
-		try {
-			quitButton = new JButton(new ImageIcon(ImageIO.read(
-					new File("images/quitButton.png")).getScaledInstance(200,
-					200, Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		quitButton.setBackground(GUI.BACKGROUND_COLOUR);
-		quitButton.setBorder(GUI.EMPTY_BORDER);
-
-		// about
-		JButton aboutButton = new JButton();
-		try {
-			aboutButton = new JButton(new ImageIcon(ImageIO.read(
-					new File("images/moreInfoButton.png")).getScaledInstance(
-					200, 200, Image.SCALE_SMOOTH)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		aboutButton.setBackground(GUI.BACKGROUND_COLOUR);
-		aboutButton.setBorder(GUI.EMPTY_BORDER);
+		// creates six buttons
+		HomePanelNavButton searchButton = new HomePanelNavButton("searchButton");
+		HomePanelNavButton groupButton = new HomePanelNavButton("groupButton");
+		HomePanelNavButton addFoodButton = new HomePanelNavButton(
+				"addFoodButton");
+		HomePanelNavButton helpButton = new HomePanelNavButton("helpButton");
+		HomePanelNavButton quitButton = new HomePanelNavButton("quitButton");
+		HomePanelNavButton aboutButton = new HomePanelNavButton(
+				"moreInfoButton");
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
@@ -127,6 +64,22 @@ public class HomePanel extends JPanel {
 		bannerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(buttonQuad);
 		aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+	}
+
+	class HomePanelNavButton extends JButton {
+		private HomePanelNavButton(String buttonName) {
+			super();
+			try {
+				this.setIcon(new ImageIcon(ImageIO.read(
+						new File("images/" + buttonName + ".png"))
+						.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			this.setFocusable(false);
+			this.setBackground(GUI.BACKGROUND_COLOUR);
+			this.setBorder(GUI.EMPTY_BORDER);
+		}
 	}
 
 	class SearchButtonListener implements ActionListener {

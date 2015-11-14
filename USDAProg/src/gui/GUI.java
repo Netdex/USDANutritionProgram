@@ -8,7 +8,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import parser.DataManager;
@@ -19,10 +18,9 @@ public class GUI extends JFrame {
 	public static final ConfigurationManager CONFIG = new ConfigurationManager(
 			new File("config.prop"));
 
-	public final static Color BACKGROUND_COLOUR = new Color(255, 255, 255);
-//	public final static Color HEADER_COLOUR = new Color(192, 192, 192);
+	public final static Color BACKGROUND_COLOUR = Color.WHITE;
+	public final static Color HEADER_COLOUR = new Color(7517933);
 	public final static Color ACCENT_COLOUR = new Color(6084351);
-	public final static Color HEADER_COLOUR = ACCENT_COLOUR;
 
 	protected static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);
 	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
@@ -34,6 +32,9 @@ public class GUI extends JFrame {
 
 	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
 			.createEmptyBorder();
+	protected static final javax.swing.border.Border BUTTON_BORDER = BorderFactory
+			.createLineBorder(BACKGROUND_COLOUR, 1, true);
+
 	protected static final byte SCROLL_SPEED = 20;
 
 	protected static DataManager dataManager;
@@ -78,8 +79,8 @@ public class GUI extends JFrame {
 	public static void main(String[] args) throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {
-		UIManager
-				.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+		// UIManager
+		// .setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 		new GUI();
 	}
 }

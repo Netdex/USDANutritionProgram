@@ -119,7 +119,8 @@ public class PanelManager extends JPanel {
 	public void paint(Graphics gr) {
 		super.paint(gr);
 		Graphics2D g = (Graphics2D) gr;
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		// For drawing progress bars and stuff
 		if (LOADING_PERCENTAGE != -1) {
@@ -137,27 +138,32 @@ public class PanelManager extends JPanel {
 			g.drawRect(x, y, width, height);
 
 			try {
-				g.setColor(new Color(255 - (int) (LOADING_PERCENTAGE / 100.0 * 1024) % 255,
+				g.setColor(new Color(
+						255 - (int) (LOADING_PERCENTAGE / 100.0 * 1024) % 255,
 						255 - (int) (LOADING_PERCENTAGE / 100.0 * 2000) % 255,
 						(int) (LOADING_PERCENTAGE / 100.0 * 4000) % 255));
 			} catch (Exception e) {
 				System.err.println(e.getMessage());
 			}
-			g.fillArc(x + width / 2 - size, y + height / 2 - size + loadOffset, size * 2, size * 2,
-					0, (int) (LOADING_PERCENTAGE / 100.0 * 360));
+			g.fillArc(x + width / 2 - size, y + height / 2 - size + loadOffset,
+					size * 2, size * 2, 0,
+					(int) (LOADING_PERCENTAGE / 100.0 * 360));
 			g.setColor(Color.WHITE);
-			g.fillOval(x + width / 2 - size / 2, y + height / 2 - size / 2 + loadOffset, size, size);
+			g.fillOval(x + width / 2 - size / 2, y + height / 2 - size / 2
+					+ loadOffset, size, size);
 			g.setColor(Color.DARK_GRAY);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 36));
 			String perc = LOADING_PERCENTAGE + "%";
-			g.drawString(perc, x + width / 2 - g.getFontMetrics().stringWidth(perc) / 2, y + height
-					/ 2 + g.getFontMetrics().getAscent() / 2);
+			g.drawString(perc,
+					x + width / 2 - g.getFontMetrics().stringWidth(perc) / 2, y
+							+ height / 2 + g.getFontMetrics().getAscent() / 2);
 			g.setColor(Color.BLUE);
 			g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
 			g.drawString("Loading database...", x + 10, y + 20);
 			g.drawString("Loaded "
-					+ GUI.dataManager.getParser().getFoodItemMap().getInternalTree().size()
-					+ " food(s)", x + 10, y + height - 10);
+					+ GUI.dataManager.getParser().getFoodItemMap()
+							.getInternalTree().size() + " food(s)", x + 10, y
+					+ height - 10);
 		}
 	}
 }

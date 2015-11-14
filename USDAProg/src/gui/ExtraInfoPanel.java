@@ -26,7 +26,7 @@ public class ExtraInfoPanel extends JPanel {
 		JPanel header = new JPanel();
 		header.setBackground(GUI.HEADER_COLOUR);
 		header.setLayout(new BorderLayout());
-		
+
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		buttonPanel.setBackground(GUI.HEADER_COLOUR);
 		buttonPanel.add(new HomeButton(manager));

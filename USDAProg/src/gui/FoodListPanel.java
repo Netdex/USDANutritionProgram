@@ -92,6 +92,8 @@ public class FoodListPanel extends JPanel {
 			this.addActionListener(new FoodButtonListener());
 			this.setLayout(new BorderLayout());
 			this.setMaximumSize(new Dimension(460, Short.MAX_VALUE));
+			this.setFocusable(false);
+			this.setBorder(GUI.BUTTON_BORDER);
 
 			JLabel foodDescription = new JLabel("<html>"
 					+ food.getLongDescription() + "</html>");

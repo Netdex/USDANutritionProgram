@@ -12,11 +12,9 @@ import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
 import parser.parsables.FoodWeight;
 import parser.parsables.Footnote;
-import parser.parsables.LanguaLGroup;
 import parser.parsables.NutrientData;
 import parser.util.BinaryTreeMap;
 import parser.util.DoublyLinkedList;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class DataManager {
 
