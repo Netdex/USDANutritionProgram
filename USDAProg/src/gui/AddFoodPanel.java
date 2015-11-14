@@ -21,6 +21,7 @@ import javax.swing.SpinnerNumberModel;
 
 import parser.DataManager;
 import parser.parsables.FoodGroup;
+import parser.parsables.FoodItem;
 import parser.parsables.Nutrient;
 import parser.util.DoublyLinkedList;
 
@@ -168,7 +169,8 @@ public class AddFoodPanel extends JPanel {
 				nutrientAdd.setLayout(new BoxLayout(nutrientAdd,
 						BoxLayout.Y_AXIS));
 
-				Nutrient[] listOfNutrients = DataManager.getInstance().getNutrients();
+				Nutrient[] listOfNutrients = DataManager.getInstance()
+						.getNutrients();
 				DoublyLinkedList<NutrientEntryLine> nutrientEntries = new DoublyLinkedList<NutrientEntryLine>();
 
 				for (Nutrient nutrient : listOfNutrients) {
@@ -231,14 +233,13 @@ public class AddFoodPanel extends JPanel {
 	class NutrientEntryLine extends JPanel {
 
 		private JTextField nutrientUnit;
-		private JSpinner amount; // TODO remember to multiply amount by 100
-									// before giving it to Gordon
+		private JSpinner amount;
 
 		private NutrientEntryLine(Nutrient nutrient) {
 			super(new BorderLayout());
 			this.setBackground(GUI.BACKGROUND_COLOUR);
 
-			add(new CustomizedTextArea(nutrient.getNutrientInfo()
+			this.add(new CustomizedTextArea(nutrient.getNutrientInfo()
 					.getNutrientName()), BorderLayout.WEST);
 
 			nutrientUnit = new JTextField("Unit");
@@ -247,7 +248,7 @@ public class AddFoodPanel extends JPanel {
 			nutrientUnit.setForeground(GUI.CONTENT_COLOUR);
 			nutrientUnit.setBackground(GUI.BACKGROUND_COLOUR);
 			nutrientUnit.setPreferredSize(new Dimension(75, 50));
-			add(nutrientUnit, BorderLayout.CENTER);
+			this.add(nutrientUnit, BorderLayout.CENTER);
 
 			amount = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 1));
 			amount.setFont(GUI.CONTENT_FONT);
@@ -255,16 +256,19 @@ public class AddFoodPanel extends JPanel {
 			amount.setFocusable(false);
 			amount.setForeground(GUI.CONTENT_COLOUR);
 			amount.setBackground(GUI.BACKGROUND_COLOUR);
-			add(amount, BorderLayout.WEST);
+			this.add(amount, BorderLayout.EAST);
+
+			System.out.println("added line "
+					+ nutrient.getNutrientInfo().getNutrientName());
 
 		}
 
-		private JTextField getNutrientUnit() {
-			return nutrientUnit;
+		private String getNutrientUnit() {
+			return nutrientUnit.getText().trim();
 		}
 
-		private JSpinner getAmount() {
-			return amount;
+		private double getAmountForEntry() {
+			return Double.parseDouble(amount.getModel().getValue().toString()) * 100.0;
 		}
 
 	}
@@ -273,11 +277,9 @@ public class AddFoodPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("method not implemented. trying to add food.");
-
-			// DataManager.getInstance().addFoodItem(new FoodItem()); // TODO
-			// this
-			// "datamanager getunusedndbnumber"
+			 DataManager.getInstance().addFoodItem(new FoodItem()); // TODO
+//			 this
+//			 "datamanager getunusedndbnumber"
 			// TODO add something to end of footnotes indicating it was added by
 			// user
 
