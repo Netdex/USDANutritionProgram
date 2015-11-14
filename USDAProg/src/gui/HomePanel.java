@@ -44,7 +44,7 @@ public class HomePanel extends JPanel {
 //		HomePanelNavButton helpButton = new HomePanelNavButton("helpButton");
 //		HomePanelNavButton quitButton = new HomePanelNavButton("quitButton");
 		HomePanelNavButton aboutButton = new HomePanelNavButton(
-				"moreInfoButton");
+				"aboutButton");
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);

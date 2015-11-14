@@ -30,7 +30,8 @@ public class BackButton extends JButton {
 		}
 		this.setSize(new Dimension(48, 48));
 		this.setFocusable(false);
-		this.setBackground(GUI.BACKGROUND_COLOUR);
+		this.setBackground(GUI.HEADER_COLOUR);
+		this.setBorder(GUI.EMPTY_BORDER);
 		this.addActionListener(new BackButtonActionListener());
 	}
 

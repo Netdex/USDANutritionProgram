@@ -28,7 +28,7 @@ public class ImageExtract {
 			.createLineBorder(GUI.ACCENT_COLOUR, 3);
 
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
-	private static final String ADDITIONAL_KEYWORD = "best food";
+	private static final String ADDITIONAL_KEYWORD = "food";
 	private static int IMAGE_WIDTH = 400;
 
 	public static void injectImage(JLabel imageLabel, String key) {

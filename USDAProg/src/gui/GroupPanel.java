@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -20,8 +19,9 @@ import parser.parsables.FoodGroup;
 
 public class GroupPanel extends JPanel {
 
-	PanelManager manager;
-	ArrayList<FoodGroupButton> foodGroupButtons;
+	private PanelManager manager;
+
+	private JScrollPane groupsScrollable;
 
 	public GroupPanel(PanelManager manager) {
 		super();
@@ -35,7 +35,8 @@ public class GroupPanel extends JPanel {
 
 		JLabel title = new JLabel("Food Groups");
 		title.setFont(GUI.TITLE_FONT);
-		title.setBackground(GUI.HEADER_COLOUR);
+		title.setForeground(GUI.TITLE_COLOUR);
+		title.setOpaque(false);
 		header.add(title);
 		header.setBackground(GUI.HEADER_COLOUR);
 		this.add(header, BorderLayout.NORTH);
@@ -64,7 +65,7 @@ public class GroupPanel extends JPanel {
 		};
 		DataManager.getInstance().registerSyncEvent(r);
 
-		JScrollPane groupsScrollable = new JScrollPane(groupsList);
+		groupsScrollable = new JScrollPane(groupsList);
 		groupsScrollable.createVerticalScrollBar();
 		groupsScrollable.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
 		groupsScrollable
@@ -76,6 +77,10 @@ public class GroupPanel extends JPanel {
 		groupsScrollable.setWheelScrollingEnabled(true);
 
 		this.add(groupsScrollable, BorderLayout.CENTER);
+	}
+
+	protected void resetScroll() {
+		groupsScrollable.getVerticalScrollBar().setValue(0);
 	}
 
 	class FoodGroupButton extends JButton {
@@ -95,6 +100,7 @@ public class GroupPanel extends JPanel {
 			name.setAlignmentX(LEFT_ALIGNMENT);
 			name.setFocusable(false);
 			name.setOpaque(false);
+			name.setForeground(GUI.CONTENT_COLOUR);
 			this.add(name);
 		}
 

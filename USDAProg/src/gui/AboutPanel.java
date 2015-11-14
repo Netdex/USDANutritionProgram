@@ -29,7 +29,8 @@ public class AboutPanel extends JPanel {
 		header.setLayout(new FlowLayout(FlowLayout.LEFT));
 		header.add(new HomeButton(manager));
 
-		JLabel title = new JLabel("ABOUT");
+		JLabel title = new JLabel("About");
+		title.setForeground(GUI.TITLE_COLOUR);
 		title.setFont(GUI.TITLE_FONT);
 		title.setBackground(GUI.HEADER_COLOUR);
 		header.add(title);
@@ -50,6 +51,7 @@ public class AboutPanel extends JPanel {
 		JLabel info = new JLabel(
 				"<html>&copy; 2015 Gordon Guan and Vince Ou.<br>Created for ICS4UE Unit 3 Final Project.<br>Did you enjoy reading in this hideous font?</html>");
 		info.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+		info.setForeground(GUI.CONTENT_COLOUR);
 		info.setHorizontalAlignment(SwingConstants.RIGHT);
 		info.setBackground(GUI.BACKGROUND_COLOUR);
 		this.add(info, BorderLayout.SOUTH);

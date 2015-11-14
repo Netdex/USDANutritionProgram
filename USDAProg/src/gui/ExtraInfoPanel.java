@@ -33,9 +33,10 @@ public class ExtraInfoPanel extends JPanel {
 		buttonPanel.add(new BackButton(manager.getInfoPanel(), this.manager));
 		header.add(buttonPanel, BorderLayout.WEST);
 
-		JLabel titleNameLabel = new JLabel("Extra Info");
-		titleNameLabel.setFont(GUI.TITLE_FONT);
-		header.add(titleNameLabel, BorderLayout.CENTER);
+		JLabel titleLabel = new JLabel("Extra Info");
+		titleLabel.setFont(GUI.TITLE_FONT);
+		titleLabel.setForeground(GUI.TITLE_COLOUR);
+		header.add(titleLabel, BorderLayout.CENTER);
 		this.add(header, BorderLayout.NORTH);
 
 		contentPanel = new JPanel();
@@ -75,6 +76,8 @@ public class ExtraInfoPanel extends JPanel {
 		}
 		languaLsList.setMaximumSize(new Dimension(470, Short.MAX_VALUE));
 		languaLsList.setFont(GUI.CONTENT_FONT);
+		languaLsList.setForeground(GUI.CONTENT_COLOUR);
+		languaLsList.setBackground(GUI.BACKGROUND_COLOUR);
 		languaLsList.setAlignmentX(LEFT_ALIGNMENT);
 		languaLsList.setWrapStyleWord(true);
 		languaLsList.setLineWrap(true);
@@ -96,6 +99,8 @@ public class ExtraInfoPanel extends JPanel {
 		footnotes.setWrapStyleWord(true);
 		footnotes.setLineWrap(true);
 		footnotes.setEditable(false);
+		footnotes.setForeground(GUI.CONTENT_COLOUR);
+		footnotes.setBackground(GUI.BACKGROUND_COLOUR);
 		footnotes.setFocusable(false);
 		footnotes.setOpaque(false);
 		contentPanel.add(footnotes);

@@ -43,7 +43,7 @@ public class InfoPanel extends JPanel {
 	private JPanel header;
 	private JPanel contentPanel;
 	private JPanel nutritionPanel;
-	private JLabel titleNameLabel;
+	private JLabel titleLabel;
 	private JSpinner amountEntry;
 	private JScrollPane contentScrollbar;
 	private BackButton back;
@@ -74,10 +74,11 @@ public class InfoPanel extends JPanel {
 		buttonPanel.add(back);
 		header.add(buttonPanel, BorderLayout.WEST);
 
-		titleNameLabel = new JLabel();
-		titleNameLabel.setFont(GUI.TITLE_FONT);
-		titleNameLabel.setAlignmentX(CENTER_ALIGNMENT);
-		header.add(titleNameLabel, BorderLayout.CENTER);
+		titleLabel = new JLabel();
+		titleLabel.setFont(GUI.TITLE_FONT);
+		titleLabel.setForeground(GUI.TITLE_COLOUR);
+		titleLabel.setAlignmentX(CENTER_ALIGNMENT);
+		header.add(titleLabel, BorderLayout.CENTER);
 
 		JButton moreInfo = new JButton();
 		try {
@@ -88,7 +89,8 @@ public class InfoPanel extends JPanel {
 		}
 		moreInfo.setFocusable(false);
 		moreInfo.addActionListener(new MoreInfoButtonListener());
-		moreInfo.setBackground(GUI.BACKGROUND_COLOUR);
+		moreInfo.setBackground(GUI.HEADER_COLOUR);
+		moreInfo.setBorder(GUI.EMPTY_BORDER);
 		header.add(moreInfo, BorderLayout.EAST);
 		header.setBackground(GUI.HEADER_COLOUR);
 
@@ -150,7 +152,7 @@ public class InfoPanel extends JPanel {
 			titleName = longDesc.substring(0, firstSeparatorIndex);
 		}
 		titleName = toTitleCase(titleName);
-		titleNameLabel.setText(titleName);
+		titleLabel.setText(titleName);
 
 		// adds an image
 		JLabel imageLabel = new JLabel();
@@ -165,6 +167,7 @@ public class InfoPanel extends JPanel {
 		longName.setFont(GUI.SUBTITLE_FONT);
 		longName.setWrapStyleWord(true);
 		longName.setEditable(false);
+		longName.setForeground(GUI.CONTENT_COLOUR);
 		longName.setLineWrap(true);
 		longName.setForeground(GUI.ACCENT_COLOUR);
 		longName.setOpaque(false);
@@ -180,6 +183,7 @@ public class InfoPanel extends JPanel {
 			commonName.setFont(GUI.CONTENT_FONT);
 			commonName.setWrapStyleWord(true);
 			commonName.setEditable(false);
+			commonName.setForeground(GUI.CONTENT_COLOUR);
 			commonName.setOpaque(false);
 			commonName.setFocusable(false);
 			commonName.setLineWrap(true);
@@ -196,6 +200,7 @@ public class InfoPanel extends JPanel {
 		gramsOfNutrientLabel.setAlignmentX(LEFT_ALIGNMENT);
 		gramsOfNutrientLabel.setWrapStyleWord(true);
 		gramsOfNutrientLabel.setLineWrap(true);
+		gramsOfNutrientLabel.setForeground(GUI.CONTENT_COLOUR);
 		gramsOfNutrientLabel.setEditable(false);
 		gramsOfNutrientLabel.setFocusable(false);
 		gramsOfNutrientLabel.setOpaque(false);
@@ -212,6 +217,7 @@ public class InfoPanel extends JPanel {
 			scientificName.setLineWrap(true);
 			scientificName.setEditable(false);
 			scientificName.setFocusable(false);
+			scientificName.setForeground(GUI.CONTENT_COLOUR);
 			scientificName.setOpaque(false);
 			contentPanel.add(scientificName);
 		}
@@ -228,6 +234,7 @@ public class InfoPanel extends JPanel {
 			manufacName.setEditable(false);
 			manufacName.setFocusable(false);
 			manufacName.setOpaque(false);
+			manufacName.setForeground(GUI.CONTENT_COLOUR);
 			contentPanel.add(manufacName);
 		}
 
@@ -255,6 +262,7 @@ public class InfoPanel extends JPanel {
 		amountEntryPrompt.setAlignmentX(LEFT_ALIGNMENT);
 		amountEntryPrompt.setWrapStyleWord(true);
 		amountEntryPrompt.setLineWrap(true);
+		amountEntryPrompt.setForeground(GUI.CONTENT_COLOUR);
 		amountEntryPrompt.setEditable(false);
 		amountEntryPrompt.setFocusable(false);
 		amountEntryPrompt.setOpaque(false);
@@ -266,6 +274,8 @@ public class InfoPanel extends JPanel {
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.setFont(GUI.CONTENT_FONT);
 		amountEntry.setAlignmentX(LEFT_ALIGNMENT);
+		amountEntry.setForeground(GUI.CONTENT_COLOUR);
+		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.setFocusable(false);
 		amountEntry.addChangeListener(new AmountEntryListener());
 		amountEntryLine.add(amountEntry);
@@ -402,6 +412,7 @@ public class InfoPanel extends JPanel {
 					+ nutrient.getNutrientInfo().getUnit() + ")</html>");
 			nameLabel.setFont(GUI.CONTENT_FONT);
 			nameLabel.setOpaque(false);
+			nameLabel.setForeground(GUI.CONTENT_COLOUR);
 			nameLabel.setFocusable(false);
 			nameLabel.setPreferredSize(new Dimension(300, 40));
 			this.add(nameLabel, BorderLayout.WEST);
@@ -409,6 +420,7 @@ public class InfoPanel extends JPanel {
 			amount = new JLabel();
 			updateFields();
 			amount.setFont(GUI.CONTENT_FONT);
+			amount.setForeground(GUI.CONTENT_COLOUR);
 			amount.setOpaque(false);
 			this.add(amount, BorderLayout.EAST);
 		}

@@ -19,8 +19,10 @@ public class GUI extends JFrame {
 			new File("config.prop"));
 
 	public final static Color BACKGROUND_COLOUR = Color.WHITE;
-	public final static Color HEADER_COLOUR = new Color(7517933);
+	public final static Color HEADER_COLOUR = new Color(7517933);	
 	public final static Color ACCENT_COLOUR = new Color(6084351);
+	public final static Color TITLE_COLOUR = Color.WHITE;
+	public final static Color CONTENT_COLOUR = Color.BLACK;
 
 	protected static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);
 	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
@@ -45,7 +47,7 @@ public class GUI extends JFrame {
 		CONFIG.load();
 		// this doesn't actually set the correct height, but whatever.
 		this.setSize(480, 640);
-		this.setLocation(100, 100);
+		this.setLocation(300, 100);
 		try {
 			this.setIconImage(ImageIO.read(new File("images/windowIcon.png")));
 		} catch (IOException e) {

@@ -37,15 +37,16 @@ public class SearchPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.setBackground(GUI.BACKGROUND_COLOUR);
 
-		JPanel bannerTitlePanel = new JPanel();
-		bannerTitlePanel.setLayout(new FlowLayout());
-		bannerTitlePanel.setBackground(GUI.HEADER_COLOUR);
-		bannerTitlePanel.add(new HomeButton(manager));
+		JPanel titlePanel = new JPanel();
+		titlePanel.setLayout(new FlowLayout());
+		titlePanel.setBackground(GUI.HEADER_COLOUR);
+		titlePanel.add(new HomeButton(manager));
 
 		searchBox = new JTextField("Search...", 22);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 		searchBox.setBackground(Color.WHITE);
 		searchBox.setForeground(searchBoxGray);
+		searchBox.setBorder(GUI.EMPTY_BORDER);
 		searchBox.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (searchBox.getText().equals("Search...")) {
@@ -54,9 +55,9 @@ public class SearchPanel extends JPanel {
 				}
 			}
 		});
-		bannerTitlePanel.add(searchBox);
+		titlePanel.add(searchBox);
 		searchBox.addKeyListener(new SearchBoxActionListener());
-		this.add(bannerTitlePanel, BorderLayout.NORTH);
+		this.add(titlePanel, BorderLayout.NORTH);
 
 		resultsPanel = new JPanel();
 		resultsPanel.setBackground(GUI.BACKGROUND_COLOUR);
@@ -156,6 +157,7 @@ public class SearchPanel extends JPanel {
 					+ food.getLongDescription() + "</html>");
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
 			foodDescription.setForeground(Color.BLACK);
+			foodDescription.setForeground(GUI.CONTENT_COLOUR);
 			foodDescription.setOpaque(false);
 			this.add(foodDescription, BorderLayout.CENTER);
 
@@ -163,6 +165,7 @@ public class SearchPanel extends JPanel {
 					+ food.getFoodGroup().toString() + "</html>");
 			foodGroupName.setFont(GUI.CONTENT_FONT);
 			foodGroupName.setForeground(Color.BLACK);
+			foodGroupName.setForeground(GUI.CONTENT_COLOUR);
 			foodGroupName.setOpaque(false);
 			this.add(foodGroupName, BorderLayout.SOUTH);
 		}

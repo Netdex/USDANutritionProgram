@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -78,8 +77,9 @@ public class PanelManager extends JPanel {
 	}
 
 	protected void switchToGroup() {
-		if (LOADING_PERCENTAGE == -1)
-			cardLayoutManager.show(this, "group");
+		if (LOADING_PERCENTAGE == -1){
+			groupPanel.resetScroll();
+			cardLayoutManager.show(this, "group");}
 	}
 
 //	protected void switchToHelp() {

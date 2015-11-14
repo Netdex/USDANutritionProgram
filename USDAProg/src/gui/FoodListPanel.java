@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -39,6 +38,7 @@ public class FoodListPanel extends JPanel {
 		header.add(new HomeButton(manager));
 		header.add(new BackButton(manager.getGroupPanel(), manager));
 		title = new JLabel();
+		title.setForeground(GUI.TITLE_COLOUR);
 		title.setFont(GUI.SUBTITLE_FONT);
 		header.add(title);
 		this.add(header, BorderLayout.NORTH);
@@ -98,7 +98,7 @@ public class FoodListPanel extends JPanel {
 			JLabel foodDescription = new JLabel("<html>"
 					+ food.getLongDescription() + "</html>");
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
-			foodDescription.setForeground(Color.BLACK);
+			foodDescription.setForeground(GUI.CONTENT_COLOUR);
 			foodDescription.setOpaque(false);
 			this.add(foodDescription, BorderLayout.CENTER);
 		}
