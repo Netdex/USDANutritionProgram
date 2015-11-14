@@ -20,7 +20,7 @@ public class GUI extends JFrame {
 
 	public final static Color BACKGROUND_COLOUR = Color.WHITE;
 	public final static Color HEADER_COLOUR = new Color(7517933);	
-	public final static Color ACCENT_COLOUR = new Color(6084351);
+	public final static Color ACCENT_COLOUR = new Color(16120427);
 	public final static Color TITLE_COLOUR = Color.WHITE;
 	public final static Color CONTENT_COLOUR = Color.BLACK;
 

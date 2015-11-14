@@ -18,7 +18,7 @@ public class PanelManager extends JPanel {
 	private InfoPanel infoPanel;
 	private ExtraInfoPanel extraInfoPanel;
 	private AboutPanel aboutPanel;
-//	private HelpPanel helpPanel;
+	// private HelpPanel helpPanel;
 	private AddFoodPanel addFoodPanel;
 
 	CardLayout cardLayoutManager;
@@ -35,12 +35,12 @@ public class PanelManager extends JPanel {
 		aboutPanel = new AboutPanel(this);
 		infoPanel = new InfoPanel(searchPanel, this);
 		extraInfoPanel = new ExtraInfoPanel(this);
-//		try {
-//			helpPanel = new HelpPanel(this);
-//		} catch (IOException e) {
-//			System.err.println("failed to load image for help screen");
-//			e.printStackTrace();
-//		}
+		// try {
+		// helpPanel = new HelpPanel(this);
+		// } catch (IOException e) {
+		// System.err.println("failed to load image for help screen");
+		// e.printStackTrace();
+		// }
 		addFoodPanel = new AddFoodPanel(this);
 
 		this.add(homePanel, "home");
@@ -48,7 +48,7 @@ public class PanelManager extends JPanel {
 		this.add(foodListPanel, "foodList");
 		this.add(searchPanel, "search");
 		this.add(aboutPanel, "about");
-//		this.add(helpPanel, "help");
+		// this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
 		this.add(infoPanel, "foodInfo");
 		this.add(addFoodPanel, "addFood");
@@ -77,15 +77,16 @@ public class PanelManager extends JPanel {
 	}
 
 	protected void switchToGroup() {
-		if (LOADING_PERCENTAGE == -1){
+		if (LOADING_PERCENTAGE == -1) {
 			groupPanel.resetScroll();
-			cardLayoutManager.show(this, "group");}
+			cardLayoutManager.show(this, "group");
+		}
 	}
 
-//	protected void switchToHelp() {
-//		if (LOADING_PERCENTAGE == -1)
-//			cardLayoutManager.show(this, "help");
-//	}
+	// protected void switchToHelp() {
+	// if (LOADING_PERCENTAGE == -1)
+	// cardLayoutManager.show(this, "help");
+	// }
 
 	protected void switchToAbout() {
 		if (LOADING_PERCENTAGE == -1)
@@ -97,8 +98,10 @@ public class PanelManager extends JPanel {
 	}
 
 	protected void switchToAddFood() {
-		if (LOADING_PERCENTAGE == -1)
+		if (LOADING_PERCENTAGE == -1) {
 			cardLayoutManager.show(this, "addFood");
+			addFoodPanel.resetFields();
+		}
 	}
 
 	protected JPanel getGroupPanel() {

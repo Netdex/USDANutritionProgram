@@ -167,9 +167,8 @@ public class InfoPanel extends JPanel {
 		longName.setFont(GUI.SUBTITLE_FONT);
 		longName.setWrapStyleWord(true);
 		longName.setEditable(false);
-		longName.setForeground(GUI.CONTENT_COLOUR);
 		longName.setLineWrap(true);
-		longName.setForeground(GUI.ACCENT_COLOUR);
+		longName.setForeground(GUI.HEADER_COLOUR);
 		longName.setOpaque(false);
 		longName.setFocusable(false);
 		longName.setAlignmentX(LEFT_ALIGNMENT);

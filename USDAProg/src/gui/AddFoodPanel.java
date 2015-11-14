@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,10 +30,10 @@ public class AddFoodPanel extends JPanel {
 	private JPanel contentPanel;
 	private JScrollPane contentScrollbar;
 
-	private JTextField nameEntry;
-	private JTextField commonNameEntry;
-	private JTextField manufacNameEntry;
-	private JTextField weightUnitEntry;
+	private CustomTextEntryBox nameEntry;
+	private CustomTextEntryBox commonNameEntry;
+	private CustomTextEntryBox manufacNameEntry;
+	private CustomTextEntryBox weightUnitEntry;
 	private JSpinner gramsPerEntry;
 	private JComboBox<FoodGroup> foodGroupEntry;
 
@@ -59,7 +62,7 @@ public class AddFoodPanel extends JPanel {
 		contentPanel.setLayout(contentLayout);
 		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
 		contentPanel.setOpaque(false);
-		contentPanel.setMaximumSize(new Dimension(465, Short.MAX_VALUE));
+		contentPanel.setMaximumSize(new Dimension(400, Short.MAX_VALUE));
 
 		// longDesc
 		JPanel nameLine = new JPanel(new BorderLayout());
@@ -68,14 +71,7 @@ public class AddFoodPanel extends JPanel {
 		nameLine.add(new CustomizedTextArea(
 				"What is the name of your new food?"), BorderLayout.CENTER);
 
-		nameEntry = new JTextField("Name");
-		// TODO set these to change colour on click (ugh!) and also make text
-		// disappear on click
-		nameEntry.setFont(GUI.CONTENT_FONT);
-		nameEntry.setBackground(GUI.BACKGROUND_COLOUR);
-		nameEntry.setForeground(GUI.CONTENT_COLOUR);
-		nameEntry.setPreferredSize(new Dimension(175, 50));
-		nameEntry.setFocusable(false);
+		nameEntry = new CustomTextEntryBox("Name");
 		nameLine.add(nameEntry, BorderLayout.EAST);
 		contentPanel.add(nameLine);
 
@@ -88,12 +84,7 @@ public class AddFoodPanel extends JPanel {
 						"What are some of the other names for your new food? Leave blank if none."),
 						BorderLayout.CENTER);
 
-		commonNameEntry = new JTextField("Common Name");
-		commonNameEntry.setFont(GUI.CONTENT_FONT);
-		commonNameEntry.setBackground(GUI.BACKGROUND_COLOUR);
-		commonNameEntry.setForeground(GUI.CONTENT_COLOUR);
-		commonNameEntry.setPreferredSize(new Dimension(175, 50));
-		commonNameEntry.setFocusable(false);
+		commonNameEntry = new CustomTextEntryBox("Common Name");
 		commonNameLine.add(commonNameEntry, BorderLayout.EAST);
 		contentPanel.add(commonNameLine);
 
@@ -110,7 +101,7 @@ public class AddFoodPanel extends JPanel {
 				foodGroupEntry = new JComboBox<FoodGroup>(DataManager
 						.getInstance().getFoodGroups());
 				foodGroupEntry.setFont(GUI.CONTENT_FONT);
-				foodGroupEntry.setPreferredSize(new Dimension(175, 50));
+				foodGroupEntry.setPreferredSize(new Dimension(150, 30));
 				foodGroupEntry.setFocusable(false);
 				foodGroupEntry.setBackground(GUI.BACKGROUND_COLOUR);
 				foodGroupEntry.setForeground(GUI.CONTENT_COLOUR);
@@ -126,12 +117,7 @@ public class AddFoodPanel extends JPanel {
 						"What is the manufacturer name of your new food?"),
 						BorderLayout.CENTER);
 
-				manufacNameEntry = new JTextField("Manufacturer Name");
-				manufacNameEntry.setFont(GUI.CONTENT_FONT);
-				manufacNameEntry.setPreferredSize(new Dimension(175, 50));
-				manufacNameEntry.setFocusable(false);
-				manufacNameEntry.setBackground(GUI.BACKGROUND_COLOUR);
-				manufacNameEntry.setForeground(GUI.CONTENT_COLOUR);
+				manufacNameEntry = new CustomTextEntryBox("Manufacturer Name");
 				manufacNameLine.add(manufacNameEntry, BorderLayout.EAST);
 				contentPanel.add(manufacNameLine);
 
@@ -143,12 +129,7 @@ public class AddFoodPanel extends JPanel {
 						"What is the unit used to measure your new food?"),
 						BorderLayout.CENTER);
 
-				weightUnitEntry = new JTextField("Unit");
-				weightUnitEntry.setFont(GUI.CONTENT_FONT);
-				weightUnitEntry.setPreferredSize(new Dimension(175, 50));
-				weightUnitEntry.setFocusable(false);
-				weightUnitEntry.setBackground(GUI.BACKGROUND_COLOUR);
-				weightUnitEntry.setForeground(GUI.CONTENT_COLOUR);
+				weightUnitEntry = new CustomTextEntryBox("Unit");
 				weightUnitLine.add(weightUnitEntry, BorderLayout.EAST);
 				contentPanel.add(weightUnitLine);
 
@@ -164,7 +145,7 @@ public class AddFoodPanel extends JPanel {
 				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1, 0, 999,
 						1));
 				gramsPerEntry.setFont(GUI.CONTENT_FONT);
-				gramsPerEntry.setPreferredSize(new Dimension(175, 50));
+				gramsPerEntry.setPreferredSize(new Dimension(150, 30));
 				gramsPerEntry.setFocusable(false);
 				gramsPerEntry.setBackground(GUI.BACKGROUND_COLOUR);
 				gramsPerEntry.setForeground(GUI.CONTENT_COLOUR);
@@ -174,7 +155,7 @@ public class AddFoodPanel extends JPanel {
 				// prompts for all nutrients
 				CustomizedTextArea nutrEntryPrompt = new CustomizedTextArea(
 						"\nBelow, enter information about the nutrients in your new food.\n"
-								+ "For each nutrient, enter the units it's measuered in,\n"
+								+ "For each nutrient, enter the units it's measuered in, "
 								+ "and the amount of each unit is in one gram of food.");
 				nutrEntryPrompt.setAlignmentX(CENTER_ALIGNMENT);
 				Dimension nutrSize = new Dimension(400, 150);
@@ -223,6 +204,14 @@ public class AddFoodPanel extends JPanel {
 		this.add(saveButton, BorderLayout.SOUTH);
 	}
 
+	protected void resetFields() {
+		nameEntry.setText("Name");
+		commonNameEntry.setText("Common Name");
+		manufacNameEntry.setText("Manufacturer Name");
+		weightUnitEntry.setText("Unit");
+		gramsPerEntry.getModel().setValue(1);
+	}
+
 	class CustomizedTextArea extends JTextArea {
 
 		private CustomizedTextArea(String displayText) {
@@ -231,9 +220,9 @@ public class AddFoodPanel extends JPanel {
 			this.setWrapStyleWord(true);
 			this.setEditable(false);
 			this.setLineWrap(true);
+			this.setFocusable(false);
 			this.setForeground(GUI.CONTENT_COLOUR);
 			this.setOpaque(false);
-			this.setFocusable(false);
 			this.setAlignmentX(LEFT_ALIGNMENT);
 			this.setMaximumSize(new Dimension(325, 150));
 		}
@@ -292,6 +281,25 @@ public class AddFoodPanel extends JPanel {
 			// TODO add something to end of footnotes indicating it was added by
 			// user
 
+		}
+	}
+
+	class CustomTextEntryBox extends JTextField {
+		public CustomTextEntryBox(String boxText) {
+			super(boxText);
+			this.setFont(GUI.CONTENT_FONT);
+			this.setBackground(GUI.BACKGROUND_COLOUR);
+			this.setForeground(GUI.CONTENT_COLOUR);
+			Dimension size = new Dimension(150, 20);
+			this.setPreferredSize(size);
+			this.setMaximumSize(size);
+			this.addMouseListener(new MouseAdapter() {
+				public void mousePressed(MouseEvent e) {
+					if (CustomTextEntryBox.this.getText().equals(boxText)) {
+						CustomTextEntryBox.this.setText("");
+					}
+				}
+			});
 		}
 	}
 }
