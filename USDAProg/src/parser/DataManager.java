@@ -126,7 +126,13 @@ public class DataManager {
     }
 
     public Nutrient[] getNutrients(){
-        return null;
+        BinaryTreeMap<Short, Nutrient> nutrientMap = new BinaryTreeMap<>();
+        for(FoodItem fi : this.parser.getFoodItemMap().getAllValues().toArray(FoodItem.SAMPLE)){
+            for(Nutrient n : fi.getNutrientData().getNutrientArray()){
+                nutrientMap.put(n.getNutrNo(), n);
+            }
+        }
+        return nutrientMap.getAllValues().toArray(Nutrient.SAMPLE);
     }
 
     public Parser getParser() {
