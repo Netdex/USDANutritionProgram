@@ -38,9 +38,9 @@ public class SearchPanel extends JPanel {
 		this.setBackground(GUI.BACKGROUND_COLOUR);
 
 		JPanel headerPanel = new JPanel();
-		headerPanel.setLayout(new BorderLayout());
+		headerPanel.setLayout(new FlowLayout());
 		headerPanel.setBackground(GUI.HEADER_COLOUR);
-		headerPanel.add(new HomeButton(manager), BorderLayout.WEST);
+		headerPanel.add(new HomeButton(manager));
 
 		searchBox = new JTextField("Search...", 22);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
@@ -55,7 +55,7 @@ public class SearchPanel extends JPanel {
 				}
 			}
 		});
-		headerPanel.add(searchBox, BorderLayout.CENTER);
+		headerPanel.add(searchBox);
 		searchBox.addKeyListener(new SearchBoxActionListener());
 		this.add(headerPanel, BorderLayout.NORTH);
 
