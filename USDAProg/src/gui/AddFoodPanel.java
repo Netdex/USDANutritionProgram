@@ -168,9 +168,9 @@ public class AddFoodPanel extends JPanel {
 				nutrientAdd.setLayout(new BoxLayout(nutrientAdd,
 						BoxLayout.Y_AXIS));
 
-				Nutrient[] listOfNutrients = { new Nutrient() };
+				Nutrient[] listOfNutrients = DataManager.getInstance().getNutrients();
 				DoublyLinkedList<NutrientEntryLine> nutrientEntries = new DoublyLinkedList<NutrientEntryLine>();
-				// TODO get the list of all nutrients here
+
 				for (Nutrient nutrient : listOfNutrients) {
 					NutrientEntryLine line = new NutrientEntryLine(nutrient);
 					nutrientEntries.add(line);
