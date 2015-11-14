@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
@@ -18,7 +19,7 @@ public class PanelManager extends JPanel {
 	private InfoPanel infoPanel;
 	private ExtraInfoPanel extraInfoPanel;
 	private AboutPanel aboutPanel;
-	private HelpPanel helpPanel;
+//	private HelpPanel helpPanel;
 	private AddFoodPanel addFoodPanel;
 
 	CardLayout cardLayoutManager;
@@ -35,7 +36,12 @@ public class PanelManager extends JPanel {
 		aboutPanel = new AboutPanel(this);
 		infoPanel = new InfoPanel(searchPanel, this);
 		extraInfoPanel = new ExtraInfoPanel(this);
-		helpPanel = new HelpPanel(this);
+//		try {
+//			helpPanel = new HelpPanel(this);
+//		} catch (IOException e) {
+//			System.err.println("failed to load image for help screen");
+//			e.printStackTrace();
+//		}
 		addFoodPanel = new AddFoodPanel(this);
 
 		this.add(homePanel, "home");
@@ -43,7 +49,7 @@ public class PanelManager extends JPanel {
 		this.add(foodListPanel, "foodList");
 		this.add(searchPanel, "search");
 		this.add(aboutPanel, "about");
-		this.add(helpPanel, "help");
+//		this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
 		this.add(infoPanel, "foodInfo");
 		this.add(addFoodPanel, "addFood");
@@ -76,10 +82,10 @@ public class PanelManager extends JPanel {
 			cardLayoutManager.show(this, "group");
 	}
 
-	protected void switchToHelp() {
-		if (LOADING_PERCENTAGE == -1)
-			cardLayoutManager.show(this, "help");
-	}
+//	protected void switchToHelp() {
+//		if (LOADING_PERCENTAGE == -1)
+//			cardLayoutManager.show(this, "help");
+//	}
 
 	protected void switchToAbout() {
 		if (LOADING_PERCENTAGE == -1)

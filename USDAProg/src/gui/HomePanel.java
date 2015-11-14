@@ -33,7 +33,7 @@ public class HomePanel extends JPanel {
 					128, Image.SCALE_SMOOTH)));
 		} catch (IOException e1) {
 		}
-		JPanel buttonQuad = new JPanel(new GridLayout(3, 2, 8, 8));
+		JPanel buttonQuad = new JPanel(new GridLayout(2, 2, 8, 8));
 		buttonQuad.setOpaque(false);
 
 		// creates six buttons
@@ -41,23 +41,23 @@ public class HomePanel extends JPanel {
 		HomePanelNavButton groupButton = new HomePanelNavButton("groupButton");
 		HomePanelNavButton addFoodButton = new HomePanelNavButton(
 				"addFoodButton");
-		HomePanelNavButton helpButton = new HomePanelNavButton("helpButton");
-		HomePanelNavButton quitButton = new HomePanelNavButton("quitButton");
+//		HomePanelNavButton helpButton = new HomePanelNavButton("helpButton");
+//		HomePanelNavButton quitButton = new HomePanelNavButton("quitButton");
 		HomePanelNavButton aboutButton = new HomePanelNavButton(
 				"moreInfoButton");
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
 		buttonQuad.add(addFoodButton);
-		buttonQuad.add(helpButton);
+//		buttonQuad.add(helpButton);
 		buttonQuad.add(aboutButton);
-		buttonQuad.add(quitButton);
+//		buttonQuad.add(quitButton);
 
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
-		helpButton.addActionListener(new HelpButtonListener());
+//		helpButton.addActionListener(new HelpButtonListener());
 		addFoodButton.addActionListener(new AddFoodButtonListener());
-		quitButton.addActionListener(new QuitButtonListener());
+//		quitButton.addActionListener(new QuitButtonListener());
 		aboutButton.addActionListener(new AboutButtonListener());
 
 		this.add(bannerLabel);
@@ -97,13 +97,13 @@ public class HomePanel extends JPanel {
 		}
 	}
 
-	class HelpButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			manager.switchToHelp();
-		}
-	}
+//	class HelpButtonListener implements ActionListener {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			manager.switchToHelp();
+//		}
+//	}
 
 	class AboutButtonListener implements ActionListener {
 
@@ -121,12 +121,12 @@ public class HomePanel extends JPanel {
 		}
 	}
 
-	class QuitButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (manager.LOADING_PERCENTAGE == -1)
-				System.exit(0);
-		}
-	}
+//	class QuitButtonListener implements ActionListener {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			if (manager.LOADING_PERCENTAGE == -1)
+//				System.exit(0);
+//		}
+//	}
 }

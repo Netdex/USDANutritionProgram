@@ -22,7 +22,6 @@ public class BackButton extends JButton {
 		this.target = target;
 		this.manager = manager;
 		try {
-			// TODO make better icon
 			this.setIcon(new ImageIcon(ImageIO.read(
 					new File("images/backButton.png")).getScaledInstance(48,
 					48, Image.SCALE_SMOOTH)));
