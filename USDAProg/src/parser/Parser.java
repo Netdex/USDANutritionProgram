@@ -1,24 +1,14 @@
 package parser;
 
 import gui.GUI;
+import parser.parsables.*;
+import parser.util.BinaryTreeMap;
+import parser.util.DoublyLinkedList;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import parser.parsables.FoodGroup;
-import parser.parsables.FoodItem;
-import parser.parsables.FoodWeight;
-import parser.parsables.Footnote;
-import parser.parsables.LanguaL;
-import parser.parsables.LanguaLDescription;
-import parser.parsables.LanguaLGroup;
-import parser.parsables.Nutrient;
-import parser.parsables.NutrientData;
-import parser.parsables.NutrientInfo;
-import parser.util.BinaryTreeMap;
-import parser.util.DoublyLinkedList;
 
 /**
  * Creates data structures out of the given files
@@ -241,6 +231,12 @@ public class Parser {
 			// using .split now since stringtokenizer ignores empty values
 			String[] items = splitTokens(line, "^", FoodItem.PARSE_DATA_LENGTH);
 			FoodItem foodItem = new FoodItem().parse(items);
+			int ndbNo = foodItem.getNDBNo();
+			foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
+			foodItem.setWeightInfo(map_foodWeight.get(ndbNo));
+			foodItem.setNutrientData(map_nutrData.get(ndbNo));
+			foodItem.setLangualGroup(map_langualGroup.get(ndbNo));
+			foodItem.setFootnotes(map_footnote.get(ndbNo));
 			addFoodItem(foodItem);
 			updatePercentage();
 		}
@@ -249,12 +245,6 @@ public class Parser {
 
 	public void addFoodItem(FoodItem foodItem) {
 		int ndbNo = foodItem.getNDBNo();
-		foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
-		foodItem.setWeightInfo(map_foodWeight.get(ndbNo));
-		foodItem.setNutrientData(map_nutrData.get(ndbNo));
-		foodItem.setLangualGroup(map_langualGroup.get(ndbNo));
-		foodItem.setFootnotes(map_footnote.get(ndbNo));
-
 		foodItem.getFoodGroup().addFood(foodItem);
 		map_foodItems.put(ndbNo, foodItem);
 	}
