@@ -1,5 +1,7 @@
 package parser;
 
+import gui.GUI;
+
 import java.awt.Component;
 import java.awt.Image;
 import java.io.BufferedReader;
@@ -16,7 +18,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import gui.GUI;
 import parser.util.BinaryTreeMap;
 
 public class ImageExtract {
@@ -27,7 +28,7 @@ public class ImageExtract {
 			.createLineBorder(GUI.ACCENT_COLOUR, 3);
 
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
-	private static final String ADDITIONAL_KEYWORD = "food";
+	private static final String ADDITIONAL_KEYWORD = "best food";
 	private static int IMAGE_WIDTH = 400;
 
 	public static void injectImage(JLabel imageLabel, String key) {
@@ -37,7 +38,8 @@ public class ImageExtract {
 					System.out.println("injecting " + key + " into label");
 					if (imageCache.get(key.toLowerCase()) != null) {
 						System.out.println("loaded image from cache");
-						insertImage(imageCache.get(key.toLowerCase()), imageLabel);
+						insertImage(imageCache.get(key.toLowerCase()),
+								imageLabel);
 					} else {
 						Image img = getSearchImage(key);
 						System.out.println("searching for image");
@@ -45,8 +47,7 @@ public class ImageExtract {
 							System.out.println("found image");
 							insertImage(img, imageLabel);
 							imageCache.put(key.toLowerCase(), img);
-						}
-						else{
+						} else {
 							System.out.println("no image found");
 						}
 					}
@@ -91,7 +92,8 @@ public class ImageExtract {
 	}
 
 	private static String getImageURL(String json) {
-		Pattern p = Pattern.compile("height\":\"([0-9]*)\",.*?,\"unescapedUrl\":\"(.*?)\"");
+		Pattern p = Pattern
+				.compile("height\":\"([0-9]*)\",.*?,\"unescapedUrl\":\"(.*?)\"");
 		Matcher m = p.matcher(json);
 		String selectedURL = "";
 		int minimumHeight = Integer.MAX_VALUE;
@@ -110,9 +112,12 @@ public class ImageExtract {
 
 	private static String getJSONResult(String key) {
 		try {
-			URL remote = new URL(("http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-					+ ADDITIONAL_KEYWORD + "%20" + key).replace(" ", "%20"));
-			BufferedReader br = new BufferedReader(new InputStreamReader(remote.openStream()));
+			URL remote = new URL(
+					("http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
+							+ ADDITIONAL_KEYWORD + "%20" + key.replace(".", "%2e")).replace(" ",
+							"%20"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					remote.openStream()));
 			String result = "";
 			String line;
 			while ((line = br.readLine()) != null) {

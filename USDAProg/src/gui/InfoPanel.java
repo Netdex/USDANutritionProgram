@@ -51,7 +51,7 @@ public class InfoPanel extends JPanel {
 	private BackButton back;
 
 	protected static final javax.swing.border.Border BLACK_BORDER = BorderFactory
-			.createLineBorder(Color.DARK_GRAY, 2);
+			.createLineBorder(GUI.ACCENT_COLOUR, 2);
 
 	private Nutrient[] nutrients;
 	private NutrientInfoPanel[] nutritionLabels;

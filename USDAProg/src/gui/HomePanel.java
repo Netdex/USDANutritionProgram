@@ -24,7 +24,7 @@ public class HomePanel extends JPanel {
 		this.manager = manager;
 		// Sets it up to boxLayout vertical
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBackground(Color.BLACK);
+		this.setBackground(GUI.BACKGROUND_COLOUR);
 
 		// create banner header and buttons on layout
 		JLabel bannerLabel = new JLabel();
@@ -35,7 +35,7 @@ public class HomePanel extends JPanel {
 		} catch (IOException e1) {
 		}
 		JPanel buttonQuad = new JPanel(new GridLayout(3, 2, 8, 8));
-		buttonQuad.setBackground(Color.BLACK);
+		buttonQuad.setOpaque(false);
 
 		// search
 		JButton searchButton = new JButton();
@@ -46,7 +46,7 @@ public class HomePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		searchButton.setBackground(Color.GREEN);
+		searchButton.setBackground(GUI.BACKGROUND_COLOUR);
 		searchButton.setBorder(GUI.EMPTY_BORDER);
 
 		// group
@@ -58,7 +58,7 @@ public class HomePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		groupButton.setBackground(Color.ORANGE);
+		groupButton.setBackground(GUI.BACKGROUND_COLOUR);
 		groupButton.setBorder(GUI.EMPTY_BORDER);
 
 		// add
@@ -70,7 +70,7 @@ public class HomePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		addFoodButton.setBackground(new Color(3793803));
+		addFoodButton.setBackground(GUI.BACKGROUND_COLOUR);
 		addFoodButton.setBorder(GUI.EMPTY_BORDER);
 
 		// help
@@ -82,7 +82,7 @@ public class HomePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		helpButton.setBackground(new Color(8174056));
+		helpButton.setBackground(GUI.BACKGROUND_COLOUR);
 		helpButton.setBorder(GUI.EMPTY_BORDER);
 
 		// quit
@@ -94,7 +94,7 @@ public class HomePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		quitButton.setBackground(new Color(14046292));
+		quitButton.setBackground(GUI.BACKGROUND_COLOUR);
 		quitButton.setBorder(GUI.EMPTY_BORDER);
 
 		// about
@@ -106,7 +106,7 @@ public class HomePanel extends JPanel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		aboutButton.setBackground(new Color(14046411));
+		aboutButton.setBackground(GUI.BACKGROUND_COLOUR);
 		aboutButton.setBorder(GUI.EMPTY_BORDER);
 
 		buttonQuad.add(searchButton);
@@ -172,7 +172,8 @@ public class HomePanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
+			if (manager.LOADING_PERCENTAGE == -1)
+				System.exit(0);
 		}
 	}
 }
