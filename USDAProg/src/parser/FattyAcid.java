@@ -4,6 +4,9 @@ import java.util.StringTokenizer;
 
 import parser.util.DoublyLinkedList;
 
+/**
+ * List of all the fatty acids
+ */
 public enum FattyAcid {
 
 	// UNSATURATED FATTY ACIDS
