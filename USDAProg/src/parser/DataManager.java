@@ -217,20 +217,14 @@ public class DataManager {
         if (matched == null)
             return new FoodItem[0];
         // Sort the list of food items by their score
-        Arrays.sort(matched, new Comparator<FoodItem>() {
-            @Override
-            public int compare(FoodItem a, FoodItem b) {
-                if (map_results.get(b) > map_results.get(a))
-                    return 1;
-                else if (map_results.get(b) < map_results.get(a))
-                    return -1;
-                return 0;
-            }
+        Arrays.sort(matched, (a, b) -> {
+            if (map_results.get(b) > map_results.get(a))
+                return 1;
+            else if (map_results.get(b) < map_results.get(a))
+                return -1;
+            return 0;
         });
         // Return a list of matches capped at 25
-        // for(FoodItem s : matched){
-        // System.out.println(s + " " + map_results.get(s));
-        // }
         return Arrays.copyOf(matched, Math.min(matched.length, 500));
     }
 

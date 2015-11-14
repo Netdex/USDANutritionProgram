@@ -5,320 +5,289 @@ import parser.InvalidParseDataException;
 
 /**
  * Represents a single food item
- * 
- * @author Gordon Guan
  *
+ * @author Gordon Guan
  */
 public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
-		Formattable {
+        Formattable {
 
-	public static FoodItem SAMPLE = new FoodItem();
+    public static FoodItem SAMPLE = new FoodItem();
 
-	public static final int PARSE_DATA_LENGTH = 14;
+    public static final int PARSE_DATA_LENGTH = 14;
 
-	private NutrientData nutrientData = new NutrientData();
-	private FoodGroup foodGroup;
-	private FoodWeight foodWeight;
-	private LanguaLGroup langualGroup;
-	private Footnote footnotes;
+    private NutrientData nutrientData = new NutrientData();
+    private FoodGroup foodGroup;
+    private FoodWeight foodWeight;
+    private LanguaLGroup langualGroup;
+    private Footnote footnotes;
 
-	@Override
-	public String getFormat() {
-		return Formattable.getFileFormatted(
-				String.format("~%05d~", nutrientDatabankNumber),
-				String.format("~%04d~", foodGroupID), "~" + longDescription
-						+ "~", "~~", "~" + commonName + "~", "~"
-						+ manufacturerName + "~", "~~", "~" + refuseDescription
-						+ "~", percentRefuse + "", "~" + scientificName + "~",
-				"", "", "", "");
-	}
+    @Override
+    public String getFormat() {
+        return Formattable.getFileFormatted(
+                String.format("~%05d~", nutrientDatabankNumber),
+                String.format("~%04d~", foodGroupID), "~" + longDescription
+                        + "~", "~~", "~" + commonName + "~", "~"
+                        + manufacturerName + "~", "~~", "~" + refuseDescription
+                        + "~", percentRefuse + "", "~" + scientificName + "~",
+                "", "", "", "");
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof FoodItem) {
-			return ((FoodItem) o).getNDBNo() == this.getNDBNo();
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof FoodItem && ((FoodItem) o).getNDBNo() == this.getNDBNo();
+    }
 
-	@Override
-	public FoodItem parse(String[] data) throws InvalidParseDataException {
-		if (data.length != PARSE_DATA_LENGTH)
-			throw new InvalidParseDataException();
-		nutrientDatabankNumber = Integer.parseInt(data[0]);
-		foodGroupID = Integer.parseInt(data[1]);
-		longDescription = data[2];
-		// shortDescription = data[3];
-		commonName = data[4];
-		manufacturerName = data[5];
-		// isSurvey = data[6].equals("Y");
-		refuseDescription = data[7];
-		percentRefuse = data[8].equals("") ? 0 : Double.parseDouble(data[8]);
-		scientificName = data[9];
-		// nitrogenFactor = data[10].equals("") ? 0 :
-		// Double.parseDouble(data[10]);
-		// proteinFactor = data[11].equals("") ? 0 :
-		// Double.parseDouble(data[11]);
-		// fatFactor = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
-		// cholestrolFactor = data[13].equals("") ? 0 :
-		// Double.parseDouble(data[13]);
-		return this;
-	}
+    @Override
+    public FoodItem parse(String[] data) throws InvalidParseDataException {
+        if (data.length != PARSE_DATA_LENGTH)
+            throw new InvalidParseDataException();
+        nutrientDatabankNumber = Integer.parseInt(data[0]);
+        foodGroupID = Integer.parseInt(data[1]);
+        longDescription = data[2];
+        // shortDescription = data[3];
+        commonName = data[4];
+        manufacturerName = data[5];
+        // isSurvey = data[6].equals("Y");
+        refuseDescription = data[7];
+        percentRefuse = data[8].equals("") ? 0 : Double.parseDouble(data[8]);
+        scientificName = data[9];
+        // nitrogenFactor = data[10].equals("") ? 0 :
+        // Double.parseDouble(data[10]);
+        // proteinFactor = data[11].equals("") ? 0 :
+        // Double.parseDouble(data[11]);
+        // fatFactor = data[12].equals("") ? 0 : Double.parseDouble(data[12]);
+        // cholestrolFactor = data[13].equals("") ? 0 :
+        // Double.parseDouble(data[13]);
+        return this;
+    }
 
-	@Override
-	public int compareTo(FoodItem o) {
-		return this.getNDBNo() - o.getNDBNo();
-	}
+    @Override
+    public int compareTo(FoodItem o) {
+        return this.getNDBNo() - o.getNDBNo();
+    }
 
-	/**
-	 * @return Gets the nutritional data of this FoodItem
-	 */
-	public NutrientData getNutrientData() {
-		return nutrientData;
-	}
+    /**
+     * @return Gets the nutritional data of this FoodItem
+     */
+    public NutrientData getNutrientData() {
+        return nutrientData;
+    }
 
-	/**
-	 * @param nutrientData
-	 *            the nutrientData to set
-	 */
-	public void setNutrientData(NutrientData nutrientData) {
-		this.nutrientData = nutrientData;
-	}
+    /**
+     * @param nutrientData the nutrientData to set
+     */
+    public void setNutrientData(NutrientData nutrientData) {
+        this.nutrientData = nutrientData;
+    }
 
-	/**
-	 * @return Gets the FoodGroup of this FoodItem
-	 */
-	public FoodGroup getFoodGroup() {
-		return foodGroup;
-	}
+    /**
+     * @return Gets the FoodGroup of this FoodItem
+     */
+    public FoodGroup getFoodGroup() {
+        return foodGroup;
+    }
 
-	/**
-	 * @param foodGroup
-	 *            the foodGroup to set
-	 */
-	public void setFoodGroup(FoodGroup foodGroup) {
-		this.foodGroup = foodGroup;
-	}
+    /**
+     * @param foodGroup the foodGroup to set
+     */
+    public void setFoodGroup(FoodGroup foodGroup) {
+        this.foodGroup = foodGroup;
+    }
 
-	/**
-	 * @return The information about weights of this FoodItem
-	 */
-	public FoodWeight getWeightInfo() {
-		return foodWeight;
-	}
+    /**
+     * @return The information about weights of this FoodItem
+     */
+    public FoodWeight getWeightInfo() {
+        return foodWeight;
+    }
 
-	public void setWeightInfo(FoodWeight fw) {
-		this.foodWeight = fw;
-	}
+    public void setWeightInfo(FoodWeight fw) {
+        this.foodWeight = fw;
+    }
 
-	// All the fields start here
+    // All the fields start here
 
-	/**
-	 * @return The LanguaLGroup of this FoodItem, containing all LanguaL
-	 *         descriptions
-	 */
-	public LanguaLGroup getLangualGroup() {
-		return langualGroup;
-	}
+    /**
+     * @return The LanguaLGroup of this FoodItem, containing all LanguaL
+     * descriptions
+     */
+    public LanguaLGroup getLangualGroup() {
+        return langualGroup;
+    }
 
-	public void setLangualGroup(LanguaLGroup langualGroup) {
-		this.langualGroup = langualGroup;
-	}
+    public void setLangualGroup(LanguaLGroup langualGroup) {
+        this.langualGroup = langualGroup;
+    }
 
-	/**
-	 * @return the footnotes
-	 */
-	public Footnote getFootnotes() {
-		return footnotes;
-	}
+    /**
+     * @return the footnotes
+     */
+    public Footnote getFootnotes() {
+        return footnotes;
+    }
 
-	/**
-	 * @param footnotes
-	 *            the footnotes to set
-	 */
-	public void setFootnotes(Footnote footnotes) {
-		this.footnotes = footnotes;
-	}
+    /**
+     * @param footnotes the footnotes to set
+     */
+    public void setFootnotes(Footnote footnotes) {
+        this.footnotes = footnotes;
+    }
 
-	/**
-	 * Nutrient Databank number<br>
-	 * (5 digits)
-	 */
-	private int nutrientDatabankNumber;
+    /**
+     * Nutrient Databank number<br>
+     * (5 digits)
+     */
+    private int nutrientDatabankNumber;
 
-	/**
-	 * Food Group ID<br>
-	 * (4 digits)
-	 */
-	private int foodGroupID;
+    /**
+     * Food Group ID<br>
+     * (4 digits)
+     */
+    private int foodGroupID;
 
-	/** 200-character description of the item */
-	private String longDescription;
+    /**
+     * 200-character description of the item
+     */
+    private String longDescription;
 
-	/** 60-character abbreviated description of the item */
-	private String shortDescription;
+    /**
+     * 60-character abbreviated description of the item
+     */
+    private String shortDescription;
 
-	/**
-	 * Common name associated with the item<br>
-	 * Can be blank
-	 */
-	private String commonName;
+    /**
+     * Common name associated with the item<br>
+     * Can be blank
+     */
+    private String commonName;
 
-	/**
-	 * Manufacturer company name<br>
-	 * Can be blank
-	 */
-	private String manufacturerName;
+    /**
+     * Manufacturer company name<br>
+     * Can be blank
+     */
+    private String manufacturerName;
 
-	/**
-	 * Indicates if the food item is used in a USDA survey database<br>
-	 * Y/N<br>
-	 * Can be blank
-	 */
-	private boolean isSurvey;
+    /**
+     * Indicates if the food item is used in a USDA survey database<br>
+     * Y/N<br>
+     * Can be blank
+     */
+    private boolean isSurvey;
 
-	/**
-	 * Description of refuse (inedible parts) of the food<br>
-	 * Can be blank
-	 */
-	private String refuseDescription;
+    /**
+     * Description of refuse (inedible parts) of the food<br>
+     * Can be blank
+     */
+    private String refuseDescription;
 
-	/**
-	 * Percentage of the food which is refuse<br>
-	 * Can be blank
-	 */
-	private double percentRefuse;
+    /**
+     * Percentage of the food which is refuse<br>
+     * Can be blank
+     */
+    private double percentRefuse;
 
-	/**
-	 * Scientific name of the food item<br>
-	 * Can be blank
-	 */
-	private String scientificName;
+    /**
+     * Scientific name of the food item<br>
+     * Can be blank
+     */
+    private String scientificName;
 
-	/**
-	 * Factor for converting nitrogen to protein<br>
-	 * Can be blank
-	 */
-	private double nitrogenFactor;
+    /**
+     * Factor for converting nitrogen to protein<br>
+     * Can be blank
+     */
+    private double nitrogenFactor;
 
-	/**
-	 * Factor for calculating calories from protein<br>
-	 * Can be blank
-	 */
-	private double proteinFactor;
+    /**
+     * Factor for calculating calories from protein<br>
+     * Can be blank
+     */
+    private double proteinFactor;
 
-	/**
-	 * Factor for calculating calories from fat<br>
-	 * Can be blank
-	 */
-	private double fatFactor;
+    /**
+     * Factor for calculating calories from fat<br>
+     * Can be blank
+     */
+    private double fatFactor;
 
-	/**
-	 * Factor for calculating calories from carbohydrate<br>
-	 * Can be blank
-	 */
-	private double cholestrolFactor;
+    /**
+     * Factor for calculating calories from carbohydrate<br>
+     * Can be blank
+     */
+    private double cholestrolFactor;
 
-	public FoodItem() {
+    public FoodItem() {
 
-	}
+    }
 
-	/**
-	 * @return The Nutrient DataBank number of this food item
-	 */
-	public int getNDBNo() {
-		return nutrientDatabankNumber;
-	}
+    /**
+     * @return The Nutrient DataBank number of this food item
+     */
+    public int getNDBNo() {
+        return nutrientDatabankNumber;
+    }
 
-	/**
-	 * @return The food group ID of the food item
-	 */
-	public int getFoodGroupID() {
-		return foodGroupID;
-	}
+    /**
+     * @return The food group ID of the food item
+     */
+    public int getFoodGroupID() {
+        return foodGroupID;
+    }
 
-	/**
-	 * @return The long description of this food item
-	 */
-	public String getLongDescription() {
-		return longDescription;
-	}
+    /**
+     * @return The long description of this food item
+     */
+    public String getLongDescription() {
+        return longDescription;
+    }
 
-	/**
-	 * @return The short description of this food item
-	 */
-	public String getShortDescription() {
-		return shortDescription;
-	}
+    /**
+     * @return The short description of this food item
+     */
+    public String getShortDescription() {
+        return shortDescription;
+    }
 
-	/**
-	 * @return A common name for this item
-	 */
-	public String getCommonName() {
-		return commonName;
-	}
+    /**
+     * @return A common name for this item
+     */
+    public String getCommonName() {
+        return commonName;
+    }
 
-	/**
-	 * @return The manufacturer's name of the item
-	 */
-	public String getManufacturerName() {
-		return manufacturerName;
-	}
+    /**
+     * @return The manufacturer's name of the item
+     */
+    public String getManufacturerName() {
+        return manufacturerName;
+    }
 
-	/**
-	 * @return A description of the refuse in this food item
-	 */
-	public String getRefuseDescription() {
-		return refuseDescription;
-	}
+    /**
+     * @return A description of the refuse in this food item
+     */
+    public String getRefuseDescription() {
+        return refuseDescription;
+    }
 
-	/**
-	 * @return The percentage of the food item which is refuse
-	 */
-	public double getRefusePercentage() {
-		return percentRefuse;
-	}
+    /**
+     * @return The percentage of the food item which is refuse
+     */
+    public double getRefusePercentage() {
+        return percentRefuse;
+    }
 
-	/**
-	 * @return The scientific name for this item
-	 */
-	public String getScientificName() {
-		return scientificName;
-	}
+    /**
+     * @return The scientific name for this item
+     */
+    public String getScientificName() {
+        return scientificName;
+    }
 
-	/**
-	 * @return The factor required for converting nitrogen in this food item
-	 */
-	public double getNitrogenFactor() {
-		return nitrogenFactor;
-	}
-
-	/**
-	 * @return The factor required for calculating protein in this food item
-	 */
-	public double getProteinFactor() {
-		return proteinFactor;
-	}
-
-	/**
-	 * @return The factor required for calculating fat in this food item
-	 */
-	public double getFatFactor() {
-		return fatFactor;
-	}
-
-	/**
-	 * @return The factor required for calculating cholestrol in this food item
-	 */
-	public double getCholestrolFactor() {
-		return cholestrolFactor;
-	}
-
-	/**
-	 * @return The factor
-	 */
-	public String toString() {
-		return this.getLongDescription();
-	}
+    /**
+     * @return The factor
+     */
+    public String toString() {
+        return this.getLongDescription();
+    }
 
 }
