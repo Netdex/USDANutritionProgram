@@ -1,105 +1,19 @@
 package parser.parsables;
 
-import parser.Formattable;
-import parser.InvalidParseDataException;
+import parser.util.DoublyLinkedList;
 
 /**
- * A structure storing weight information of this FoodItem
- * 
- * @author Gordon Guan
- *
+ * Contains all the possible weights of a food item
  */
-public class FoodWeight implements Parsable<FoodWeight>, Formattable {
+public class FoodWeight {
+    private DoublyLinkedList<WeightUnit> units = new DoublyLinkedList<>();
+    public FoodWeight(){
 
-	public static final int PARSE_DATA_LENGTH = 7;
-
-	@Override
-	public FoodWeight parse(String[] data) throws InvalidParseDataException {
-		if (data.length != PARSE_DATA_LENGTH)
-			throw new InvalidParseDataException();
-		ndbNo = Integer.parseInt(data[0]);
-		// seq = Integer.parseInt(data[1]);
-		amount = Double.parseDouble(data[2]);
-		desc = data[3];
-		gramWeight = Double.parseDouble(data[4]);
-		// numDataPts = data[5].equals("") ? 0 : Integer.parseInt(data[5]);
-		// stdDev = data[6].equals("") ? 0 : Double.parseDouble(data[6]);
-		return this;
-	}
-
-	@Override
-	public String getFormat() {
-		return Formattable.getFileFormatted(String.format("~%05d~", ndbNo), "0", amount + "", "~"
-				+ desc + "~", gramWeight + "", "0", "0");
-
-	}
-
-	private int ndbNo;
-	private int seq;
-	private double amount;
-	private String desc;
-	private double gramWeight;
-	private int numDataPts;
-	private double stdDev;
-
-	public FoodWeight() {
-
-	}
-
-	public int getNDBNo() {
-		return ndbNo;
-	}
-
-	/**
-	 * @return the parseDataLength
-	 */
-	public static int getParseDataLength() {
-		return PARSE_DATA_LENGTH;
-	}
-
-	/**
-	 * @return the seq
-	 */
-	public int getSeq() {
-		return seq;
-	}
-
-	/**
-	 * @return the amount
-	 */
-	public double getAmount() {
-		return amount;
-	}
-
-	/**
-	 * @return the desc
-	 */
-	public String getDesc() {
-		return desc;
-	}
-
-	/**
-	 * @return the gramWeight
-	 */
-	public double getGramWeight() {
-		return gramWeight;
-	}
-
-	/**
-	 * @return the numDataPts
-	 */
-	public int getNumDataPts() {
-		return numDataPts;
-	}
-
-	/**
-	 * @return the stdDev
-	 */
-	public double getStdDev() {
-		return stdDev;
-	}
-
-	public String toString() {
-		return this.getAmount() + " " + this.getDesc();
-	}
+    }
+    public void addWeightUnit(WeightUnit wu){
+        units.add(wu);
+    }
+    public WeightUnit[] getWeightUnits(){
+        return units.toArray(WeightUnit.SAMPLE);
+    }
 }

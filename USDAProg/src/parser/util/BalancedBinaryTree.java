@@ -43,7 +43,9 @@ public class BalancedBinaryTree<E extends Comparable<E>> extends BinaryTree<E> {
                         node.getParent().setLeft(newNode);
                         newNode.setParent(node.getParent());
                     }
-
+                }
+                else{
+                    this.setRootNode(newNode);
                 }
                 newNode.setLeft(node.getLeft());
                 newNode.setRight(node.getRight());
@@ -51,7 +53,6 @@ public class BalancedBinaryTree<E extends Comparable<E>> extends BinaryTree<E> {
                     node.getLeft().setParent(newNode);
                 if (node.getRight() != null)
                     node.getRight().setParent(newNode);
-                this.setRootNode(newNode);
             }
         }
         balanceUp(newNode);
