@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Comparator;
 
 public class DataManager {
 
@@ -95,13 +94,14 @@ public class DataManager {
     public void addFoodItem(FoodItem fi) {
         NutrientData nd = fi.getNutrientData();
         Footnote fn = fi.getFootnotes();
-        FoodWeight wi = fi.getWeightInfo();
+        //WeightUnit wi = fi.getWeightInfo();
 
         addFormattable(files[0], fi);
         if (fn != null)
             addFormattable(files[7], fn);
-        if (wi != null)
-            addFormattable(files[4], wi);
+        // todo broken
+        //if (wi != null)
+        //    addFormattable(files[4], wi);
         if (nd != null)
             for (int i = 0; i < nd.getNutrients().size(); i++) {
                 addFormattable(files[1], nd.getNutrients().get(i));

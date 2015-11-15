@@ -11,15 +11,88 @@ import parser.InvalidParseDataException;
 public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
         Formattable {
 
-    public static FoodItem SAMPLE = new FoodItem();
-
     public static final int PARSE_DATA_LENGTH = 14;
-
+    public static FoodItem SAMPLE = new FoodItem();
     private NutrientData nutrientData = new NutrientData();
     private FoodGroup foodGroup;
-    private FoodWeight foodWeight;
+    private FoodWeight weightInfo;
     private LanguaLGroup langualGroup;
     private Footnote footnotes;
+    /**
+     * Nutrient Databank number<br>
+     * (5 digits)
+     */
+    private int nutrientDatabankNumber;
+    /**
+     * Food Group ID<br>
+     * (4 digits)
+     */
+    private int foodGroupID;
+    /**
+     * 200-character description of the item
+     */
+    private String longDescription;
+    /**
+     * 60-character abbreviated description of the item
+     */
+    private String shortDescription;
+    /**
+     * Common name associated with the item<br>
+     * Can be blank
+     */
+    private String commonName;
+    /**
+     * Manufacturer company name<br>
+     * Can be blank
+     */
+    private String manufacturerName;
+    /**
+     * Indicates if the food item is used in a USDA survey database<br>
+     * Y/N<br>
+     * Can be blank
+     */
+    private boolean isSurvey;
+    /**
+     * Description of refuse (inedible parts) of the food<br>
+     * Can be blank
+     */
+    private String refuseDescription;
+    /**
+     * Percentage of the food which is refuse<br>
+     * Can be blank
+     */
+    private double percentRefuse;
+    /**
+     * Scientific name of the food item<br>
+     * Can be blank
+     */
+    private String scientificName;
+
+    // All the fields start here
+    /**
+     * Factor for converting nitrogen to protein<br>
+     * Can be blank
+     */
+    private double nitrogenFactor;
+    /**
+     * Factor for calculating calories from protein<br>
+     * Can be blank
+     */
+    private double proteinFactor;
+    /**
+     * Factor for calculating calories from fat<br>
+     * Can be blank
+     */
+    private double fatFactor;
+    /**
+     * Factor for calculating calories from carbohydrate<br>
+     * Can be blank
+     */
+    private double cholestrolFactor;
+
+    public FoodItem() {
+
+    }
 
     @Override
     public String getFormat() {
@@ -98,14 +171,12 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
      * @return The information about weights of this FoodItem
      */
     public FoodWeight getWeightInfo() {
-        return foodWeight;
+        return weightInfo;
     }
 
     public void setWeightInfo(FoodWeight fw) {
-        this.foodWeight = fw;
+        this.weightInfo = fw;
     }
-
-    // All the fields start here
 
     /**
      * @return The LanguaLGroup of this FoodItem, containing all LanguaL
@@ -131,93 +202,6 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
      */
     public void setFootnotes(Footnote footnotes) {
         this.footnotes = footnotes;
-    }
-
-    /**
-     * Nutrient Databank number<br>
-     * (5 digits)
-     */
-    private int nutrientDatabankNumber;
-
-    /**
-     * Food Group ID<br>
-     * (4 digits)
-     */
-    private int foodGroupID;
-
-    /**
-     * 200-character description of the item
-     */
-    private String longDescription;
-
-    /**
-     * 60-character abbreviated description of the item
-     */
-    private String shortDescription;
-
-    /**
-     * Common name associated with the item<br>
-     * Can be blank
-     */
-    private String commonName;
-
-    /**
-     * Manufacturer company name<br>
-     * Can be blank
-     */
-    private String manufacturerName;
-
-    /**
-     * Indicates if the food item is used in a USDA survey database<br>
-     * Y/N<br>
-     * Can be blank
-     */
-    private boolean isSurvey;
-
-    /**
-     * Description of refuse (inedible parts) of the food<br>
-     * Can be blank
-     */
-    private String refuseDescription;
-
-    /**
-     * Percentage of the food which is refuse<br>
-     * Can be blank
-     */
-    private double percentRefuse;
-
-    /**
-     * Scientific name of the food item<br>
-     * Can be blank
-     */
-    private String scientificName;
-
-    /**
-     * Factor for converting nitrogen to protein<br>
-     * Can be blank
-     */
-    private double nitrogenFactor;
-
-    /**
-     * Factor for calculating calories from protein<br>
-     * Can be blank
-     */
-    private double proteinFactor;
-
-    /**
-     * Factor for calculating calories from fat<br>
-     * Can be blank
-     */
-    private double fatFactor;
-
-    /**
-     * Factor for calculating calories from carbohydrate<br>
-     * Can be blank
-     */
-    private double cholestrolFactor;
-
-    public FoodItem() {
-
     }
 
     /**

@@ -87,7 +87,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="parser.parsables.FoodWeight" project="USDAProg" 
+  <class id="11" language="java" name="parser.parsables.WeightUnit" project="USDAProg"
     file="/USDAProg/src/parser/parsables/FoodWeight.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="268" width="182" x="1464" y="742"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -465,7 +465,7 @@
   </association>  
   <association id="79">    
     <end type="SOURCE" refId="27" navigable="false">      
-      <attribute id="80" name="foodWeight">        
+      <attribute id="80" name="weightUnit">
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
       <multiplicity id="81" minimum="0" maximum="1">        
