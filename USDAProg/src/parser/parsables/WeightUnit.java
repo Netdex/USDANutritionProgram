@@ -117,15 +117,4 @@ public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 	public String toString() {
 		return this.getAmount() + " " + this.getDesc();
 	}
-
-	public WeightUnit newGramUnit() {
-		try {
-			// TODO figure out what this all means
-			return this.parse(new String[] { "0", "0", "0", "gram", "1", "0",
-					"0" });
-		} catch (InvalidParseDataException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 }
