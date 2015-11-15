@@ -190,20 +190,20 @@ public class DoublyLinkedList<E> {
 			this.item = item;
 		}
 
-		public void setNext(DoubleLLNode<E> next) {
-			this.next = next;
-		}
-
-		public void setPrevious(DoubleLLNode<E> previous) {
-			this.previous = previous;
-		}
-
 		public DoubleLLNode<E> getNext() {
 			return this.next;
 		}
 
+		public void setNext(DoubleLLNode<E> next) {
+			this.next = next;
+		}
+
 		public DoubleLLNode<E> getPrevious() {
 			return this.previous;
+		}
+
+		public void setPrevious(DoubleLLNode<E> previous) {
+			this.previous = previous;
 		}
 
 		public E getItem() {
