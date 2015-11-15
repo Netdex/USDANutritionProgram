@@ -55,9 +55,9 @@ public class InfoPanel extends JPanel {
 	private JSpinner amountEntry;
 
 	private JComboBox<WeightUnit> unitSelection;
-	private WeightUnit selectedUnit;
+	private WeightUnit selectedUnit = WeightUnit.GRAM;
 	private double gramsOfFood = 1;
-	private double amountOfUnits;
+	private double amountOfUnits = 1;
 
 	private Nutrient[] nutrients;
 	private NutrientInfoLine[] nutritionLabels;
@@ -250,7 +250,6 @@ public class InfoPanel extends JPanel {
 		}
 
 		// select the unit to measure food with
-		selectedUnit = WeightUnit.GRAM;
 		if (food.getWeightInfo() != null) {
 			DoublyLinkedList<WeightUnit> possibleUnits = new DoublyLinkedList<WeightUnit>(
 					food.getWeightInfo().getWeightUnits());
@@ -374,6 +373,9 @@ public class InfoPanel extends JPanel {
 		}
 		nutritionPanel.revalidate();
 		nutritionPanel.repaint();
+		
+		contentPanel.revalidate();
+		contentPanel.repaint();
 	}
 
 	class UnitSelectorListener implements ActionListener {
@@ -383,8 +385,8 @@ public class InfoPanel extends JPanel {
 			selectedUnit = (WeightUnit) unitSelection.getModel()
 					.getSelectedItem();
 			String selectedUnitName = selectedUnit.getDesc();
-			System.out.println("changed unit to " + selectedUnitName); // TODO
-																		// debug
+			//DEBUG
+			System.out.println("changed unit to " + selectedUnitName);
 			amountEntryPromptText = "You have selected to measure this food in "
 					+ selectedUnitName
 					+ ".\nPlease enter the amount of "
