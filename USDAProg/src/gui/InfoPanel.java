@@ -31,12 +31,12 @@ import parser.ImageExtract;
 import parser.parsables.FoodItem;
 import parser.parsables.FoodWeight;
 import parser.parsables.Nutrient;
+import parser.parsables.WeightUnit;
 import parser.util.DoublyLinkedList;
 
 public class InfoPanel extends JPanel {
 
 	private FoodItem food;
-	private double gramsOfFood = 1;
 
 	private SearchPanel searchPanel;
 	private PanelManager manager;
@@ -53,8 +53,11 @@ public class InfoPanel extends JPanel {
 	private String amountEntryPromptText;
 	private JTextArea amountEntryPrompt;
 	private JSpinner amountEntry;
-	private JComboBox<FoodWeight> unitSelection;
-	private FoodWeight selectedUnit; // if this is null, then it's in grams
+
+	private JComboBox<WeightUnit> unitSelection;
+	private WeightUnit selectedUnit;
+	private double gramsOfFood = 1;
+	private double amountOfUnits;
 
 	private Nutrient[] nutrients;
 	private NutrientInfoLine[] nutritionLabels;
@@ -130,7 +133,8 @@ public class InfoPanel extends JPanel {
 		contentPanel.removeAll();
 		this.food = item;
 		if (food.getWeightInfo() != null)
-			gramsOfFood = food.getWeightInfo().getGramWeight();
+			gramsOfFood = food.getWeightInfo().getWeightUnits()[0]
+					.getGramWeight();
 		else
 			gramsOfFood = 1;
 
@@ -246,32 +250,42 @@ public class InfoPanel extends JPanel {
 		}
 
 		// select the unit to measure food with
-		selectedUnit = null;
-		JPanel unitSelectionLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		unitSelectionLine.setOpaque(false);
-		unitSelectionLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+		selectedUnit = WeightUnit.GRAM;
+		DoublyLinkedList<WeightUnit> possibleUnits = new DoublyLinkedList<WeightUnit>(
+				food.getWeightInfo().getWeightUnits());
+		possibleUnits.add(WeightUnit.GRAM);
+		if (possibleUnits.size() > 0) {
+			JPanel unitSelectionLine = new JPanel(new FlowLayout(
+					FlowLayout.LEFT));
+			unitSelectionLine.setOpaque(false);
+			unitSelectionLine
+					.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 
-		JTextArea unitPrompt = new JTextArea(
-				"What unit will you be measuring your food with?");
-		unitPrompt.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
-		unitPrompt.setFont(GUI.CONTENT_FONT);
-		unitPrompt.setAlignmentX(LEFT_ALIGNMENT);
-		unitPrompt.setWrapStyleWord(true);
-		unitPrompt.setLineWrap(true);
-		unitPrompt.setEditable(false);
-		unitPrompt.setFocusable(false);
-		unitPrompt.setForeground(GUI.CONTENT_COLOUR);
-		unitPrompt.setOpaque(false);
-		unitSelectionLine.add(unitPrompt);
+			JTextArea unitPrompt = new JTextArea(
+					"What unit will you be measuring your food with?");
+			unitPrompt.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+			unitPrompt.setFont(GUI.CONTENT_FONT);
+			unitPrompt.setWrapStyleWord(true);
+			unitPrompt.setLineWrap(true);
+			unitPrompt.setEditable(false);
+			unitPrompt.setFocusable(false);
+			unitPrompt.setForeground(GUI.CONTENT_COLOUR);
+			unitPrompt.setOpaque(false);
+			unitSelectionLine.add(unitPrompt);
 
-		// TODO get ALL possible weight measurements for a food
-		// also add "grams" to the end
-		FoodWeight[] possibleUnits = new FoodWeight[0];
-		if (possibleUnits.length > 0) {
-			unitSelection = new JComboBox<FoodWeight>(possibleUnits);
+			unitSelection = new JComboBox<WeightUnit>(
+					possibleUnits.toArray(WeightUnit.SAMPLE));
 			unitSelection.setForeground(GUI.CONTENT_COLOUR);
+			unitSelection.setFont(GUI.CONTENT_FONT);
 			unitSelection.setBackground(GUI.BACKGROUND_COLOUR);
+			unitSelection.setEditable(false);
 			unitSelection.addActionListener(new UnitSelectorListener());
+			unitSelectionLine.add(unitSelection);
+
+			unitSelectionLine.setAlignmentX(LEFT_ALIGNMENT);
+			contentPanel.add(unitSelectionLine);
+			amountEntryPromptText = unitSelection.getModel().getElementAt(0)
+					.getDesc();
 		}
 
 		// asks the user for how much food they are consuming
@@ -302,7 +316,6 @@ public class InfoPanel extends JPanel {
 		amountEntry.setAlignmentX(LEFT_ALIGNMENT);
 		amountEntry.setForeground(GUI.CONTENT_COLOUR);
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
-		amountEntry.setFocusable(false);
 		amountEntry.addChangeListener(new AmountEntryListener());
 		amountEntryLine.add(amountEntry);
 
@@ -357,26 +370,25 @@ public class InfoPanel extends JPanel {
 		for (NutrientInfoLine nutrientInfoLine : nutritionLabels) {
 			nutrientInfoLine.updateFields();
 		}
+		nutritionPanel.revalidate();
+		nutritionPanel.repaint();
 	}
 
 	class UnitSelectorListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO
-			selectedUnit = (FoodWeight) unitSelection.getModel()
+			selectedUnit = (WeightUnit) unitSelection.getModel()
 					.getSelectedItem();
-			String unitName = selectedUnit.getDesc();
+			String selectedUnitName = selectedUnit.getDesc();
 			amountEntryPromptText = "You have selected to measure this food in "
-					+ unitName
+					+ selectedUnitName
 					+ ".\nPlease enter the amount of "
-					+ unitName
-					+ "(s) you are intending to consume.";
+					+ selectedUnitName + "(s) you are intending to consume.";
 			amountEntryPrompt.revalidate();
 			amountEntryPrompt.repaint();
 
-			gramsOfFood = selectedUnit.getGramWeight()
-					* Double.parseDouble(amountEntry.getValue().toString());
+			gramsOfFood = selectedUnit.getGramWeight() * amountOfUnits;
 
 			updateFields();
 		}
@@ -386,20 +398,16 @@ public class InfoPanel extends JPanel {
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			double newAmountInThatUnit = Double.parseDouble(amountEntry
-					.getModel().getValue().toString());
+			amountOfUnits = Double.parseDouble(amountEntry.getModel()
+					.getValue().toString());
 			if (food.getWeightInfo() != null)
-				gramsOfFood = newAmountInThatUnit
-						* selectedUnit.getGramWeight();
+				gramsOfFood = amountOfUnits * selectedUnit.getGramWeight();
 			else
 				// actually in grams, not arbitrary units
-				gramsOfFood = newAmountInThatUnit;
+				gramsOfFood = amountOfUnits;
 
 			// update all of the labels
 			updateFields();
-
-			nutritionPanel.revalidate();
-			nutritionPanel.repaint();
 		}
 
 	}

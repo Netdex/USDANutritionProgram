@@ -10,7 +10,8 @@ public class DoublyLinkedList<E> {
 	public DoublyLinkedList() {
 		front = new DoubleLLNode<E>(null);
 		back = new DoubleLLNode<E>(null);
-
+		front.setNext(back);
+		back.setPrevious(front);
 	}
 
 	public DoublyLinkedList(E[] array) {

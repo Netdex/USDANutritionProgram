@@ -11,6 +11,9 @@ import parser.InvalidParseDataException;
 public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 
 	public static final int PARSE_DATA_LENGTH = 7;
+	/**
+	 * Represents a weight unit of one gram.
+	 */
 	public static WeightUnit GRAM = getGram();
 	public static WeightUnit SAMPLE = new WeightUnit();
 	private int ndbNo;
@@ -115,6 +118,6 @@ public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 	}
 
 	public String toString() {
-		return this.getAmount() + " " + this.getDesc();
+		return this.getDesc();
 	}
 }
