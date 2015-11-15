@@ -36,7 +36,7 @@ public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 	private static WeightUnit getGram() {
 		try {
 			return new WeightUnit()
-                    .parse(new String[]{"-1", "", "1", "Gram", "1", "", ""});
+                    .parse(new String[]{"-1", "", "1", "gram", "1", "", ""});
         } catch (InvalidParseDataException e) {
 			e.printStackTrace();
 		}
