@@ -3,7 +3,7 @@
     
   </description>
 
-  <property name="src" location="src"/>
+  <property name="src" location="USDAProg/src"/>
   <property name="build" location="build"/>
   <property name="dist" location="dist"/>
 
