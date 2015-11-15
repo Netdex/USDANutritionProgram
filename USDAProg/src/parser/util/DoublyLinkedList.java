@@ -10,8 +10,18 @@ public class DoublyLinkedList<E> {
 	public DoublyLinkedList() {
 		front = new DoubleLLNode<E>(null);
 		back = new DoubleLLNode<E>(null);
+
+	}
+
+	public DoublyLinkedList(E[] array) {
+		front = new DoubleLLNode<E>(null);
+		back = new DoubleLLNode<E>(null);
 		front.setNext(back);
 		back.setPrevious(front);
+		for (int i = 0; i < array.length - 1; i++) {
+			add(array[i]);
+		}
+
 	}
 
 	public void add(E item) {
