@@ -251,41 +251,43 @@ public class InfoPanel extends JPanel {
 
 		// select the unit to measure food with
 		selectedUnit = WeightUnit.GRAM;
-		DoublyLinkedList<WeightUnit> possibleUnits = new DoublyLinkedList<WeightUnit>(
-				food.getWeightInfo().getWeightUnits());
-		possibleUnits.add(WeightUnit.GRAM);
-		if (possibleUnits.size() > 0) {
-			JPanel unitSelectionLine = new JPanel(new FlowLayout(
-					FlowLayout.LEFT));
-			unitSelectionLine.setOpaque(false);
-			unitSelectionLine
-					.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+		if (food.getWeightInfo() != null) {
+			DoublyLinkedList<WeightUnit> possibleUnits = new DoublyLinkedList<WeightUnit>(
+					food.getWeightInfo().getWeightUnits());
+			possibleUnits.add(WeightUnit.GRAM);
+			if (possibleUnits.size() > 1) {
+				JPanel unitSelectionLine = new JPanel(new FlowLayout(
+						FlowLayout.LEFT));
+				unitSelectionLine.setOpaque(false);
+				unitSelectionLine.setMaximumSize(new Dimension(450,
+						Short.MAX_VALUE));
 
-			JTextArea unitPrompt = new JTextArea(
-					"What unit will you be measuring your food with?");
-			unitPrompt.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
-			unitPrompt.setFont(GUI.CONTENT_FONT);
-			unitPrompt.setWrapStyleWord(true);
-			unitPrompt.setLineWrap(true);
-			unitPrompt.setEditable(false);
-			unitPrompt.setFocusable(false);
-			unitPrompt.setForeground(GUI.CONTENT_COLOUR);
-			unitPrompt.setOpaque(false);
-			unitSelectionLine.add(unitPrompt);
+				JTextArea unitPrompt = new JTextArea(
+						"What unit will you be measuring your food with?");
+				unitPrompt.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+				unitPrompt.setFont(GUI.CONTENT_FONT);
+				unitPrompt.setWrapStyleWord(true);
+				unitPrompt.setLineWrap(true);
+				unitPrompt.setEditable(false);
+				unitPrompt.setFocusable(false);
+				unitPrompt.setForeground(GUI.CONTENT_COLOUR);
+				unitPrompt.setOpaque(false);
+				unitSelectionLine.add(unitPrompt);
 
-			unitSelection = new JComboBox<WeightUnit>(
-					possibleUnits.toArray(WeightUnit.SAMPLE));
-			unitSelection.setForeground(GUI.CONTENT_COLOUR);
-			unitSelection.setFont(GUI.CONTENT_FONT);
-			unitSelection.setBackground(GUI.BACKGROUND_COLOUR);
-			unitSelection.setEditable(false);
-			unitSelection.addActionListener(new UnitSelectorListener());
-			unitSelectionLine.add(unitSelection);
+				unitSelection = new JComboBox<WeightUnit>(
+						possibleUnits.toArray(WeightUnit.SAMPLE));
+				unitSelection.setForeground(GUI.CONTENT_COLOUR);
+				unitSelection.setFont(GUI.CONTENT_FONT);
+				unitSelection.setBackground(GUI.BACKGROUND_COLOUR);
+				unitSelection.setEditable(false);
+				unitSelection.addActionListener(new UnitSelectorListener());
+				unitSelectionLine.add(unitSelection);
 
-			unitSelectionLine.setAlignmentX(LEFT_ALIGNMENT);
-			contentPanel.add(unitSelectionLine);
-			amountEntryPromptText = unitSelection.getModel().getElementAt(0)
-					.getDesc();
+				unitSelectionLine.setAlignmentX(LEFT_ALIGNMENT);
+				contentPanel.add(unitSelectionLine);
+				amountEntryPromptText = unitSelection.getModel()
+						.getElementAt(0).getDesc();
+			}
 		}
 
 		// asks the user for how much food they are consuming
@@ -381,6 +383,8 @@ public class InfoPanel extends JPanel {
 			selectedUnit = (WeightUnit) unitSelection.getModel()
 					.getSelectedItem();
 			String selectedUnitName = selectedUnit.getDesc();
+			System.out.println("changed unit to " + selectedUnitName); // TODO
+																		// debug
 			amountEntryPromptText = "You have selected to measure this food in "
 					+ selectedUnitName
 					+ ".\nPlease enter the amount of "
