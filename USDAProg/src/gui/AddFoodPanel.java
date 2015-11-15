@@ -233,8 +233,7 @@ public class AddFoodPanel extends JPanel {
 	class NutrientEntryLine extends JPanel {
 
 		private JTextField nutrientUnit;
-		private JSpinner amount; // TODO remember to multiply amount by 100
-									// before giving it to Gordon
+		private JSpinner amount;
 
 		private NutrientEntryLine(NutrientInfo nutrient) {
 			super(new BorderLayout());
@@ -261,12 +260,12 @@ public class AddFoodPanel extends JPanel {
 
 		}
 
-		private JTextField getNutrientUnit() {
-			return nutrientUnit;
+		private String getNutrientUnit() {
+			return nutrientUnit.getText().trim();
 		}
 
-		private JSpinner getAmount() {
-			return amount;
+		private double getAmountForEntry() {
+			return Double.parseDouble(amount.getModel().getValue().toString()) * 100.0;
 		}
 
 	}
@@ -275,11 +274,9 @@ public class AddFoodPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("method not implemented. trying to add food.");
-
-			// DataManager.getInstance().addFoodItem(new FoodItem()); // TODO
-			// this
-			// "datamanager getunusedndbnumber"
+			 DataManager.getInstance().addFoodItem(new FoodItem()); // TODO
+//			 this
+//			 "datamanager getunusedndbnumber"
 			// TODO add something to end of footnotes indicating it was added by
 			// user
 

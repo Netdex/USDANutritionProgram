@@ -147,10 +147,7 @@ public class PanelManager extends JPanel {
 			g.drawRect(x, y, width, height);
 
 			try {
-				g.setColor(new Color(
-						255 - (int) (LOADING_PERCENTAGE / 100.0 * 1024) % 255,
-						255 - (int) (LOADING_PERCENTAGE / 100.0 * 2000) % 255,
-						(int) (LOADING_PERCENTAGE / 100.0 * 4000) % 255));
+				g.setColor(GUI.ACCENT_COLOUR);
 			} catch (Exception e) {
 				System.err.println(e.getMessage());
 			}
