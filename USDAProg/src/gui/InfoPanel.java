@@ -26,10 +26,11 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.sun.corba.se.spi.orbutil.fsm.FSMImpl;
+
 import parser.FattyAcid;
 import parser.ImageExtract;
 import parser.parsables.FoodItem;
-import parser.parsables.FoodWeight;
 import parser.parsables.Nutrient;
 import parser.parsables.WeightUnit;
 import parser.util.DoublyLinkedList;
@@ -250,6 +251,8 @@ public class InfoPanel extends JPanel {
 		}
 
 		// select the unit to measure food with
+		amountEntryPromptText = "This item is measured in grams.\n"
+				+ "Please enter the amount of food you are intending on consuming.";
 		if (food.getWeightInfo() != null) {
 			DoublyLinkedList<WeightUnit> possibleUnits = new DoublyLinkedList<WeightUnit>(
 					food.getWeightInfo().getWeightUnits());
@@ -258,8 +261,7 @@ public class InfoPanel extends JPanel {
 				JPanel unitSelectionLine = new JPanel(new FlowLayout(
 						FlowLayout.LEFT));
 				unitSelectionLine.setOpaque(false);
-				unitSelectionLine.setMaximumSize(new Dimension(450,
-						Short.MAX_VALUE));
+				unitSelectionLine.setMinimumSize(new Dimension(400, 0));
 
 				JTextArea unitPrompt = new JTextArea(
 						"What unit will you be measuring your food with?");
@@ -284,8 +286,10 @@ public class InfoPanel extends JPanel {
 
 				unitSelectionLine.setAlignmentX(LEFT_ALIGNMENT);
 				contentPanel.add(unitSelectionLine);
-				amountEntryPromptText = unitSelection.getModel()
-						.getElementAt(0).getDesc();
+
+				selectedUnit = (WeightUnit) (unitSelection.getModel()
+						.getElementAt(0));
+				updateAmountEntryPrompt();
 			}
 		}
 
@@ -296,7 +300,6 @@ public class InfoPanel extends JPanel {
 		amountEntryLine.setLayout(amountEntryLayout);
 		amountEntryLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 
-		amountEntryPromptText = "This item is measured in grams.\nPlease enter the amount of food you are intending on consuming.";
 		amountEntryPrompt = new JTextArea(amountEntryPromptText);
 		amountEntryPrompt.setPreferredSize(new Dimension(350, 80));
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
@@ -367,15 +370,29 @@ public class InfoPanel extends JPanel {
 		return back;
 	}
 
-	private void updateFields() {
+	private void updateNutrientFields() {
 		for (NutrientInfoLine nutrientInfoLine : nutritionLabels) {
 			nutrientInfoLine.updateFields();
 		}
 		nutritionPanel.revalidate();
 		nutritionPanel.repaint();
-		
+
 		contentPanel.revalidate();
 		contentPanel.repaint();
+	}
+
+	private void updateAmountEntryPrompt() {
+		String selectedUnitName = selectedUnit.getDesc();
+		int separatorIndex = selectedUnitName.indexOf('(');
+		if (separatorIndex < 1)
+			separatorIndex = selectedUnitName.length();
+		amountEntryPromptText = "You have selected to measure this food in \""
+				+ selectedUnitName + "\".\nPlease enter the amount of "
+				+ selectedUnitName.substring(0, separatorIndex).trim()
+				+ "(s) you are intending to consume.";
+		amountEntryPrompt.setText(amountEntryPromptText);
+		amountEntryPrompt.revalidate();
+		amountEntryPrompt.repaint();
 	}
 
 	class UnitSelectorListener implements ActionListener {
@@ -384,19 +401,12 @@ public class InfoPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			selectedUnit = (WeightUnit) unitSelection.getModel()
 					.getSelectedItem();
-			String selectedUnitName = selectedUnit.getDesc();
-			//DEBUG
-			System.out.println("changed unit to " + selectedUnitName);
-			amountEntryPromptText = "You have selected to measure this food in "
-					+ selectedUnitName
-					+ ".\nPlease enter the amount of "
-					+ selectedUnitName + "(s) you are intending to consume.";
-			amountEntryPrompt.revalidate();
-			amountEntryPrompt.repaint();
+			
+			updateAmountEntryPrompt();
 
 			gramsOfFood = selectedUnit.getGramWeight() * amountOfUnits;
 
-			updateFields();
+			updateNutrientFields();
 		}
 	}
 
@@ -413,7 +423,7 @@ public class InfoPanel extends JPanel {
 				gramsOfFood = amountOfUnits;
 
 			// update all of the labels
-			updateFields();
+			updateNutrientFields();
 		}
 
 	}
