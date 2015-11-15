@@ -18,8 +18,10 @@ public class ParsableTest {
 		BinaryTreeMap<Integer, String> btm = new BinaryTreeMap<>();
 		btm.put(1, "Teest");
 		btm.put(2, "Teest");
+		btm.put(0, "Teest");
+		btm.put(-1, "teest");
 		System.out.println(btm);
-		btm.put(1, "NOOO");
+		btm.put(0, "NOOO");
 		System.out.println(btm);
 	}
 
