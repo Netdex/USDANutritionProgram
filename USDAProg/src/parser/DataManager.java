@@ -25,12 +25,21 @@ public class DataManager {
 
     }
 
+    /**
+     * Creates a new instance of DataManager if it is null, or return the existing instance.
+     * There should never be more than one DataManager in existence.
+     * @return the instance of the DataManager
+     */
     public static DataManager getInstance() {
         if (instance == null)
             instance = new DataManager();
         return instance;
     }
 
+    /**
+     * Tells the DataManager to use the following GUI for displaying loading progress
+     * @param gui
+     */
     public void bindProgressDisplay(GUI gui) {
         this.gui = gui;
     }
@@ -57,7 +66,7 @@ public class DataManager {
     }
 
     /**
-     * Runs code after the parsing is done
+     * Run any given code after all parsing is complete
      *
      * @param r The runnable containing the event to run
      */
@@ -125,14 +134,8 @@ public class DataManager {
         return parser.getFoodGroups().toArray(FoodGroup.SAMPLE);
     }
 
-    public Nutrient[] getNutrients(){
-        BinaryTreeMap<Short, Nutrient> nutrientMap = new BinaryTreeMap<>();
-        for(FoodItem fi : this.parser.getFoodItemMap().getAllValues().toArray(FoodItem.SAMPLE)){
-            for(Nutrient n : fi.getNutrientData().getNutrientArray()){
-                nutrientMap.put(n.getNutrNo(), n);
-            }
-        }
-        return nutrientMap.getAllValues().toArray(Nutrient.SAMPLE);
+    public NutrientInfo[] getNutrientData(){
+       return parser.getNutrientInfo().getAllValues().toArray(NutrientInfo.SAMPLE);
     }
 
     public Parser getParser() {

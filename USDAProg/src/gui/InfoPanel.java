@@ -177,7 +177,7 @@ public class InfoPanel extends JPanel {
 		// adds common name info
 		if (!food.getCommonName().equals("")) {
 			JTextArea commonName = new JTextArea("Other name(s) include: "
-					+ food.getCommonName().toString());
+					+ food.getCommonName());
 			commonName.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 			commonName.setFont(GUI.CONTENT_FONT);
 			commonName.setWrapStyleWord(true);
@@ -208,7 +208,7 @@ public class InfoPanel extends JPanel {
 		// add scientific name
 		if (!food.getScientificName().equals("")) {
 			JTextArea scientificName = new JTextArea("Scientific name: "
-					+ food.getScientificName().toString());
+					+ food.getScientificName());
 			scientificName.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 			scientificName.setFont(GUI.SCIENTIFIC_FONT);
 			scientificName.setAlignmentX(LEFT_ALIGNMENT);
@@ -224,7 +224,7 @@ public class InfoPanel extends JPanel {
 		// add manufacturer name
 		if (!food.getManufacturerName().equals("")) {
 			JTextArea manufacName = new JTextArea("Manufactured by: "
-					+ food.getManufacturerName().toString());
+					+ food.getManufacturerName());
 			manufacName.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 			manufacName.setFont(GUI.CONTENT_FONT);
 			manufacName.setAlignmentX(LEFT_ALIGNMENT);
@@ -247,10 +247,10 @@ public class InfoPanel extends JPanel {
 		String promptText;
 		if (food.getWeightInfo() != null)
 			promptText = "The unit used to measure this item is: \""
-					+ food.getWeightInfo().getDesc().toString() + "\" ("
+					+ food.getWeightInfo().getDesc() + "\" ("
 					+ food.getWeightInfo().getGramWeight()
 					+ " grams).\nPlease enter the amount in "
-					+ food.getWeightInfo().getDesc().toString()
+					+ food.getWeightInfo().getDesc()
 					+ "(s) you are intending to consume";
 		else
 			promptText = "This item is measured in grams.\nPlease enter the number of grams you are consuming.";

@@ -22,6 +22,8 @@ import javax.swing.SpinnerNumberModel;
 import parser.DataManager;
 import parser.parsables.FoodGroup;
 import parser.parsables.Nutrient;
+import parser.parsables.NutrientData;
+import parser.parsables.NutrientInfo;
 import parser.util.DoublyLinkedList;
 
 public class AddFoodPanel extends JPanel {
@@ -168,10 +170,10 @@ public class AddFoodPanel extends JPanel {
 				nutrientAdd.setLayout(new BoxLayout(nutrientAdd,
 						BoxLayout.Y_AXIS));
 
-				Nutrient[] listOfNutrients = DataManager.getInstance().getNutrients();
+				NutrientInfo[] listOfNutrients = DataManager.getInstance().getNutrientData();
 				DoublyLinkedList<NutrientEntryLine> nutrientEntries = new DoublyLinkedList<NutrientEntryLine>();
 
-				for (Nutrient nutrient : listOfNutrients) {
+				for (NutrientInfo nutrient : listOfNutrients) {
 					NutrientEntryLine line = new NutrientEntryLine(nutrient);
 					nutrientEntries.add(line);
 					nutrientAdd.add(line);
@@ -234,14 +236,14 @@ public class AddFoodPanel extends JPanel {
 		private JSpinner amount; // TODO remember to multiply amount by 100
 									// before giving it to Gordon
 
-		private NutrientEntryLine(Nutrient nutrient) {
+		private NutrientEntryLine(NutrientInfo nutrient) {
 			super(new BorderLayout());
 			this.setBackground(GUI.BACKGROUND_COLOUR);
 
-			add(new CustomizedTextArea(nutrient.getNutrientInfo()
+			add(new CustomizedTextArea(nutrient
 					.getNutrientName()), BorderLayout.WEST);
 
-			nutrientUnit = new JTextField("Unit");
+			nutrientUnit = new JTextField(nutrient.getUnit());
 			nutrientUnit.setFont(GUI.CONTENT_FONT);
 			nutrientUnit.setOpaque(false);
 			nutrientUnit.setForeground(GUI.CONTENT_COLOUR);
@@ -255,7 +257,7 @@ public class AddFoodPanel extends JPanel {
 			amount.setFocusable(false);
 			amount.setForeground(GUI.CONTENT_COLOUR);
 			amount.setBackground(GUI.BACKGROUND_COLOUR);
-			add(amount, BorderLayout.WEST);
+			add(amount, BorderLayout.EAST);
 
 		}
 

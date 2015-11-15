@@ -12,6 +12,7 @@ import parser.InvalidParseDataException;
  */
 public class NutrientInfo implements Parsable<NutrientInfo>, Formattable {
 
+	public static NutrientInfo SAMPLE = new NutrientInfo();
 	public static final int PARSE_DATA_LENGTH = 6;
 	
 	@Override

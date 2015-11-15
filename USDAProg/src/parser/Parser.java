@@ -102,6 +102,9 @@ public class Parser {
 
 	}
 
+	public BinaryTreeMap<Integer, NutrientInfo> getNutrientInfo(){
+		return map_nutrDesc;
+	}
 	private void parseFootnotes() throws IOException, InvalidParseDataException {
 		BufferedReader br = new BufferedReader(new FileReader(dataFiles[7]));
 
