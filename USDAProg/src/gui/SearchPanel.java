@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -37,16 +38,18 @@ public class SearchPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		this.setBackground(GUI.BACKGROUND_COLOUR);
 
-		JPanel headerPanel = new JPanel();
-		headerPanel.setLayout(new FlowLayout());
-		headerPanel.setBackground(GUI.HEADER_COLOUR);
-		headerPanel.add(new HomeButton(manager));
+		JPanel header = new JPanel();
+		header.setLayout(new FlowLayout(FlowLayout.LEFT));
+		header.setBackground(GUI.HEADER_COLOUR);
+		header.add(new HomeButton(manager));
 
 		searchBox = new JTextField("Search...", 22);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 		searchBox.setBackground(Color.WHITE);
 		searchBox.setForeground(searchBoxGray);
 		searchBox.setBorder(GUI.EMPTY_BORDER);
+		searchBox.setAlignmentX(LEFT_ALIGNMENT);
+		searchBox.setMinimumSize(new Dimension(400, 0));
 		searchBox.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (searchBox.getText().equals("Search...")) {
@@ -55,9 +58,9 @@ public class SearchPanel extends JPanel {
 				}
 			}
 		});
-		headerPanel.add(searchBox);
+		header.add(searchBox);
 		searchBox.addKeyListener(new SearchBoxActionListener());
-		this.add(headerPanel, BorderLayout.NORTH);
+		this.add(header, BorderLayout.NORTH);
 
 		resultsPanel = new JPanel();
 		resultsPanel.setBackground(GUI.BACKGROUND_COLOUR);
@@ -108,6 +111,7 @@ public class SearchPanel extends JPanel {
 			for (int i = 0; i < results.length; i++) {
 				FoodItemButton button = new FoodItemButton(results[i], manager);
 				resultsPanel.add(button);
+				resultsPanel.add(Box.createRigidArea(new Dimension(0, 7)));
 				button.repaint();
 			}
 		else {

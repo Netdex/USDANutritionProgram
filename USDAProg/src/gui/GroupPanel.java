@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -37,7 +38,9 @@ public class GroupPanel extends JPanel {
 		title.setFont(GUI.TITLE_FONT);
 		title.setForeground(GUI.TITLE_COLOUR);
 		title.setOpaque(false);
+		title.setAlignmentX(LEFT_ALIGNMENT);
 		header.add(title);
+
 		header.setBackground(GUI.HEADER_COLOUR);
 		this.add(header, BorderLayout.NORTH);
 
@@ -60,6 +63,7 @@ public class GroupPanel extends JPanel {
 					FoodGroupButton button = new FoodGroupButton(foodGroups[i]);
 					button.setAlignmentX(LEFT_ALIGNMENT);
 					groupsList.add(button);
+					groupsList.add(Box.createRigidArea(new Dimension(0, 7)));
 				}
 			}
 		};

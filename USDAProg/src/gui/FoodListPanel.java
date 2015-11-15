@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -74,6 +75,7 @@ public class FoodListPanel extends JPanel {
 		for (int i = 0; i < foods.length; i++) {
 			FoodButton button = new FoodButton(foods[i], manager);
 			foodsList.add(button);
+			foodsList.add(Box.createRigidArea(new Dimension(0, 7)));
 		}
 
 		foodsList.revalidate();

@@ -65,9 +65,10 @@ public class PanelManager extends JPanel {
 	protected void switchToSearchPanel(boolean reset) {
 		if (LOADING_PERCENTAGE == -1) {
 			cardLayoutManager.show(this, "search");
-			searchPanel.resetSearchBox();
-			if (reset)
+			if (reset) {
+				searchPanel.resetSearchBox();
 				searchPanel.resetResults();
+			}
 		}
 	}
 
