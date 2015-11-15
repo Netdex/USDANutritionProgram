@@ -20,10 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import parser.DataManager;
-import parser.parsables.FoodGroup;
-import parser.parsables.Nutrient;
-import parser.parsables.NutrientData;
-import parser.parsables.NutrientInfo;
+import parser.parsables.*;
 import parser.util.DoublyLinkedList;
 
 public class AddFoodPanel extends JPanel {
