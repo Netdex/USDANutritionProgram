@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,31 +29,38 @@ import javax.swing.event.ChangeListener;
 import parser.FattyAcid;
 import parser.ImageExtract;
 import parser.parsables.FoodItem;
+import parser.parsables.FoodWeight;
 import parser.parsables.Nutrient;
+import parser.util.DoublyLinkedList;
 
 public class InfoPanel extends JPanel {
 
 	private FoodItem food;
 	private double gramsOfFood = 1;
-	// private double nutritionMultiplier;
 
 	private SearchPanel searchPanel;
 	private PanelManager manager;
 
-	private String titleName;
 	private JPanel header;
+	private String titleName;
+	private JLabel titleLabel;
+	private BackButton back;
+
 	private JPanel contentPanel;
 	private JPanel nutritionPanel;
-	private JLabel titleLabel;
-	private JSpinner amountEntry;
 	private JScrollPane contentScrollbar;
-	private BackButton back;
+
+	private String amountEntryPromptText;
+	private JTextArea amountEntryPrompt;
+	private JSpinner amountEntry;
+	private JComboBox<FoodWeight> unitSelection;
+	private FoodWeight selectedUnit; // if this is null, then it's in grams
+
+	private Nutrient[] nutrients;
+	private NutrientInfoLine[] nutritionLabels;
 
 	protected static final javax.swing.border.Border BLACK_BORDER = BorderFactory
 			.createLineBorder(GUI.ACCENT_COLOUR, 2);
-
-	private Nutrient[] nutrients;
-	private NutrientInfoPanel[] nutritionLabels;
 
 	public InfoPanel(SearchPanel searchPanel, PanelManager manager) {
 		super();
@@ -237,6 +245,35 @@ public class InfoPanel extends JPanel {
 			contentPanel.add(manufacName);
 		}
 
+		// select the unit to measure food with
+		selectedUnit = null;
+		JPanel unitSelectionLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		unitSelectionLine.setOpaque(false);
+		unitSelectionLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+
+		JTextArea unitPrompt = new JTextArea(
+				"What unit will you be measuring your food with?");
+		unitPrompt.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+		unitPrompt.setFont(GUI.CONTENT_FONT);
+		unitPrompt.setAlignmentX(LEFT_ALIGNMENT);
+		unitPrompt.setWrapStyleWord(true);
+		unitPrompt.setLineWrap(true);
+		unitPrompt.setEditable(false);
+		unitPrompt.setFocusable(false);
+		unitPrompt.setForeground(GUI.CONTENT_COLOUR);
+		unitPrompt.setOpaque(false);
+		unitSelectionLine.add(unitPrompt);
+
+		// TODO get ALL possible weight measurements for a food
+		// also add "grams" to the end
+		FoodWeight[] possibleUnits = new FoodWeight[0];
+		if (possibleUnits.length > 0) {
+			unitSelection = new JComboBox<FoodWeight>(possibleUnits);
+			unitSelection.setForeground(GUI.CONTENT_COLOUR);
+			unitSelection.setBackground(GUI.BACKGROUND_COLOUR);
+			unitSelection.addActionListener(new UnitSelectorListener());
+		}
+
 		// asks the user for how much food they are consuming
 		JPanel amountEntryLine = new JPanel();
 		amountEntryLine.setOpaque(false);
@@ -244,18 +281,8 @@ public class InfoPanel extends JPanel {
 		amountEntryLine.setLayout(amountEntryLayout);
 		amountEntryLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 
-		String promptText;
-		if (food.getWeightInfo() != null)
-			promptText = "The unit used to measure this item is: \""
-					+ food.getWeightInfo().getDesc() + "\" ("
-					+ food.getWeightInfo().getGramWeight()
-					+ " grams).\nPlease enter the amount in "
-					+ food.getWeightInfo().getDesc()
-					+ "(s) you are intending to consume";
-		else
-			promptText = "This item is measured in grams.\nPlease enter the number of grams you are consuming.";
-
-		JTextArea amountEntryPrompt = new JTextArea(promptText);
+		amountEntryPromptText = "This item is measured in grams.\nPlease enter the amount of food you are intending on consuming.";
+		amountEntryPrompt = new JTextArea(amountEntryPromptText);
 		amountEntryPrompt.setPreferredSize(new Dimension(350, 80));
 		amountEntryPrompt.setFont(GUI.CONTENT_FONT);
 		amountEntryPrompt.setAlignmentX(LEFT_ALIGNMENT);
@@ -293,10 +320,9 @@ public class InfoPanel extends JPanel {
 
 		nutrients = food.getNutrientData().getNutrients()
 				.toArray(Nutrient.SAMPLE);
-		nutritionLabels = new NutrientInfoPanel[nutrients.length];
+		nutritionLabels = new NutrientInfoLine[nutrients.length];
 		for (int i = 0; i < nutrients.length; i++) {
-			NutrientInfoPanel nutrientPanel = new NutrientInfoPanel(
-					nutrients[i]);
+			NutrientInfoLine nutrientPanel = new NutrientInfoLine(nutrients[i]);
 			nutritionLabels[i] = nutrientPanel;
 			nutritionPanel.add(nutrientPanel);
 		}
@@ -327,31 +353,50 @@ public class InfoPanel extends JPanel {
 		return back;
 	}
 
-	// protected void setNutritionMultiplier(double personalizedMultiplier)
-	// {
-	// this.nutritionMultiplier = personalizedMultiplier;
-	// for (NutritionInfoLabel label : nutritionLabels) {
-	// label.updateAmounts(gramsOfFood);
-	// }
-	// }
+	private void updateFields() {
+		for (NutrientInfoLine nutrientInfoLine : nutritionLabels) {
+			nutrientInfoLine.updateFields();
+		}
+	}
+
+	class UnitSelectorListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO
+			selectedUnit = (FoodWeight) unitSelection.getModel()
+					.getSelectedItem();
+			String unitName = selectedUnit.getDesc();
+			amountEntryPromptText = "You have selected to measure this food in "
+					+ unitName
+					+ ".\nPlease enter the amount of "
+					+ unitName
+					+ "(s) you are intending to consume.";
+			amountEntryPrompt.revalidate();
+			amountEntryPrompt.repaint();
+
+			gramsOfFood = selectedUnit.getGramWeight()
+					* Double.parseDouble(amountEntry.getValue().toString());
+
+			updateFields();
+		}
+	}
 
 	class AmountEntryListener implements ChangeListener {
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
-			double newAmountInArbitraryUnits = Double.parseDouble(amountEntry
+			double newAmountInThatUnit = Double.parseDouble(amountEntry
 					.getModel().getValue().toString());
 			if (food.getWeightInfo() != null)
-				gramsOfFood = newAmountInArbitraryUnits
-						* food.getWeightInfo().getGramWeight();
+				gramsOfFood = newAmountInThatUnit
+						* selectedUnit.getGramWeight();
 			else
 				// actually in grams, not arbitrary units
-				gramsOfFood = newAmountInArbitraryUnits;
+				gramsOfFood = newAmountInThatUnit;
 
 			// update all of the labels
-			for (NutrientInfoPanel nutPanel : nutritionLabels) {
-				nutPanel.updateFields();
-			}
+			updateFields();
 
 			nutritionPanel.revalidate();
 			nutritionPanel.repaint();
@@ -369,7 +414,7 @@ public class InfoPanel extends JPanel {
 
 	}
 
-	class NutrientInfoPanel extends JPanel {
+	class NutrientInfoLine extends JPanel {
 
 		private Nutrient nutrient;
 		private double amountPerGram;
@@ -377,7 +422,7 @@ public class InfoPanel extends JPanel {
 		private JLabel amount;
 		private JLabel nameLabel;
 
-		private NutrientInfoPanel(Nutrient nut) {
+		private NutrientInfoLine(Nutrient nut) {
 			super();
 			this.nutrient = nut;
 			this.amountPerGram = nutrient.getNutrVal() / 100;

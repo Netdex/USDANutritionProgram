@@ -32,7 +32,7 @@ public class AddFoodPanel extends JPanel {
 	private JPanel contentPanel;
 	private JScrollPane contentScrollbar;
 
-	private CustomTextEntryBox nameEntry;
+	private CustomTextEntryBox longDescEntry;
 	private CustomTextEntryBox commonNameEntry;
 	private CustomTextEntryBox manufacNameEntry;
 	private CustomTextEntryBox weightUnitEntry;
@@ -68,16 +68,16 @@ public class AddFoodPanel extends JPanel {
 		contentPanel.add(Box.createRigidArea(new Dimension(0, 25)));
 
 		// longDesc
-		JPanel nameLine = new JPanel(new BorderLayout());
-		nameLine.setBackground(GUI.BACKGROUND_COLOUR);
-		nameLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+		JPanel longDescLine = new JPanel(new BorderLayout());
+		longDescLine.setBackground(GUI.BACKGROUND_COLOUR);
+		longDescLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 
-		nameLine.add(new CustomizedTextArea(
+		longDescLine.add(new CustomizedTextArea(
 				"What is the name of your new food?"), BorderLayout.CENTER);
 
-		nameEntry = new CustomTextEntryBox("Name");
-		nameLine.add(nameEntry, BorderLayout.EAST);
-		contentPanel.add(nameLine);
+		longDescEntry = new CustomTextEntryBox("Name");
+		longDescLine.add(longDescEntry, BorderLayout.EAST);
+		contentPanel.add(longDescLine);
 		contentPanel.add(Box.createRigidArea(new Dimension(0, 7)));
 
 		// commonName
@@ -225,7 +225,7 @@ public class AddFoodPanel extends JPanel {
 	}
 
 	protected void resetFields() {
-		nameEntry.setText("Name");
+		longDescEntry.setText("Name");
 		commonNameEntry.setText("Common Name");
 		manufacNameEntry.setText("Manufacturer Name");
 		weightUnitEntry.setText("Unit");
@@ -278,10 +278,15 @@ public class AddFoodPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			DataManager.getInstance().addFoodItem(new FoodItem()); // TODO
-			// this
-			// "datamanager getunusedndbnumber"
-			// TODO add something to end of footnotes indicating it was added by
+			int ndbNo = DataManager.getInstance().getUnusedNDBNumber();
+			int groupID = ((FoodGroup) foodGroupEntry.getModel().getSelectedItem()).getFoodGroupID();
+			String longDesc = longDescEntry.getText();
+			String commonName = commonNameEntry.getText();
+			String manufacName = manufacNameEntry.getText();
+			DataManager.getInstance().addFoodItem(new FoodItem());
+			
+			
+			//TODO add something to end of footnotes indicating it was added by
 			// user
 
 		}
