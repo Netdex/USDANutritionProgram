@@ -21,9 +21,14 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import parser.DataManager;
+import parser.InvalidParseDataException;
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
+import parser.parsables.Footnote;
+import parser.parsables.Nutrient;
+import parser.parsables.NutrientData;
 import parser.parsables.NutrientInfo;
+import parser.parsables.WeightUnit;
 import parser.util.DoublyLinkedList;
 
 public class AddFoodPanel extends JPanel {
@@ -38,6 +43,7 @@ public class AddFoodPanel extends JPanel {
 	private CustomTextEntryBox weightUnitEntry;
 	private JSpinner gramsPerEntry;
 	private JComboBox<FoodGroup> foodGroupEntry;
+	private DoublyLinkedList<NutrientEntryLine> nutrientEntries;
 
 	protected AddFoodPanel(PanelManager pManager) {
 		super();
@@ -186,7 +192,7 @@ public class AddFoodPanel extends JPanel {
 
 				NutrientInfo[] listOfNutrients = DataManager.getInstance()
 						.getNutrientData();
-				DoublyLinkedList<NutrientEntryLine> nutrientEntries = new DoublyLinkedList<NutrientEntryLine>();
+				nutrientEntries = new DoublyLinkedList<NutrientEntryLine>();
 
 				for (int i = listOfNutrients.length - 1; i >= 0; i--) {
 					NutrientEntryLine line = new NutrientEntryLine(
@@ -251,10 +257,12 @@ public class AddFoodPanel extends JPanel {
 	class NutrientEntryLine extends JPanel {
 
 		private JSpinner amount;
+		private NutrientInfo nutrient;
 
-		private NutrientEntryLine(NutrientInfo nutrient) {
+		private NutrientEntryLine(NutrientInfo nut) {
 			super(new BorderLayout());
 			this.setBackground(GUI.BACKGROUND_COLOUR);
+			this.nutrient = nut;
 
 			this.add(new CustomizedTextArea(nutrient.getNutrientName() + " ("
 					+ nutrient.getUnit() + ")"), BorderLayout.CENTER);
@@ -268,6 +276,10 @@ public class AddFoodPanel extends JPanel {
 			this.add(amount, BorderLayout.EAST);
 		}
 
+		private NutrientInfo getNutrient() {
+			return nutrient;
+		}
+
 		private double getAmountForEntry() {
 			return Double.parseDouble(amount.getModel().getValue().toString()) * 100.0;
 		}
@@ -279,14 +291,60 @@ public class AddFoodPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int ndbNo = DataManager.getInstance().getUnusedNDBNumber();
-			int groupID = ((FoodGroup) foodGroupEntry.getModel().getSelectedItem()).getFoodGroupID();
+			int groupID = ((FoodGroup) foodGroupEntry.getModel()
+					.getSelectedItem()).getFoodGroupID();
 			String longDesc = longDescEntry.getText();
 			String commonName = commonNameEntry.getText();
 			String manufacName = manufacNameEntry.getText();
-			DataManager.getInstance().addFoodItem(new FoodItem());
-			
-			
-			//TODO add something to end of footnotes indicating it was added by
+
+			WeightUnit unit = new WeightUnit();
+			try {
+				unit = unit.parse(new String[] { ndbNo + "", "0",
+						weightUnitEntry.getText(),
+						gramsPerEntry.getModel().getValue().toString() + "",
+						"", "" });
+			} catch (InvalidParseDataException e1) {
+				e1.printStackTrace();
+			}
+
+			NutrientData nutrients = new NutrientData();
+			NutrientEntryLine[] nutEntryLineArray = nutrientEntries
+					.toArray(new NutrientEntryLine(new NutrientInfo()));
+			for (int i = 0; i < nutEntryLineArray.length; i++) {
+				NutrientEntryLine line = nutEntryLineArray[i];
+				Nutrient nut = new Nutrient();
+				try {
+					nut.parse(new String[] { ndbNo + "",
+							line.getNutrient().getNutrientNumber() + "",
+							line.getAmountForEntry() + "" });
+				} catch (InvalidParseDataException e1) {
+					e1.printStackTrace();
+				}
+				nutrients.addNutrient(nut);
+			}
+
+			FoodItem newFood = new FoodItem();
+			try {
+				newFood = newFood.parse(new String[] { ndbNo + "",
+						groupID + "", longDesc, "", commonName, manufacName,
+						"", "", "", "", "", "", "", "" });
+			} catch (InvalidParseDataException e1) {
+				e1.printStackTrace();
+			}
+
+			Footnote footnote = new Footnote();
+			try {
+				footnote = footnote.parse(new String[] { ndbNo + "", "", "D",
+						"", "Created by user." });
+			} catch (InvalidParseDataException e1) {
+				e1.printStackTrace();
+			}
+
+			newFood.setFootnotes(footnote);
+			newFood.setNutrientData(nutrients);
+			DataManager.getInstance().addFoodItem(newFood);
+
+			// TODO add something to end of footnotes indicating it was added by
 			// user
 
 		}
