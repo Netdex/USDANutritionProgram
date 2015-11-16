@@ -281,7 +281,7 @@ public class AddFoodPanel extends JPanel {
 		commonNameEntry.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
 		manufacNameEntry.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
 		weightUnitEntry.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
-		
+
 		this.revalidate();
 		this.repaint();
 	}
@@ -413,7 +413,8 @@ public class AddFoodPanel extends JPanel {
 				manufacName = "";
 
 			// Specifies the units the food is measured in.
-			if (weightUnitEntry.getText().equals("Unit") || weightUnitEntry.getText().equals("")) {
+			if (weightUnitEntry.getText().equals("Unit")
+					|| weightUnitEntry.getText().equals("")) {
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
 						"The unit cannot be left blank", "Invalid field",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
@@ -434,9 +435,11 @@ public class AddFoodPanel extends JPanel {
 			NutrientData nutrients = new NutrientData();
 			NutrientEntryLine[] nutEntryLineArray = nutrientEntries
 					.toArray(new NutrientEntryLine());
+			boolean selectedNutrient = false;
 			for (int i = 0; i < nutEntryLineArray.length; i++) {
 				NutrientEntryLine line = nutEntryLineArray[i];
 				if (line.getAmountForEntry() != 0) {
+					selectedNutrient = true;
 					Nutrient nut = new Nutrient();
 					try {
 						nut.parse(new String[] { ndbNo + "",
@@ -450,13 +453,20 @@ public class AddFoodPanel extends JPanel {
 					nutrients.addNutrient(nut);
 				}
 			}
+			if (!selectedNutrient) {
+				JOptionPane.showConfirmDialog(AddFoodPanel.this,
+						"You must enter at least one nutrient",
+						"Invalid entry", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
 			// Actually creates the new food object
 			FoodItem newFood = new FoodItem();
 			try {
 				newFood = newFood.parse(new String[] { ndbNo + "",
-						group.getFoodGroupID() + "", longDesc, "", commonName, manufacName,
-						"", "", "", "", "", "", "", "" });
+						group.getFoodGroupID() + "", longDesc, "", commonName,
+						manufacName, "", "", "", "", "", "", "", "" });
 			} catch (InvalidParseDataException e1) {
 				e1.printStackTrace();
 			}
@@ -485,9 +495,9 @@ public class AddFoodPanel extends JPanel {
 	 * @author Vince Ou
 	 */
 	class CustomTextEntryBox extends JTextField {
-		
+
 		private String text;
-		
+
 		/**
 		 * Constructor.
 		 * 
@@ -506,7 +516,7 @@ public class AddFoodPanel extends JPanel {
 			// Makes the "prompt" text disappear when clicked.
 			this.addFocusListener(new TextFocusListener());
 		}
-		
+
 		class TextFocusListener implements FocusListener {
 
 			@Override
@@ -514,7 +524,7 @@ public class AddFoodPanel extends JPanel {
 				if (CustomTextEntryBox.this.getText().equals(text)) {
 					CustomTextEntryBox.this.setText("");
 				}
-				CustomTextEntryBox.this.setForeground(GUI.CONTENT_COLOUR);	
+				CustomTextEntryBox.this.setForeground(GUI.CONTENT_COLOUR);
 				CustomTextEntryBox.this.revalidate();
 				CustomTextEntryBox.this.repaint();
 			}
@@ -524,11 +534,11 @@ public class AddFoodPanel extends JPanel {
 				if (CustomTextEntryBox.this.getText().equals("")) {
 					CustomTextEntryBox.this.setText(text);
 				}
-				CustomTextEntryBox.this.setForeground(GUI.SEARCH_BOX_GREY_GRAY);	
+				CustomTextEntryBox.this.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
 				CustomTextEntryBox.this.revalidate();
-				CustomTextEntryBox.this.repaint();			
+				CustomTextEntryBox.this.repaint();
 			}
-			
+
 		}
 	}
 }
