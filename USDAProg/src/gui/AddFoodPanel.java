@@ -165,8 +165,8 @@ public class AddFoodPanel extends JPanel {
 								"How many grams are in each unit (as indicated above)?"),
 								BorderLayout.CENTER);
 
-				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1, 0, 999,
-						1));
+				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1.000, 0.001, 999.999,
+						0.025));
 				gramsPerEntry.setFont(GUI.CONTENT_FONT);
 				gramsPerEntry.setPreferredSize(new Dimension(150, 30));
 				gramsPerEntry.setFocusable(false);
@@ -267,7 +267,7 @@ public class AddFoodPanel extends JPanel {
 			this.add(new CustomizedTextArea(nutrient.getNutrientName() + " ("
 					+ nutrient.getUnit() + ")"), BorderLayout.CENTER);
 
-			amount = new JSpinner(new SpinnerNumberModel(0, 0, 9999, 1));
+			amount = new JSpinner(new SpinnerNumberModel(0.000, 0.000, 9999.999, 0.500));
 			amount.setFont(GUI.CONTENT_FONT);
 			amount.setOpaque(false);
 			amount.setFocusable(true);
@@ -343,9 +343,6 @@ public class AddFoodPanel extends JPanel {
 			newFood.setFootnotes(footnote);
 			newFood.setNutrientData(nutrients);
 			DataManager.getInstance().addFoodItem(newFood);
-
-			// TODO add something to end of footnotes indicating it was added by
-			// user
 
 		}
 	}

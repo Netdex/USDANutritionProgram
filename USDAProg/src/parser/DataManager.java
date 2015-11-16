@@ -1,14 +1,19 @@
 package parser;
 
 import gui.GUI;
-import parser.parsables.*;
-import parser.util.BinaryTreeMap;
-import parser.util.DoublyLinkedList;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+
+import parser.parsables.FoodGroup;
+import parser.parsables.FoodItem;
+import parser.parsables.Footnote;
+import parser.parsables.NutrientData;
+import parser.parsables.NutrientInfo;
+import parser.util.BinaryTreeMap;
+import parser.util.DoublyLinkedList;
 
 public class DataManager {
 

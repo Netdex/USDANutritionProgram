@@ -1,10 +1,10 @@
 package parser;
 
-import parser.parsables.FoodItem;
-import parser.util.BinaryTreeMap;
-
 import java.io.File;
 import java.util.Scanner;
+
+import parser.parsables.FoodItem;
+import parser.util.BinaryTreeMap;
 
 public class ParsableTest {
 

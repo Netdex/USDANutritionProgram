@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,8 +26,6 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import com.sun.corba.se.spi.orbutil.fsm.FSMImpl;
 
 import parser.FattyAcid;
 import parser.ImageExtract;
@@ -186,6 +185,7 @@ public class InfoPanel extends JPanel {
 		longName.setFocusable(false);
 		longName.setAlignmentX(LEFT_ALIGNMENT);
 		contentPanel.add(longName);
+		contentPanel.add(Box.createRigidArea(new Dimension(0, 9)));
 
 		// adds common name info
 		if (!food.getCommonName().equals("")) {
@@ -201,6 +201,7 @@ public class InfoPanel extends JPanel {
 			commonName.setLineWrap(true);
 			commonName.setAlignmentX(LEFT_ALIGNMENT);
 			contentPanel.add(commonName);
+			contentPanel.add(Box.createRigidArea(new Dimension(0, 9)));
 		}
 
 		// adds food group info
@@ -217,6 +218,7 @@ public class InfoPanel extends JPanel {
 		gramsOfNutrientLabel.setFocusable(false);
 		gramsOfNutrientLabel.setOpaque(false);
 		contentPanel.add(gramsOfNutrientLabel);
+		contentPanel.add(Box.createRigidArea(new Dimension(0, 9)));
 
 		// add scientific name
 		if (!food.getScientificName().equals("")) {
@@ -232,6 +234,7 @@ public class InfoPanel extends JPanel {
 			scientificName.setForeground(GUI.CONTENT_COLOUR);
 			scientificName.setOpaque(false);
 			contentPanel.add(scientificName);
+			contentPanel.add(Box.createRigidArea(new Dimension(0, 9)));
 		}
 
 		// add manufacturer name
@@ -248,18 +251,18 @@ public class InfoPanel extends JPanel {
 			manufacName.setOpaque(false);
 			manufacName.setForeground(GUI.CONTENT_COLOUR);
 			contentPanel.add(manufacName);
+			contentPanel.add(Box.createRigidArea(new Dimension(0, 9)));
 		}
 
 		// select the unit to measure food with
 		amountEntryPromptText = "This item is measured in grams.\n"
-				+ "Please enter the amount of food you are intending on consuming.";
+				+ "Please enter the number of grams you are intending on consuming.";
 		if (food.getWeightInfo() != null) {
 			DoublyLinkedList<WeightUnit> possibleUnits = new DoublyLinkedList<WeightUnit>(
 					food.getWeightInfo().getWeightUnits());
 			possibleUnits.add(WeightUnit.GRAM);
 			if (possibleUnits.size() > 1) {
-				JPanel unitSelectionLine = new JPanel(new FlowLayout(
-						FlowLayout.LEFT));
+				JPanel unitSelectionLine = new JPanel(new BorderLayout());
 				unitSelectionLine.setOpaque(false);
 				unitSelectionLine.setMinimumSize(new Dimension(400, 0));
 
@@ -273,7 +276,7 @@ public class InfoPanel extends JPanel {
 				unitPrompt.setFocusable(false);
 				unitPrompt.setForeground(GUI.CONTENT_COLOUR);
 				unitPrompt.setOpaque(false);
-				unitSelectionLine.add(unitPrompt);
+				unitSelectionLine.add(unitPrompt, BorderLayout.CENTER);
 
 				unitSelection = new JComboBox<WeightUnit>(
 						possibleUnits.toArray(WeightUnit.SAMPLE));
@@ -282,10 +285,11 @@ public class InfoPanel extends JPanel {
 				unitSelection.setBackground(GUI.BACKGROUND_COLOUR);
 				unitSelection.setEditable(false);
 				unitSelection.addActionListener(new UnitSelectorListener());
-				unitSelectionLine.add(unitSelection);
+				unitSelectionLine.add(unitSelection, BorderLayout.EAST);
 
 				unitSelectionLine.setAlignmentX(LEFT_ALIGNMENT);
 				contentPanel.add(unitSelectionLine);
+				contentPanel.add(Box.createRigidArea(new Dimension(0, 9)));
 
 				selectedUnit = (WeightUnit) (unitSelection.getModel()
 						.getElementAt(0));
@@ -294,17 +298,16 @@ public class InfoPanel extends JPanel {
 				if (separatorIndex < 1)
 					separatorIndex = selectedUnitName.length();
 				amountEntryPromptText = "You have selected to measure this food in \""
-						+ selectedUnitName + "\".\nPlease enter the amount of "
+						+ selectedUnitName
+						+ "\".\nPlease enter the amount of "
 						+ selectedUnitName.substring(0, separatorIndex).trim()
 						+ "(s) you are intending to consume.";
 			}
 		}
 
 		// asks the user for how much food they are consuming
-		JPanel amountEntryLine = new JPanel();
+		JPanel amountEntryLine = new JPanel(new BorderLayout());
 		amountEntryLine.setOpaque(false);
-		FlowLayout amountEntryLayout = new FlowLayout(FlowLayout.LEFT);
-		amountEntryLine.setLayout(amountEntryLayout);
 		amountEntryLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 
 		amountEntryPrompt = new JTextArea(amountEntryPromptText);
@@ -317,10 +320,10 @@ public class InfoPanel extends JPanel {
 		amountEntryPrompt.setEditable(false);
 		amountEntryPrompt.setFocusable(false);
 		amountEntryPrompt.setOpaque(false);
-		amountEntryLine.add(amountEntryPrompt);
+		amountEntryLine.add(amountEntryPrompt, BorderLayout.CENTER);
 
-		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(1, 1, 999,
-				1);
+		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(1.000,
+				1.000, 999.999, 0.500);
 		amountEntry = new JSpinner(amountEntryModel);
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.setFont(GUI.CONTENT_FONT);
@@ -328,10 +331,11 @@ public class InfoPanel extends JPanel {
 		amountEntry.setForeground(GUI.CONTENT_COLOUR);
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.addChangeListener(new AmountEntryListener());
-		amountEntryLine.add(amountEntry);
+		amountEntryLine.add(amountEntry, BorderLayout.EAST);
 
 		amountEntryLine.setAlignmentX(LEFT_ALIGNMENT);
 		contentPanel.add(amountEntryLine);
+		contentPanel.add(Box.createRigidArea(new Dimension(0, 9)));
 
 		// create the base "framework" for displaying nutrients
 		nutritionPanel = new JPanel();
@@ -408,7 +412,7 @@ public class InfoPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			selectedUnit = (WeightUnit) unitSelection.getModel()
 					.getSelectedItem();
-			
+
 			updateAmountEntryPrompt();
 
 			gramsOfFood = selectedUnit.getGramWeight() * amountOfUnits;

@@ -1,14 +1,25 @@
 package parser;
 
 import gui.GUI;
-import parser.parsables.*;
-import parser.util.BinaryTreeMap;
-import parser.util.DoublyLinkedList;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
+import parser.parsables.FoodGroup;
+import parser.parsables.FoodItem;
+import parser.parsables.FoodWeight;
+import parser.parsables.Footnote;
+import parser.parsables.LanguaL;
+import parser.parsables.LanguaLDescription;
+import parser.parsables.LanguaLGroup;
+import parser.parsables.Nutrient;
+import parser.parsables.NutrientData;
+import parser.parsables.NutrientInfo;
+import parser.parsables.WeightUnit;
+import parser.util.BinaryTreeMap;
+import parser.util.DoublyLinkedList;
 
 /**
  * Creates data structures out of the given files
