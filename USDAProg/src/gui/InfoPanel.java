@@ -27,6 +27,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import parser.DataManager;
 import parser.FattyAcid;
 import parser.ImageExtract;
 import parser.parsables.FoodItem;
@@ -133,31 +134,7 @@ public class InfoPanel extends JPanel {
 		else
 			gramsOfFood = 1;
 
-		// Changes title in header
-		String longDesc = food.getLongDescription();
-		int firstSeparatorIndex = longDesc.indexOf(',');
-		int alternateFirstSeparator = longDesc.indexOf('(');
-		if ((alternateFirstSeparator > 0 && alternateFirstSeparator < firstSeparatorIndex)
-				|| firstSeparatorIndex == -1)
-			firstSeparatorIndex = alternateFirstSeparator;
-
-		// ridiculously long string before comma/bracket or none
-		if (firstSeparatorIndex > 17 || firstSeparatorIndex == -1) {
-			int firstSpaceIndex = longDesc.indexOf(' ');
-			if (longDesc.length() <= 17)
-				titleName = longDesc;
-			else {
-				if (firstSpaceIndex > 17)
-					// if the first space is still too long, force cut
-					titleName = longDesc.substring(0, 17);
-				else
-					// use space instead of the other separators then...
-					titleName = longDesc.substring(0, firstSpaceIndex);
-			}
-		} else {
-			// normal case
-			titleName = longDesc.substring(0, firstSeparatorIndex);
-		}
+		String titleName = DataManager.getInstance().getFoodItemRelevantKeyword(food);
 		titleName = toTitleCase(titleName);
 		titleLabel.setText(titleName);
 
@@ -169,7 +146,7 @@ public class InfoPanel extends JPanel {
 		contentPanel.repaint();
 
 		// adds long name in actual page
-		JTextArea longName = new JTextArea(longDesc);
+		JTextArea longName = new JTextArea(food.getLongDescription());
 		longName.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 		longName.setFont(GUI.SUBTITLE_FONT);
 		longName.setWrapStyleWord(true);

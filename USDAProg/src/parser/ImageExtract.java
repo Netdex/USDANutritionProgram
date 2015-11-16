@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import parser.parsables.FoodItem;
 import parser.util.BinaryTreeMap;
 
 public class ImageExtract {
@@ -31,6 +32,8 @@ public class ImageExtract {
 	private static final String ADDITIONAL_KEYWORD = "food";
 	private static int IMAGE_WIDTH = 400;
 
+	public static final int MAXIMUM_IMAGE_PRELOAD_RESULTS = 20;
+	
 	public static void injectImage(JLabel imageLabel, String key) {
 		new Thread() {
 			public void run() {
@@ -51,13 +54,46 @@ public class ImageExtract {
 							System.out.println("no image found");
 						}
 					}
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}.start();
-
+	}
+	
+	public static void preloadImages(FoodItem[] items){
+		new Thread(){
+			public void run(){
+				try{
+					int count = 0;
+					for(int i = 0; i < items.length; i++){
+						String name = DataManager.getInstance().getFoodItemRelevantKeyword(items[i]).toLowerCase();
+						if(imageCache.get(name) == null){
+							System.out.println("downloading image " + name);
+							Image img = getSearchImage(name);
+							if(img != null){
+								System.out.println("preloaded image");
+								imageCache.put(name, img);
+								count++;
+							}
+							else{
+								System.out.println("failed to preload image");
+							}
+						}
+						else{
+							System.out.println("image " + name + " is already in the cache");
+						}
+						if(count >= MAXIMUM_IMAGE_PRELOAD_RESULTS){
+							System.out.println("max 20 images preload");
+							break;
+						}
+					}
+					
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		}.start();
 	}
 
 	private static void insertImage(Image img, JLabel imageLabel) {

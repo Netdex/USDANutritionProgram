@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import parser.ImageExtract;
 import parser.parsables.FoodItem;
 
 public class SearchPanel extends JPanel {
@@ -63,20 +64,17 @@ public class SearchPanel extends JPanel {
 
 		resultsPanel = new JPanel();
 		resultsPanel.setBackground(GUI.BACKGROUND_COLOUR);
-		BoxLayout resultsPanelLayout = new BoxLayout(resultsPanel,
-				BoxLayout.Y_AXIS);
+		BoxLayout resultsPanelLayout = new BoxLayout(resultsPanel, BoxLayout.Y_AXIS);
 		resultsPanel.setAlignmentX(LEFT_ALIGNMENT);
 		resultsPanel.setLayout(resultsPanelLayout);
 
 		resultsList = new CustomScrollPane(resultsPanel);
-		
+
 		new Thread() {
 			public void run() {
 				while (true) {
 					try {
-						if (shouldSearch
-								&& System.currentTimeMillis()
-										- prevKeyPressedTime >= 500) {
+						if (shouldSearch && System.currentTimeMillis() - prevKeyPressedTime >= 500) {
 							String txt = searchBox.getText();
 							if (!txt.equals("Search...") && !txt.equals(""))
 								findResults(txt);
@@ -112,6 +110,8 @@ public class SearchPanel extends JPanel {
 			notFound.setFont(GUI.SUBTITLE_FONT);
 			resultsPanel.add(notFound);
 		}
+		System.out.println("preloading");
+		ImageExtract.preloadImages(results);
 
 		resultsPanel.revalidate();
 		resultsPanel.repaint();
@@ -149,16 +149,14 @@ public class SearchPanel extends JPanel {
 			this.setFocusable(false);
 			this.setBorder(GUI.BUTTON_BORDER);
 
-			JLabel foodDescription = new JLabel("<html>"
-					+ food.getLongDescription() + "</html>");
+			JLabel foodDescription = new JLabel("<html>" + food.getLongDescription() + "</html>");
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
 			foodDescription.setForeground(Color.BLACK);
 			foodDescription.setForeground(GUI.CONTENT_COLOUR);
 			foodDescription.setOpaque(false);
 			this.add(foodDescription, BorderLayout.CENTER);
 
-			JLabel foodGroupName = new JLabel("<html>"
-					+ food.getFoodGroup().toString() + "</html>");
+			JLabel foodGroupName = new JLabel("<html>" + food.getFoodGroup().toString() + "</html>");
 			foodGroupName.setFont(GUI.CONTENT_FONT);
 			foodGroupName.setForeground(Color.BLACK);
 			foodGroupName.setForeground(GUI.CONTENT_COLOUR);
@@ -171,8 +169,7 @@ public class SearchPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				manager.getInfoPanel().setFoodItem(food);
-				manager.getInfoPanel().getBackButton()
-						.setTarget(SearchPanel.this);
+				manager.getInfoPanel().getBackButton().setTarget(SearchPanel.this);
 				manager.switchToInfoPanel();
 			}
 
