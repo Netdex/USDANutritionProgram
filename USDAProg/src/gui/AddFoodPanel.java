@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import parser.DataManager;
+import parser.FattyAcid;
 import parser.InvalidParseDataException;
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
@@ -283,20 +286,20 @@ public class AddFoodPanel extends JPanel {
 	protected void resetFields() {
 		// self explanatory
 		contentScrollbar.scrollToTop();
-		
+
 		// Resets text
 		longDescEntry.setText("Name");
 		commonNameEntry.setText("Common Name");
 		manufacNameEntry.setText("Manufacturer Name");
 		weightUnitEntry.setText("Unit");
 		gramsPerEntry.getModel().setValue(1);
-		
+
 		// Resets colour to the default grey when nothing is selected
 		longDescEntry.setForeground(GUI.SEARCH_BOX_GRAY);
 		commonNameEntry.setForeground(GUI.SEARCH_BOX_GRAY);
 		manufacNameEntry.setForeground(GUI.SEARCH_BOX_GRAY);
 		weightUnitEntry.setForeground(GUI.SEARCH_BOX_GRAY);
-		
+
 		contentPanel.revalidate();
 		contentPanel.repaint();
 	}
@@ -340,8 +343,29 @@ public class AddFoodPanel extends JPanel {
 			this.setBackground(GUI.BACKGROUND_COLOUR);
 			this.nutrient = nut;
 
-			this.add(new CustomizedTextArea(nutrient.getNutrientName() + " ("
-					+ nutrient.getUnit() + ")"), BorderLayout.CENTER);
+			String nutrientName = nutrient.getNutrientName();
+			if (nutrientName.matches(".*[0-9]*:[0-9]*.*")) {
+				Matcher m = Pattern.compile("[0-9]*:[0-9]*").matcher(
+						nutrientName);
+				m.find();
+				int start = m.start();
+				int end = m.end();
+				FattyAcid[] proteinNames = FattyAcid
+						.lookupByCDRatio(m.group(0));
+				if (proteinNames != null && proteinNames.length > 0) {
+					String proteinName = "";
+					for (FattyAcid fa : proteinNames) {
+						proteinName += fa.getName() + "; ";
+					}
+					nutrientName = nutrientName.substring(0, start)
+							+ proteinName
+									.substring(0, proteinName.length() - 2)
+							+ nutrientName.substring(end);
+				}
+			}
+			this.add(
+					new CustomizedTextArea(nutrientName + " ("
+							+ nutrient.getUnit() + ")"), BorderLayout.CENTER);
 
 			amount = new JSpinner(new SpinnerNumberModel(0.000, 0.000,
 					9999.999, 0.500));
@@ -355,6 +379,7 @@ public class AddFoodPanel extends JPanel {
 
 		/**
 		 * Gets the nutrient
+		 * 
 		 * @return the nutrient
 		 */
 		private NutrientInfo getNutrient() {
@@ -363,6 +388,7 @@ public class AddFoodPanel extends JPanel {
 
 		/**
 		 * Gets the amount in the JSpinner
+		 * 
 		 * @return the currently displayed number in the JSpinner
 		 */
 		private double getAmountForEntry() {
@@ -372,7 +398,9 @@ public class AddFoodPanel extends JPanel {
 	}
 
 	/**
-	 * Action listener for the "save" button when the user has finished specifying details for their food.
+	 * Action listener for the "save" button when the user has finished
+	 * specifying details for their food.
+	 * 
 	 * @author Vince
 	 *
 	 */
@@ -426,7 +454,8 @@ public class AddFoodPanel extends JPanel {
 				e1.printStackTrace();
 			}
 
-			// Adds a footnote, that specifies that it was created by the user and is NOT part of the USDA database.
+			// Adds a footnote, that specifies that it was created by the user
+			// and is NOT part of the USDA database.
 			Footnote footnote = new Footnote();
 			try {
 				footnote = footnote.parse(new String[] { ndbNo + "", "", "D",
@@ -436,7 +465,7 @@ public class AddFoodPanel extends JPanel {
 			}
 			newFood.setFootnotes(footnote);
 			newFood.setNutrientData(nutrients);
-			
+
 			// Finishes up.
 			DataManager.getInstance().addFoodItem(newFood);
 		}
@@ -444,12 +473,15 @@ public class AddFoodPanel extends JPanel {
 
 	/**
 	 * A custom JTextField with options set as desired, so code is cleaner.
+	 * 
 	 * @author Vince Ou
 	 */
 	class CustomTextEntryBox extends JTextField {
 		/**
 		 * Constructor.
-		 * @param boxText the text to be displayed in the custom text field.
+		 * 
+		 * @param boxText
+		 *            the text to be displayed in the custom text field.
 		 */
 		public CustomTextEntryBox(String boxText) {
 			super(boxText);
