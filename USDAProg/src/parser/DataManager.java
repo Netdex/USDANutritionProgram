@@ -131,7 +131,7 @@ public class DataManager {
 	 *
 	 * @param fi The food item to add
 	 */
-	public void addFoodItem(FoodItem fi) {
+	public boolean addFoodItem(FoodItem fi) {
 		NutrientData nd = fi.getNutrientData();
 		Footnote fn = fi.getFootnotes();
 		// WeightUnit wi = fi.getWeightInfo();
@@ -148,6 +148,8 @@ public class DataManager {
 			}
 		parser.addFoodItem(fi);
 
+		// TODO make this actually work and not always return true
+		return true;
 	}
 
 	/**

@@ -485,7 +485,11 @@ public class AddFoodPanel extends JPanel {
 			newFood.setFoodGroup(group);
 
 			// Finishes up.
-			DataManager.getInstance().addFoodItem(newFood);
+			if(DataManager.getInstance().addFoodItem(newFood))
+				JOptionPane.showConfirmDialog(AddFoodPanel.this,
+						"Food successfully created",
+						"Success", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
