@@ -66,8 +66,8 @@ public class ExtraInfoPanel extends JPanel {
 		UIManager.put("TabbedPane.background", GUI.BACKGROUND_COLOUR);
 		UIManager.put("TabbedPane.tabAreaBackground", GUI.BACKGROUND_COLOUR);
 		UIManager.put("TabbedPane.contentAreaColor", GUI.BACKGROUND_COLOUR);
-		UIManager.put("TabbedPane.borderColor", GUI.HEADER_COLOUR);
-		UIManager.put("TabbedPane.borderHightlightColor", GUI.HEADER_COLOUR);
+		UIManager.put("TabbedPane.borderColor", GUI.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.borderHightlightColor", GUI.BACKGROUND_COLOUR);
 		contentTabs = new JTabbedPane(JTabbedPane.TOP,
 				JTabbedPane.SCROLL_TAB_LAYOUT);
 		contentTabs.setBorder(GUI.EMPTY_BORDER);

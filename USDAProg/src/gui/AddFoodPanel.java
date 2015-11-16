@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.regex.Matcher;
@@ -296,13 +298,13 @@ public class AddFoodPanel extends JPanel {
 		gramsPerEntry.getModel().setValue(1);
 
 		// Resets colour to the default grey when nothing is selected
-		longDescEntry.setForeground(GUI.SEARCH_BOX_GRAY);
-		commonNameEntry.setForeground(GUI.SEARCH_BOX_GRAY);
-		manufacNameEntry.setForeground(GUI.SEARCH_BOX_GRAY);
-		weightUnitEntry.setForeground(GUI.SEARCH_BOX_GRAY);
-
-		contentPanel.revalidate();
-		contentPanel.repaint();
+		longDescEntry.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
+		commonNameEntry.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
+		manufacNameEntry.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
+		weightUnitEntry.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
+		
+		this.revalidate();
+		this.repaint();
 	}
 
 	/**
@@ -502,6 +504,9 @@ public class AddFoodPanel extends JPanel {
 	 * @author Vince Ou
 	 */
 	class CustomTextEntryBox extends JTextField {
+		
+		private String text;
+		
 		/**
 		 * Constructor.
 		 * 
@@ -509,22 +514,40 @@ public class AddFoodPanel extends JPanel {
 		 *            the text to be displayed in the custom text field.
 		 */
 		public CustomTextEntryBox(String boxText) {
-			super(boxText);
+			super();
+			this.text = boxText;
+			this.setText(text);
 			this.setFont(GUI.CONTENT_FONT);
 			this.setBackground(GUI.BACKGROUND_COLOUR);
-			this.setForeground(GUI.SEARCH_BOX_GRAY);
 			Dimension size = new Dimension(150, 20);
 			this.setPreferredSize(size);
 			this.setMaximumSize(size);
 			// Makes the "prompt" text disappear when clicked.
-			this.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent e) {
-					if (CustomTextEntryBox.this.getText().equals(boxText)) {
-						CustomTextEntryBox.this.setText("");
-					}
-					CustomTextEntryBox.this.setForeground(GUI.CONTENT_COLOUR);
+			this.addFocusListener(new TextFocusListener());
+		}
+		
+		class TextFocusListener implements FocusListener {
+
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				if (CustomTextEntryBox.this.getText().equals(text)) {
+					CustomTextEntryBox.this.setText("");
 				}
-			});
+				CustomTextEntryBox.this.setForeground(GUI.CONTENT_COLOUR);	
+				CustomTextEntryBox.this.revalidate();
+				CustomTextEntryBox.this.repaint();
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if (CustomTextEntryBox.this.getText().equals("")) {
+					CustomTextEntryBox.this.setText(text);
+				}
+				CustomTextEntryBox.this.setForeground(GUI.SEARCH_BOX_GREY_GRAY);	
+				CustomTextEntryBox.this.revalidate();
+				CustomTextEntryBox.this.repaint();			
+			}
+			
 		}
 	}
 }

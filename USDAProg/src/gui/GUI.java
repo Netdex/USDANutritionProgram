@@ -45,7 +45,7 @@ public class GUI extends JFrame {
 	/**
 	 * Colour of inactive search boxes
 	 */
-	public final static Color SEARCH_BOX_GRAY = new Color(2, 2, 2);
+	public final static Color SEARCH_BOX_GREY_GRAY = new Color(2, 2, 2);
 
 	/**
 	 * Title font

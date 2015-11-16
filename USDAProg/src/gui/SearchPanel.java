@@ -46,7 +46,7 @@ public class SearchPanel extends JPanel {
 		searchBox = new JTextField("Search...", 22);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 		searchBox.setBackground(Color.WHITE);
-		searchBox.setForeground(GUI.SEARCH_BOX_GRAY);
+		searchBox.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
 		searchBox.setBorder(GUI.EMPTY_BORDER);
 		searchBox.setAlignmentX(LEFT_ALIGNMENT);
 		searchBox.setMinimumSize(new Dimension(400, 0));
@@ -119,7 +119,7 @@ public class SearchPanel extends JPanel {
 
 	protected void resetSearchBox() {
 		searchBox.setText("Search...");
-		searchBox.setForeground(GUI.SEARCH_BOX_GRAY);
+		searchBox.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
 	}
 
 	protected void resetResults() {
