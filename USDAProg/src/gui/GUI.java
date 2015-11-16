@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import parser.DataManager;
+import parser.ImageExtract;
 
 /**
  * The JFrame of the entire program
@@ -104,7 +105,8 @@ public class GUI extends JFrame {
 		// Creates a manager for the different views
 		manager = new PanelManager();
 		this.add(manager);
-
+		
+		ImageExtract.initPreload();
 		// Loads the files from the database
 		dataManager = DataManager.getInstance();
 		dataManager.bindProgressDisplay(this);
