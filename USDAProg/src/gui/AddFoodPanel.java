@@ -1,40 +1,19 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import parser.DataManager;
+import parser.FattyAcid;
+import parser.InvalidParseDataException;
+import parser.parsables.*;
+import parser.util.DoublyLinkedList;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-
-import parser.DataManager;
-import parser.FattyAcid;
-import parser.InvalidParseDataException;
-import parser.parsables.FoodGroup;
-import parser.parsables.FoodItem;
-import parser.parsables.Footnote;
-import parser.parsables.Nutrient;
-import parser.parsables.NutrientData;
-import parser.parsables.NutrientInfo;
-import parser.parsables.WeightUnit;
-import parser.util.DoublyLinkedList;
 
 /**
  * Allows the user to add custom foods to the database
@@ -417,8 +396,8 @@ public class AddFoodPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			// Gets the values from the objects
 			int ndbNo = DataManager.getInstance().getUnusedNDBNumber();
-			int groupID = ((FoodGroup) foodGroupEntry.getModel()
-					.getSelectedItem()).getFoodGroupID();
+			FoodGroup group = (FoodGroup) foodGroupEntry.getModel()
+					.getSelectedItem();
 			String longDesc = longDescEntry.getText();
 			if (longDesc.equals("") || longDesc.equalsIgnoreCase("Name")) {
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
@@ -475,7 +454,7 @@ public class AddFoodPanel extends JPanel {
 			FoodItem newFood = new FoodItem();
 			try {
 				newFood = newFood.parse(new String[] { ndbNo + "",
-						groupID + "", longDesc, "", commonName, manufacName,
+						group.getFoodGroupID() + "", longDesc, "", commonName, manufacName,
 						"", "", "", "", "", "", "", "" });
 			} catch (InvalidParseDataException e1) {
 				e1.printStackTrace();
@@ -492,6 +471,7 @@ public class AddFoodPanel extends JPanel {
 			}
 			newFood.setFootnotes(footnote);
 			newFood.setNutrientData(nutrients);
+			newFood.setFoodGroup(group);
 
 			// Finishes up.
 			DataManager.getInstance().addFoodItem(newFood);
