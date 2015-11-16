@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
@@ -126,8 +127,8 @@ public class AddFoodPanel extends JPanel {
 		longDescLine.setBackground(GUI.BACKGROUND_COLOUR);
 		longDescLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 		// prompt for the user
-		longDescLine.add(new CustomizedTextArea("What is the name of your new food?"),
-				BorderLayout.CENTER);
+		longDescLine.add(new CustomizedTextArea(
+				"What is the name of your new food?"), BorderLayout.CENTER);
 		// JTextField for the user to enter the name
 		longDescEntry = new CustomTextEntryBox("Name");
 		longDescLine.add(longDescEntry, BorderLayout.EAST);
@@ -139,9 +140,10 @@ public class AddFoodPanel extends JPanel {
 		commonNameLine.setBackground(GUI.BACKGROUND_COLOUR);
 		commonNameLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 		// prompt for the user
-		commonNameLine.add(new CustomizedTextArea(
-				"What are some of the other names for your new food? Leave blank if none."),
-				BorderLayout.CENTER);
+		commonNameLine
+				.add(new CustomizedTextArea(
+						"What are some of the other names for your new food? Leave blank if none."),
+						BorderLayout.CENTER);
 		// Actually takes the name from the user
 		commonNameEntry = new CustomTextEntryBox("Common Name");
 		commonNameLine.add(commonNameEntry, BorderLayout.EAST);
@@ -153,14 +155,16 @@ public class AddFoodPanel extends JPanel {
 		foodGroupLine.setBackground(GUI.BACKGROUND_COLOUR);
 		foodGroupLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 		// Prompt
-		foodGroupLine.add(new CustomizedTextArea("What is the food group of your new food?"),
+		foodGroupLine.add(new CustomizedTextArea(
+				"What is the food group of your new food?"),
 				BorderLayout.CENTER);
 		// Gets list of food groups AFTER the food groups have been loaded from
 		// the database (resolving errors)
 		DataManager.getInstance().registerSyncEvent(new Runnable() {
 			public void run() {
 				// gets the food group choice through a list
-				foodGroupEntry = new JComboBox<FoodGroup>(DataManager.getInstance().getFoodGroups());
+				foodGroupEntry = new JComboBox<FoodGroup>(DataManager
+						.getInstance().getFoodGroups());
 				foodGroupEntry.setFont(GUI.CONTENT_FONT);
 				foodGroupEntry.setPreferredSize(new Dimension(150, 30));
 				foodGroupEntry.setFocusable(false);
@@ -174,10 +178,12 @@ public class AddFoodPanel extends JPanel {
 				// Area for user to specify manufacturer name
 				JPanel manufacNameLine = new JPanel(new BorderLayout());
 				manufacNameLine.setBackground(GUI.BACKGROUND_COLOUR);
-				manufacNameLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+				manufacNameLine.setMaximumSize(new Dimension(450,
+						Short.MAX_VALUE));
 				// Prompt
 				manufacNameLine.add(new CustomizedTextArea(
-						"What is the manufacturer name of your new food?"), BorderLayout.CENTER);
+						"What is the manufacturer name of your new food?"),
+						BorderLayout.CENTER);
 				// Actual entry
 				manufacNameEntry = new CustomTextEntryBox("Manufacturer Name");
 				manufacNameLine.add(manufacNameEntry, BorderLayout.EAST);
@@ -187,10 +193,12 @@ public class AddFoodPanel extends JPanel {
 				// Area for user to specify what unit the food is measured in
 				JPanel weightUnitLine = new JPanel(new BorderLayout());
 				weightUnitLine.setBackground(GUI.BACKGROUND_COLOUR);
-				weightUnitLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+				weightUnitLine.setMaximumSize(new Dimension(450,
+						Short.MAX_VALUE));
 				// Prompt
 				weightUnitLine.add(new CustomizedTextArea(
-						"What is the unit used to measure your new food?"), BorderLayout.CENTER);
+						"What is the unit used to measure your new food?"),
+						BorderLayout.CENTER);
 				// Actually entering the unit
 				weightUnitEntry = new CustomTextEntryBox("Unit");
 				weightUnitLine.add(weightUnitEntry, BorderLayout.EAST);
@@ -201,14 +209,17 @@ public class AddFoodPanel extends JPanel {
 				// are specifying
 				JPanel gramsPerLine = new JPanel(new BorderLayout());
 				gramsPerLine.setBackground(GUI.BACKGROUND_COLOUR);
-				gramsPerLine.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+				gramsPerLine
+						.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 				// Prompt
-				gramsPerLine.add(new CustomizedTextArea(
-						"How many grams are in each unit (as indicated above)?"),
-						BorderLayout.CENTER);
+				gramsPerLine
+						.add(new CustomizedTextArea(
+								"How many grams are in each unit (as indicated above)?"),
+								BorderLayout.CENTER);
 				// Actually taking the input through a Spinner (limited to only
 				// numbers)
-				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1.000, 0.001, 999.999, 0.025));
+				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1.000,
+						0.001, 999.999, 0.025));
 				gramsPerEntry.setFont(GUI.CONTENT_FONT);
 				gramsPerEntry.setPreferredSize(new Dimension(150, 30));
 				gramsPerEntry.setFocusable(false);
@@ -222,22 +233,26 @@ public class AddFoodPanel extends JPanel {
 						"\nBelow, enter information about the nutrients in your new food.\n"
 								+ "For each nutrient, enter how of it there is in 1 gram of your new food\n");
 				nutrEntryPrompt.setAlignmentX(CENTER_ALIGNMENT);
-				nutrEntryPrompt.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+				nutrEntryPrompt.setMaximumSize(new Dimension(450,
+						Short.MAX_VALUE));
 				contentPanel.add(nutrEntryPrompt);
 
 				// Creates a panel that holds all of the nutrients (for
 				// alignment purposes)
 				JPanel nutrientAdd = new JPanel();
 				nutrientAdd.setOpaque(false);
-				nutrientAdd.setLayout(new BoxLayout(nutrientAdd, BoxLayout.Y_AXIS));
+				nutrientAdd.setLayout(new BoxLayout(nutrientAdd,
+						BoxLayout.Y_AXIS));
 				nutrientAdd.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
 				// Gets a list of possible nutrients and converts it to a doubly
 				// linked list
-				NutrientInfo[] listOfNutrients = DataManager.getInstance().getNutrientData();
+				NutrientInfo[] listOfNutrients = DataManager.getInstance()
+						.getNutrientData();
 				nutrientEntries = new DoublyLinkedList<NutrientEntryLine>();
 				// Adds prompts+entry boxes (lines) for each possible nutrient
 				for (int i = listOfNutrients.length - 1; i >= 0; i--) {
-					NutrientEntryLine line = new NutrientEntryLine(listOfNutrients[i]);
+					NutrientEntryLine line = new NutrientEntryLine(
+							listOfNutrients[i]);
 					nutrientEntries.add(line);
 					nutrientAdd.add(line);
 					nutrientAdd.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -324,10 +339,10 @@ public class AddFoodPanel extends JPanel {
 		private JSpinner amount;
 		private NutrientInfo nutrient;
 
-		private NutrientEntryLine(){
-			
+		private NutrientEntryLine() {
+
 		}
-		
+
 		private NutrientEntryLine(NutrientInfo nut) {
 			super(new BorderLayout());
 			this.setBackground(GUI.BACKGROUND_COLOUR);
@@ -335,25 +350,30 @@ public class AddFoodPanel extends JPanel {
 
 			String nutrientName = nutrient.getNutrientName();
 			if (nutrientName.matches(".*[0-9]*:[0-9]*.*")) {
-				Matcher m = Pattern.compile("[0-9]*:[0-9]*").matcher(nutrientName);
+				Matcher m = Pattern.compile("[0-9]*:[0-9]*").matcher(
+						nutrientName);
 				m.find();
 				int start = m.start();
 				int end = m.end();
-				FattyAcid[] proteinNames = FattyAcid.lookupByCDRatio(m.group(0));
+				FattyAcid[] proteinNames = FattyAcid
+						.lookupByCDRatio(m.group(0));
 				if (proteinNames != null && proteinNames.length > 0) {
 					String proteinName = "";
 					for (FattyAcid fa : proteinNames) {
 						proteinName += fa.getName() + "; ";
 					}
 					nutrientName = nutrientName.substring(0, start)
-							+ proteinName.substring(0, proteinName.length() - 2)
+							+ proteinName
+									.substring(0, proteinName.length() - 2)
 							+ nutrientName.substring(end);
 				}
 			}
-			this.add(new CustomizedTextArea(nutrientName + " (" + nutrient.getUnit() + ")"),
-					BorderLayout.CENTER);
+			this.add(
+					new CustomizedTextArea(nutrientName + " ("
+							+ nutrient.getUnit() + ")"), BorderLayout.CENTER);
 
-			amount = new JSpinner(new SpinnerNumberModel(0.000, 0.000, 9999.999, 0.500));
+			amount = new JSpinner(new SpinnerNumberModel(0.000, 0.000,
+					9999.999, 0.500));
 			amount.setFont(GUI.CONTENT_FONT);
 			amount.setOpaque(false);
 			amount.setFocusable(true);
@@ -395,38 +415,53 @@ public class AddFoodPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			// Gets the values from the objects
 			int ndbNo = DataManager.getInstance().getUnusedNDBNumber();
-			int groupID = ((FoodGroup) foodGroupEntry.getModel().getSelectedItem())
-					.getFoodGroupID();
+			int groupID = ((FoodGroup) foodGroupEntry.getModel()
+					.getSelectedItem()).getFoodGroupID();
 			String longDesc = longDescEntry.getText();
+			if (longDesc.equals("") || longDesc.equalsIgnoreCase("Name")) {
+				JOptionPane.showConfirmDialog(AddFoodPanel.this,
+						"The name field cannot be left blank", "Invalid field",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			String commonName = commonNameEntry.getText();
+			if (commonName.equals("Common Name"))
+				commonName = "";
 			String manufacName = manufacNameEntry.getText();
+			if (manufacName.equals("Manufacturer Name"))
+				manufacName = "";
 
 			// Specifies the units the food is measured in.
+			if (weightUnitEntry.getText().equals("Unit") || weightUnitEntry.getText().equals("")) {
+				JOptionPane.showConfirmDialog(AddFoodPanel.this,
+						"The unit cannot be left blank", "Invalid field",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			WeightUnit unit = new WeightUnit();
 			try {
-				unit = unit.parse(new String[] { ndbNo + "", "", "1", weightUnitEntry.getText(),
-						gramsPerEntry.getModel().getValue().toString(), "", "" });
+				unit = unit
+						.parse(new String[] { ndbNo + "", "", "1",
+								weightUnitEntry.getText(),
+								gramsPerEntry.getModel().getValue().toString(),
+								"", "" });
 			} catch (InvalidParseDataException e1) {
 				e1.printStackTrace();
 			}
 
 			// Creates the nutrient database for the new food
 			NutrientData nutrients = new NutrientData();
-			NutrientEntryLine[] nutEntryLineArray = nutrientEntries.toArray(new NutrientEntryLine());
+			NutrientEntryLine[] nutEntryLineArray = nutrientEntries
+					.toArray(new NutrientEntryLine());
 			for (int i = 0; i < nutEntryLineArray.length; i++) {
 				NutrientEntryLine line = nutEntryLineArray[i];
 				if (line.getAmountForEntry() != 0) {
 					Nutrient nut = new Nutrient();
 					try {
-						nut.parse(new String[] { 
-								ndbNo + "",
+						nut.parse(new String[] { ndbNo + "",
 								line.getNutrient().getNutrientNumber() + "",
-								line.getAmountForEntry() + "",
-								"",
-								"",
-								"",
-								"","","","","","","","","","","",""
-								});
+								line.getAmountForEntry() + "", "", "", "", "",
+								"", "", "", "", "", "", "", "", "", "", "" });
 					} catch (InvalidParseDataException e1) {
 						e1.printStackTrace();
 					}
@@ -437,8 +472,9 @@ public class AddFoodPanel extends JPanel {
 			// Actually creates the new food object
 			FoodItem newFood = new FoodItem();
 			try {
-				newFood = newFood.parse(new String[] { ndbNo + "", groupID + "", longDesc, "",
-						commonName, manufacName, "", "", "", "", "", "", "", "" });
+				newFood = newFood.parse(new String[] { ndbNo + "",
+						groupID + "", longDesc, "", commonName, manufacName,
+						"", "", "", "", "", "", "", "" });
 			} catch (InvalidParseDataException e1) {
 				e1.printStackTrace();
 			}
@@ -447,8 +483,8 @@ public class AddFoodPanel extends JPanel {
 			// and is NOT part of the USDA database.
 			Footnote footnote = new Footnote();
 			try {
-				footnote = footnote.parse(new String[] { ndbNo + "", "0", "D", "",
-						"Created by user." });
+				footnote = footnote.parse(new String[] { ndbNo + "", "0", "D",
+						"", "Created by user." });
 			} catch (InvalidParseDataException e1) {
 				e1.printStackTrace();
 			}
@@ -469,7 +505,8 @@ public class AddFoodPanel extends JPanel {
 		/**
 		 * Constructor.
 		 * 
-		 * @param boxText the text to be displayed in the custom text field.
+		 * @param boxText
+		 *            the text to be displayed in the custom text field.
 		 */
 		public CustomTextEntryBox(String boxText) {
 			super(boxText);
