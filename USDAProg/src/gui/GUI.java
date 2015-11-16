@@ -45,7 +45,7 @@ public class GUI extends JFrame {
 	/**
 	 * Colour of inactive search boxes
 	 */
-	public final static Color SEARCH_BOX_GREY_GRAY = new Color(2, 2, 2);
+	public final static Color SEARCH_BOX_GREY_GRAY = new Color(128, 128, 128);
 
 	/**
 	 * Title font
@@ -105,7 +105,7 @@ public class GUI extends JFrame {
 		// Creates a manager for the different views
 		manager = new PanelManager();
 		this.add(manager);
-		
+
 		ImageExtract.initPreload();
 		// Loads the files from the database
 		dataManager = DataManager.getInstance();
