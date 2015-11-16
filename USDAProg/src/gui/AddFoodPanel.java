@@ -443,6 +443,7 @@ public class AddFoodPanel extends JPanel {
 								line.getNutrient().getNutrientNumber() + "",
 								line.getAmountForEntry() + "", "", "", "", "",
 								"", "", "", "", "", "", "", "", "", "", "" });
+						nut.setNutrientDescription(nut.getNutrientInfo());
 					} catch (InvalidParseDataException e1) {
 						e1.printStackTrace();
 					}
