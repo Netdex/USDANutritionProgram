@@ -26,7 +26,7 @@ public class ImageExtract {
 	private static BinaryTreeMap<String, Image> imageCache = new BinaryTreeMap<String, Image>();
 
 	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
-			.createLineBorder(GUI.ACCENT_COLOUR, 3);
+			.createLineBorder(GUI.HEADER_COLOUR, 3);
 
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
 	private static final String ADDITIONAL_KEYWORD = "food";
@@ -67,7 +67,7 @@ public class ImageExtract {
 				try{
 					int count = 0;
 					for(int i = 0; i < items.length; i++){
-						String name = DataManager.getInstance().getFoodItemRelevantKeyword(items[i]).toLowerCase();
+						String name = DataManager.getInstance().getRelevantKeywords(items[i]).toLowerCase();
 						if(imageCache.get(name) == null){
 							System.out.println("downloading image " + name);
 							Image img = getSearchImage(name);

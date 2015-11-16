@@ -68,8 +68,8 @@ public class InfoPanel extends JPanel {
 	private Nutrient[] nutrients;
 	private NutrientInfoLine[] nutritionLabels;
 
-	protected static final javax.swing.border.Border BLACK_BORDER = BorderFactory
-			.createLineBorder(GUI.ACCENT_COLOUR, 2);
+	protected static final javax.swing.border.Border ACCENT_BORDER = BorderFactory
+			.createLineBorder(GUI.HEADER_COLOUR, 2);
 
 	public InfoPanel(SearchPanel searchPanel, PanelManager manager) {
 		super();
@@ -77,10 +77,6 @@ public class InfoPanel extends JPanel {
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
 		this.setBackground(GUI.BACKGROUND_COLOUR);
-
-		// GUI.CONFIG.load();
-		// nutritionMultiplier =
-		// GUI.CONFIG.getDouble("userNutritionMultiplier");
 
 		header = new JPanel();
 		header.setLayout(new BorderLayout());
@@ -134,7 +130,7 @@ public class InfoPanel extends JPanel {
 		else
 			gramsOfFood = 1;
 
-		String titleName = DataManager.getInstance().getFoodItemRelevantKeyword(food);
+		String titleName = DataManager.getInstance().getRelevantKeywords(food);
 		titleName = toTitleCase(titleName);
 		titleLabel.setText(titleName);
 
@@ -313,8 +309,7 @@ public class InfoPanel extends JPanel {
 		nutritionPanel = new JPanel();
 		nutritionPanel
 				.setLayout(new BoxLayout(nutritionPanel, BoxLayout.Y_AXIS));
-		// nutritionPanel.setMinimumSize(new Dimension(480, 120));
-		nutritionPanel.setBorder(BLACK_BORDER);
+		nutritionPanel.setBorder(ACCENT_BORDER);
 		nutritionPanel.setAlignmentX(LEFT_ALIGNMENT);
 		nutritionPanel.setBackground(GUI.BACKGROUND_COLOUR);
 
@@ -433,7 +428,6 @@ public class InfoPanel extends JPanel {
 			super();
 			this.nutrient = nut;
 			this.amountPerGram = nutrient.getNutrVal() / 100;
-			this.setBackground(GUI.ACCENT_COLOUR);
 			this.setBorder(GUI.EMPTY_BORDER);
 			this.setLayout(new BorderLayout());
 			this.setOpaque(false);

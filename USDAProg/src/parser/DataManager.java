@@ -95,7 +95,7 @@ public class DataManager {
 		return -1;
 	}
 
-	public String getFoodItemRelevantKeyword(FoodItem food) {
+	public String getRelevantKeywords(FoodItem food) {
 		String titleName;
 		// Changes title in header
 		String longDesc = food.getLongDescription();

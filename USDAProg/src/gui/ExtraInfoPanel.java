@@ -8,10 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import parser.parsables.FoodItem;
+import parser.parsables.LanguaL;
 
 /**
  * More information on a food (i.e. LanguaL descriptors and footnotes)
@@ -61,18 +61,23 @@ public class ExtraInfoPanel extends JPanel {
 		this.add(header, BorderLayout.NORTH);
 
 		// Creates the content panel
+		UIManager.put("TabbedPane.selected", GUI.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.shadow", GUI.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.background", GUI.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.tabAreaBackground", GUI.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.contentAreaColor", GUI.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.borderColor", GUI.HEADER_COLOUR);
+		UIManager.put("TabbedPane.borderHightlightColor", GUI.HEADER_COLOUR);
 		contentTabs = new JTabbedPane(JTabbedPane.TOP,
 				JTabbedPane.SCROLL_TAB_LAYOUT);
 		contentTabs.setBorder(GUI.EMPTY_BORDER);
 		contentTabs.setBackground(GUI.BACKGROUND_COLOUR);
+		contentTabs.setFocusable(false);
 
 		languaLsList = new ExtraInfoTextArea();
 		footnotes = new ExtraInfoTextArea();
 		contentTabs.addTab("LanguaL Descriptors", languaLsList);
 		contentTabs.addTab("Footnotes", footnotes);
-		UIManager.put("TabbedPane.selected", GUI.BACKGROUND_COLOUR);
-		UIManager.put("TabbedPane.tabAreaBackground", GUI.BACKGROUND_COLOUR);
-		SwingUtilities.updateComponentTreeUI(contentTabs);
 
 		for (int i = 0; i < contentTabs.getTabCount(); i++) {
 			contentTabs.setForegroundAt(i, GUI.CONTENT_COLOUR);
@@ -104,9 +109,15 @@ public class ExtraInfoPanel extends JPanel {
 
 		// adds LanguaLs
 		if (food.getLangualGroup() != null) {
+			LanguaL[] languals = food.getLangualGroup().getLanguaLs()
+					.toArray(LanguaL.SAMPLE);
+			String languaLString = "";
+			for (LanguaL term : languals) {
+				languaLString += "    " + term + "\n";
+			}
 			languaLsList
 					.setText("The LanguaL descriptors for this food are: \n\n"
-							+ food.getLangualGroup().getLanguaLs().toString());
+							+ languaLString);
 		} else {
 			// If there are no LanguaL descriptors
 			languaLsList.setText("There are no LanguaL descriptors for "
@@ -134,7 +145,7 @@ public class ExtraInfoPanel extends JPanel {
 			// Creates it
 			super();
 			// Formatting.
-			this.setMaximumSize(new Dimension(470, Short.MAX_VALUE));
+			this.setMaximumSize(new Dimension(400, Short.MAX_VALUE));
 			this.setFont(GUI.CONTENT_FONT);
 			this.setForeground(GUI.CONTENT_COLOUR);
 			this.setBackground(GUI.BACKGROUND_COLOUR);
