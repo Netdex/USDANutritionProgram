@@ -20,13 +20,14 @@ import javax.swing.SwingConstants;
 
 import parser.parsables.FoodItem;
 import parser.util.BinaryTreeMap;
+import parser.util.Stack;
 
 public class ImageExtract {
 
 	private static BinaryTreeMap<String, Image> imageCache = new BinaryTreeMap<String, Image>();
 
-	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
-			.createLineBorder(GUI.HEADER_COLOUR, 3);
+	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory.createLineBorder(
+			GUI.ACCENT_COLOUR, 3);
 
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
 	private static final String ADDITIONAL_KEYWORD = "food";
@@ -62,21 +63,6 @@ public class ImageExtract {
 			}
 		}.start();
 	}
-	
-	public static void preloadImages(FoodItem[] items){
-		new Thread(){
-			public void run(){
-				try{
-					int count = 0;
-					for(int i = 0; i < items.length; i++){
-						String name = DataManager.getInstance().getRelevantKeywords(items[i]).toLowerCase();
-						if(imageCache.get(name) == null){
-							System.out.println("downloading image " + name);
-							Image img = getSearchImage(name);
-							if(img != null){
-								System.out.println("preloaded image");
-								imageCache.put(name, img);
-								count++;
 
 	public static void initPreload() {
 		new Thread() {
@@ -85,7 +71,7 @@ public class ImageExtract {
 					try {
 						while (!PRELOAD_LINE.isEmpty()) {
 							FoodItem fi = PRELOAD_LINE.pop();
-							String name = DataManager.getInstance().getFoodItemRelevantKeyword(fi)
+							String name = DataManager.getInstance().getRelevantKeywords(fi)
 									.toLowerCase();
 							if (imageCache.get(name) == null) {
 								System.out.println("downloading image " + name);
