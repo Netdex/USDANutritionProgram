@@ -289,7 +289,14 @@ public class InfoPanel extends JPanel {
 
 				selectedUnit = (WeightUnit) (unitSelection.getModel()
 						.getElementAt(0));
-				updateAmountEntryPrompt();
+				String selectedUnitName = selectedUnit.getDesc();
+				int separatorIndex = selectedUnitName.indexOf('(');
+				if (separatorIndex < 1)
+					separatorIndex = selectedUnitName.length();
+				amountEntryPromptText = "You have selected to measure this food in \""
+						+ selectedUnitName + "\".\nPlease enter the amount of "
+						+ selectedUnitName.substring(0, separatorIndex).trim()
+						+ "(s) you are intending to consume.";
 			}
 		}
 
