@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import parser.parsables.FoodItem;
 
@@ -30,13 +32,16 @@ public class ExtraInfoPanel extends JPanel {
 	/**
 	 * Panel to hold all of the interesting content that is worth showing here
 	 */
-	private JPanel contentPanel;
+	private JTabbedPane contentTabs;
+	private ExtraInfoTextArea languaLsList;
+	private ExtraInfoTextArea footnotes;
 
 	protected ExtraInfoPanel(PanelManager panelManager) {
 		// Creates a new JPanel
 		super();
 		this.manager = panelManager;
 		this.setLayout(new BorderLayout());
+		this.setBackground(GUI.HEADER_COLOUR);
 
 		// Creates a header
 		JPanel header = new JPanel();
@@ -56,15 +61,26 @@ public class ExtraInfoPanel extends JPanel {
 		this.add(header, BorderLayout.NORTH);
 
 		// Creates the content panel
-		contentPanel = new JPanel();
-		contentPanel.setBackground(GUI.BACKGROUND_COLOUR);
-		BoxLayout contentLayout = new BoxLayout(contentPanel, BoxLayout.Y_AXIS);
-		contentPanel.setLayout(contentLayout);
-		contentPanel.setMaximumSize(new Dimension(470, Short.MAX_VALUE));
-		contentPanel.setOpaque(false);
+		contentTabs = new JTabbedPane(JTabbedPane.TOP,
+				JTabbedPane.SCROLL_TAB_LAYOUT);
+		contentTabs.setBorder(GUI.EMPTY_BORDER);
+		contentTabs.setBackground(GUI.BACKGROUND_COLOUR);
+
+		languaLsList = new ExtraInfoTextArea();
+		footnotes = new ExtraInfoTextArea();
+		contentTabs.addTab("LanguaL Descriptors", languaLsList);
+		contentTabs.addTab("Footnotes", footnotes);
+		UIManager.put("TabbedPane.selected", GUI.BACKGROUND_COLOUR);
+		UIManager.put("TabbedPane.tabAreaBackground", GUI.BACKGROUND_COLOUR);
+		SwingUtilities.updateComponentTreeUI(contentTabs);
+
+		for (int i = 0; i < contentTabs.getTabCount(); i++) {
+			contentTabs.setForegroundAt(i, GUI.CONTENT_COLOUR);
+			contentTabs.setBackgroundAt(i, GUI.BACKGROUND_COLOUR);
+		}
 
 		// Makes it scrollable
-		this.add(new CustomScrollPane(contentPanel), BorderLayout.CENTER);
+		this.add(contentTabs, BorderLayout.CENTER);
 	}
 
 	/**
@@ -84,36 +100,31 @@ public class ExtraInfoPanel extends JPanel {
 	 */
 	protected void setFood(FoodItem item, String titleName) {
 		// Clears the former contents, and sets the food
-		contentPanel.removeAll();
 		this.food = item;
 
 		// adds LanguaLs
-		ExtraInfoTextArea languaLsList = new ExtraInfoTextArea();
 		if (food.getLangualGroup() != null) {
-			languaLsList.setText(
-					"The LanguaL descriptors for this food are: \n\n"
+			languaLsList
+					.setText("The LanguaL descriptors for this food are: \n\n"
 							+ food.getLangualGroup().getLanguaLs().toString());
 		} else {
 			// If there are no LanguaL descriptors
-			languaLsList.setText(
-					"There are no LanguaL descriptors for " + food.toString());
+			languaLsList.setText("There are no LanguaL descriptors for "
+					+ food.toString());
 		}
-		contentPanel.add(languaLsList);
 
 		// Adds footnotes
-		ExtraInfoTextArea footnotes = new ExtraInfoTextArea();
 		if (food.getFootnotes() != null)
 			footnotes.setText("The footnotes for this food: \n\n"
 					+ food.getFootnotes().getFootnoteText());
 		else
 			// There are no footnotes in this case
 			footnotes.setText("There are no footnotes for " + food.toString());
-		contentPanel.add(footnotes);
-
 	}
 
 	/**
 	 * Removing duplicate code, again.
+	 * 
 	 * @author Vince Ou
 	 *
 	 */
@@ -132,7 +143,7 @@ public class ExtraInfoPanel extends JPanel {
 			this.setLineWrap(true);
 			this.setEditable(false);
 			this.setFocusable(false);
-			this.setOpaque(false);
+			this.setOpaque(true);
 		}
 	}
 }

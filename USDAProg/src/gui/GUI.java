@@ -32,7 +32,7 @@ public class GUI extends JFrame {
 	/**
 	 * Colour of accents
 	 */
-	public final static Color ACCENT_COLOUR = new Color(15594071);
+	public final static Color ACCENT_COLOUR = new Color(5242800);
 
 	/**
 	 * Colour of title text
