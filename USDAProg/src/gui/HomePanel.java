@@ -15,11 +15,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Home screen
+ * 
+ * @author Vince Ou
+ *
+ */
 public class HomePanel extends JPanel {
 
+	/**
+	 * Manager for the panels/views/different functions
+	 */
 	PanelManager manager;
 
 	public HomePanel(PanelManager manager) {
+		// Sets up things
 		this.manager = manager;
 		// Sets it up to boxLayout vertical
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -33,42 +43,55 @@ public class HomePanel extends JPanel {
 					128, Image.SCALE_SMOOTH)));
 		} catch (IOException e1) {
 		}
+
+		// something to hold the four major nav buttons
 		JPanel buttonQuad = new JPanel(new GridLayout(2, 2, 8, 8));
 		buttonQuad.setOpaque(false);
 
-		// creates six buttons
+		// adds the four main buttons
 		HomePanelNavButton searchButton = new HomePanelNavButton("searchButton");
 		HomePanelNavButton groupButton = new HomePanelNavButton("groupButton");
 		HomePanelNavButton addFoodButton = new HomePanelNavButton(
 				"addFoodButton");
-//		HomePanelNavButton helpButton = new HomePanelNavButton("helpButton");
-//		HomePanelNavButton quitButton = new HomePanelNavButton("quitButton");
-		HomePanelNavButton aboutButton = new HomePanelNavButton(
-				"aboutButton");
+		HomePanelNavButton aboutButton = new HomePanelNavButton("aboutButton");
 
 		buttonQuad.add(searchButton);
 		buttonQuad.add(groupButton);
 		buttonQuad.add(addFoodButton);
-//		buttonQuad.add(helpButton);
 		buttonQuad.add(aboutButton);
-//		buttonQuad.add(quitButton);
 
+		// Makes the buttons work
 		searchButton.addActionListener(new SearchButtonListener());
 		groupButton.addActionListener(new GroupButtonListener());
-//		helpButton.addActionListener(new HelpButtonListener());
 		addFoodButton.addActionListener(new AddFoodButtonListener());
-//		quitButton.addActionListener(new QuitButtonListener());
 		aboutButton.addActionListener(new AboutButtonListener());
 
+		// Adds things into the panel
 		this.add(bannerLabel);
 		bannerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(buttonQuad);
 		aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 	}
 
+	/**
+	 * Creates one of the four buttons
+	 * 
+	 * @author Vince Ou
+	 *
+	 */
 	class HomePanelNavButton extends JButton {
+
+		/**
+		 * Constructor
+		 * 
+		 * @param buttonName
+		 *            the name of the button (ALSO THE FILE NAME)
+		 */
 		private HomePanelNavButton(String buttonName) {
+			// does things.
 			super();
+
+			// Gives the button an image
 			try {
 				this.setIcon(new ImageIcon(ImageIO.read(
 						new File("images/" + buttonName + ".png"))
@@ -76,12 +99,20 @@ public class HomePanel extends JPanel {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
+			// Does more things layout-wise.
 			this.setFocusable(false);
 			this.setBackground(GUI.BACKGROUND_COLOUR);
 			this.setBorder(GUI.EMPTY_BORDER);
 		}
 	}
 
+	/**
+	 * What happens when you press the group button (switches to group panel)
+	 * 
+	 * @author Vince Ou
+	 *
+	 */
 	class SearchButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -89,6 +120,12 @@ public class HomePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * What happens when you press the group button (switches to group panel)
+	 * 
+	 * @author Vince Ou
+	 *
+	 */
 	class GroupButtonListener implements ActionListener {
 
 		@Override
@@ -97,14 +134,11 @@ public class HomePanel extends JPanel {
 		}
 	}
 
-//	class HelpButtonListener implements ActionListener {
-//
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			manager.switchToHelp();
-//		}
-//	}
-
+	/**
+	 * What happens when you press the about button (switches to about panel)
+	 * @author Vince Ou
+	 *
+	 */
 	class AboutButtonListener implements ActionListener {
 
 		@Override
@@ -113,6 +147,11 @@ public class HomePanel extends JPanel {
 		}
 	}
 
+	/**
+	 * What happens when you press the add food button (switches to add food panel)
+	 * @author Vince Ou
+	 *
+	 */
 	class AddFoodButtonListener implements ActionListener {
 
 		@Override
@@ -120,13 +159,4 @@ public class HomePanel extends JPanel {
 			manager.switchToAddFood();
 		}
 	}
-
-//	class QuitButtonListener implements ActionListener {
-//
-//		@Override
-//		public void actionPerformed(ActionEvent e) {
-//			if (manager.LOADING_PERCENTAGE == -1)
-//				System.exit(0);
-//		}
-//	}
 }

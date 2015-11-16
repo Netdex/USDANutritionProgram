@@ -12,81 +12,124 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import parser.parsables.FoodGroup;
 import parser.parsables.FoodItem;
 
+/**
+ * A list of all the foods in a food group.
+ * 
+ * @author Vince Ou
+ *
+ */
 public class FoodListPanel extends JPanel {
 
+	/**
+	 * Card layout manager switcher thing
+	 */
 	private PanelManager manager;
+	/**
+	 * The food group being shown
+	 */
 	private FoodGroup group;
 
+	/**
+	 * The title label
+	 */
 	private JLabel title;
+	/**
+	 * The header
+	 */
 	private JPanel header;
 
+	/**
+	 * The panel displaying the list of foods
+	 */
 	private JPanel foodsList;
-	private JScrollPane foodsScrollable;
+	/**
+	 * The thing making the food scrollable
+	 */
+	private CustomScrollPane foodsScrollable;
 
 	protected FoodListPanel(PanelManager manager) {
+		// Set up
 		super();
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
 		this.setAlignmentY(Component.LEFT_ALIGNMENT);
 
+		// Creates a header
 		header = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		header.setBackground(GUI.HEADER_COLOUR);
+		// Adds home and back buttons (to return to the list of food groups)
 		header.add(new HomeButton(manager));
 		header.add(new BackButton(manager.getGroupPanel(), manager));
+		// Sets the title, but empty
 		title = new JLabel();
 		title.setForeground(GUI.TITLE_COLOUR);
 		title.setFont(GUI.SUBTITLE_FONT);
 		header.add(title);
 		this.add(header, BorderLayout.NORTH);
 
+		// Creates a panel to hold the list of food item buttons
 		foodsList = new JPanel();
 		BoxLayout groupsLayout = new BoxLayout(foodsList, BoxLayout.Y_AXIS);
 		foodsList.setLayout(groupsLayout);
 		foodsList.setBackground(GUI.BACKGROUND_COLOUR);
 
-		foodsScrollable = new JScrollPane(foodsList);
-		foodsScrollable.createVerticalScrollBar();
-		foodsScrollable.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
-		foodsScrollable
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		foodsScrollable.getVerticalScrollBar().setUnitIncrement(
-				GUI.SCROLL_SPEED);
-		foodsScrollable.getVerticalScrollBar().setBackground(
-				GUI.BACKGROUND_COLOUR);
-		foodsScrollable.setWheelScrollingEnabled(true);
-		foodsScrollable.setHorizontalScrollBar(null);
-
+		// Makes it scrollable
+		foodsScrollable = new CustomScrollPane(foodsList);
 		this.add(foodsScrollable, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Sets the food group only when it is selected, during run time.
+	 * 
+	 * @param foodGroup
+	 *            the food group to display
+	 * @author Vince Ou
+	 */
 	protected void setFoodGroup(FoodGroup foodGroup) {
+		// Sets things and removes previous items
 		this.group = foodGroup;
 		title.setText(group.getDescription());
 		foodsScrollable.getVerticalScrollBar().setValue(0);
 		foodsList.removeAll();
 
+		// Gets the list of foods
 		FoodItem[] foods = group.getFoods().toArray(new FoodItem());
 
+		// Makes buttons and adds them for each food in the group
 		for (int i = 0; i < foods.length; i++) {
 			FoodButton button = new FoodButton(foods[i], manager);
 			foodsList.add(button);
 			foodsList.add(Box.createRigidArea(new Dimension(0, 7)));
 		}
 
+		// Refresh
 		foodsList.revalidate();
 		foodsList.repaint();
 	}
 
+	/**
+	 * Each button represents one food, and redirects to the food's individual
+	 * info page when clicked.
+	 * 
+	 * @author Vince Ou
+	 *
+	 */
 	class FoodButton extends JButton {
+		/**
+		 * The food that the item redirects to
+		 */
 		FoodItem food;
+		/**
+		 * Manager thingamabob.
+		 */
 		PanelManager manager;
 
 		public FoodButton(FoodItem food, PanelManager manager) {
+			// Sets up things.
 			super();
 			this.food = food;
 			this.manager = manager;
@@ -97,6 +140,10 @@ public class FoodListPanel extends JPanel {
 			this.setFocusable(false);
 			this.setBorder(GUI.BUTTON_BORDER);
 
+			// Creates the text for the button.
+			// HTML formatting means auto-text
+			// wrapping. JTextAreas are used elsewhere because they have better
+			// text wrapping capabilities, but take longer to load.
 			JLabel foodDescription = new JLabel("<html>"
 					+ food.getLongDescription() + "</html>");
 			foodDescription.setFont(GUI.SUBTITLE_FONT);
@@ -105,10 +152,20 @@ public class FoodListPanel extends JPanel {
 			this.add(foodDescription, BorderLayout.CENTER);
 		}
 
+		/**
+		 * What happens when you click the button to go to a food item page
+		 * 
+		 * @author Vince Ou
+		 *
+		 */
 		class FoodButtonListener implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				// Sets the food item for the info panel, and
+				// then changes the target for the back button in the info
+				// panel,
+				// then switches to the info panel
 				manager.getInfoPanel().setFoodItem(food);
 				manager.getInfoPanel().getBackButton()
 						.setTarget(FoodListPanel.this);

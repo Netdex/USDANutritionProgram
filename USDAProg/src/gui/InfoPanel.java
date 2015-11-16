@@ -34,6 +34,11 @@ import parser.parsables.Nutrient;
 import parser.parsables.WeightUnit;
 import parser.util.DoublyLinkedList;
 
+/**
+ * The information panel representing a single food item.
+ * @author Vince Ou
+ *
+ */
 public class InfoPanel extends JPanel {
 
 	private FoodItem food;
@@ -48,7 +53,7 @@ public class InfoPanel extends JPanel {
 
 	private JPanel contentPanel;
 	private JPanel nutritionPanel;
-	private JScrollPane contentScrollbar;
+	private CustomScrollPane contentScrollbar;
 
 	private String amountEntryPromptText;
 	private JTextArea amountEntryPrompt;
@@ -114,17 +119,7 @@ public class InfoPanel extends JPanel {
 		contentPanel.setOpaque(false);
 		contentPanel.setMaximumSize(new Dimension(465, Short.MAX_VALUE));
 
-		contentScrollbar = new JScrollPane(contentPanel);
-		contentScrollbar.createVerticalScrollBar();
-		contentScrollbar.getViewport().setBackground(GUI.BACKGROUND_COLOUR);
-		contentScrollbar
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		contentScrollbar.getVerticalScrollBar().setUnitIncrement(
-				GUI.SCROLL_SPEED);
-		contentScrollbar.getVerticalScrollBar().setBackground(
-				GUI.BACKGROUND_COLOUR);
-		contentScrollbar.setWheelScrollingEnabled(true);
-		contentScrollbar.setHorizontalScrollBar(null);
+		contentScrollbar = new CustomScrollPane(contentPanel);
 
 		this.add(contentScrollbar, BorderLayout.CENTER);
 	}

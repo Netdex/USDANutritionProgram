@@ -12,15 +12,30 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * Universal back button for any screen to add to return their previous screen
+ * 
+ * @author Vince Ou
+ *
+ */
 public class BackButton extends JButton {
 
+	/**
+	 * The JPanel to return to
+	 */
 	private JPanel target;
+	/**
+	 * The manager of all panels
+	 */
 	private final PanelManager manager;
 
 	public BackButton(JPanel target, PanelManager manager) {
+		// Sets up its information
 		super();
 		this.target = target;
 		this.manager = manager;
+
+		// Creates an icon for the back button
 		try {
 			this.setIcon(new ImageIcon(ImageIO.read(
 					new File("images/backButton.png")).getScaledInstance(48,
@@ -28,6 +43,7 @@ public class BackButton extends JButton {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		// Alignment
 		this.setSize(new Dimension(48, 48));
 		this.setFocusable(false);
 		this.setBackground(GUI.HEADER_COLOUR);
@@ -35,14 +51,29 @@ public class BackButton extends JButton {
 		this.addActionListener(new BackButtonActionListener());
 	}
 
+	/**
+	 * Changes where the back button should point
+	 * 
+	 * @param panel
+	 *            the target
+	 */
 	protected void setTarget(JPanel panel) {
 		target = panel;
 	}
 
+	/**
+	 * What happens when the button is clicked
+	 * 
+	 * @author Vince Ou
+	 *
+	 */
 	class BackButtonActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			// There is no better way to do this.
+			// Switches to the appropriate panel as desired.
+			// These are the only panels that need to be using the back button.
 			if (target instanceof GroupPanel)
 				manager.switchToGroup();
 			else if (target instanceof InfoPanel)

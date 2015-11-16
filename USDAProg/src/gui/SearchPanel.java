@@ -26,11 +26,10 @@ public class SearchPanel extends JPanel {
 
 	private PanelManager manager;
 	private JTextField searchBox;
-	private JScrollPane resultsList;
+	private CustomScrollPane resultsList;
 	private JPanel resultsPanel;
 	private long prevKeyPressedTime;
 	private boolean shouldSearch = true;
-	Color searchBoxGray = new Color(2, 2, 2);
 
 	public SearchPanel(PanelManager manager) {
 		super();
@@ -46,7 +45,7 @@ public class SearchPanel extends JPanel {
 		searchBox = new JTextField("Search...", 22);
 		searchBox.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 		searchBox.setBackground(Color.WHITE);
-		searchBox.setForeground(searchBoxGray);
+		searchBox.setForeground(GUI.SEARCH_BOX_GRAY);
 		searchBox.setBorder(GUI.EMPTY_BORDER);
 		searchBox.setAlignmentX(LEFT_ALIGNMENT);
 		searchBox.setMinimumSize(new Dimension(400, 0));
@@ -69,15 +68,8 @@ public class SearchPanel extends JPanel {
 		resultsPanel.setAlignmentX(LEFT_ALIGNMENT);
 		resultsPanel.setLayout(resultsPanelLayout);
 
-		resultsList = new JScrollPane(resultsPanel);
-		resultsList.createVerticalScrollBar();
-		resultsList
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		resultsList.getVerticalScrollBar().setUnitIncrement(GUI.SCROLL_SPEED);
-		resultsList.getVerticalScrollBar().setBackground(GUI.BACKGROUND_COLOUR);
-		resultsList.setWheelScrollingEnabled(true);
-		resultsList.setHorizontalScrollBar(null);
-
+		resultsList = new CustomScrollPane(resultsPanel);
+		
 		new Thread() {
 			public void run() {
 				while (true) {
@@ -127,7 +119,7 @@ public class SearchPanel extends JPanel {
 
 	protected void resetSearchBox() {
 		searchBox.setText("Search...");
-		searchBox.setForeground(searchBoxGray);
+		searchBox.setForeground(GUI.SEARCH_BOX_GRAY);
 	}
 
 	protected void resetResults() {

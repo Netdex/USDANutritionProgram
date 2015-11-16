@@ -10,12 +10,25 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+/**
+ * Universal home button that switches whatever the user is looking at to the
+ * home screen
+ * 
+ * @author Vince Ou
+ *
+ */
 public class HomeButton extends JButton {
 
+	/**
+	 * The manager for the different panels/views
+	 */
 	PanelManager manager;
 
 	public HomeButton(PanelManager manager) {
+		// sets up things
 		super();
+
+		// Sets an image for the home button
 		try {
 			this.setIcon(new ImageIcon(ImageIO.read(
 					new File("images/homeButton.png")).getScaledInstance(48,
@@ -23,6 +36,8 @@ public class HomeButton extends JButton {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		// Sets up more things
 		this.manager = manager;
 		this.setBackground(GUI.HEADER_COLOUR);
 		this.setFocusable(false);
@@ -30,10 +45,17 @@ public class HomeButton extends JButton {
 		addActionListener(new HomeButtonActionListener());
 	}
 
+	/**
+	 * What happens when you click the home button
+	 * 
+	 * @author Vince Ou
+	 *
+	 */
 	class HomeButtonActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			// Switches the view to the home view.
 			manager.switchToHome();
 		}
 
