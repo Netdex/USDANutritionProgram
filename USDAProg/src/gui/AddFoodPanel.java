@@ -200,7 +200,7 @@ public class AddFoodPanel extends JPanel {
 				// Actually taking the input through a Spinner (limited to only
 				// numbers)
 				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1.000,
-						0.001, 999.999, 0.025));
+						0.001, 999.999, 1.000));
 				gramsPerEntry.setFont(GUI.CONTENT_FONT);
 				gramsPerEntry.setPreferredSize(new Dimension(150, 30));
 				gramsPerEntry.setFocusable(false);
@@ -354,7 +354,7 @@ public class AddFoodPanel extends JPanel {
 							+ nutrient.getUnit() + ")"), BorderLayout.CENTER);
 
 			amount = new JSpinner(new SpinnerNumberModel(0.000, 0.000,
-					9999.999, 0.500));
+					9999.999, 1.000));
 			amount.setFont(GUI.CONTENT_FONT);
 			amount.setOpaque(false);
 			amount.setFocusable(true);

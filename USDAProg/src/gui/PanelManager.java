@@ -9,25 +9,63 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+/**
+ * The card-switching, panel manager
+ * 
+ * @author Vince Ou
+ *
+ */
 public class PanelManager extends JPanel {
 
+	/**
+	 * Home screen
+	 */
 	private HomePanel homePanel;
+	/**
+	 * The list of food groups
+	 */
 	private GroupPanel groupPanel;
+	/**
+	 * List of foods under each food group
+	 */
 	private FoodListPanel foodListPanel;
+	/**
+	 * Search function view
+	 */
 	private SearchPanel searchPanel;
+	/**
+	 * The information about a certain food
+	 */
 	private InfoPanel infoPanel;
+	/**
+	 * Any other pertinent information about a food
+	 */
 	private ExtraInfoPanel extraInfoPanel;
+	/**
+	 * Information about developers
+	 */
 	private AboutPanel aboutPanel;
-	// private HelpPanel helpPanel;
+	/**
+	 * Allows user to create their own foods and add them to the database
+	 */
 	private AddFoodPanel addFoodPanel;
 
-	CardLayout cardLayoutManager;
+	/**
+	 * The manager being used
+	 */
+	private CardLayout cardLayoutManager;
 
+	/**
+	 * Used to animate the loading wheel
+	 */
 	public int LOADING_PERCENTAGE = -1;
 
 	public PanelManager() {
+		// Set up
 		cardLayoutManager = new CardLayout();
 		this.setLayout(cardLayoutManager);
+
+		// Creates all of the panels
 		homePanel = new HomePanel(this);
 		groupPanel = new GroupPanel(this);
 		foodListPanel = new FoodListPanel(this);
@@ -35,36 +73,44 @@ public class PanelManager extends JPanel {
 		aboutPanel = new AboutPanel(this);
 		infoPanel = new InfoPanel(searchPanel, this);
 		extraInfoPanel = new ExtraInfoPanel(this);
-		// try {
-		// helpPanel = new HelpPanel(this);
-		// } catch (IOException e) {
-		// System.err.println("failed to load image for help screen");
-		// e.printStackTrace();
-		// }
 		addFoodPanel = new AddFoodPanel(this);
 
+		// Adds the panels into the stock "list" of panels
 		this.add(homePanel, "home");
 		this.add(groupPanel, "group");
 		this.add(foodListPanel, "foodList");
 		this.add(searchPanel, "search");
 		this.add(aboutPanel, "about");
-		// this.add(helpPanel, "help");
 		this.add(extraInfoPanel, "extraInfo");
 		this.add(infoPanel, "foodInfo");
 		this.add(addFoodPanel, "addFood");
 	}
 
+	/**
+	 * Switches to the ExtraInfo panel
+	 */
 	protected void switchToExtraInfo() {
 		cardLayoutManager.show(this, "extraInfo");
 	}
 
+	/**
+	 * Switches to the home panel
+	 */
 	protected void switchToHome() {
 		cardLayoutManager.show(this, "home");
 	}
 
+	/**
+	 * Switches to the search panel
+	 * 
+	 * @param reset
+	 *            reset the search results?
+	 */
 	protected void switchToSearchPanel(boolean reset) {
+		// Disables buttons during loading wheel sequence
 		if (LOADING_PERCENTAGE == -1) {
 			cardLayoutManager.show(this, "search");
+			// resets only if going from home, else keeps the results
 			if (reset) {
 				searchPanel.resetSearchBox();
 				searchPanel.resetResults();
@@ -72,11 +118,18 @@ public class PanelManager extends JPanel {
 		}
 	}
 
+	/**
+	 * Switches to the info panel, along with loading wheel blocking support
+	 */
 	protected void switchToInfoPanel() {
 		if (LOADING_PERCENTAGE == -1)
 			cardLayoutManager.show(this, "foodInfo");
 	}
 
+	/**
+	 * Switches to the food groups list panel, along with loading wheel blocking
+	 * support
+	 */
 	protected void switchToGroup() {
 		if (LOADING_PERCENTAGE == -1) {
 			groupPanel.resetScroll();
@@ -84,20 +137,25 @@ public class PanelManager extends JPanel {
 		}
 	}
 
-	// protected void switchToHelp() {
-	// if (LOADING_PERCENTAGE == -1)
-	// cardLayoutManager.show(this, "help");
-	// }
-
+	/**
+	 * Switches to the about panel, along with loading wheel blocking support
+	 */
 	protected void switchToAbout() {
 		if (LOADING_PERCENTAGE == -1)
 			cardLayoutManager.show(this, "about");
 	}
 
+	/**
+	 * Switches to the list of foods panel
+	 */
 	protected void switchToFoodListPanel() {
 		cardLayoutManager.show(this, "foodList");
 	}
 
+	/**
+	 * Switches to the add food to database panel, along with loading wheel
+	 * blocking support
+	 */
 	protected void switchToAddFood() {
 		if (LOADING_PERCENTAGE == -1) {
 			cardLayoutManager.show(this, "addFood");
@@ -105,28 +163,57 @@ public class PanelManager extends JPanel {
 		}
 	}
 
+	/**
+	 * Gets the food group list panel
+	 * 
+	 * @return the groupPanel
+	 */
 	protected JPanel getGroupPanel() {
 		return groupPanel;
 	}
 
+	/**
+	 * Gets the info panel
+	 * 
+	 * @return the InfoPanel
+	 */
 	protected InfoPanel getInfoPanel() {
 		return infoPanel;
 	}
 
+	/**
+	 * Gets the home panel
+	 * 
+	 * @return the home panel
+	 */
 	protected HomePanel getHomePanel() {
 		return homePanel;
 	}
 
+	/**
+	 * Gets the panel of list of foods in a food group
+	 * 
+	 * @return the foodListPanel
+	 */
 	protected FoodListPanel getFoodListPanel() {
 		return foodListPanel;
 	}
 
+	/**
+	 * Gets the extra info panel
+	 * 
+	 * @return the extraInfoPanel
+	 */
 	protected ExtraInfoPanel getExtraInfoPanel() {
 		return extraInfoPanel;
 	}
 
+	/**
+	 * Overrides the graphics in order to draw the loading wheel
+	 */
 	@Override
 	public void paint(Graphics gr) {
+		// set up
 		super.paint(gr);
 		Graphics2D g = (Graphics2D) gr;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
