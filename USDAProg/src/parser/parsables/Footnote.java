@@ -3,6 +3,11 @@ package parser.parsables;
 import parser.Formattable;
 import parser.InvalidParseDataException;
 
+/**
+ * Represents a footnote of a food item
+ *
+ * @author Gordon Guan
+ */
 public class Footnote implements Parsable<Footnote>, Formattable{
 
 	public static final int PARSE_DATA_LENGTH = 5;
@@ -71,7 +76,12 @@ public class Footnote implements Parsable<Footnote>, Formattable{
 	public String getFootnoteText() {
 		return footnoteTxt;
 	}
-	
+
+	/**
+	 * Represents one of 3 types a footnote can be
+	 *
+	 * @author Gordon Guan
+	 */
 	enum FootnoteType {
 		FOOD_DESCRIPTION,
 		MEASURE_DESCRIPTION,

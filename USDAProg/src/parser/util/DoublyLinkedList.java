@@ -2,21 +2,27 @@ package parser.util;
 
 import java.lang.reflect.Array;
 
+/**
+ * A doubly linked list structure
+ *
+ * @param <E>
+ * @author Gordon Guan
+ */
 public class DoublyLinkedList<E> {
 
-	private DoubleLLNode<E> front;
-	private DoubleLLNode<E> back;
+	private final DoubleLLNode<E> front;
+	private final DoubleLLNode<E> back;
 
 	public DoublyLinkedList() {
-		front = new DoubleLLNode<E>(null);
-		back = new DoubleLLNode<E>(null);
+		front = new DoubleLLNode<>(null);
+		back = new DoubleLLNode<>(null);
 		front.setNext(back);
 		back.setPrevious(front);
 	}
 
 	public DoublyLinkedList(E[] array) {
-		front = new DoubleLLNode<E>(null);
-		back = new DoubleLLNode<E>(null);
+		front = new DoubleLLNode<>(null);
+		back = new DoubleLLNode<>(null);
 		front.setNext(back);
 		back.setPrevious(front);
 		for (int i = 0; i < array.length - 1; i++) {
@@ -25,8 +31,13 @@ public class DoublyLinkedList<E> {
 
 	}
 
+	/**
+	 * Add an item to the list
+	 *
+	 * @param item the item to add
+	 */
 	public void add(E item) {
-		DoubleLLNode<E> newNode = new DoubleLLNode<E>(item);
+		DoubleLLNode<E> newNode = new DoubleLLNode<>(item);
 
 		DoubleLLNode<E> currentItem = back.getPrevious();
 		currentItem.getNext().setPrevious(newNode);
@@ -36,6 +47,11 @@ public class DoublyLinkedList<E> {
 		newNode.setNext(back);
 	}
 
+	/**
+	 * Get an item by its index
+	 * @param index the index of the item
+	 * @return the item
+	 */
 	public E get(int index) {
 		return getNode(index).getItem();
 	}
@@ -52,14 +68,27 @@ public class DoublyLinkedList<E> {
 		return currentItem;
 	}
 
+	/**
+	 * Get the first item
+	 * @return the first item
+	 */
 	public E getFirst() {
 		return front.getNext().getItem();
 	}
 
+	/**
+	 * Get the last item
+	 * @return the last item
+	 */
 	public E getLast() {
 		return back.getPrevious().getItem();
 	}
 
+	/**
+	 * Get the index of an item
+	 * @param item the item to find its index
+	 * @return the index of an item
+	 */
 	public int indexOf(E item) {
 		DoubleLLNode<E> currentItem = front.getNext();
 		int count = 0;
@@ -72,6 +101,11 @@ public class DoublyLinkedList<E> {
 		return -1;
 	}
 
+	/**
+	 * Remove an item from the list by index
+	 * @param index the index of the item
+	 * @return the item removed
+	 */
 	public E remove(int index) {
 		DoubleLLNode<E> currentItem = front.getNext();
 		for (int i = 0; i < index; i++) {
@@ -84,6 +118,11 @@ public class DoublyLinkedList<E> {
 		return currentItem.getItem();
 	}
 
+	/**
+	 * Removes an item from the list by item reference
+	 * @param item the item to remove
+	 * @return whether or not the item was removed successfully
+	 */
 	public boolean remove(E item) {
 		DoubleLLNode<E> currentItem = front.getNext();
 		while (currentItem != null) {
@@ -97,11 +136,18 @@ public class DoublyLinkedList<E> {
 		return false;
 	}
 
+	/**
+	 * Clear the list
+	 */
 	public void clear() {
 		front.setNext(back);
 		back.setPrevious(front);
 	}
 
+	/**
+	 * Gets the size of the list
+	 * @return the size of the list
+	 */
 	public int size() {
 		int count = 0;
 		DoubleLLNode<E> currentItem = front.getNext();
@@ -112,12 +158,17 @@ public class DoublyLinkedList<E> {
 		return count;
 	}
 
+	/**
+	 * Swaps two elements in the list
+	 * @param a index to swap
+	 * @param b other index to swap
+	 */
 	public void swap(int a, int b) {
 		DoubleLLNode<E> nodeA = this.getNode(a);
 		DoubleLLNode<E> nodeB = this.getNode(b);
 
-		if (nodeA == nodeB)
-			return;
+		if (nodeA == nodeB) {
+		}
 		else if (Math.abs(a - b) == 1) {
 			nodeA.getPrevious().setNext(nodeB);
 			nodeA.setNext(nodeB.getNext());
@@ -158,8 +209,13 @@ public class DoublyLinkedList<E> {
 		return arr;
 	}
 
+	/**
+	 * Get all items in the list that match a selector
+	 * @param sel the selector
+	 * @return all items in the list that match
+	 */
 	public DoublyLinkedList<E> selectAllItems(Selector<E> sel) {
-		DoublyLinkedList<E> selected = new DoublyLinkedList<E>();
+		DoublyLinkedList<E> selected = new DoublyLinkedList<>();
 		DoubleLLNode<E> currentNode = front.getNext();
 		while (currentNode.getNext() != null) {
 			if (sel.select(currentNode.getItem()))
@@ -181,8 +237,13 @@ public class DoublyLinkedList<E> {
 		return ts;
 	}
 
+	/**
+	 * Represents a node in the list
+	 * @author Gordon Guan
+	 * @param <E>
+	 */
 	static class DoubleLLNode<E> {
-		private E item;
+		private final E item;
 		private DoubleLLNode<E> next;
 		private DoubleLLNode<E> previous;
 

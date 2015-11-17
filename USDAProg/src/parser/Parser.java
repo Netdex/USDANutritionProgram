@@ -1,25 +1,14 @@
 package parser;
 
 import gui.GUI;
+import parser.parsables.*;
+import parser.util.BinaryTreeMap;
+import parser.util.DoublyLinkedList;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import parser.parsables.FoodGroup;
-import parser.parsables.FoodItem;
-import parser.parsables.FoodWeight;
-import parser.parsables.Footnote;
-import parser.parsables.LanguaL;
-import parser.parsables.LanguaLDescription;
-import parser.parsables.LanguaLGroup;
-import parser.parsables.Nutrient;
-import parser.parsables.NutrientData;
-import parser.parsables.NutrientInfo;
-import parser.parsables.WeightUnit;
-import parser.util.BinaryTreeMap;
-import parser.util.DoublyLinkedList;
 
 /**
  * Creates data structures out of the given files
@@ -29,26 +18,25 @@ import parser.util.DoublyLinkedList;
 public class Parser {
     
     // Various maps for storing indexes to temporary data
-    private BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
+    private final BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
 
-    private BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
-    private BinaryTreeMap<Integer, NutrientInfo> map_nutrDesc = new BinaryTreeMap<>();
-    private BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
-    private BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
-    private BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
-    private BinaryTreeMap<String, LanguaLDescription> map_langualDesc = new BinaryTreeMap<>();
-    private BinaryTreeMap<Integer, Footnote> map_footnote = new BinaryTreeMap<>();
+    private final BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
+    private final BinaryTreeMap<Integer, NutrientInfo> map_nutrDesc = new BinaryTreeMap<>();
+    private final BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
+    private final BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
+    private final BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
+    private final BinaryTreeMap<String, LanguaLDescription> map_langualDesc = new BinaryTreeMap<>();
+    private final BinaryTreeMap<Integer, Footnote> map_footnote = new BinaryTreeMap<>();
 
     /**
      * In this order: 0 File foodDesc, 1 File nutrientData, 2 File
      * nutrientDescription, 3 File foodGroup, 4 File foodWeight, 5 File langual,
      * 6 File langualDesc, 7 File footnotes
      */
-    private File[] dataFiles;
-
+    private final File[] dataFiles;
+    private final GUI gui;
     private long totalFileSize = 0;
     private long processedFileSize = 0;
-    private GUI gui;
 
     public Parser(File[] files, GUI gui) {
         this.dataFiles = files;
@@ -59,9 +47,9 @@ public class Parser {
     }
 
     /**
-     * EXPENSIVE OPERATION
+     * Get a list of food items parsed
      *
-     * @return
+     * @return a list of food items parsed
      */
     public DoublyLinkedList<FoodItem> getParsedData() {
         return map_foodItems.getAllValues();
@@ -72,7 +60,7 @@ public class Parser {
     }
 
     /**
-     * Parses all the data in the given files
+     * Parses all the data in the given files in a separate thread
      */
     public void parseData() {
         try {
@@ -112,10 +100,21 @@ public class Parser {
 
     }
 
+    /**
+     * Get all nutrient info
+     *
+     * @return all nutrient info
+     */
     public BinaryTreeMap<Integer, NutrientInfo> getNutrientInfo() {
         return map_nutrDesc;
     }
 
+    /**
+     * Parse footnotes file
+     *
+     * @throws IOException               when file error occurs
+     * @throws InvalidParseDataException when parsed data is in wrong format
+     */
     private void parseFootnotes() throws IOException, InvalidParseDataException {
         BufferedReader br = new BufferedReader(new FileReader(dataFiles[7]));
 
@@ -248,6 +247,7 @@ public class Parser {
             String[] items = splitTokens(line, "^", FoodItem.PARSE_DATA_LENGTH);
             FoodItem foodItem = new FoodItem().parse(items);
             int ndbNo = foodItem.getNDBNo();
+            // Set various references to other data based on NDB number
             foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
             foodItem.setWeightInfo(map_foodWeight.get(ndbNo));
             foodItem.setNutrientData(map_nutrData.get(ndbNo));
@@ -313,6 +313,13 @@ public class Parser {
         br.close();
     }
 
+    /**
+     * Split a string into tokens from a delimiter
+     * @param item the string to split
+     * @param delim the delimiter to split by
+     * @param length the number of tokens
+     * @return the tokens in the string
+     */
     private String[] splitTokens(String item, String delim, int length) {
         String[] items = new String[length];
         int lastIdx = 0;
@@ -324,13 +331,20 @@ public class Parser {
         return items;
     }
 
-    public void updatePercentage() {
+    /**
+     * Tells the GUI to update the loading bar
+     */
+    private void updatePercentage() {
         if (gui != null) {
             gui.getPanelManager().LOADING_PERCENTAGE = (int) (100.0 * processedFileSize / totalFileSize);
             gui.getPanelManager().repaint();
         }
     }
 
+    /**
+     * Gets all food groups
+     * @return all food groups
+     */
     public DoublyLinkedList<FoodGroup> getFoodGroups() {
         return map_foodGroup.getAllValues();
     }

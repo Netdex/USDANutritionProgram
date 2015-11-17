@@ -2,6 +2,12 @@ package parser.parsables;
 
 import parser.InvalidParseDataException;
 
+/**
+ * An interface which represents an object which can be deserialized from a file
+ *
+ * @param <E> The type of the object after deserialization
+ * @author Gordon Guan
+ */
 public interface Parsable<E> {
 
 	/**
@@ -9,5 +15,5 @@ public interface Parsable<E> {
 	 * @param data The data to be parsed
 	 * @throws InvalidParseDataException When parse data does not meet specifications required
 	 */
-	public E parse(String[] data) throws InvalidParseDataException;
+	E parse(String[] data) throws InvalidParseDataException;
 }

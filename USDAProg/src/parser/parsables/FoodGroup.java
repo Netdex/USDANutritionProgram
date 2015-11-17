@@ -12,10 +12,24 @@ import parser.util.DoublyLinkedList;
  */
 public class FoodGroup implements Parsable<FoodGroup>, Formattable {
 
-	public static FoodGroup SAMPLE = new FoodGroup();
+	/**
+	 * A sample for generics to create arrays from
+	 */
+	public static final FoodGroup SAMPLE = new FoodGroup();
+	/**
+	 * The required length of parse data
+	 */
+	private static final int PARSE_DATA_LENGTH = 2;
+	/**
+	 * A list of all foods in this food group
+	 */
+	private final DoublyLinkedList<FoodItem> foods = new DoublyLinkedList<>();
+	private int foodGroupID;
+	private String desc;
 
-	public static final int PARSE_DATA_LENGTH = 2;
-	private DoublyLinkedList<FoodItem> foods = new DoublyLinkedList<FoodItem>();
+	public FoodGroup() {
+
+	}
 
 	@Override
 	public FoodGroup parse(String[] data) throws InvalidParseDataException {
@@ -33,18 +47,18 @@ public class FoodGroup implements Parsable<FoodGroup>, Formattable {
 				+ desc + "~");
 	}
 
-	private int foodGroupID;
-
-	private String desc;
-
-	public FoodGroup() {
-
-	}
-
+	/**
+	 * Gets a list of all foods in this food group
+	 * @return a list of all the foods in this food group
+	 */
 	public DoublyLinkedList<FoodItem> getFoods() {
 		return foods;
 	}
 
+	/**
+	 * Adds a food item to this food group
+	 * @param fi The food item to add
+	 */
 	public void addFood(FoodItem fi) {
 		this.foods.add(fi);
 	}

@@ -1,11 +1,12 @@
 package parser;
 
-import java.util.StringTokenizer;
-
 import parser.util.DoublyLinkedList;
+
+import java.util.StringTokenizer;
 
 /**
  * List of all the fatty acids
+ * @author Gordon Guan
  */
 public enum FattyAcid {
 
@@ -41,8 +42,9 @@ public enum FattyAcid {
 	// OMEGA-9 FATTY ACIDS
 	GONDOIC_ACID(20, 1, "Gondoic Acid"), NERVONIC_ACID(24, 1, "Nervonic Acid");
 
-	private int cn, dn;
-	private String name;
+	private final int cn;
+	private final int dn;
+	private final String name;
 
 	FattyAcid(int cn, int dn, String name) {
 		this.cn = cn;
@@ -50,13 +52,26 @@ public enum FattyAcid {
 		this.name = name;
 	}
 
+	/**
+	 * Get a fatty acid by its carbon to double bond ratio
+	 *
+	 * @param cd CD ratio
+	 * @return the fatty acid, or an empty array if none
+	 */
 	public static FattyAcid[] lookupByCDRatio(String cd) {
 		StringTokenizer st = new StringTokenizer(cd, ":");
 		return lookupByCDRatio(Integer.parseInt(st.nextToken()),
 				Integer.parseInt(st.nextToken()));
 	}
 
-	public static FattyAcid[] lookupByCDRatio(int cn, int dn) {
+	/**
+	 * Get a fatty acid by its carbon to double bond ratio
+	 *
+	 * @param cn number of carbon atoms
+	 * @param dn number of double bonds
+	 * @return the fatty acid, or an empty array if none
+	 */
+	private static FattyAcid[] lookupByCDRatio(int cn, int dn) {
 
 		DoublyLinkedList<FattyAcid> matches = new DoublyLinkedList<>();
 
@@ -73,11 +88,11 @@ public enum FattyAcid {
 		return name;
 	}
 
-	public int getCarbonAtomCount() {
+	private int getCarbonAtomCount() {
 		return cn;
 	}
 
-	public int getDoubleCarbonBondCount() {
+	private int getDoubleCarbonBondCount() {
 		return dn;
 	}
 }

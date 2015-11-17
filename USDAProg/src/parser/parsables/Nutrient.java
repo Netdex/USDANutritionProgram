@@ -6,13 +6,54 @@ import parser.InvalidParseDataException;
 /**
  * 
  *
- * Represents a nutrient, which is contained in a NutrientData. Modify in future
- * to use builder structure, this is temporary to allow my code to work.
+ * Represents a single nutrient which a food item can own
+ * @author Gordon Guan
  */
 public class Nutrient implements Parsable<Nutrient>, Formattable {
 
+	public static final int PARSE_DATA_LENGTH = 18;
 	public static Nutrient SAMPLE = new Nutrient();
+	private int ndbNo;
+	/**
+	 * 3 digit unique ID for a nutrient
+	 */
+	private short nutrNo;
+	/**
+	 * Amount in 100 grams, edible portion
+	 */
+	private double nutrVal;
+	/**
+	 * Number of data points used to calculate the value
+	 */
+	private int numDataPts;
+	/**
+	 * Standard error of the mean Can be NaN
+	 */
+	private double stdError;
+	/**
+	 * Type of data
+	 */
+	private String srcCd;
+	/**
+	 * Some data derivation code thing
+	 */
+	private String derivCd;
+	private int refNDBNo;
+	private String addNutrMark;
+	private int numStudies;
+	private double min;
+	private double max;
+	private double df;
+	private double lowEB;
+	private double upEB;
+	private String statCmt;
+	private String addModDate;
+	private NutrientInfo desc;
+	public Nutrient() {
 
+	}
+
+	@Override
 	public String getFormat() {
 		return Formattable.getFileFormatted(String.format("~%05d~", ndbNo),
 				String.format("~%03d~", nutrNo), nutrVal + "", "0", "", "", "", "", "", "", "", "",
@@ -44,83 +85,40 @@ public class Nutrient implements Parsable<Nutrient>, Formattable {
 		return this;
 	}
 
-	public static final int PARSE_DATA_LENGTH = 18;
-
-	private int ndbNo;
 	/**
-	 * 3 digit unique ID for a nutrient
-	 */
-	private short nutrNo;
-
-	/**
-	 * Amount in 100 grams, edible portion
-	 */
-	private double nutrVal;
-
-	/**
-	 * Number of data points used to calculate the value
-	 */
-	private int numDataPts;
-
-	/**
-	 * Standard error of the mean Can be NaN
-	 */
-	private double stdError;
-
-	/**
-	 * Type of data
-	 */
-	private String srcCd;
-
-	/**
-	 * Some data derivation code thing
-	 */
-	private String derivCd;
-
-	private int refNDBNo;
-
-	private String addNutrMark;
-
-	private int numStudies;
-
-	private double min;
-	private double max;
-	private double df;
-	private double lowEB;
-	private double upEB;
-	private String statCmt;
-	private String addModDate;
-	private NutrientInfo desc;
-
-	public Nutrient() {
-
-	}
-
-	/**
-	 * @return the ndbNo
+	 * @return the NDB number
 	 */
 	public int getNDBNo() {
 		return ndbNo;
 	}
 
 	/**
-	 * @return the nutrNo
+	 * @return the nutrient number
 	 */
 	public short getNutrNo() {
 		return nutrNo;
 	}
 
 	/**
-	 * @return the nutrVal
+	 * @return the nutrient value in grams
 	 */
 	public double getNutrVal() {
 		return nutrVal;
 	}
 
+	/**
+	 * Sets the nutrient description
+	 *
+	 * @param nd The nutrient description to set
+	 */
 	public void setNutrientDescription(NutrientInfo nd) {
 		this.desc = nd;
 	}
 
+	/**
+	 * Gets the nutrient description
+	 * @return the nutrient description
+	 */
 	public NutrientInfo getNutrientInfo() {
 		return this.desc;
 	}

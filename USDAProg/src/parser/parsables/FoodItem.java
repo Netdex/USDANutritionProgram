@@ -11,12 +11,21 @@ import parser.InvalidParseDataException;
 public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
         Formattable {
 
+    /**
+     * Required length of parse data
+     */
     public static final int PARSE_DATA_LENGTH = 14;
-    public static FoodItem SAMPLE = new FoodItem();
+    /* A sample for creating generic arrays */
+    public static final FoodItem SAMPLE = new FoodItem();
+    /* The nutrient data of this food item */
     private NutrientData nutrientData = new NutrientData();
+    /* The food group of this food item */
     private FoodGroup foodGroup;
+    /* The weight statistics of this food item */
     private FoodWeight weightInfo;
+    /* A set of languals for this food item */
     private LanguaLGroup langualGroup;
+    /* Footnotes for this food item */
     private Footnote footnotes;
     /**
      * Nutrient Databank number<br>

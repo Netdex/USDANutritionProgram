@@ -1,5 +1,11 @@
 package parser.util;
 
+/**
+ * Represents the balanced binary tree data structure using an AVL tree
+ *
+ * @param <E>
+ * @author Gordon Guan
+ */
 public class BalancedBinaryTree<E extends Comparable<E>> extends BinaryTree<E> {
 
     public BalancedBinaryTree() {
@@ -58,52 +64,26 @@ public class BalancedBinaryTree<E extends Comparable<E>> extends BinaryTree<E> {
         balanceUp(newNode);
     }
 
+    /**
+     * Remove this item from the tree
+     *
+     * @param item the item to remove
+     * @return whether the item was removed successfully or not
+     */
     public boolean remove(E item) {
         BinaryTreeNode<E> node = findNode(item);
         if (node == null)
             return false;
-        remove(node);
+        super.remove(node);
         balanceUp(node);
         return true;
     }
 
-    private void remove(BinaryTreeNode<E> node) {
-        int branches = node.getBranches();
-        switch (branches) {
-            case 0:
-                if (node.getParent().getLeft() == node) {
-                    node.getParent().setLeft(null);
-                } else {
-                    node.getParent().setRight(null);
-                }
-                break;
-            case 1:
-                if (node.getParent().getLeft() == node) {
-                    if (node.getLeft() != null) {
-                        node.getParent().setLeft(node.getLeft());
-                        node.getLeft().setParent(node.getParent());
-                    } else {
-                        node.getParent().setLeft(node.getRight());
-                        node.getRight().setParent(node.getParent());
-                    }
-                } else {
-                    if (node.getLeft() != null) {
-                        node.getParent().setRight(node.getLeft());
-                        node.getLeft().setParent(node.getParent());
-                    } else {
-                        node.getParent().setRight(node.getRight());
-                        node.getRight().setParent(node.getParent());
-                    }
-                }
-                break;
-            case 2:
-                BinaryTreeNode<E> minNode = this.getMinNode(node.getRight());
-                node.setItem(minNode.getItem());
-                remove(minNode);
-                break;
-        }
-    }
-
+    /**
+     * Balances the tree upwards from a single point
+     *
+     * @param node The node to balance from
+     */
     private void balanceUp(BinaryTreeNode<E> node) {
         BinaryTreeNode<E> currentNode = node;
         while (currentNode != null) {
@@ -130,7 +110,12 @@ public class BalancedBinaryTree<E extends Comparable<E>> extends BinaryTree<E> {
         }
     }
 
-    public void leftRotation(BinaryTreeNode<E> r) {
+    /**
+     * Does a left rotation on this node
+     *
+     * @param r The root node to do the rotation from
+     */
+    void leftRotation(BinaryTreeNode<E> r) {
         BinaryTreeNode<E> p = r.getRight();
         if (p == null)
             return;
@@ -151,7 +136,12 @@ public class BalancedBinaryTree<E extends Comparable<E>> extends BinaryTree<E> {
         r.setParent(p);
     }
 
-    public void rightRotation(BinaryTreeNode<E> r) {
+    /**
+     * Does a right rotation on this node
+     *
+     * @param r The root node to do the rotation on
+     */
+    void rightRotation(BinaryTreeNode<E> r) {
         BinaryTreeNode<E> p = r.getLeft();
         if (p == null)
             return;
@@ -172,12 +162,22 @@ public class BalancedBinaryTree<E extends Comparable<E>> extends BinaryTree<E> {
         r.setParent(p);
     }
 
-    public void doubleLeftRotation(BinaryTreeNode<E> r) {
+    /**
+     * Does a double left rotation on this node
+     *
+     * @param r The root node to do the rotation on
+     */
+    void doubleLeftRotation(BinaryTreeNode<E> r) {
         rightRotation(r.getRight());
         leftRotation(r);
     }
 
-    public void doubleRightRotation(BinaryTreeNode<E> r) {
+    /**
+     * Does a double right rotation on this node
+     *
+     * @param r The root node to do the rotation on
+     */
+    void doubleRightRotation(BinaryTreeNode<E> r) {
         leftRotation(r.getLeft());
         rightRotation(r);
     }

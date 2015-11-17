@@ -2,9 +2,16 @@ package parser.util;
 
 import parser.util.BinaryTree.BinaryTreeNode;
 
+/**
+ * Represents a map structure, using a balanced binary tree
+ *
+ * @param <K> The key type of the map
+ * @param <V> The value type of the map
+ * @author Gordon Guan
+ */
 public class BinaryTreeMap<K extends Comparable<K>, V> {
 
-    private BalancedBinaryTree<BinaryTreeMapNode<K, V>> tree = new BalancedBinaryTree<BinaryTreeMapNode<K, V>>();
+    private final BalancedBinaryTree<BinaryTreeMapNode<K, V>> tree = new BalancedBinaryTree<>();
 
     public BinaryTreeMap() {
 
@@ -22,10 +29,10 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
      * @param sel The selector to base adding decisions on
      * @return The list of selected items
      */
-    public DoublyLinkedList<V> selectAllItems(Selector<V> sel) {
+    private DoublyLinkedList<V> selectAllItems(Selector<V> sel) {
         if (tree.size() == 0)
-            return new DoublyLinkedList<V>();
-        DoublyLinkedList<V> selectedValues = new DoublyLinkedList<V>();
+            return new DoublyLinkedList<>();
+        DoublyLinkedList<V> selectedValues = new DoublyLinkedList<>();
         Stack<BinaryTreeNode<BinaryTreeMapNode<K, V>>> stack = new Stack<>();
         stack.push(tree.getRootNode());
 
@@ -42,14 +49,24 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
         return selectedValues;
     }
 
+    /**
+     * Gets all values
+     *
+     * @return all values
+     */
     public DoublyLinkedList<V> getAllValues() {
         return selectAllItems(Selector.TRUE_SELECTOR);
     }
 
+    /**
+     * Gets all keys
+     *
+     * @return all keys
+     */
     public DoublyLinkedList<K> getAllKeys() {
         if (tree.size() == 0)
-            return new DoublyLinkedList<K>();
-        DoublyLinkedList<K> selectedValues = new DoublyLinkedList<K>();
+            return new DoublyLinkedList<>();
+        DoublyLinkedList<K> selectedValues = new DoublyLinkedList<>();
         Stack<BinaryTreeNode<BinaryTreeMapNode<K, V>>> stack = new Stack<>();
         stack.push(tree.getRootNode());
 
@@ -66,11 +83,23 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
         return selectedValues;
     }
 
+    /**
+     * Add an item to the tree
+     *
+     * @param key   The key of the item
+     * @param value the item
+     */
     public void put(K key, V value) {
         BinaryTreeMapNode<K, V> node = new BinaryTreeMapNode<>(key, value);
         tree.add(node);
     }
 
+    /**
+     * Get an item by its key
+     *
+     * @param key The key of the item
+     * @return the item
+     */
     public V get(K key) {
         return get(key, tree.getRootNode());
     }
@@ -91,10 +120,15 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
         return tree.toString();
     }
 
+    /**
+     * Represents a node in the binary tree map
+     * @param <K> The key type
+     * @param <V> The value type
+     */
     public static class BinaryTreeMapNode<K extends Comparable<K>, V> implements
             Comparable<BinaryTreeMapNode<K, V>> {
-        private K key;
-        private V value;
+        private final K key;
+        private final V value;
 
         public BinaryTreeMapNode(K key, V value) {
             this.key = key;
