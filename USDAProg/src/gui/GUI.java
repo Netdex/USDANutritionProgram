@@ -66,6 +66,11 @@ public class GUI extends JFrame {
 	 */
 	protected static final Font SCIENTIFIC_FONT = new Font("Calibri",
 			Font.ITALIC, 14);
+	
+	/**
+	 * Maximum value for JSpinners
+	 */
+	protected static double SPINNER_MAX = (double) Integer.MAX_VALUE;
 
 	/**
 	 * No border

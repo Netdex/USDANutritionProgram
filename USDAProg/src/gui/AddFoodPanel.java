@@ -200,7 +200,7 @@ public class AddFoodPanel extends JPanel {
 				// Actually taking the input through a Spinner (limited to only
 				// numbers)
 				gramsPerEntry = new JSpinner(new SpinnerNumberModel(1.000,
-						0.001, 999.999, 1.000));
+						0.001, GUI.SPINNER_MAX, 0.250));
 				gramsPerEntry.setFont(GUI.CONTENT_FONT);
 				gramsPerEntry.setPreferredSize(new Dimension(150, 30));
 				gramsPerEntry.setFocusable(false);
@@ -354,7 +354,7 @@ public class AddFoodPanel extends JPanel {
 							+ nutrient.getUnit() + ")"), BorderLayout.CENTER);
 
 			amount = new JSpinner(new SpinnerNumberModel(0.000, 0.000,
-					9999.999, 1.000));
+					GUI.SPINNER_MAX, 0.250));
 			amount.setFont(GUI.CONTENT_FONT);
 			amount.setOpaque(false);
 			amount.setFocusable(true);
@@ -485,11 +485,10 @@ public class AddFoodPanel extends JPanel {
 			newFood.setFoodGroup(group);
 
 			// Finishes up.
-			if(DataManager.getInstance().addFoodItem(newFood))
+			if (DataManager.getInstance().addFoodItem(newFood))
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
-						"Food successfully created",
-						"Success", JOptionPane.DEFAULT_OPTION,
-						JOptionPane.PLAIN_MESSAGE);
+						"Food successfully created", "Success",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
@@ -537,8 +536,10 @@ public class AddFoodPanel extends JPanel {
 			public void focusLost(FocusEvent arg0) {
 				if (CustomTextEntryBox.this.getText().equals("")) {
 					CustomTextEntryBox.this.setText(text);
-				}
-				CustomTextEntryBox.this.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
+					CustomTextEntryBox.this
+							.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
+				} else
+					CustomTextEntryBox.this.setForeground(GUI.CONTENT_COLOUR);
 				CustomTextEntryBox.this.revalidate();
 				CustomTextEntryBox.this.repaint();
 			}

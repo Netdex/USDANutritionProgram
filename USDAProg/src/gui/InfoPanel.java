@@ -380,7 +380,7 @@ public class InfoPanel extends JPanel {
 
 		// Takes input from the user on the amount of food desired
 		SpinnerNumberModel amountEntryModel = new SpinnerNumberModel(1.000,
-				1.000, 999.999, 1.000);
+				1.000, GUI.SPINNER_MAX, 0.500);
 		amountEntry = new JSpinner(amountEntryModel);
 		amountEntry.setBackground(GUI.BACKGROUND_COLOUR);
 		amountEntry.setFont(GUI.CONTENT_FONT);
