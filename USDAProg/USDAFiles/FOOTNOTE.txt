@@ -529,6 +529,3 @@
 ~42289~^~01~^~D~^~~^~Other phytosterols and phytostanols identified include: beta-sitostanol (4.599 ) and delta-5 avenasterol (15.76)~
 ~43483~^~01~^~D~^~~^~Made from proso millet~
 ~90240~^~01~^~N~^~307~^~Samples were obtained from 12 retail stores using a probability-based sampling plan.  Some fish had been treated during processing to retain moisture on thawing.  Untreated fish = 265 mg sodium/100g.~
-~00000~^~00~
-~00001~^~00~
-~00002~^~00~

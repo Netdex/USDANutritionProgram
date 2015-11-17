@@ -346,8 +346,8 @@ public class InfoPanel extends JPanel {
 				// Changes the "default" text prompting the user for an amount
 				// of food in a certain unit, depending on whether or not there
 				// are specific units of weight being used.
-				selectedUnit = (WeightUnit) (unitSelection.getModel()
-						.getElementAt(0));
+				selectedUnit = unitSelection.getModel()
+						.getElementAt(0);
 				String selectedUnitName = selectedUnit.getDesc();
 				int separatorIndex = selectedUnitName.indexOf('(');
 				if (separatorIndex < 1)
