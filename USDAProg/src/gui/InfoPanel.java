@@ -311,14 +311,14 @@ public class InfoPanel extends JPanel {
 			possibleUnits.add(WeightUnit.GRAM);
 			if (possibleUnits.size() > 1) {
 				// Creates a framework for the text
-				JPanel unitSelectionLine = new JPanel(new BorderLayout());
+				JPanel unitSelectionLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 				unitSelectionLine.setOpaque(false);
 				unitSelectionLine.setMinimumSize(new Dimension(400, 0));
 
 				// The actual prompt asking the user
 				JTextArea unitPrompt = new JTextArea(
 						"What unit will you be measuring your food with?");
-				unitPrompt.setMaximumSize(new Dimension(450, Short.MAX_VALUE));
+				unitPrompt.setMinimumSize(new Dimension(300, 0));
 				unitPrompt.setFont(GUI.CONTENT_FONT);
 				unitPrompt.setWrapStyleWord(true);
 				unitPrompt.setLineWrap(true);
@@ -326,7 +326,7 @@ public class InfoPanel extends JPanel {
 				unitPrompt.setFocusable(false);
 				unitPrompt.setForeground(GUI.CONTENT_COLOUR);
 				unitPrompt.setOpaque(false);
-				unitSelectionLine.add(unitPrompt, BorderLayout.CENTER);
+				unitSelectionLine.add(unitPrompt);
 
 				// Takes input from the user to select a unit of measure
 				unitSelection = new JComboBox<WeightUnit>(
@@ -336,7 +336,7 @@ public class InfoPanel extends JPanel {
 				unitSelection.setBackground(GUI.BACKGROUND_COLOUR);
 				unitSelection.setEditable(false);
 				unitSelection.addActionListener(new UnitSelectorListener());
-				unitSelectionLine.add(unitSelection, BorderLayout.EAST);
+				unitSelectionLine.add(unitSelection);
 
 				// Adds the unit selection components to the panel
 				unitSelectionLine.setAlignmentX(LEFT_ALIGNMENT);
