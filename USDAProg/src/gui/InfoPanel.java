@@ -61,12 +61,12 @@ class InfoPanel extends JPanel {
 	 * The header panel
 	 */
 	private final JPanel header;
-// --Commented out by Inspection START (11/20/2015 12:10 PM):
-//	/**
-//	 * The name of the food
-//	 */
-//	private String titleName;
-// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
+	// --Commented out by Inspection START (11/20/2015 12:10 PM):
+	// /**
+	// * The name of the food
+	// */
+	// private String titleName;
+	// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 	/**
 	 * The label containing the title name
 	 */
@@ -170,8 +170,9 @@ class InfoPanel extends JPanel {
 					48, 48, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			JOptionPane.showConfirmDialog(this,
-					"Cannot find image for \"Extra Info\" button", "Image Not Found",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+					"Cannot find image for \"Extra Info\" button",
+					"Image Not Found", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE);
 		}
 		// more set up
 		moreInfo.setFocusable(false);
@@ -208,7 +209,7 @@ class InfoPanel extends JPanel {
 		contentPanel.removeAll();
 		this.food = item;
 		// Changes some set up variables
-		if (food.getWeightInfo() != null)
+		if (food.getWeightInfo().getWeightUnits() != null)
 			gramsOfFood = food.getWeightInfo().getWeightUnits()[0]
 					.getGramWeight();
 		else
@@ -310,14 +311,15 @@ class InfoPanel extends JPanel {
 		// Prompts the user to select a unit to measure with
 		amountEntryPromptText = "This item is measured in grams.\n"
 				+ "Please enter the number of grams you are intending on consuming.";
-		if (food.getWeightInfo() != null) {
+		if (food.getWeightInfo().getWeightUnits() != null) {
 			// Gets the possible units
 			DoublyLinkedList<WeightUnit> possibleUnits = new DoublyLinkedList<WeightUnit>(
 					food.getWeightInfo().getWeightUnits());
 			possibleUnits.add(WeightUnit.GRAM);
 			if (possibleUnits.size() > 1) {
 				// Creates a framework for the text
-				JPanel unitSelectionLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+				JPanel unitSelectionLine = new JPanel(new FlowLayout(
+						FlowLayout.LEFT));
 				unitSelectionLine.setOpaque(false);
 				unitSelectionLine.setMinimumSize(new Dimension(400, 0));
 
@@ -341,6 +343,7 @@ class InfoPanel extends JPanel {
 				unitSelection.setFont(GUI.CONTENT_FONT);
 				unitSelection.setBackground(GUI.BACKGROUND_COLOUR);
 				unitSelection.setEditable(false);
+				unitSelection.setFocusable(false);
 				unitSelection.addActionListener(new UnitSelectorListener());
 				unitSelectionLine.add(unitSelection);
 
@@ -352,8 +355,7 @@ class InfoPanel extends JPanel {
 				// Changes the "default" text prompting the user for an amount
 				// of food in a certain unit, depending on whether or not there
 				// are specific units of weight being used.
-				selectedUnit = unitSelection.getModel()
-						.getElementAt(0);
+				selectedUnit = unitSelection.getModel().getElementAt(0);
 				String selectedUnitName = selectedUnit.getDesc();
 				int separatorIndex = selectedUnitName.indexOf('(');
 				if (separatorIndex < 1)
