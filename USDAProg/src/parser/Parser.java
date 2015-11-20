@@ -66,10 +66,10 @@ public class Parser {
         try {
             long start = System.currentTimeMillis();
 
-            System.err.println("PARSING FOOD DESCRIPTIONS");
-            parseFoodDescriptions();
             System.err.println("PARSING FOOD GROUPS");
             parseFoodGroups();
+            System.err.println("PARSING FOOD DESCRIPTIONS");
+            parseFoodDescriptions();
             System.err.println("PARSING FOOD WEIGHTS");
             parseFoodWeights();
             System.err.println("PARSING FOOTNOTES");
@@ -102,6 +102,7 @@ public class Parser {
 							"Failure to parse data.\nPlease do not modify/change/delete/augment/adjust/adapt\nthe nutrition database files.",
 							"Invalid Data", JOptionPane.DEFAULT_OPTION,
 							JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
 		}
 
     }
@@ -200,6 +201,7 @@ public class Parser {
             String[] items = splitTokens(line, WeightUnit.PARSE_DATA_LENGTH);
             WeightUnit weightUnit = new WeightUnit().parse(items);
             map_foodItems.get(weightUnit.getNDBNo()).getWeightInfo().addWeightUnit(weightUnit);
+
             updatePercentage();
 
         }

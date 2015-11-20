@@ -8615,3 +8615,4 @@
 ~90240~^~1500~^~Mollusks, scallop, (bay and sea), cooked, steamed~^~SCALLOP,(BAY&SEA),CKD,STMD~^~~^~~^~Y~^~~^0^~~^^^^
 ~90480~^~1900~^~Syrup, Cane~^~SYRUP,CANE~^~~^~~^~~^~~^0^~~^6.25^0.00^0.00^3.68
 ~90560~^~1500~^~Mollusks, snail, raw~^~SNAIL,RAW~^~~^~~^~Y~^~~^0^~~^^^^
+~93600~^~1500~^~Turtle, green, raw~^~TURTLE,GREEN,RAW~^~~^~~^~Y~^~~^0^~~^^^^
