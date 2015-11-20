@@ -11,6 +11,7 @@ import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
 import parser.parsables.FoodItem;
+import parser.parsables.Footnote;
 import parser.parsables.LanguaL;
 
 /**
@@ -67,7 +68,8 @@ class ExtraInfoPanel extends JPanel {
 		UIManager.put("TabbedPane.tabAreaBackground", GUI.BACKGROUND_COLOUR);
 		UIManager.put("TabbedPane.contentAreaColor", GUI.BACKGROUND_COLOUR);
 		UIManager.put("TabbedPane.borderColor", GUI.BACKGROUND_COLOUR);
-		UIManager.put("TabbedPane.borderHightlightColor", GUI.BACKGROUND_COLOUR);
+		UIManager
+				.put("TabbedPane.borderHightlightColor", GUI.BACKGROUND_COLOUR);
 		contentTabs = new JTabbedPane(JTabbedPane.TOP,
 				JTabbedPane.SCROLL_TAB_LAYOUT);
 		contentTabs.setBorder(GUI.EMPTY_BORDER);
@@ -120,10 +122,15 @@ class ExtraInfoPanel extends JPanel {
 		}
 
 		// Adds footnotes
-		if (food.getFootnotes() != null)
+		if (food.getFootnoteGroup() != null) {
+			Footnote[] listOfFN = food.getFootnoteGroup().getFootnotes();
+			String footNoteText = "";
+			for (Footnote footnote : listOfFN) {
+				footNoteText += footnote.toString() + "\n";
+			}
 			footnotes.setText("The footnotes for this food: \n\n"
-					+ food.getFootnotes().getFootnoteText());
-		else
+					+ footNoteText);
+		} else
 			// There are no footnotes in this case
 			footnotes.setText("There are no footnotes for " + food.toString());
 	}
