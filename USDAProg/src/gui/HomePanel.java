@@ -38,7 +38,9 @@ public class HomePanel extends JPanel {
 					new File("images/homeBanner.png")).getScaledInstance(480,
 					128, Image.SCALE_SMOOTH)));
 		} catch (IOException e1) {
-			JOptionPane.showConfirmDialog(null, "Banner image not found", "Image Not Found", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showConfirmDialog(null, "Banner image not found",
+					"Image Not Found", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 		// something to hold the four major nav buttons
@@ -135,6 +137,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * What happens when you press the about button (switches to about panel)
+	 * 
 	 * @author Vince Ou
 	 *
 	 */
@@ -147,7 +150,9 @@ public class HomePanel extends JPanel {
 	}
 
 	/**
-	 * What happens when you press the add food button (switches to add food panel)
+	 * What happens when you press the add food button (switches to add food
+	 * panel)
+	 * 
 	 * @author Vince Ou
 	 *
 	 */

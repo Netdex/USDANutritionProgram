@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
@@ -168,6 +169,9 @@ class InfoPanel extends JPanel {
 					new File("images/moreInfoButton.png")).getScaledInstance(
 					48, 48, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
+			JOptionPane.showConfirmDialog(this,
+					"Cannot find image for \"Extra Info\" button", "Image Not Found",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 		// more set up
 		moreInfo.setFocusable(false);
