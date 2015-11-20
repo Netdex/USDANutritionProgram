@@ -401,7 +401,7 @@ public class AddFoodPanel extends JPanel {
 			String longDesc = longDescEntry.getText();
 			if (longDesc.equals("") || longDesc.equalsIgnoreCase("Name")) {
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
-						"The name field cannot be left blank", "Invalid field",
+						"The name field cannot be left blank", "Invalid Field",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -416,7 +416,7 @@ public class AddFoodPanel extends JPanel {
 			if (weightUnitEntry.getText().equals("Unit")
 					|| weightUnitEntry.getText().equals("")) {
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
-						"The unit cannot be left blank", "Invalid field",
+						"The unit cannot be left blank", "Invalid Field",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -456,7 +456,7 @@ public class AddFoodPanel extends JPanel {
 			if (!selectedNutrient) {
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
 						"You must enter at least one nutrient",
-						"Invalid entry", JOptionPane.DEFAULT_OPTION,
+						"Invalid Entry", JOptionPane.DEFAULT_OPTION,
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -488,7 +488,7 @@ public class AddFoodPanel extends JPanel {
 			if (DataManager.getInstance().addFoodItem(newFood))
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
 						"Food successfully created", "Success",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

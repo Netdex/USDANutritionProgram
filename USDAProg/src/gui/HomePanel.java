@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -97,7 +98,9 @@ public class HomePanel extends JPanel {
 						new File("images/" + buttonName + ".png"))
 						.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
 			} catch (IOException e) {
-				e.printStackTrace();
+				JOptionPane.showConfirmDialog(this, "Button icon not found",
+						"Missing Image", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE);
 			}
 
 			// Does more things layout-wise.
@@ -136,6 +139,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * What happens when you press the about button (switches to about panel)
+	 * 
 	 * @author Vince Ou
 	 *
 	 */
@@ -148,7 +152,9 @@ public class HomePanel extends JPanel {
 	}
 
 	/**
-	 * What happens when you press the add food button (switches to add food panel)
+	 * What happens when you press the add food button (switches to add food
+	 * panel)
+	 * 
 	 * @author Vince Ou
 	 *
 	 */

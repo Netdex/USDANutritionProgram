@@ -10,18 +10,21 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 /**
  * "About creators" information panel for the users
+ * 
  * @author Vince Ou
  *
  */
 public class AboutPanel extends JPanel {
 
 	/**
-	 * The manager for all the panels that are switched around to display different views.
+	 * The manager for all the panels that are switched around to display
+	 * different views.
 	 */
 	PanelManager manager;
 
@@ -57,7 +60,9 @@ public class AboutPanel extends JPanel {
 					new File("images/aboutIcon.png")).getScaledInstance(460,
 					230, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showConfirmDialog(this, "\"About\" Icon not found",
+					"Missing Image", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE);
 		}
 		icon.setHorizontalAlignment(SwingConstants.CENTER);
 		this.add(icon);

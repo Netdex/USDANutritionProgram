@@ -7,6 +7,7 @@ import parser.util.Stack;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,8 +26,8 @@ public class ImageExtract {
 
 	private static final int MAXIMUM_IMAGE_PRELOAD_RESULTS = 100;
 	private static final int MAX_DOWNLOAD_TIME = 10000;
-	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory.createLineBorder(
-			GUI.ACCENT_COLOUR, 3);
+	private static final javax.swing.border.Border IMAGE_BORDER = BorderFactory
+			.createLineBorder(GUI.ACCENT_COLOUR, 3);
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1";
 	private static final String ADDITIONAL_KEYWORD = "food";
 	private static final BinaryTreeMap<String, Image> imageCache = new BinaryTreeMap<>();
@@ -35,8 +36,10 @@ public class ImageExtract {
 	/**
 	 * Puts an image into a JLabel
 	 *
-	 * @param imageLabel The JLabel to put the image in
-	 * @param key        the search term
+	 * @param imageLabel
+	 *            The JLabel to put the image in
+	 * @param key
+	 *            the search term
 	 */
 	public static void injectImage(JLabel imageLabel, String key) {
 		new Thread() {
@@ -45,7 +48,8 @@ public class ImageExtract {
 					System.out.println("injecting " + key + " into label");
 					if (imageCache.get(key.toLowerCase()) != null) {
 						System.out.println("loaded image from cache");
-						insertImage(imageCache.get(key.toLowerCase()), imageLabel);
+						insertImage(imageCache.get(key.toLowerCase()),
+								imageLabel);
 					} else {
 						System.out.println("searching for image");
 						Image img = getSearchImage(key);
@@ -58,7 +62,10 @@ public class ImageExtract {
 						}
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null,
+							"No internet connection", "Image Not Found",
+							JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}.start();
@@ -72,11 +79,13 @@ public class ImageExtract {
 			public void run() {
 				while (true) {
 					try {
-						// Go through the entire stack of items waiting to be preloaded, and load them if they don't exist in the cache
+						// Go through the entire stack of items waiting to be
+						// preloaded, and load them if they don't exist in the
+						// cache
 						while (!PRELOAD_LINE.isEmpty()) {
 							FoodItem fi = PRELOAD_LINE.pop();
-							String name = DataManager.getInstance().getRelevantKeywords(fi)
-									.toLowerCase();
+							String name = DataManager.getInstance()
+									.getRelevantKeywords(fi).toLowerCase();
 							if (imageCache.get(name) == null) {
 								System.out.println("downloading image " + name);
 								Image img = getSearchImage(name);
@@ -84,16 +93,19 @@ public class ImageExtract {
 									System.out.println("preloaded image");
 									imageCache.put(name, img);
 								} else {
-									System.out.println("failed to preload image");
+									System.out
+											.println("failed to preload image");
 								}
 							} else {
-								System.out.println("image " + name + " is already in the cache");
+								System.out.println("image " + name
+										+ " is already in the cache");
 							}
 						}
 						Thread.sleep(1000);
 					} catch (Exception e) {
-						e.printStackTrace();
-					}
+						JOptionPane.showConfirmDialog(null, "Failed to initialize image preloading thread.",
+								"Preload Failure", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE);					}
 				}
 
 			}
@@ -102,7 +114,9 @@ public class ImageExtract {
 
 	/**
 	 * Queue all the items to be preloaded
-	 * @param items items to the preloaded
+	 * 
+	 * @param items
+	 *            items to the preloaded
 	 */
 	public static void preloadImages(FoodItem[] items) {
 		for (int i = Math.min(MAXIMUM_IMAGE_PRELOAD_RESULTS, items.length - 1); i > 0; i--) {
@@ -112,8 +126,11 @@ public class ImageExtract {
 
 	/**
 	 * Inserts an image into a JLabel
-	 * @param img the image to insert
-	 * @param imageLabel the JLabel to insert into
+	 * 
+	 * @param img
+	 *            the image to insert
+	 * @param imageLabel
+	 *            the JLabel to insert into
 	 */
 	private static void insertImage(Image img, JLabel imageLabel) {
 		imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -129,7 +146,8 @@ public class ImageExtract {
 	/**
 	 * Gets an image by search query
 	 *
-	 * @param key the query
+	 * @param key
+	 *            the query
 	 * @return the image
 	 */
 	private static Image getSearchImage(String key) {
@@ -153,7 +171,8 @@ public class ImageExtract {
 	/**
 	 * Get the uri of the image from a key
 	 *
-	 * @param key the key to search from
+	 * @param key
+	 *            the key to search from
 	 * @return the uri of the image
 	 */
 	private static String getSearchResult(String key) {
@@ -162,12 +181,15 @@ public class ImageExtract {
 
 	/**
 	 * Gets the url of the image from JSON formatted string from Google's API
-	 * @param json the JSON to extract the url from
+	 * 
+	 * @param json
+	 *            the JSON to extract the url from
 	 * @return the url of the image
 	 */
 	private static String getImageURL(String json) {
 		// Use regex to extract the url of the image
-		Pattern p = Pattern.compile("height\":\"([0-9]*)\",.*?,\"unescapedUrl\":\"(.*?)\"");
+		Pattern p = Pattern
+				.compile("height\":\"([0-9]*)\",.*?,\"unescapedUrl\":\"(.*?)\"");
 		Matcher m = p.matcher(json);
 		String selectedURL = "";
 		int minimumHeight = Integer.MAX_VALUE;
@@ -187,14 +209,19 @@ public class ImageExtract {
 
 	/**
 	 * Queries Google's API and searches for an image
-	 * @param key the search query
+	 * 
+	 * @param key
+	 *            the search query
 	 * @return the JSON data from the API
 	 */
 	private static String getJSONResult(String key) {
 		try {
-			URL remote = new URL(("http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
-					+ ADDITIONAL_KEYWORD + "%20" + key.replace(".", "%2e")).replace(" ", "%20"));
-			BufferedReader br = new BufferedReader(new InputStreamReader(remote.openStream()));
+			URL remote = new URL(
+					("http://ajax.googleapis.com/ajax/services/search/images?v=1.0&q="
+							+ ADDITIONAL_KEYWORD + "%20" + key.replace(".",
+							"%2e")).replace(" ", "%20"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					remote.openStream()));
 			String result = "";
 			String line;
 			while ((line = br.readLine()) != null) {

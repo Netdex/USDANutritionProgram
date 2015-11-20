@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import parser.DataManager;
@@ -104,8 +105,9 @@ public class GUI extends JFrame {
 		try {
 			this.setIconImage(ImageIO.read(new File("images/windowIcon.png")));
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			JOptionPane.showConfirmDialog(this, "Window icon not found",
+					"Missing Image", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE);		}
 
 		// Creates a manager for the different views
 		manager = new PanelManager();
