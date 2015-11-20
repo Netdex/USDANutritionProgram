@@ -22,13 +22,9 @@ public class Parser {
 	// Various maps for storing indexes to temporary data
 	private final BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
 
-	private final BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
 	private final BinaryTreeMap<Integer, NutrientInfo> map_nutrDesc = new BinaryTreeMap<>();
 	private final BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
-	private final BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
-	private final BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
 	private final BinaryTreeMap<String, LanguaLDescription> map_langualDesc = new BinaryTreeMap<>();
-	private final BinaryTreeMap<Integer, FootnoteGroup> map_footnote = new BinaryTreeMap<>();
 
 	/**
 	 * In this order: 0 File foodDesc, 1 File nutrientData, 2 File
@@ -70,6 +66,8 @@ public class Parser {
         try {
             long start = System.currentTimeMillis();
 
+            System.err.println("PARSING FOOD DESCRIPTIONS");
+            parseFoodDescriptions();
             System.err.println("PARSING FOOD GROUPS");
             parseFoodGroups();
             System.err.println("PARSING FOOD WEIGHTS");
@@ -84,8 +82,7 @@ public class Parser {
             parseLanguaLDescriptions();
             System.err.println("PARSING LANGUAL DATA");
             parseLanguaL();
-            System.err.println("PARSING FOOD DESCRIPTIONS");
-            parseFoodDescriptions();
+
             System.err.println("DONE");
             if (gui != null) {
                 gui.getPanelManager().LOADING_PERCENTAGE = 100;
@@ -134,11 +131,8 @@ public class Parser {
             // using .split now since stringtokenizer ignores empty values
             String[] items = splitTokens(line, Footnote.PARSE_DATA_LENGTH);
             Footnote footnote = new Footnote().parse(items);
-            if(map_footnote.get(footnote.getNdbNo()) == null)
-                map_footnote.put(footnote.getNdbNo(), new FootnoteGroup());
-            map_footnote.get(footnote.getNdbNo()).addFootnote(footnote);
+            map_foodItems.get(footnote.getNdbNo()).getFootnotes().addFootnote(footnote);
             updatePercentage();
-
         }
         br.close();
     }
@@ -161,7 +155,6 @@ public class Parser {
             LanguaLDescription lld = new LanguaLDescription().parse(items);
             map_langualDesc.put(lld.getFactorCode(), lld);
             updatePercentage();
-
         }
         br.close();
     }
@@ -183,9 +176,7 @@ public class Parser {
             String[] items = splitTokens(line, LanguaL.PARSE_DATA_LENGTH);
             LanguaL ll = new LanguaL().parse(items);
             ll.setLangualDescription(map_langualDesc.get(ll.getFactorCode()));
-            if (map_langualGroup.get(ll.getNDBNo()) == null)
-                map_langualGroup.put(ll.getNDBNo(), new LanguaLGroup());
-            map_langualGroup.get(ll.getNDBNo()).addLanguaL(ll);
+            map_foodItems.get(ll.getNDBNo()).getLangualGroup().addLanguaL(ll);
             updatePercentage();
 
         }
@@ -208,9 +199,7 @@ public class Parser {
             // using .split now since stringtokenizer ignores empty values
             String[] items = splitTokens(line, WeightUnit.PARSE_DATA_LENGTH);
             WeightUnit weightUnit = new WeightUnit().parse(items);
-            if (map_foodWeight.get(weightUnit.getNDBNo()) == null)
-                map_foodWeight.put(weightUnit.getNDBNo(), new FoodWeight());
-            map_foodWeight.get(weightUnit.getNDBNo()).addWeightUnit(weightUnit);
+            map_foodItems.get(weightUnit.getNDBNo()).getWeightInfo().addWeightUnit(weightUnit);
             updatePercentage();
 
         }
@@ -257,13 +246,8 @@ public class Parser {
             // using .split now since stringtokenizer ignores empty values
             String[] items = splitTokens(line, FoodItem.PARSE_DATA_LENGTH);
             FoodItem foodItem = new FoodItem().parse(items);
-            int ndbNo = foodItem.getNDBNo();
             // Set various references to other data based on NDB number
             foodItem.setFoodGroup(map_foodGroup.get(foodItem.getFoodGroupID()));
-            foodItem.setWeightInfo(map_foodWeight.get(ndbNo));
-            foodItem.setNutrientData(map_nutrData.get(ndbNo));
-            foodItem.setLangualGroup(map_langualGroup.get(ndbNo));
-            foodItem.setFootnotes(map_footnote.get(ndbNo));
             addFoodItem(foodItem);
             updatePercentage();
         }
@@ -315,10 +299,7 @@ public class Parser {
             String[] items = splitTokens(line, Nutrient.PARSE_DATA_LENGTH);
             Nutrient nutr = new Nutrient().parse(items);
             nutr.setNutrientDescription(map_nutrDesc.get((int) nutr.getNutrNo()));
-            NutrientData nd = map_nutrData.get(nutr.getNDBNo());
-            if (nd == null)
-                map_nutrData.put(nutr.getNDBNo(), new NutrientData());
-            map_nutrData.get(nutr.getNDBNo()).addNutrient(nutr);
+            map_foodItems.get(nutr.getNDBNo()).getNutrientData().addNutrient(nutr);
             updatePercentage();
         }
         br.close();
