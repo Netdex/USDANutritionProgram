@@ -172,7 +172,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
     /**
      * @return the footnotes
      */
-    public FootnoteGroup getFootnotes() {
+    public FootnoteGroup getFootnoteGroup() {
         return footnotes;
     }
 
