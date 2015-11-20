@@ -144,7 +144,7 @@ public class DataManager {
      */
     public boolean addFoodItem(FoodItem fi) {
         NutrientData nd = fi.getNutrientData();
-        FootnoteGroup fn = fi.getFootnotes();
+        FootnoteGroup fn = fi.getFootnoteGroup();
         FoodWeight wi = fi.getWeightInfo();
 
         addFormattable(files[0], fi);
