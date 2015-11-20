@@ -1,5 +1,7 @@
 package parser.parsables;
 
+import javax.swing.JOptionPane;
+
 import parser.Formattable;
 import parser.InvalidParseDataException;
 
@@ -35,10 +37,13 @@ public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 	 */
 	private static WeightUnit getGram() {
 		try {
-			return new WeightUnit()
-                    .parse(new String[]{"-1", "", "1", "gram", "1", "", ""});
-        } catch (InvalidParseDataException e) {
-			e.printStackTrace();
+			return new WeightUnit().parse(new String[] { "-1", "", "1", "gram",
+					"1", "", "" });
+		} catch (InvalidParseDataException e) {
+			JOptionPane.showConfirmDialog(null,
+					"Cannot parse 'Gram'\nThis error should never happen",
+					"What Did You Do?!", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.WARNING_MESSAGE);
 		}
 		return null;
 	}

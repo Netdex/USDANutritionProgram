@@ -10,41 +10,43 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 /**
  * Creates data structures out of the given files
  *
  * @author Gordon Guan
  */
 public class Parser {
-    
-    // Various maps for storing indexes to temporary data
-    private final BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
 
-    private final BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
-    private final BinaryTreeMap<Integer, NutrientInfo> map_nutrDesc = new BinaryTreeMap<>();
-    private final BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
-    private final BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
-    private final BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
-    private final BinaryTreeMap<String, LanguaLDescription> map_langualDesc = new BinaryTreeMap<>();
-    private final BinaryTreeMap<Integer, Footnote> map_footnote = new BinaryTreeMap<>();
+	// Various maps for storing indexes to temporary data
+	private final BinaryTreeMap<Integer, FoodItem> map_foodItems = new BinaryTreeMap<>();
 
-    /**
-     * In this order: 0 File foodDesc, 1 File nutrientData, 2 File
-     * nutrientDescription, 3 File foodGroup, 4 File foodWeight, 5 File langual,
-     * 6 File langualDesc, 7 File footnotes
-     */
-    private final File[] dataFiles;
-    private final GUI gui;
-    private long totalFileSize = 0;
-    private long processedFileSize = 0;
+	private final BinaryTreeMap<Integer, NutrientData> map_nutrData = new BinaryTreeMap<>();
+	private final BinaryTreeMap<Integer, NutrientInfo> map_nutrDesc = new BinaryTreeMap<>();
+	private final BinaryTreeMap<Integer, FoodGroup> map_foodGroup = new BinaryTreeMap<>();
+	private final BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
+	private final BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
+	private final BinaryTreeMap<String, LanguaLDescription> map_langualDesc = new BinaryTreeMap<>();
+	private final BinaryTreeMap<Integer, Footnote> map_footnote = new BinaryTreeMap<>();
 
-    public Parser(File[] files, GUI gui) {
-        this.dataFiles = files;
-        this.gui = gui;
-        for (File f : files) {
-            totalFileSize += f.length();
-        }
-    }
+	/**
+	 * In this order: 0 File foodDesc, 1 File nutrientData, 2 File
+	 * nutrientDescription, 3 File foodGroup, 4 File foodWeight, 5 File langual,
+	 * 6 File langualDesc, 7 File footnotes
+	 */
+	private final File[] dataFiles;
+	private final GUI gui;
+	private long totalFileSize = 0;
+	private long processedFileSize = 0;
+
+	public Parser(File[] files, GUI gui) {
+		this.dataFiles = files;
+		this.gui = gui;
+		for (File f : files) {
+			totalFileSize += f.length();
+		}
+	}
 
 // --Commented out by Inspection START (11/20/2015 12:10 PM):
 //    /**
@@ -89,16 +91,21 @@ public class Parser {
                 gui.getPanelManager().LOADING_PERCENTAGE = 100;
             }
 
-            long end = System.currentTimeMillis() - start;
-            System.err.println("Took " + end + "ms");
-            Thread.sleep(1000);
-            if (gui != null) {
-                gui.getPanelManager().LOADING_PERCENTAGE = -1;
-                gui.getPanelManager().repaint();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+			long end = System.currentTimeMillis() - start;
+			System.err.println("Took " + end + "ms");
+			Thread.sleep(1000);
+			if (gui != null) {
+				gui.getPanelManager().LOADING_PERCENTAGE = -1;
+				gui.getPanelManager().repaint();
+			}
+		} catch (Exception e) {
+			JOptionPane
+					.showConfirmDialog(
+							null,
+							"Failure to parse data.\nPlease do not modify/change/delete/augment/adjust/adapt\nthe nutrition database files.",
+							"Invalid Data", JOptionPane.DEFAULT_OPTION,
+							JOptionPane.ERROR_MESSAGE);
+		}
 
     }
 

@@ -94,7 +94,9 @@ public class HomePanel extends JPanel {
 						new File("images/" + buttonName + ".png"))
 						.getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
 			} catch (IOException e) {
-				e.printStackTrace();
+				JOptionPane.showConfirmDialog(this, "Button icon not found",
+						"Missing Image", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.ERROR_MESSAGE);
 			}
 
 			// Does more things layout-wise.

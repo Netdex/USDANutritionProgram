@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -41,8 +42,9 @@ class BackButton extends JButton {
 					new File("images/backButton.png")).getScaledInstance(48,
 					48, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			JOptionPane.showConfirmDialog(this, "\"Back\" button icon not found",
+					"Missing Image", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE);		}
 		// Alignment
 		this.setSize(new Dimension(48, 48));
 		this.setFocusable(false);

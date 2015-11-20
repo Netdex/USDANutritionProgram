@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  * Universal home button that switches whatever the user is looking at to the
@@ -34,8 +35,9 @@ class HomeButton extends JButton {
 					new File("images/homeButton.png")).getScaledInstance(48,
 					48, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			JOptionPane.showConfirmDialog(this, "Home button icon not found",
+					"Missing Image", JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE);		}
 
 		// Sets up more things
 		this.manager = manager;
