@@ -26,7 +26,7 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
     /* A set of languals for this food item */
     private LanguaLGroup langualGroup;
     /* Footnotes for this food item */
-    private Footnote footnotes;
+    private FootnoteGroup footnotes;
     /**
      * Nutrient Databank number<br>
      * (5 digits)
@@ -172,14 +172,14 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
     /**
      * @return the footnotes
      */
-    public Footnote getFootnotes() {
+    public FootnoteGroup getFootnotes() {
         return footnotes;
     }
 
     /**
      * @param footnotes the footnotes to set
      */
-    public void setFootnotes(Footnote footnotes) {
+    public void setFootnotes(FootnoteGroup footnotes) {
         this.footnotes = footnotes;
     }
 

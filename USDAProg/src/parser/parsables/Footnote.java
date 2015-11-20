@@ -10,6 +10,8 @@ import parser.InvalidParseDataException;
  */
 public class Footnote implements Parsable<Footnote>, Formattable{
 
+	public static Footnote SAMPLE = new Footnote();
+
 	public static final int PARSE_DATA_LENGTH = 5;
 	private int ndbNo;
 	private int seqNo;

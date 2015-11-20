@@ -28,7 +28,7 @@ public class Parser {
 	private final BinaryTreeMap<Integer, FoodWeight> map_foodWeight = new BinaryTreeMap<>();
 	private final BinaryTreeMap<Integer, LanguaLGroup> map_langualGroup = new BinaryTreeMap<>();
 	private final BinaryTreeMap<String, LanguaLDescription> map_langualDesc = new BinaryTreeMap<>();
-	private final BinaryTreeMap<Integer, Footnote> map_footnote = new BinaryTreeMap<>();
+	private final BinaryTreeMap<Integer, FootnoteGroup> map_footnote = new BinaryTreeMap<>();
 
 	/**
 	 * In this order: 0 File foodDesc, 1 File nutrientData, 2 File
@@ -134,7 +134,9 @@ public class Parser {
             // using .split now since stringtokenizer ignores empty values
             String[] items = splitTokens(line, Footnote.PARSE_DATA_LENGTH);
             Footnote footnote = new Footnote().parse(items);
-            map_footnote.put(footnote.getNdbNo(), footnote);
+            if(map_footnote.get(footnote.getNdbNo()) == null)
+                map_footnote.put(footnote.getNdbNo(), new FootnoteGroup());
+            map_footnote.get(footnote.getNdbNo()).addFootnote(footnote);
             updatePercentage();
 
         }
