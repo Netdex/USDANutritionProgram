@@ -42,10 +42,6 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
      */
     private String longDescription;
     /**
-     * 60-character abbreviated description of the item
-     */
-    private String shortDescription;
-    /**
      * Common name associated with the item<br>
      * Can be blank
      */
@@ -55,12 +51,6 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
      * Can be blank
      */
     private String manufacturerName;
-    /**
-     * Indicates if the food item is used in a USDA survey database<br>
-     * Y/N<br>
-     * Can be blank
-     */
-    private boolean isSurvey;
     /**
      * Description of refuse (inedible parts) of the food<br>
      * Can be blank
@@ -78,26 +68,6 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
     private String scientificName;
 
     // All the fields start here
-    /**
-     * Factor for converting nitrogen to protein<br>
-     * Can be blank
-     */
-    private double nitrogenFactor;
-    /**
-     * Factor for calculating calories from protein<br>
-     * Can be blank
-     */
-    private double proteinFactor;
-    /**
-     * Factor for calculating calories from fat<br>
-     * Can be blank
-     */
-    private double fatFactor;
-    /**
-     * Factor for calculating calories from carbohydrate<br>
-     * Can be blank
-     */
-    private double cholestrolFactor;
 
     public FoodItem() {
 
@@ -235,13 +205,6 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
     }
 
     /**
-     * @return The short description of this food item
-     */
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    /**
      * @return A common name for this item
      */
     public String getCommonName() {
@@ -253,20 +216,6 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
      */
     public String getManufacturerName() {
         return manufacturerName;
-    }
-
-    /**
-     * @return A description of the refuse in this food item
-     */
-    public String getRefuseDescription() {
-        return refuseDescription;
-    }
-
-    /**
-     * @return The percentage of the food item which is refuse
-     */
-    public double getRefusePercentage() {
-        return percentRefuse;
     }
 
     /**

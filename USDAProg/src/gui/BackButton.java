@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * @author Vince Ou
  *
  */
-public class BackButton extends JButton {
+class BackButton extends JButton {
 
 	/**
 	 * The JPanel to return to
@@ -57,7 +57,7 @@ public class BackButton extends JButton {
 	 * @param panel
 	 *            the target
 	 */
-	protected void setTarget(JPanel panel) {
+	void setTarget(JPanel panel) {
 		target = panel;
 	}
 
@@ -67,7 +67,7 @@ public class BackButton extends JButton {
 	 * @author Vince Ou
 	 *
 	 */
-	class BackButtonActionListener implements ActionListener {
+	private class BackButtonActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {

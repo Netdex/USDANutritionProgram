@@ -17,12 +17,12 @@ import javax.swing.JButton;
  * @author Vince Ou
  *
  */
-public class HomeButton extends JButton {
+class HomeButton extends JButton {
 
 	/**
 	 * The manager for the different panels/views
 	 */
-	PanelManager manager;
+	private final PanelManager manager;
 
 	public HomeButton(PanelManager manager) {
 		// sets up things
@@ -51,7 +51,7 @@ public class HomeButton extends JButton {
 	 * @author Vince Ou
 	 *
 	 */
-	class HomeButtonActionListener implements ActionListener {
+	private class HomeButtonActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {

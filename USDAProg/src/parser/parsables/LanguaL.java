@@ -36,14 +36,16 @@ public class LanguaL implements Parsable<LanguaL>, Formattable {
 		return Formattable.getFileFormatted(String.format("~%05d~", NDBNo), "~" + factorCode + "~");
 	}
 
-	/**
-	 * Gets the description of this LanguaL
-	 *
-	 * @return the description of this LanguaL
-	 */
-	public LanguaLDescription getLangualDescription() {
-		return langualDescription;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * Gets the description of this LanguaL
+//	 *
+//	 * @return the description of this LanguaL
+//	 */
+//	public LanguaLDescription getLangualDescription() {
+//		return langualDescription;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	/**
 	 * Sets the description of this langual

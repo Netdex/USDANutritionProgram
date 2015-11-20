@@ -21,29 +21,29 @@ import java.util.regex.Pattern;
  * @author Vince Ou
  *
  */
-public class AddFoodPanel extends JPanel {
+class AddFoodPanel extends JPanel {
 
 	/**
 	 * The manager for all the cards that are switched between views
 	 */
-	private PanelManager manager;
+	private final PanelManager manager;
 	/**
 	 * The panel to actually hold the content in the panel
 	 */
-	private JPanel contentPanel;
+	private final JPanel contentPanel;
 	/**
 	 * Allows the content to be scrolled
 	 */
-	private CustomScrollPane contentScrollbar;
+	private final CustomScrollPane contentScrollbar;
 
 	/**
 	 * For the user to provide a long-description for their custom food
 	 */
-	private CustomTextEntryBox longDescEntry;
+	private final CustomTextEntryBox longDescEntry;
 	/**
 	 * For the user to provide common names/ other names for their custom food
 	 */
-	private CustomTextEntryBox commonNameEntry;
+	private final CustomTextEntryBox commonNameEntry;
 	/**
 	 * For the user to provide a manufacturer name for their custom food
 	 */
@@ -66,7 +66,7 @@ public class AddFoodPanel extends JPanel {
 	 */
 	private DoublyLinkedList<NutrientEntryLine> nutrientEntries;
 
-	protected AddFoodPanel(PanelManager pManager) {
+	AddFoodPanel(PanelManager pManager) {
 		// Sets up a JPanel
 		super();
 		this.setLayout(new BorderLayout());
@@ -265,7 +265,7 @@ public class AddFoodPanel extends JPanel {
 	 * 
 	 * @author Vince Ou
 	 */
-	protected void resetFields() {
+	void resetFields() {
 		// self explanatory
 		contentScrollbar.scrollToTop();
 
@@ -390,7 +390,7 @@ public class AddFoodPanel extends JPanel {
 	 * @author Vince
 	 *
 	 */
-	class SaveButtonActionListener implements ActionListener {
+	private class SaveButtonActionListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -419,16 +419,6 @@ public class AddFoodPanel extends JPanel {
 						"The unit cannot be left blank", "Invalid field",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				return;
-			}
-			WeightUnit unit = new WeightUnit();
-			try {
-				unit = unit
-						.parse(new String[] { ndbNo + "", "", "1",
-								weightUnitEntry.getText(),
-								gramsPerEntry.getModel().getValue().toString(),
-								"", "" });
-			} catch (InvalidParseDataException e1) {
-				e1.printStackTrace();
 			}
 
 			// Creates the nutrient database for the new food
@@ -499,7 +489,7 @@ public class AddFoodPanel extends JPanel {
 	 */
 	class CustomTextEntryBox extends JTextField {
 
-		private String text;
+		private final String text;
 
 		/**
 		 * Constructor.

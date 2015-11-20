@@ -26,10 +26,9 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
      * given the value, and then the selector can determine whether or not to
      * add this item to the list.
      *
-     * @param sel The selector to base adding decisions on
      * @return The list of selected items
      */
-    private DoublyLinkedList<V> selectAllItems(Selector<V> sel) {
+    private DoublyLinkedList<V> selectAllItems() {
         if (tree.size() == 0)
             return new DoublyLinkedList<>();
         DoublyLinkedList<V> selectedValues = new DoublyLinkedList<>();
@@ -38,7 +37,7 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
 
         while (!stack.isEmpty()) {
             BinaryTreeNode<BinaryTreeMapNode<K, V>> currentNode = stack.pop();
-            if (sel.select(currentNode.getItem().getValue())) {
+            if (Selector.TRUE_SELECTOR.select(currentNode.getItem().getValue())) {
                 selectedValues.add(currentNode.getItem().getValue());
             }
             if (currentNode.getLeft() != null)
@@ -55,7 +54,7 @@ public class BinaryTreeMap<K extends Comparable<K>, V> {
      * @return all values
      */
     public DoublyLinkedList<V> getAllValues() {
-        return selectAllItems(Selector.TRUE_SELECTOR);
+        return selectAllItems();
     }
 
     /**

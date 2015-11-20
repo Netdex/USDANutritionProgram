@@ -40,7 +40,7 @@ import parser.util.DoublyLinkedList;
  * @author Vince Ou
  *
  */
-public class InfoPanel extends JPanel {
+class InfoPanel extends JPanel {
 
 	/**
 	 * The food which information it is displaying
@@ -50,33 +50,35 @@ public class InfoPanel extends JPanel {
 	/**
 	 * The panel that directed here from search (if applicable)
 	 */
-	private SearchPanel searchPanel;
+	private final SearchPanel searchPanel;
 	/**
 	 * The card layout switcher manager
 	 */
-	private PanelManager manager;
+	private final PanelManager manager;
 
 	/**
 	 * The header panel
 	 */
-	private JPanel header;
-	/**
-	 * The name of the food
-	 */
-	private String titleName;
+	private final JPanel header;
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * The name of the food
+//	 */
+//	private String titleName;
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 	/**
 	 * The label containing the title name
 	 */
-	private JLabel titleLabel;
+	private final JLabel titleLabel;
 	/**
 	 * The back button, going to either the search panel or the food group list
 	 */
-	private BackButton back;
+	private final BackButton back;
 
 	/**
 	 * The panel holding the contents
 	 */
-	private JPanel contentPanel;
+	private final JPanel contentPanel;
 	/**
 	 * The panel inside content panel, holding the nutrients
 	 */
@@ -84,7 +86,7 @@ public class InfoPanel extends JPanel {
 	/**
 	 * Makes it scrollable
 	 */
-	private CustomScrollPane contentScrollbar;
+	private final CustomScrollPane contentScrollbar;
 
 	/**
 	 * The text to prompt the user to enter an amount of food
@@ -130,7 +132,7 @@ public class InfoPanel extends JPanel {
 	/**
 	 * The border around the nutrition panel
 	 */
-	protected static final javax.swing.border.Border ACCENT_BORDER = BorderFactory
+	private static final javax.swing.border.Border ACCENT_BORDER = BorderFactory
 			.createLineBorder(GUI.HEADER_COLOUR, 2);
 
 	public InfoPanel(SearchPanel searchPanel, PanelManager manager) {
@@ -197,7 +199,7 @@ public class InfoPanel extends JPanel {
 	 * @param item
 	 *            the FoodItem being displayed
 	 */
-	protected void setFoodItem(FoodItem item) {
+	void setFoodItem(FoodItem item) {
 		// Clears the panel
 		contentPanel.removeAll();
 		this.food = item;
@@ -456,7 +458,7 @@ public class InfoPanel extends JPanel {
 	 * 
 	 * @return the back button
 	 */
-	protected BackButton getBackButton() {
+	BackButton getBackButton() {
 		return back;
 	}
 
@@ -502,7 +504,7 @@ public class InfoPanel extends JPanel {
 	 * @author Vince Ou
 	 *
 	 */
-	class UnitSelectorListener implements ActionListener {
+	private class UnitSelectorListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -527,7 +529,7 @@ public class InfoPanel extends JPanel {
 	 * @author Vince Ou
 	 *
 	 */
-	class AmountEntryListener implements ChangeListener {
+	private class AmountEntryListener implements ChangeListener {
 
 		@Override
 		public void stateChanged(ChangeEvent e) {
@@ -552,12 +554,12 @@ public class InfoPanel extends JPanel {
 	 * @author Vince
 	 *
 	 */
-	class MoreInfoButtonListener implements ActionListener {
+	private class MoreInfoButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// Sets up the more info panel, then switches to it.
-			manager.getExtraInfoPanel().setFood(food, titleName);
+			manager.getExtraInfoPanel().setFood(food);
 			manager.switchToExtraInfo();
 		}
 
@@ -575,20 +577,20 @@ public class InfoPanel extends JPanel {
 		/**
 		 * The nutrient itself
 		 */
-		private Nutrient nutrient;
+		private final Nutrient nutrient;
 		/**
 		 * The amount of this nutrient per gram of food
 		 */
-		private double amountPerGram;
+		private final double amountPerGram;
 
 		/**
 		 * The amount of this nutrient in the current sample
 		 */
-		private JLabel amount;
+		private final JLabel amount;
 		/**
 		 * The label containing the name of the nutrient
 		 */
-		private JLabel nameLabel;
+		private final JLabel nameLabel;
 
 		private NutrientInfoLine(Nutrient nut) {
 			// Sets up things

@@ -14,15 +14,15 @@ public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 	/**
 	 * Represents a weight unit of one gram.
 	 */
-	public static WeightUnit GRAM = getGram();
-	public static WeightUnit SAMPLE = new WeightUnit();
+	public static final WeightUnit GRAM = getGram();
+	public static final WeightUnit SAMPLE = new WeightUnit();
 	private int ndbNo;
-	private int seq;
+	// --Commented out by Inspection (11/20/2015 12:10 PM):private int seq;
 	private double amount;
 	private String desc;
 	private double gramWeight;
-	private int numDataPts;
-	private double stdDev;
+	// --Commented out by Inspection (11/20/2015 12:10 PM):private int numDataPts;
+	// --Commented out by Inspection (11/20/2015 12:10 PM):private double stdDev;
 
 	public WeightUnit() {
 
@@ -43,12 +43,14 @@ public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 		return null;
 	}
 
-	/**
-	 * @return the parseDataLength
-	 */
-	public static int getParseDataLength() {
-		return PARSE_DATA_LENGTH;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the parseDataLength
+//	 */
+//	public static int getParseDataLength() {
+//		return PARSE_DATA_LENGTH;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	@Override
 	public WeightUnit parse(String[] data) throws InvalidParseDataException {
@@ -75,19 +77,23 @@ public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 		return ndbNo;
 	}
 
-	/**
-	 * @return the seq
-	 */
-	public int getSeq() {
-		return seq;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the seq
+//	 */
+//	public int getSeq() {
+//		return seq;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
-	/**
-	 * @return the amount
-	 */
-	public double getAmount() {
-		return amount;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the amount
+//	 */
+//	public double getAmount() {
+//		return amount;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	/**
 	 * @return the desc
@@ -103,19 +109,23 @@ public class WeightUnit implements Parsable<WeightUnit>, Formattable {
 		return gramWeight;
 	}
 
-	/**
-	 * @return the numDataPts
-	 */
-	public int getNumDataPts() {
-		return numDataPts;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the numDataPts
+//	 */
+//	public int getNumDataPts() {
+//		return numDataPts;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
-	/**
-	 * @return the stdDev
-	 */
-	public double getStdDev() {
-		return stdDev;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the stdDev
+//	 */
+//	public double getStdDev() {
+//		return stdDev;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	public String toString() {
 		return this.getDesc();

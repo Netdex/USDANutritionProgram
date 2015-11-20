@@ -8,7 +8,7 @@ import parser.InvalidParseDataException;
  * @param <E> The type of the object after deserialization
  * @author Gordon Guan
  */
-public interface Parsable<E> {
+interface Parsable<E> {
 
 	/**
 	 * Sets the appropriate fields in a Parsable structure from the given data

@@ -17,7 +17,7 @@ class CustomScrollPane extends JScrollPane {
 	 */
 	private static final byte SCROLL_SPEED = 20;
 
-	protected CustomScrollPane(JPanel pane) {
+	CustomScrollPane(JPanel pane) {
 		super(pane);
 		this.createVerticalScrollBar();
 		this.setForeground(GUI.CONTENT_COLOUR);
@@ -30,7 +30,7 @@ class CustomScrollPane extends JScrollPane {
 		this.setHorizontalScrollBar(null);
 	}
 
-	protected void scrollToTop() {
+	void scrollToTop() {
 		this.getVerticalScrollBar().setValue(0);
 	}
 }

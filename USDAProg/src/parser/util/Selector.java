@@ -15,7 +15,7 @@ public abstract class Selector<V> {
 		}
 	};
 	
-	public Selector(){
+	private Selector(){
 
 	}
 

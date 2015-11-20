@@ -12,7 +12,7 @@ import parser.InvalidParseDataException;
 public class Nutrient implements Parsable<Nutrient>, Formattable {
 
 	public static final int PARSE_DATA_LENGTH = 18;
-	public static Nutrient SAMPLE = new Nutrient();
+	public static final Nutrient SAMPLE = new Nutrient();
 	private int ndbNo;
 	/**
 	 * 3 digit unique ID for a nutrient

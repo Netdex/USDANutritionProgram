@@ -18,17 +18,17 @@ import javax.swing.SwingConstants;
  * @author Vince Ou
  *
  */
-public class AboutPanel extends JPanel {
+class AboutPanel extends JPanel {
 
 	/**
 	 * The manager for all the panels that are switched around to display different views.
 	 */
-	PanelManager manager;
+	private final PanelManager manager;
 
-	public AboutPanel(PanelManager manager) {
+	public AboutPanel(PanelManager man) {
 		super();
 		// Sets up the layout
-		this.manager = manager;
+		this.manager = man;
 		this.setLayout(new BorderLayout());
 		this.setAlignmentY(CENTER_ALIGNMENT);
 		this.setBackground(GUI.BACKGROUND_COLOUR);

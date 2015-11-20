@@ -46,14 +46,16 @@ public class Parser {
         }
     }
 
-    /**
-     * Get a list of food items parsed
-     *
-     * @return a list of food items parsed
-     */
-    public DoublyLinkedList<FoodItem> getParsedData() {
-        return map_foodItems.getAllValues();
-    }
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//    /**
+//     * Get a list of food items parsed
+//     *
+//     * @return a list of food items parsed
+//     */
+//    public DoublyLinkedList<FoodItem> getParsedData() {
+//        return map_foodItems.getAllValues();
+//    }
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
     public BinaryTreeMap<Integer, FoodItem> getFoodItemMap() {
         return map_foodItems;
@@ -123,7 +125,7 @@ public class Parser {
             processedFileSize += line.getBytes().length + 1;
             line = line.replace("~", "");
             // using .split now since stringtokenizer ignores empty values
-            String[] items = splitTokens(line, "^", Footnote.PARSE_DATA_LENGTH);
+            String[] items = splitTokens(line, Footnote.PARSE_DATA_LENGTH);
             Footnote footnote = new Footnote().parse(items);
             map_footnote.put(footnote.getNdbNo(), footnote);
             updatePercentage();
@@ -146,7 +148,7 @@ public class Parser {
             processedFileSize += line.getBytes().length + 1;
             line = line.replace("~", "");
             // using .split now since stringtokenizer ignores empty values
-            String[] items = splitTokens(line, "^", LanguaLDescription.PARSE_DATA_LENGTH);
+            String[] items = splitTokens(line, LanguaLDescription.PARSE_DATA_LENGTH);
             LanguaLDescription lld = new LanguaLDescription().parse(items);
             map_langualDesc.put(lld.getFactorCode(), lld);
             updatePercentage();
@@ -169,7 +171,7 @@ public class Parser {
             processedFileSize += line.getBytes().length + 1;
             line = line.replace("~", "");
             // using .split now since stringtokenizer ignores empty values
-            String[] items = splitTokens(line, "^", LanguaL.PARSE_DATA_LENGTH);
+            String[] items = splitTokens(line, LanguaL.PARSE_DATA_LENGTH);
             LanguaL ll = new LanguaL().parse(items);
             ll.setLangualDescription(map_langualDesc.get(ll.getFactorCode()));
             if (map_langualGroup.get(ll.getNDBNo()) == null)
@@ -195,7 +197,7 @@ public class Parser {
             processedFileSize += line.getBytes().length + 1;
             line = line.replace("~", "");
             // using .split now since stringtokenizer ignores empty values
-            String[] items = splitTokens(line, "^", WeightUnit.PARSE_DATA_LENGTH);
+            String[] items = splitTokens(line, WeightUnit.PARSE_DATA_LENGTH);
             WeightUnit weightUnit = new WeightUnit().parse(items);
             if (map_foodWeight.get(weightUnit.getNDBNo()) == null)
                 map_foodWeight.put(weightUnit.getNDBNo(), new FoodWeight());
@@ -220,7 +222,7 @@ public class Parser {
             processedFileSize += line.getBytes().length + 1;
             line = line.replace("~", "");
             // using .split now since stringtokenizer ignores empty values
-            String[] items = splitTokens(line, "^", 2);
+            String[] items = splitTokens(line, 2);
             FoodGroup foodGroup = new FoodGroup().parse(items);
             map_foodGroup.put(foodGroup.getFoodGroupID(), foodGroup);
             updatePercentage();
@@ -244,7 +246,7 @@ public class Parser {
             processedFileSize += line.getBytes().length + 1;
             line = line.replace("~", "");
             // using .split now since stringtokenizer ignores empty values
-            String[] items = splitTokens(line, "^", FoodItem.PARSE_DATA_LENGTH);
+            String[] items = splitTokens(line, FoodItem.PARSE_DATA_LENGTH);
             FoodItem foodItem = new FoodItem().parse(items);
             int ndbNo = foodItem.getNDBNo();
             // Set various references to other data based on NDB number
@@ -278,7 +280,7 @@ public class Parser {
         while ((line = br.readLine()) != null) {
             processedFileSize += line.getBytes().length + 1;
             line = line.replace("~", "");
-            String[] items = splitTokens(line, "^", NutrientInfo.PARSE_DATA_LENGTH);
+            String[] items = splitTokens(line, NutrientInfo.PARSE_DATA_LENGTH);
             NutrientInfo nd = new NutrientInfo().parse(items);
             map_nutrDesc.put(nd.getNutrientNumber(), nd);
             updatePercentage();
@@ -301,7 +303,7 @@ public class Parser {
         while ((line = br.readLine()) != null) {
             processedFileSize += line.getBytes().length + 1;
             line = line.replace("~", "");
-            String[] items = splitTokens(line, "^", Nutrient.PARSE_DATA_LENGTH);
+            String[] items = splitTokens(line, Nutrient.PARSE_DATA_LENGTH);
             Nutrient nutr = new Nutrient().parse(items);
             nutr.setNutrientDescription(map_nutrDesc.get((int) nutr.getNutrNo()));
             NutrientData nd = map_nutrData.get(nutr.getNDBNo());
@@ -316,17 +318,16 @@ public class Parser {
     /**
      * Split a string into tokens from a delimiter
      * @param item the string to split
-     * @param delim the delimiter to split by
      * @param length the number of tokens
      * @return the tokens in the string
      */
-    private String[] splitTokens(String item, String delim, int length) {
+    private String[] splitTokens(String item, int length) {
         String[] items = new String[length];
         int lastIdx = 0;
         for (int i = 0; i < length; i++) {
             int idx = item.indexOf("^", lastIdx);
             items[i] = item.substring(lastIdx, idx == -1 ? item.length() : idx);
-            lastIdx = idx + delim.length();
+            lastIdx = idx + "^".length();
         }
         return items;
     }

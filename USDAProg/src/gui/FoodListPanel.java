@@ -22,12 +22,12 @@ import parser.parsables.FoodItem;
  * @author Vince Ou
  *
  */
-public class FoodListPanel extends JPanel {
+class FoodListPanel extends JPanel {
 
 	/**
 	 * Card layout manager switcher thing
 	 */
-	private PanelManager manager;
+	private final PanelManager manager;
 	/**
 	 * The food group being shown
 	 */
@@ -36,27 +36,26 @@ public class FoodListPanel extends JPanel {
 	/**
 	 * The title label
 	 */
-	private JLabel title;
+	private final JLabel title;
 	/**
 	 * The header
 	 */
-	private JPanel header;
+	private final JPanel header;
 
 	/**
 	 * The panel displaying the list of foods
 	 */
-	private JPanel foodsList;
+	private final JPanel foodsList;
 	/**
 	 * The thing making the food scrollable
 	 */
-	private CustomScrollPane foodsScrollable;
+	private final CustomScrollPane foodsScrollable;
 
-	protected FoodListPanel(PanelManager manager) {
+	FoodListPanel(PanelManager manager) {
 		// Set up
 		super();
 		this.manager = manager;
 		this.setLayout(new BorderLayout());
-		this.setAlignmentY(Component.LEFT_ALIGNMENT);
 
 		// Creates a header
 		header = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -89,7 +88,7 @@ public class FoodListPanel extends JPanel {
 	 *            the food group to display
 	 * @author Vince Ou
 	 */
-	protected void setFoodGroup(FoodGroup foodGroup) {
+	void setFoodGroup(FoodGroup foodGroup) {
 		// Sets things and removes previous items
 		this.group = foodGroup;
 		title.setText(group.getDescription());
@@ -122,11 +121,11 @@ public class FoodListPanel extends JPanel {
 		/**
 		 * The food that the item redirects to
 		 */
-		FoodItem food;
+		final FoodItem food;
 		/**
 		 * Manager thingamabob.
 		 */
-		PanelManager manager;
+		final PanelManager manager;
 
 		public FoodButton(FoodItem food, PanelManager manager) {
 			// Sets up things.

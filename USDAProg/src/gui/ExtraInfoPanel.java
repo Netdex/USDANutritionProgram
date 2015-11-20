@@ -19,12 +19,12 @@ import parser.parsables.LanguaL;
  * @author Vince Ou
  *
  */
-public class ExtraInfoPanel extends JPanel {
+class ExtraInfoPanel extends JPanel {
 
 	/**
 	 * The card layout switcher
 	 */
-	private PanelManager manager;
+	private final PanelManager manager;
 	/**
 	 * The actual food that is being described
 	 */
@@ -32,11 +32,11 @@ public class ExtraInfoPanel extends JPanel {
 	/**
 	 * Panel to hold all of the interesting content that is worth showing here
 	 */
-	private JTabbedPane contentTabs;
-	private ExtraInfoTextArea languaLsList;
-	private ExtraInfoTextArea footnotes;
+	private final JTabbedPane contentTabs;
+	private final ExtraInfoTextArea languaLsList;
+	private final ExtraInfoTextArea footnotes;
 
-	protected ExtraInfoPanel(PanelManager panelManager) {
+	ExtraInfoPanel(PanelManager panelManager) {
 		// Creates a new JPanel
 		super();
 		this.manager = panelManager;
@@ -96,14 +96,9 @@ public class ExtraInfoPanel extends JPanel {
 	 * 
 	 * @param item
 	 *            the food being displayed
-	 * @param titleName
-	 *            the "formatted" title name of the food (it is already
-	 *            determined in the FoodInfo class, so there is no point in
-	 *            doing it again, so it would be more efficient to just pass it
-	 *            in as a parameter)
 	 * @author Vince Ou
 	 */
-	protected void setFood(FoodItem item, String titleName) {
+	void setFood(FoodItem item) {
 		// Clears the former contents, and sets the food
 		this.food = item;
 

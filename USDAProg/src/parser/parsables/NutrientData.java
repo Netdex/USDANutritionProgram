@@ -34,13 +34,15 @@ public class NutrientData {
 		return nutrients;
 	}
 
-	/**
-	 * Gets the nutrients this data has as an array
-	 * @return the nutrients this data has
-	 */
-	public Nutrient[] getNutrientArray() {
-		return nutrients.toArray(nutrients.getFirst());
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * Gets the nutrients this data has as an array
+//	 * @return the nutrients this data has
+//	 */
+//	public Nutrient[] getNutrientArray() {
+//		return nutrients.toArray(nutrients.getFirst());
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	public String toString() {
 		return nutrients.toString();

@@ -9,11 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * Home screen
@@ -26,7 +22,7 @@ public class HomePanel extends JPanel {
 	/**
 	 * Manager for the panels/views/different functions
 	 */
-	PanelManager manager;
+	private final PanelManager manager;
 
 	public HomePanel(PanelManager manager) {
 		// Sets up things
@@ -42,6 +38,7 @@ public class HomePanel extends JPanel {
 					new File("images/homeBanner.png")).getScaledInstance(480,
 					128, Image.SCALE_SMOOTH)));
 		} catch (IOException e1) {
+			JOptionPane.showConfirmDialog(null, "Banner image not found", "Image Not Found", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 		}
 
 		// something to hold the four major nav buttons
@@ -113,7 +110,7 @@ public class HomePanel extends JPanel {
 	 * @author Vince Ou
 	 *
 	 */
-	class SearchButtonListener implements ActionListener {
+	private class SearchButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			manager.switchToSearchPanel(true);
@@ -126,7 +123,7 @@ public class HomePanel extends JPanel {
 	 * @author Vince Ou
 	 *
 	 */
-	class GroupButtonListener implements ActionListener {
+	private class GroupButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -139,7 +136,7 @@ public class HomePanel extends JPanel {
 	 * @author Vince Ou
 	 *
 	 */
-	class AboutButtonListener implements ActionListener {
+	private class AboutButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -152,7 +149,7 @@ public class HomePanel extends JPanel {
 	 * @author Vince Ou
 	 *
 	 */
-	class AddFoodButtonListener implements ActionListener {
+	private class AddFoodButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {

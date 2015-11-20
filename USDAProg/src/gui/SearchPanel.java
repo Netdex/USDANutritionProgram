@@ -31,24 +31,24 @@ import parser.parsables.FoodItem;
  * @author Vince Ou
  *
  */
-public class SearchPanel extends JPanel {
+class SearchPanel extends JPanel {
 
 	/**
 	 * The card-switching, panel-managing, backend-glueing panel
 	 */
-	private PanelManager manager;
+	private final PanelManager manager;
 	/**
 	 * The search box used to enter search terms
 	 */
-	private JTextField searchBox;
+	private final JTextField searchBox;
 	/**
 	 * The scrolling pane that holds the results panel
 	 */
-	private CustomScrollPane resultsList;
+	private final CustomScrollPane resultsList;
 	/**
 	 * The panel holding the results
 	 */
-	private JPanel resultsPanel;
+	private final JPanel resultsPanel;
 	/**
 	 * The last time a key was pressed (used to auto-search)
 	 */
@@ -176,7 +176,7 @@ public class SearchPanel extends JPanel {
 	 * Resets the search box (typically used after switching back to this
 	 * window)
 	 */
-	protected void resetSearchBox() {
+	void resetSearchBox() {
 		searchBox.setText("Search...");
 		searchBox.setForeground(GUI.SEARCH_BOX_GREY_GRAY);
 	}
@@ -185,7 +185,7 @@ public class SearchPanel extends JPanel {
 	 * Resets the list of results. Used when switching back to this from, say,
 	 * the home screen, or when coming here from the foodItem page
 	 */
-	protected void resetResults() {
+	void resetResults() {
 		// Clears everything, refreshes
 		resultsPanel.removeAll();
 		resultsPanel.revalidate();
@@ -210,11 +210,11 @@ public class SearchPanel extends JPanel {
 		/**
 		 * The food being represented
 		 */
-		FoodItem food;
+		final FoodItem food;
 		/**
 		 * The manager for the panel switching
 		 */
-		PanelManager manager;
+		final PanelManager manager;
 
 		/**
 		 * Creates a button
@@ -286,7 +286,7 @@ public class SearchPanel extends JPanel {
 	 * @author Vince Ou
 	 *
 	 */
-	class SearchBoxActionListener implements KeyListener {
+	private class SearchBoxActionListener implements KeyListener {
 
 		@Override
 		public void keyPressed(KeyEvent event) {

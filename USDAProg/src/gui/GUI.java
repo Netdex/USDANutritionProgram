@@ -50,49 +50,49 @@ public class GUI extends JFrame {
 	/**
 	 * Title font
 	 */
-	protected static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);
+	static final Font TITLE_FONT = new Font("Futura", Font.BOLD, 32);
 	/**
 	 * Subtitle font
 	 */
-	protected static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
+	static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
 			20);
 	/**
 	 * Font of content
 	 */
-	protected static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN,
+	static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN,
 			16);
 	/**
 	 * Font for scientific text
 	 */
-	protected static final Font SCIENTIFIC_FONT = new Font("Calibri",
+	static final Font SCIENTIFIC_FONT = new Font("Calibri",
 			Font.ITALIC, 14);
 	
 	/**
 	 * Maximum value for JSpinners
 	 */
-	protected static double SPINNER_MAX = (double) Integer.MAX_VALUE;
+	static final double SPINNER_MAX = (double) Integer.MAX_VALUE;
 
 	/**
 	 * No border
 	 */
-	protected static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
+	static final javax.swing.border.Border EMPTY_BORDER = BorderFactory
 			.createEmptyBorder();
 	/**
 	 * Border for buttons
 	 */
-	protected static final javax.swing.border.Border BUTTON_BORDER = BorderFactory
+	static final javax.swing.border.Border BUTTON_BORDER = BorderFactory
 			.createLineBorder(BACKGROUND_COLOUR, 1, true);
 
 	/**
 	 * The interface between front and back end
 	 */
-	protected static DataManager dataManager;
+	static DataManager dataManager;
 	/**
 	 * The manager switcher thing
 	 */
-	private PanelManager manager;
+	private final PanelManager manager;
 
-	public GUI() {
+	private GUI() {
 		// loads things
 		super("USDA Food Database");
 

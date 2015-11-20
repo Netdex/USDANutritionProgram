@@ -10,7 +10,7 @@ public class BinaryTree<E extends Comparable<E>> {
 
     private BinaryTreeNode<E> root;
 
-    public BinaryTree() {
+    BinaryTree() {
 
     }
 

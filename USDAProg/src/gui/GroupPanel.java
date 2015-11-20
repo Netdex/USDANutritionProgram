@@ -23,16 +23,16 @@ import parser.parsables.FoodGroup;
  * @author Vince Ou
  *
  */
-public class GroupPanel extends JPanel {
+class GroupPanel extends JPanel {
 
 	/**
 	 * Something that handles all the panels1
 	 */
-	private PanelManager manager;
+	private final PanelManager manager;
 	/**
 	 * Makes scrolling possible
 	 */
-	private CustomScrollPane groupsScrollable;
+	private final CustomScrollPane groupsScrollable;
 
 	public GroupPanel(PanelManager manager) {
 		// Set up
@@ -101,7 +101,7 @@ public class GroupPanel extends JPanel {
 	 * 
 	 * @author Vince Ou
 	 */
-	protected void resetScroll() {
+	void resetScroll() {
 		groupsScrollable.scrollToTop();
 	}
 
@@ -116,7 +116,7 @@ public class GroupPanel extends JPanel {
 		/**
 		 * The target for the food group
 		 */
-		FoodGroup group;
+		final FoodGroup group;
 
 		public FoodGroupButton(FoodGroup foodGroup) {
 			// Set up

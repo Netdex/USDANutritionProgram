@@ -12,7 +12,7 @@ import parser.InvalidParseDataException;
  */
 public class NutrientInfo implements Parsable<NutrientInfo>, Formattable {
 
-	public static NutrientInfo SAMPLE = new NutrientInfo();
+	public static final NutrientInfo SAMPLE = new NutrientInfo();
 	public static final int PARSE_DATA_LENGTH = 6;
 	
 	@Override
@@ -61,22 +61,26 @@ public class NutrientInfo implements Parsable<NutrientInfo>, Formattable {
 	 * Number of decimals rounded
 	 */
 	private int numDec;
-	/**
-	 * Some weird number
-	 */
-	private int srOrder;
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * Some weird number
+//	 */
+//	private int srOrder;
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	
 	public NutrientInfo() {
 
 	}
 
-	/**
-	 * @return the parseDataLength
-	 */
-	public static int getParseDataLength() {
-		return PARSE_DATA_LENGTH;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the parseDataLength
+//	 */
+//	public static int getParseDataLength() {
+//		return PARSE_DATA_LENGTH;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	/**
 	 * @return the nutrNo
@@ -92,12 +96,14 @@ public class NutrientInfo implements Parsable<NutrientInfo>, Formattable {
 		return unit;
 	}
 
-	/**
-	 * @return the tagName
-	 */
-	public String getTagName() {
-		return tagName;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the tagName
+//	 */
+//	public String getTagName() {
+//		return tagName;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	/**
 	 * @return the nutrDesc
@@ -106,19 +112,23 @@ public class NutrientInfo implements Parsable<NutrientInfo>, Formattable {
 		return nutrDesc;
 	}
 
-	/**
-	 * @return the numDec
-	 */
-	public int getNumberOfDecimals() {
-		return numDec;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the numDec
+//	 */
+//	public int getNumberOfDecimals() {
+//		return numDec;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
-	/**
-	 * @return the srOrder
-	 */
-	public int getSrOrder() {
-		return srOrder;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return the srOrder
+//	 */
+//	public int getSrOrder() {
+//		return srOrder;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	public String toString() {
 		return this.getNutrientName();

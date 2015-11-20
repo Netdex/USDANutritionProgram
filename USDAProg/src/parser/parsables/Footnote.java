@@ -49,26 +49,32 @@ public class Footnote implements Parsable<Footnote>, Formattable{
 		return ndbNo;
 	}
 
-	/**
-	 * @return The sequence number
-	 */
-	public int getSequenceNo() {
-		return seqNo;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return The sequence number
+//	 */
+//	public int getSequenceNo() {
+//		return seqNo;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
-	/**
-	 * @return The footnote type
-	 */
-	public Footnote.FootnoteType getFootnoteType() {
-		return footntType;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return The footnote type
+//	 */
+//	public Footnote.FootnoteType getFootnoteType() {
+//		return footntType;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
-	/**
-	 * @return The nutrient number
-	 */
-	public int getNutrNo() {
-		return nutrNo;
-	}
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//	/**
+//	 * @return The nutrient number
+//	 */
+//	public int getNutrNo() {
+//		return nutrNo;
+//	}
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
 	/**
 	 * @return The footnote text

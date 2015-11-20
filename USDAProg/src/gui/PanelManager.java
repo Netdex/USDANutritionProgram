@@ -79,14 +79,14 @@ public class PanelManager extends JPanel {
     /**
      * Switches to the ExtraInfo panel
      */
-    protected void switchToExtraInfo() {
+    void switchToExtraInfo() {
         cardLayoutManager.show(this, "extraInfo");
     }
 
     /**
      * Switches to the home panel
      */
-    protected void switchToHome() {
+    void switchToHome() {
         cardLayoutManager.show(this, "home");
     }
 
@@ -95,7 +95,7 @@ public class PanelManager extends JPanel {
      *
      * @param reset reset the search results?
      */
-    protected void switchToSearchPanel(boolean reset) {
+    void switchToSearchPanel(boolean reset) {
         // Disables buttons during loading wheel sequence
         if (LOADING_PERCENTAGE == -1) {
             cardLayoutManager.show(this, "search");
@@ -110,7 +110,7 @@ public class PanelManager extends JPanel {
     /**
      * Switches to the info panel, along with loading wheel blocking support
      */
-    protected void switchToInfoPanel() {
+    void switchToInfoPanel() {
         if (LOADING_PERCENTAGE == -1)
             cardLayoutManager.show(this, "foodInfo");
     }
@@ -119,7 +119,7 @@ public class PanelManager extends JPanel {
      * Switches to the food groups list panel, along with loading wheel blocking
      * support
      */
-    protected void switchToGroup() {
+    void switchToGroup() {
         if (LOADING_PERCENTAGE == -1) {
             groupPanel.resetScroll();
             cardLayoutManager.show(this, "group");
@@ -129,7 +129,7 @@ public class PanelManager extends JPanel {
     /**
      * Switches to the about panel, along with loading wheel blocking support
      */
-    protected void switchToAbout() {
+    void switchToAbout() {
         if (LOADING_PERCENTAGE == -1)
             cardLayoutManager.show(this, "about");
     }
@@ -137,7 +137,7 @@ public class PanelManager extends JPanel {
     /**
      * Switches to the list of foods panel
      */
-    protected void switchToFoodListPanel() {
+    void switchToFoodListPanel() {
         cardLayoutManager.show(this, "foodList");
     }
 
@@ -145,7 +145,7 @@ public class PanelManager extends JPanel {
      * Switches to the add food to database panel, along with loading wheel
      * blocking support
      */
-    protected void switchToAddFood() {
+    void switchToAddFood() {
         if (LOADING_PERCENTAGE == -1) {
             cardLayoutManager.show(this, "addFood");
             addFoodPanel.resetFields();
@@ -157,7 +157,7 @@ public class PanelManager extends JPanel {
      *
      * @return the groupPanel
      */
-    protected JPanel getGroupPanel() {
+    JPanel getGroupPanel() {
         return groupPanel;
     }
 
@@ -166,25 +166,27 @@ public class PanelManager extends JPanel {
      *
      * @return the InfoPanel
      */
-    protected InfoPanel getInfoPanel() {
+    InfoPanel getInfoPanel() {
         return infoPanel;
     }
 
-    /**
-     * Gets the home panel
-     *
-     * @return the home panel
-     */
-    protected HomePanel getHomePanel() {
-        return homePanel;
-    }
+// --Commented out by Inspection START (11/20/2015 12:10 PM):
+//    /**
+//     * Gets the home panel
+//     *
+//     * @return the home panel
+//     */
+//    protected HomePanel getHomePanel() {
+//        return homePanel;
+//    }
+// --Commented out by Inspection STOP (11/20/2015 12:10 PM)
 
     /**
      * Gets the panel of list of foods in a food group
      *
      * @return the foodListPanel
      */
-    protected FoodListPanel getFoodListPanel() {
+    FoodListPanel getFoodListPanel() {
         return foodListPanel;
     }
 
@@ -193,7 +195,7 @@ public class PanelManager extends JPanel {
      *
      * @return the extraInfoPanel
      */
-    protected ExtraInfoPanel getExtraInfoPanel() {
+    ExtraInfoPanel getExtraInfoPanel() {
         return extraInfoPanel;
     }
 
