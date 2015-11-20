@@ -25,29 +25,29 @@ public class Nutrient implements Parsable<Nutrient>, Formattable {
 	/**
 	 * Number of data points used to calculate the value
 	 */
-	private int numDataPts;
+	//private int numDataPts;
 	/**
 	 * Standard error of the mean Can be NaN
 	 */
-	private double stdError;
+	//private double stdError;
 	/**
 	 * Type of data
 	 */
-	private String srcCd;
+	//private String srcCd;
 	/**
 	 * Some data derivation code thing
 	 */
-	private String derivCd;
-	private int refNDBNo;
-	private String addNutrMark;
-	private int numStudies;
-	private double min;
-	private double max;
-	private double df;
-	private double lowEB;
-	private double upEB;
-	private String statCmt;
-	private String addModDate;
+	//private String derivCd;
+	//private int refNDBNo;
+	//private String addNutrMark;
+	//private int numStudies;
+	//private double min;
+	//private double max;
+	//private double df;
+	//private double lowEB;
+	//private double upEB;
+	//private String statCmt;
+	//private String addModDate;
 	private NutrientInfo desc;
 	public Nutrient() {
 
