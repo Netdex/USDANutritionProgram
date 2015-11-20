@@ -18,6 +18,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -126,7 +127,9 @@ class SearchPanel extends JPanel {
 						// Delay, so the the search doesn't trip over itself
 						Thread.sleep(50);
 					} catch (Exception e) {
-
+						JOptionPane.showConfirmDialog(null,
+								"Thread execution error", "Internal Error",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}

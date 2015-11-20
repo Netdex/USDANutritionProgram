@@ -438,7 +438,10 @@ class AddFoodPanel extends JPanel {
 								"", "", "", "", "", "", "", "", "", "", "" });
 						nut.setNutrientDescription(line.getNutrient());
 					} catch (InvalidParseDataException e1) {
-						e1.printStackTrace();
+						JOptionPane.showConfirmDialog(null,
+								"The nutrient fields cannot ALL be left blank",
+								"Invalid Entry", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE);
 					}
 					nutrients.addNutrient(nut);
 				}
@@ -458,7 +461,9 @@ class AddFoodPanel extends JPanel {
 						group.getFoodGroupID() + "", longDesc, "", commonName,
 						manufacName, "", "", "", "", "", "", "", "" });
 			} catch (InvalidParseDataException e1) {
-				e1.printStackTrace();
+				JOptionPane.showConfirmDialog(null,
+						"The name field cannot be left blank", "Invalid Field",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 
 			// Adds a footnote, that specifies that it was created by the user
@@ -468,7 +473,9 @@ class AddFoodPanel extends JPanel {
 				footnote = footnote.parse(new String[] { ndbNo + "", "0", "D",
 						"", "Created by user." });
 			} catch (InvalidParseDataException e1) {
-				e1.printStackTrace();
+				JOptionPane.showConfirmDialog(null,
+						"Error in creation of footnotes", "Parse Error",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
 			newFood.setFootnotes(footnote);
 			newFood.setNutrientData(nutrients);
@@ -478,7 +485,8 @@ class AddFoodPanel extends JPanel {
 			if (DataManager.getInstance().addFoodItem(newFood))
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
 						"Food successfully created", "Success",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.DEFAULT_OPTION,
+						JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
