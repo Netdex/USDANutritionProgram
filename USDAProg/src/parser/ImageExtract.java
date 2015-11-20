@@ -1,14 +1,9 @@
 package parser;
 
 import gui.GUI;
-import parser.parsables.FoodItem;
-import parser.util.BinaryTreeMap;
-import parser.util.Stack;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +11,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
+import parser.parsables.FoodItem;
+import parser.util.BinaryTreeMap;
+import parser.util.Stack;
 
 /**
  * Downloads images based on search terms from Google Images

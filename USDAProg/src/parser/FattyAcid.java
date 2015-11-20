@@ -1,8 +1,8 @@
 package parser;
 
-import parser.util.DoublyLinkedList;
-
 import java.util.StringTokenizer;
+
+import parser.util.DoublyLinkedList;
 
 /**
  * List of all the fatty acids
