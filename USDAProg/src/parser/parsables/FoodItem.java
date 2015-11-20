@@ -22,11 +22,11 @@ public class FoodItem implements Parsable<FoodItem>, Comparable<FoodItem>,
     /* The food group of this food item */
     private FoodGroup foodGroup;
     /* The weight statistics of this food item */
-    private FoodWeight weightInfo;
+    private FoodWeight weightInfo = new FoodWeight();
     /* A set of languals for this food item */
-    private LanguaLGroup langualGroup;
+    private LanguaLGroup langualGroup = new LanguaLGroup();
     /* Footnotes for this food item */
-    private FootnoteGroup footnotes;
+    private FootnoteGroup footnotes = new FootnoteGroup();
     /**
      * Nutrient Databank number<br>
      * (5 digits)
