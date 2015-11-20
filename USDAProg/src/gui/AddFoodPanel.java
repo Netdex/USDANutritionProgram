@@ -477,7 +477,9 @@ class AddFoodPanel extends JPanel {
 						"Error in creation of footnotes", "Parse Error",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 			}
-			newFood.setFootnotes(footnote);
+			FootnoteGroup fgg = new FootnoteGroup();
+			fgg.addFootnote(footnote);
+			newFood.setFootnotes(fgg);
 			newFood.setNutrientData(nutrients);
 			newFood.setFoodGroup(group);
 

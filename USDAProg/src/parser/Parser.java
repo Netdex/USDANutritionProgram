@@ -131,7 +131,7 @@ public class Parser {
             // using .split now since stringtokenizer ignores empty values
             String[] items = splitTokens(line, Footnote.PARSE_DATA_LENGTH);
             Footnote footnote = new Footnote().parse(items);
-            map_foodItems.get(footnote.getNdbNo()).getFootnotes().addFootnote(footnote);
+            map_foodItems.get(footnote.getNdbNo()).getFootnoteGroup().addFootnote(footnote);
             updatePercentage();
         }
         br.close();
