@@ -196,8 +196,6 @@ public class DoublyLinkedList<E> {
 	 */
 	public E[] toArray(E sample) {
 		int size = this.size();
-		if (size == 0)
-			return null;
 		@SuppressWarnings("unchecked")
 		E[] arr = (E[]) Array.newInstance(sample.getClass(), size);
 		DoubleLLNode<E> currentNode = front.getNext();
