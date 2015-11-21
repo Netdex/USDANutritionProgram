@@ -266,6 +266,8 @@ class AddFoodPanel extends JPanel {
 		// Makes the content scrollable
 		contentScrollbar = new CustomScrollPane(contentPanel);
 		this.add(contentScrollbar, BorderLayout.CENTER);
+		contentPanel.revalidate();
+		contentPanel.repaint();
 
 		// Creates a button for the user to create the food and add it to the
 		// database
@@ -397,9 +399,13 @@ class AddFoodPanel extends JPanel {
 		 * @return the currently displayed number in the JSpinner
 		 */
 		private double getAmountForEntry() {
-			return Double.parseDouble(amount.getModel().getValue().toString()) * 100.0;
+			String value = amount.getModel().getValue().toString();
+			if (value.matches("[0-9.]"))
+				return Double.parseDouble(value.replace(",", "")) * 100.0;
+			else {
+				return -1;
+			}
 		}
-
 	}
 
 	/**
@@ -423,20 +429,60 @@ class AddFoodPanel extends JPanel {
 						"The name field cannot be left blank", "Invalid Field",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				return;
+			} else if (!longDesc.matches("[A-Za-z, ]")) {
+				JOptionPane
+						.showConfirmDialog(
+								AddFoodPanel.this,
+								"Invalid Name.\nThis name is not valid.\n"
+										+ "The name cannot contain punctuation, except spaces and commas.",
+								"Invalid Field", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE);
+				return;
 			}
+
 			String commonName = commonNameEntry.getText();
 			if (commonName.equals("Common Name"))
 				commonName = "";
+			else if (!commonName.matches("[A-Za-z, ]")) {
+				JOptionPane
+						.showConfirmDialog(
+								AddFoodPanel.this,
+								"Invalid Name.\nThis common name is not valid.\n"
+										+ "The common name cannot contain punctuation, except spaces and commas.",
+								"Invalid Field", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
 			String manufacName = manufacNameEntry.getText();
 			if (manufacName.equals("Manufacturer Name"))
 				manufacName = "";
+			else if (!manufacName.matches("[A-Za-z, ]")) {
+				JOptionPane
+						.showConfirmDialog(
+								AddFoodPanel.this,
+								"Invalid Name.\nThis manufacturer name is not valid.\n"
+										+ "The manufacturer name cannot contain punctuation, except commas and spaces.",
+								"Invalid Field", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
 			// Specifies the units the food is measured in.
-			if (weightUnitEntry.getText().equals("Unit")
-					|| weightUnitEntry.getText().equals("")) {
+			String weightUnit = weightUnitEntry.getText();
+			if (weightUnit.equals("Unit") || weightUnit.equals("")) {
 				JOptionPane.showConfirmDialog(AddFoodPanel.this,
 						"The unit cannot be left blank", "Invalid Field",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+				return;
+			} else if (!weightUnit.matches("[A-Za-z, ()]")) {
+				JOptionPane
+						.showConfirmDialog(
+								AddFoodPanel.this,
+								"Invalid Name.\nThis unit name is not valid.\n"
+										+ "The unit name cannot contain punctuation\nexcept commas, spaces and parentheses.",
+								"Invalid Field", JOptionPane.DEFAULT_OPTION,
+								JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
@@ -447,14 +493,24 @@ class AddFoodPanel extends JPanel {
 			boolean selectedNutrient = false;
 			for (int i = 0; i < nutEntryLineArray.length; i++) {
 				NutrientEntryLine line = nutEntryLineArray[i];
-				if (line.getAmountForEntry() != 0) {
+				double amount = line.getAmountForEntry();
+				if (amount == -1) {
+					JOptionPane
+							.showConfirmDialog(
+									AddFoodPanel.this,
+									"Invalid value. The value for ALL nutrient amounts must be a number or decimal.",
+									"Invalid Field",
+									JOptionPane.DEFAULT_OPTION,
+									JOptionPane.ERROR_MESSAGE);
+					return;
+				} else if (amount != 0) {
 					selectedNutrient = true;
 					Nutrient nut = new Nutrient();
 					try {
 						nut.parse(new String[] { ndbNo + "",
 								line.getNutrient().getNutrientNumber() + "",
-								line.getAmountForEntry() + "", "", "", "", "",
-								"", "", "", "", "", "", "", "", "", "", "" });
+								amount + "", "", "", "", "", "", "", "", "",
+								"", "", "", "", "", "", "" });
 						nut.setNutrientDescription(line.getNutrient());
 					} catch (InvalidParseDataException e1) {
 						JOptionPane.showConfirmDialog(null,
