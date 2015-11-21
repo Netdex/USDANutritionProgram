@@ -400,7 +400,7 @@ class AddFoodPanel extends JPanel {
 		 */
 		private double getAmountForEntry() {
 			String value = amount.getModel().getValue().toString();
-			if (value.matches("[0-9.]"))
+			if (value.matches("[0-9.]*"))
 				return Double.parseDouble(value.replace(",", "")) * 100.0;
 			else {
 				return -1;
@@ -429,7 +429,7 @@ class AddFoodPanel extends JPanel {
 						"The name field cannot be left blank", "Invalid Field",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (!longDesc.matches("[A-Za-z, ]")) {
+			} else if (!longDesc.matches("[A-Za-z, ]*")) {
 				JOptionPane
 						.showConfirmDialog(
 								AddFoodPanel.this,
@@ -443,7 +443,7 @@ class AddFoodPanel extends JPanel {
 			String commonName = commonNameEntry.getText();
 			if (commonName.equals("Common Name"))
 				commonName = "";
-			else if (!commonName.matches("[A-Za-z, ]")) {
+			else if (!commonName.matches("[A-Za-z, ]*")) {
 				JOptionPane
 						.showConfirmDialog(
 								AddFoodPanel.this,
@@ -457,7 +457,7 @@ class AddFoodPanel extends JPanel {
 			String manufacName = manufacNameEntry.getText();
 			if (manufacName.equals("Manufacturer Name"))
 				manufacName = "";
-			else if (!manufacName.matches("[A-Za-z, ]")) {
+			else if (!manufacName.matches("[A-Za-z, ]*")) {
 				JOptionPane
 						.showConfirmDialog(
 								AddFoodPanel.this,
@@ -475,7 +475,7 @@ class AddFoodPanel extends JPanel {
 						"The unit cannot be left blank", "Invalid Field",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (!weightUnit.matches("[A-Za-z, ()]")) {
+			} else if (!weightUnit.matches("[A-Za-z, ()0-9]*")) {
 				JOptionPane
 						.showConfirmDialog(
 								AddFoodPanel.this,
