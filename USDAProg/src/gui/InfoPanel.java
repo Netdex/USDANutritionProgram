@@ -209,7 +209,7 @@ class InfoPanel extends JPanel {
 		contentPanel.removeAll();
 		this.food = item;
 		// Changes some set up variables
-		if (food.getWeightInfo().getWeightUnits() != null)
+		if (food.getWeightInfo().getWeightUnits().length != 0)
 			gramsOfFood = food.getWeightInfo().getWeightUnits()[0]
 					.getGramWeight();
 		else
@@ -311,7 +311,7 @@ class InfoPanel extends JPanel {
 		// Prompts the user to select a unit to measure with
 		amountEntryPromptText = "This item is measured in grams.\n"
 				+ "Please enter the number of grams you are intending on consuming.";
-		if (food.getWeightInfo().getWeightUnits() != null) {
+		if (food.getWeightInfo().getWeightUnits().length != 0) {
 			// Gets the possible units
 			DoublyLinkedList<WeightUnit> possibleUnits = new DoublyLinkedList<WeightUnit>(
 					food.getWeightInfo().getWeightUnits());
