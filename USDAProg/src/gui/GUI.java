@@ -55,19 +55,16 @@ public class GUI extends JFrame {
 	/**
 	 * Subtitle font
 	 */
-	static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD,
-			20);
+	static final Font SUBTITLE_FONT = new Font("Calibri", Font.BOLD, 20);
 	/**
 	 * Font of content
 	 */
-	static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN,
-			16);
+	static final Font CONTENT_FONT = new Font("Calibri", Font.PLAIN, 16);
 	/**
 	 * Font for scientific text
 	 */
-	static final Font SCIENTIFIC_FONT = new Font("Calibri",
-			Font.ITALIC, 14);
-	
+	static final Font SCIENTIFIC_FONT = new Font("Calibri", Font.ITALIC, 14);
+
 	/**
 	 * Maximum value for JSpinners
 	 */
@@ -107,7 +104,8 @@ public class GUI extends JFrame {
 		} catch (IOException e) {
 			JOptionPane.showConfirmDialog(this, "Window icon not found",
 					"Missing Image", JOptionPane.DEFAULT_OPTION,
-					JOptionPane.ERROR_MESSAGE);		}
+					JOptionPane.ERROR_MESSAGE);
+		}
 
 		// Creates a manager for the different views
 		manager = new PanelManager();
@@ -117,13 +115,10 @@ public class GUI extends JFrame {
 		// Loads the files from the database
 		dataManager = DataManager.getInstance();
 		dataManager.bindProgressDisplay(this);
-		dataManager.init(new File("USDAFiles/FOOD_DES.TXT"), new File(
-				"USDAFiles/NUT_DATA.TXT"), new File("USDAFiles/NUTR_DEF.TXT"),
-				new File("USDAFiles/FD_GROUP.TXT"), new File(
-						"USDAFiles/WEIGHT.TXT"), new File(
-						"USDAFiles/LANGUAL.txt"), new File(
-						"USDAFiles/LANGDESC.TXT"), new File(
-						"USDAFiles/FOOTNOTE.TXT"));
+		dataManager.init(new File("FOOD_DES.TXT"), new File("NUT_DATA.TXT"),
+				new File("NUTR_DEF.TXT"), new File("FD_GROUP.TXT"), new File(
+						"WEIGHT.TXT"), new File("LANGUAL.txt"), new File(
+						"LANGDESC.TXT"), new File("FOOTNOTE.TXT"));
 
 		// Starts actual operation
 		manager.switchToHome();
